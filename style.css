@@ -1,0 +1,150 @@
+/*.obj {
+  height: 100px;
+  background: #44A5CB;
+  color: #fff;
+}
+.obj1 {
+  background: red;
+  color: #fff;
+}
+.obj2 {
+  background: blue;
+  color: #fff;
+}
+.obj3 {
+  background: yellow;
+  color: #fff;
+}
+*/
+
+.col1 {
+  left: 20px;
+}
+
+.col2 {
+  left: 130px;
+}
+
+.col3 {
+  left: 240px;
+}
+
+.col4 {
+  left: 350px;
+}
+
+.col5 {
+  left: 460px;
+}
+
+.col6 {
+  left: 570px;
+}
+
+.col7 {
+  left: 680px;
+}
+
+.col8 {
+  left: 790px;
+}
+
+.row1 {
+  top: 20px;
+}
+
+.row2 {
+  top: 130px;
+}
+
+.row3 {
+  top: 240px;
+}
+
+.row4 {
+  top: 350px;
+}
+
+.row5 {
+  top: 460px;
+}
+
+.row6 {
+  top: 570px;
+}
+
+.row7 {
+  top: 680px;
+}
+
+.row8 {
+  top: 790px;
+}
+
+.player {
+  /*background: blue;*/
+/*  width: 100px;
+  height: 100px;
+*/  position: absolute;
+  /*margin: 5px;*/
+  width: 70px;
+  height: 70px;
+  /*visibility: "";*/
+
+  border-radius: 50%;
+}
+
+.score {
+  /*background: blue;*/
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  /*margin: 5px;*/
+}
+
+.action {
+  /*background: orange;*/
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  /*visibility: hidden;*/
+}
+
+.point {
+  /*background: orange;*/
+  width: 70px;
+  height: 70px;
+  position: absolute;
+  /*visibility: "";*/
+
+  border-radius: 50%;
+}
+
+.timeout {
+  /*background: gray;*/
+  width: 100px;
+  height: 100px;
+  position: absolute;
+}
+
+.score {
+  /*background: gray;*/
+  width: 100px;
+  height: 40px;
+  position: absolute;
+}
+
+.rotate {
+  /*background: gray;*/
+  width: 100px;
+  height: 100px;
+  position: absolute;
+}
+
+.visible {
+  visibility: '';
+}
+
+.invisible {
+  visibility: hidden;
+}

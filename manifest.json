@@ -12,6 +12,6 @@
       "type": "image/png"
     }],
 //  "start_url": "./?utm_source=homescreen",
-  "start_url": "index2.html",
+  "start_url": "https://mamedenq.github.io/index2.html/?utm_source=homescreen",
   "display": "standalone"
 }

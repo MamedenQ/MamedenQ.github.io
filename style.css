@@ -17,6 +17,11 @@
 }
 */
 
+.tstyle {
+		width:100%;
+	background-color: red;
+	}
+
 .col1 {
   left: 20px;
 }

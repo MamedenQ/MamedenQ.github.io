@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<!--
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+
+<title>スコアブック</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	  <!-- manifest.jsonを呼び出しています -->
+  <link rel="manifest" href="./manifest.json">
+  <script>
+    // service workerが有効なら、service-worker.js を登録します
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./service-worker.js').then(function() { console.log('Service Worker Registered'); });
+   }
+  </script>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<!--
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+-->
+<script src="jquery-3.3.1.min.js" charset="utf-8"></script>
+<!--
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+-->
+<script src="//d3js.org/d3.v3.min.js"></script>
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<script src="./script.js" charset="utf-8"></script>
+<link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+	<div class="tstyle">index1</div>
+<!--     <div class="container-fluid" style="width:100%;">
+    	<div class="row">
+	    	<div class="col-md-5 obj1"></div>
+	    	<div class="col-md-2 obj2"></div>
+	    	<div class="col-md-5 obj3"></div>
+	    </div>
+    </div>
+ -->
+
+    <div id='example' style="height: 450px;overflow:auto;"></div>
+    <div id="team1" teamid='1' class="score col4 row1">0</div>
+    <div id="team2" teamid='2' class="score col5 row1">0</div>
+
+    <!-- 左側 -->
+<!--     <div class="drop action col1 row4">サーブ</div>
+    <div class="drop action col2 row4">スパイク</div>
+    <div class="drop action col3 row4">フェイント</div>
+    <div class="drop action col1 row5">ブロック</div>
+    <div class="drop action col2 row5">レシーブ</div>
+    <div class="drop action col3 row5">リベロスイッチ</div>
+    <div class="timeout col4 row5">タイムアウト</div> -->
+
+    <div class="timeout col4 row5">タイムアウト</div>
+
+    <!-- 右側 -->
+<!--     <div class="drop action col8 row4">サーブ</div>
+    <div class="drop action col7 row4">スパイク</div>
+    <div class="drop action col6 row4">フェイント</div>
+    <div class="drop action col8 row5">ブロック</div>
+    <div class="drop action col7 row5">レシーブ</div>
+    <div class="drop action col6 row5">リベロスイッチ</div> -->
+    <div class="timeout col5 row5">タイムアウト</div>
+
+    <!-- 左側 -->
+    <div class="action col1 row5" name="1">チーム情報</div>
+    <div class="action col2 row5" name="1">選手交代</div>
+    <div class="rotate col3 row5" teamid="1">ローテーション</div>
+
+    <!-- 右側 -->
+    <div class="action col8 row5" name="1">チーム情報</div>
+    <div class="action col7 row5" name="1">選手交代</div>
+    <div class="rotate col6 row5" teamid="2">ローテーション</div>
+
+    <!-- 左側 -->
+    <div class="drag player col2 row4 plteam1" teamid="1" playerid="1">１</div>
+    <div class="drag player col2 row3 plteam1" teamid="1" playerid="2">２</div>
+    <div class="drag player col2 row2 plteam1" teamid="1" playerid="3">３</div>
+    <div class="drag player col3 row2 plteam1" teamid="1" playerid="4">４</div>
+    <div class="drag player col3 row3 plteam1" teamid="1" playerid="5">５</div>
+    <div class="drag player col3 row4 plteam1" teamid="1" playerid="6">６</div>
+
+    <!-- 右側 -->
+    <div class="drag player col7 row2 plteam2" teamid="2" playerid="1">１</div>
+    <div class="drag player col7 row3 plteam2" teamid="2" playerid="2">２</div>
+    <div class="drag player col7 row4 plteam2" teamid="2" playerid="3">３</div>
+    <div class="drag player col6 row4 plteam2" teamid="2" playerid="4">４</div>
+    <div class="drag player col6 row3 plteam2" teamid="2" playerid="5">５</div>
+    <div class="drag player col6 row2 plteam2" teamid="2" playerid="6">６</div>
+
+    <div class="drop point invisible serve" name="serve">サーブ</div>
+    <div class="drop point invisible spike" name="spike">スパイク</div>
+    <div class="drop point invisible fake" name="fake">フェイント</div>
+    <div class="drop point invisible block" name="block">ブロック</div>
+    <div class="drop point invisible receive" name="receive">レシーブ</div>
+    <div class="drop point invisible libero" name="libero">リベロスイッチ</div>
+    <div class="drop point invisible miss" name="miss">ミス</div>
+    <div class="drop point invisible faul" name="faul">ファウル</div>
+
+<!--   <div class="container-fluid" style="width:100%">
+    <div class="row">
+      <div class="drag player col-md-2" name="1">選手１</div>
+      <div class="drag player col-md-2" name="4">選手４</div>
+
+      <div class="score col-md-4">中央</div>
+
+      <div class="drag player col-md-2" name="1">選手１</div>
+      <div class="drag player col-md-2" name="4">選手４</div>
+    </div>
+  </div> -->
+<script type="text/javascript">
+  // var a = 1 / Math.sqrt(2);
+  // var b = Math.sin(45 / 180 * Math.PI);
+
+  // console.log(a);
+  // console.log(b);
+
+  // b = Math.cos(45 / 180 * Math.PI);
+
+  // console.log(b);
+
+  $('.player').css('background', color(5));
+  $('.action').css('background', color(6));
+  $('.point').css('background', color(7));
+  $('.score').css('background', color(8));
+  $('.timeout').css('background', color(9));
+  $('.rotate').css('background', color(10));
+
+  function dispaction(obj, isFull) {
+    // 周りに丸を並べる
+    // サーブ、スパイク、フェイント、ブロック、レシーブ
+    // 失点、リベロ、ファウル
+    var num = $(".point").length;
+    // console.log(num);
+    var range;
+    var len;
+    if(isFull == true) {
+      range = 360;
+      len = 120;
+    } else {
+      range = 180;
+      len = 200;
+    }
+
+    var ang = range / num;
+    var pos = obj.position();
+
+    for (var i = 0; i < num; i++) {
+      // 座標を算出
+      //var curang = (ang / 2) + ang * i;
+      var curang = ang * (i + 1);
+      var x = len * Math.cos(curang / 180 * Math.PI) + pos.left;
+      var y = len * Math.sin(curang / 180 * Math.PI) + pos.top;
+      // console.log('x' + x + ',y' + y);
+
+      $('.point').eq(i).css('top', y + 'px');
+      $('.point').eq(i).css('left', x + 'px');
+      // $('.point').eq(i).css('visibility', '');
+      // $('.point').eq(i).css('transition', '0.5s ease');
+
+      // classで指定されているvisibilityをcssメソッド（style?）で上書きすることができない。
+      $('.point').eq(i).removeClass('invisible');
+      $('.point').eq(i).addClass('visible');
+    }
+    
+    obj.css('z-index', '1');
+  }
+
+  // $('.player').click(function() {
+  //   dispaction($(this));
+  // })
+  //createtransition();
+  //data = [];
+
+  // ドラッグ・ドロップ検証
+  var pos;		//ドラッグ開始時の元の位置
+
+  $('.drag').draggable({
+    start: function(event, ui) {
+      pos = $(this).position();
+      $(this).css('opacity', 0.5);
+      $(this).css('transition', '0s');
+
+      // dispaction($(this), false);
+      dispaction($(this), true);
+    },
+    stop: function(event, ui) {
+      $(this).css('top', pos.top + 'px');
+      $(this).css('left', pos.left + 'px');
+      $(this).css('transition', '0.5s ease');
+      $(this).css('opacity', 1.0);
+
+      // for(var obj in $('point').eq) {
+      //   obj.removeClass('visible');
+      //   obj.addClass('invisible');
+      // }
+      for (var i = 0; i < $(".point").length; i++) {
+        // $('.point').eq(i).css('visibility', 'hidden');
+        $('.point').eq(i).removeClass('visible');
+        $('.point').eq(i).addClass('invisible');
+      }
+    },
+  });
+  // $('.drop').droppable({
+  //   drop: function(event, ui) {
+  //     // var name = ui.draggable.attr('name');
+  //     // if(dragflg) {
+  //     //   dragflg = false;
+  //     //   // var pos = ui.draggable.position();
+  //     //   // ui.draggable.attr('top') = tmptop;
+  //     //   // ui.draggable.attr('left') = tmpleft;
+  //     //   ui.draggable.css('top', pos.top + 'px');
+  //     //   ui.draggable.css('left', pos.left + 'px');
+  //     // }
+  //     // // alert(name);
+  //     // // alert(event.currentTarget.attr('background'));
+
+  //     // alert(event.currentTarget.attr('name'));
+  //   },
+  //   // tolerance: 'touch',
+  // });
+  
+  // 点数表示更新処理
+  // _id:点数を更新するチームid
+  // _point:更新する点数
+  // 指定されたチームの点数表示を更新する
+  function updateppint(_id, _point) {
+    if(_id == 1) {
+      $('#team1').text(_point);
+    } else {
+      $('#team2').text(_point);
+    }
+  }
+  
+  // 点数追加処理
+  // 点数を追加する
+  // 点数以外は固定値
+  function addpoint(_id, _playerid, _action) {
+    var _point;
+    if(_id == 1) {
+      _point = ++id1pt;
+      serverid = curServerId1;
+    } else {
+      _point = ++id2pt;
+      serverid = curServerId2;
+    }
+    updateppint(_id, _point);
+    
+    //serverid = _playerid;
+    //serverid = 99;
+
+    data.push(
+    {
+      id: _id,        // チーム識別ID
+      point: _point,  // 得点数
+      from: from,    // 遷移元
+      playerid: _playerid,      // 得点プレーヤー
+      playernm: 'test',     // 得点プレーヤー名
+      pointaction: _action,		// 得点アクション
+      serverid: serverid,  // サーバプレーヤー
+      servernm: 'test',     // サーバプレーヤー名
+      timeout: false,   // タイムアウトフラグ
+      afttimeout: false,  // タイムアウト明けフラグ
+      func: function() {
+      	alert(_action);
+      },
+    });
+    //console.log('addpoint finish!');
+    
+    createtransition();
+  }
+  
+  function pointAction(event, ui) {
+      var _id = ui.draggable.attr('teamid');
+      var _playerid = ui.draggable.attr('playerid');
+      var _name = $(this).attr('name');
+      
+      addpoint(_id, _playerid, _name);
+  };
+  
+  // サーブでの得点
+  $('.serve').droppable({
+/*    drop: function(event, ui) {
+      // alert('serve');
+      // alert(ui.draggable.attr('name'));
+      // alert(event.currentTarget.attr('name'));
+      var _id = ui.draggable.attr('teamid');
+      var _playerid = ui.draggable.attr('playerid');
+
+			console.log('serve drop event');
+	
+      addpoint(_id, _playerid, 'serve');
+      alert($(this).attr('name'));
+      // g.data(data).enter();
+    },
+    // tolerance: 'touch',
+    */
+    drop: pointAction,
+  });
+  
+  // スパイクでの得点
+  $('.spike').droppable({
+    drop: pointAction,
+  });
+  
+  // フェイントでの得点
+  $('.fake').droppable({
+    drop: pointAction,
+  });
+  
+  // ブロックでの得点
+  $('.block').droppable({
+    drop: pointAction,
+  });
+  
+  // レシーブでの得点
+  $('.receive').droppable({
+    drop: pointAction,
+  });
+  
+  $('.libero').droppable({
+    drop: pointAction,
+  });
+  $('.miss').droppable({
+    drop: pointAction,
+  });
+  $('.faul').droppable({
+    drop: pointAction,
+  });
+
+  $('.timeout').click(function() {
+		alert('タイムアウト');
+		//$(this).hide();
+  });
+
+	var curServerId1 = 1;
+	var curServerId2 = 1;
+	
+	function rotatepl(_teamid) {
+		var col1, col2;
+		var cur;
+		
+		if (_teamid == 1) {
+			curServerId1--;
+			if(curServerId1 == 0) {
+				curServerId1 = 6;
+			}
+			cur = curServerId1;
+			col1 = 2;
+			col2 = 3;
+		} else {
+			curServerId2--;
+			if(curServerId2 == 0) {
+				curServerId2 = 6;
+			}
+			cur = curServerId2;
+			col1 = 7;
+			col2 = 6;
+		}
+		
+    for (var i = 0; i < 6; i++) {
+    	var movepl = (cur + i);
+    	if(movepl > 6) {
+    		movepl = movepl - 6;
+    	}
+    	//console.log(movepl);
+    	
+    	var col, row;
+    	if (_teamid == 1) {
+	    	if(i < 3) {
+	    		col = col1;
+	    		row = 3 - i;
+	    	} else {
+	    		col = col2;
+	    		row = i - 2;
+	    	}
+    	} else {
+	    	if(i < 3) {
+	    		col = col1;
+	    		row = i + 1;
+	    	} else {
+	    		col = col2;
+	    		row = 6 - i;
+	    	}
+    	}
+    	//console.log('movepl=' + movepl + 'row=' + row + 'col=' + col);
+    	// サーバプレーヤー起点に自動配置する座標を計算
+    	var toppos = (20 + 110 * row);
+    	var leftpos = (20 + 110 * (col - 1));
+    	//console.log('toppos=' + toppos + 'leftpos=' + leftpos);
+    	
+      $('.plteam'+_teamid).eq(movepl - 1).css('top', toppos + 'px');
+      $('.plteam'+_teamid).eq(movepl - 1).css('left', leftpos + 'px');
+      //$('.plteam'+_teamid).eq(movepl - 1).css('top', '50px');
+      //$('.plteam'+_teamid).eq(movepl - 1).css('left', '50px');
+            // $('.point').eq(i).css('visibility', '');
+      $('.plteam'+_teamid).eq(movepl - 1).css('transition', '0.5s ease');
+    }
+	}
+	
+  $('.rotate').click(function() {
+		//lert('ローテーション');
+		var teamid = $(this).attr('teamid');
+		//console.log('teamid='+teamid);
+		rotatepl(teamid);
+  });
+
+// //画面サイズを取得する
+// function getScreenSize() {
+//   var s = "横幅 = " + window.parent.screen.width + " / 高さ = " + window.parent.screen.height;
+//   document.getElementById("ScrSize").innerHTML = s;
+// }
+
+// //ウィンドウサイズを取得する
+// function getWindowSize() {
+//   var sW,sH,s;
+//   sW = window.innerWidth;
+//   sH = window.innerHeight;
+
+//   s = "横幅 = " + sW + " / 高さ = " + sH;
+ 
+//   document.getElementById("WinSize").innerHTML = s;
+// }
+
+// createbubble();
+
+// function createsvg2() {
+//   var list = [
+//     {
+//       id: 'A001',
+//       name: 'name1',
+//     },
+//     {
+//       id: 'A002',
+//       name: 'name2',
+//     },
+//     {
+//       id: 'A003',
+//       name: 'name3',
+//     },
+//   ];
+
+//   var tr = d3.select("#example")
+//       .append("table")
+//       .selectAll("tr")
+//       .data(list)
+//       .enter()
+//       .append("tr");
+//   tr.append("td")
+//       .text(function(d){
+//           return d.id;
+//       });
+//   tr.append("td")
+//       .text(function(d){
+//           return d.name;
+//       });
+// };
+
+// メモ ＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊
+// スケジュール：
+// 7/2の練習試合までに完成させること。
+//
+// 得点した選手を記録することによりデータを残していく
+// ＞詳細にラリーを記録することもできるようにする。
+// 　＞それはちょっと入力に無理があるため、
+// 　　補足情報としてカウントするだけにする。
+// 　　遷移表とかにも載せず、個人、チーム単位の集計に飲み出る。
+//
+// 基本的には１回のデータを帳票（PDF）に出して終わり
+// 永続的なデータとして残さない。
+// ＞今後データさえ残ればトータルの集計も可能とするが
+// 　サーバでの動作とせずローカルのHTMLとして動作させるため、
+// 　あまりそういったことは行わない。
+// ＞データはブラウザのStorageに記録するため
+// 　ブラウザが変わるとデータは消える。
+// ＞json形式のデータを出力できるようにしておく。
+// ＞今後のアップデートでインポートできるようにする。
+//
+// 得点遷移
+// ＞サーバ、リベロ交代、選手交代、タイムアウトを表示するかどうか切り替え可能
+// 人別データ
+// チーム別データ
+// ＞ラリーの詳細を記録すると効果率とかも残せるようになる。
+//
+// サーバ用意して、データ登録しておいて、
+// 閲覧専用にする。
+
+</script>
+</body>
+</html>

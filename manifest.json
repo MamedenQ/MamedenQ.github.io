@@ -1,6 +1,6 @@
 {
-  "name": "PWA Sample",
-  "short_name": "PWA",
+  "name": "PWA GPS",
+  "short_name": "PWA GPS S",
   "background_color": "#fc980c",
   "icons": [{
       "src": "./icon-256.png",

@@ -7,27 +7,122 @@
 	<title>ワリカン計算</title>
 </head>
 <body>
+	<input type="text" id="total"/>
+	<br />
+	<input type="text" id="typea"/>
+	<br />
+	<input type="text" id="typeb"/>
+	<br />
+	<input type="text" id="typec"/>
+	<br /><br />
 	<div id="grp">
 	<span class="nm">1</span><button class="btn">btn</button>
 	</div>
-	<br /><br /><button class="calc">calc</button>
+	<!--
+	<br /><br /><button class="calc raised">calc</button>
+	-->
+	<br /><br /><a id="calc" class="raised ripple" href="#">計算</a>
 </body>
 <script>
-var cnt = 2;
-$('.btn').on('click', function() {
+var cnt = 1;
+$('#grp').on('click', '.btn', function() {
 	//alert('test');
 	$('#grp').append('<br /><span class="nm">' + cnt + '</span><button class="btn">btn</button>');
 	cnt = cnt + 1;
 });
 var test = 0;
-$('.calc').on('click', function() {
+$('#calc').on('click', function() {
 	test = 0;
 	$(".nm").each(function(i) {
 		//console.log(i + ': ' + $(this).text());
 		test = test + parseInt($(this).text());
 		//alert(i);
 	});
-	alert(test);
+	//alert(test);
 });
 </script>
+<script comment="ripple用">
+(function() {
+  var ripple, ripples, RippleEffect,loc, cover, coversize, style, x, y, i, num;
+  
+  //クラス名rippleの要素を取得
+  ripples = document.querySelectorAll('.ripple');
+
+  //位置を取得
+  RippleEffect = function(e) {
+  ripple = this;//クリックされたボタンを取得
+ 	cover = document.createElement('span');//span作る
+ 	coversize = ripple.offsetWidth;//要素の幅を取得
+  loc = ripple.getBoundingClientRect();//絶対座標の取得
+  x = e.pageX - loc.left - window.pageXOffset - (coversize / 2);
+  y = e.pageY - loc.top - window.pageYOffset - (coversize / 2);
+  pos = 'top:' + y + 'px; left:' + x + 'px; height:' + coversize + 'px; width:' + coversize + 'px;';
+
+  //spanを追加
+  ripple.appendChild(cover);
+  cover.setAttribute('style', pos);
+  cover.setAttribute('class', 'rp-effect');//クラス名追加
+  
+  //しばらくしたらspanを削除
+  setTimeout(function() {
+    var list = document.getElementsByClassName( "rp-effect" ) ;
+    for(var i =list.length-1;i>=0; i--){//末尾から順にすべて削除
+    	list[i].parentNode.removeChild(list[i]);
+  }}, 2000)};
+  for (i = 0, num = ripples.length; i < num; i++) {
+    ripple = ripples[i];
+    ripple.addEventListener('mousedown', RippleEffect);
+  }
+}());
+</script>
+<style>
+.raised{
+  display: inline-block;
+  background-color: #26a69b;/*背景色*/
+  color: #FFF;/*文字色*/
+  font-size: 1em;/*文字サイズ*/
+  line-height: 1;
+  text-decoration: none;
+  letter-spacing: 0.05em;/*字間*/
+  padding: 0.2em 1em;/*ボタン内の余白*/
+  border-radius: 3px;/*角の丸み*/
+    cursor: pointer;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);/*影*/
+  -webkit-tap-highlight-color: transparent;
+  transition: .3s ease-out;/*変化を緩やかに*/
+}
+
+.raised:hover{
+    box-shadow: 0 3px 3px 0 rgba(0,0,0,0.14), 0 1px 7px 0 rgba(0,0,0,0.12), 0 3px 1px -1px rgba(0,0,0,0.2);/*浮き上がるように*/
+}
+
+.ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple .rp-effect {/*エフェクト*/
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.35;/*波紋の濃さ*/
+  transform: scale(0);
+  background: #FFF;/*波紋色*/
+  animation: ripple 700ms;
+  pointer-events: none; 
+}
+
+@-webkit-keyframes ripple {
+  to {
+    opacity: 0;
+    transform: scale(2.0);
+  }
+}
+
+@keyframes ripple {
+  to {
+    opacity: 0;
+    transform: scale(2.0);
+  }
+}
+</style>
 </html>

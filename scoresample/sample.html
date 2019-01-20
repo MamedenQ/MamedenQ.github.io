@@ -8,6 +8,7 @@
 -->
 
 <script src="../jquery-ui.min.js"></script>
+<!--
   <script>
   /*!
  * jQuery UI Touch Punch 0.2.3
@@ -21,14 +22,27 @@
  */
 !function(a){function f(a,b){if(!(a.originalEvent.touches.length>1)){a.preventDefault();var c=a.originalEvent.changedTouches[0],d=document.createEvent("MouseEvents");d.initMouseEvent(b,!0,!0,window,1,c.screenX,c.screenY,c.clientX,c.clientY,!1,!1,!1,!1,0,null),a.target.dispatchEvent(d)}}if(a.support.touch="ontouchend"in document,a.support.touch){var e,b=a.ui.mouse.prototype,c=b._mouseInit,d=b._mouseDestroy;b._touchStart=function(a){var b=this;!e&&b._mouseCapture(a.originalEvent.changedTouches[0])&&(e=!0,b._touchMoved=!1,f(a,"mouseover"),f(a,"mousemove"),f(a,"mousedown"))},b._touchMove=function(a){e&&(this._touchMoved=!0,f(a,"mousemove"))},b._touchEnd=function(a){e&&(f(a,"mouseup"),f(a,"mouseout"),this._touchMoved||f(a,"click"),e=!1)},b._mouseInit=function(){var b=this;b.element.bind({touchstart:a.proxy(b,"_touchStart"),touchmove:a.proxy(b,"_touchMove"),touchend:a.proxy(b,"_touchEnd")}),c.call(b)},b._mouseDestroy=function(){var b=this;b.element.unbind({touchstart:a.proxy(b,"_touchStart"),touchmove:a.proxy(b,"_touchMove"),touchend:a.proxy(b,"_touchEnd")}),d.call(b)}}}(jQuery);
   </script>
+  -->
+  <script src="../jquery-ui-touch-punch.js"></script>
   
   <style>
-  .item {
+  .item1 {
   background: gray;
   width: 100px;
   height: 40px;
   position: absolute;
 }
+.item2 {
+  background: gray;
+  width: 100px;
+  height: 40px;
+  position: absolute;
+}
+
+#score {
+  border: 1px solid #999;
+}
+
   #sortdata .ui-selecting { background: #FECA40; }
   #sortdata .ui-selected { background: #F39814; color: white; }
   
@@ -72,6 +86,130 @@
   background: #fff;
 }
 
+
+.cp_pricetable3 *, .cp_pricetable3 *:before, .cp_pricetable3 *:after {
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+.cp_pricetable3 {
+	width: 100%;
+	margin: 0 auto;
+	border-spacing: 1px 0;
+	border-collapse: separate;
+}
+.cp_pricetable3 th, .cp_pricetable3 td {
+	padding: 10px;
+}
+/*Headerブロック*/
+.cp_pricetable3 th {
+	position: relative;
+	z-index: 1;
+	width: 125px;
+	height: 50px;
+	text-align: center;
+	vertical-align: middle;
+	color: #ffffff;
+	border-radius: 5px 5px 0 0;
+	background: #88b7d5;
+}
+.cp_pricetable3 th:after {
+	font-family: 'FontAwesome';
+	font-size: 5em;
+	position: absolute;
+	z-index: -1;
+	right: 0;
+	bottom: -30px;
+	left: 0;
+	content: '\f0d7';
+}
+.cp_pricetable3 th.group1 {
+	background: #2e9b72;
+}
+.cp_pricetable3 th.group1:after {
+	color: #2e9b72;
+}
+.cp_pricetable3 th.group2 {
+	background: #da3c41;
+}
+.cp_pricetable3 th.group2:after {
+	color: #da3c41;
+}
+.cp_pricetable3 th.group3 {
+	background: #131874;
+}
+.cp_pricetable3 th.group3:after {
+	color: #131874;
+}
+/*メインブロック*/
+.cp_pricetable3 tr td {
+	padding-top: 15px;
+	text-align: center;
+	border: none;
+}
+.cp_pricetable3 tr:last-child td {
+	border-radius: 0 0 5px 5px;
+}
+.cp_pricetable3 tr:nth-child(2n+1) td.group1 {
+	background: #8cd9bc;
+}
+.cp_pricetable3 tr:nth-child(2n+0) td.group1 {
+	background: #c3e4d8;
+}
+.cp_pricetable3 tr:nth-child(2n+1) td.group2 {
+	background: #f2c2c2;
+}
+.cp_pricetable3 tr:nth-child(2n+0) td.group2 {
+	background: #f7e1e1;
+}
+.cp_pricetable3 tr:nth-child(2n+1) td.group3 {
+	background: #a9bce2;
+}
+.cp_pricetable3 tr:nth-child(2n+0) td.group3 {
+	background: #d7e1f4;
+}
+/*ボタンデザイン*/
+.cp_pricetable3 a.cp_btn {
+	position: relative;
+	z-index: 1;
+	display: block;
+	overflow: hidden;
+	width: 100px;
+	margin-right: auto;
+	margin-left: auto;
+	padding: 0.3em 1em;
+	text-align: center;
+	text-decoration: none;
+	color: #ffffff;
+	border: 1px solid #da3c41;
+	border-radius: 4px;
+	background: #da3c41;
+}
+.cp_pricetable3 .cp_btn:after {
+	position: absolute;
+	z-index: -1;
+	top: 50%;
+	left: 50%;
+	width: 100%;
+	height: 0;
+	content: '';
+	transition: 0.3s;
+	-webkit-transform: translate(-50%,-50%) rotate(45deg);
+	transform: translate(-50%,-50%) rotate(45deg);
+	opacity: 0;
+	background: #ffffff;
+}
+.cp_pricetable3 .cp_btn:hover {
+	color: #da3c41;
+}
+.cp_pricetable3 .cp_btn:hover:after {
+	height: 250%;
+	opacity: 1;
+}
+.cp_pricetable3 .cp_btn:active:after {
+	height: 350%;
+	opacity: 1;
+}
+
   </style>
   <title>Document</title>
 </head>
@@ -80,8 +218,10 @@
 <div class="seaTabs">
   <div class="seaTabs_switch">
     <div class="seaTabs_tab seaTabs_switch_active" idx="0">Tab 1</div>
+    <!--
     <div class="seaTabs_tab" idx="1">Tab 2</div>
-    <div class="seaTabs_tab" idx="2">+</div>
+    -->
+    <div class="seaTabs_tab" idx="1">+</div>
   </div>
   <div class="seaTabs_content">
     <div class="seaTabs_item seaTabs_content_active">
@@ -94,28 +234,68 @@
   <table id="score">
 <thead>
   <tr>
-    <th>No.</th>
-    <th>タイトル</th>
-    <th>発売日</th>
+    <th>#</th>
+    <th>サーバー</th>
+    <th>プレーヤー</th>
+    <th>事由</th>
+    <th>点数</th>
+    <th>方向</th>
+    <th>点数</th>
+    <th>事由</th>
+    <th>プレーヤー</th>
+    <th>サーバー</th>
   </tr>
 </thead>
 <!--tbodyにID属性を指定します-->
 <tbody id="sortdata">
+<!--
   <tr>
-    <th>1</th>
-    <td>スプラトゥーン２</td>
-    <td>2017年7月21日</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
   </tr>
   <tr>
-    <th>2</th>
-    <td>スーパーマリオ・オデッセイ</td>
-    <td>2017年10月27日</td>
+    <td class="server1"></td>
+    <td class="player1"></td>
+    <td class="reason1"></td>
+    <td class="point1"></td>
+    <td class="direction"></td>
+    <td class="point2"></td>
+    <td class="reason2"></td>
+    <td class="player2"></td>
+    <td class="server2"></td>
+  </tr>
+-->
+  <tr class="score_row">
+    <td class="number">1</td>
+    <td class="server1"></td>
+    <td class="player1"></td>
+    <td class="reason1"></td>
+    <td class="point1"></td>
+    <td class="direction"></td>
+    <td class="point2"></td>
+    <td class="reason2"></td>
+    <td class="player2"></td>
+    <td class="server2"></td>
   </tr>
 </tbody>
 </table>
-<div class="item" kind="item">test</div>
+<br />
+<br />
+<div class="item1" kind="item1">test</div>
 </div>
-<div class="seaTabs_item">Tab 2 content</div>
+<br />
+<br />
+<div class="item2" kind="item2">test</div>
+</div>
+<!--
+<div class="seaTabs_item">Tab 2 content</div>-->
     <div class="seaTabs_item">Tab 3 content</div>
 </div></div>
 </body>
@@ -128,12 +308,16 @@
   });
   function dropItem(event, ui) {
     var _kind = ui.draggable.attr('kind');
-    if (_kind == 'item') {
+    if (_kind == 'item1') {
       alert('test');
+    } else if (_kind == 'item2') {
+      var num;
+      num = $(".score_row").length;
+      $('#score').append('<tr class="score_row"><td class="number">' + (num + 1) + '</td><td class="server1">3:一郎</td><td class="player1"></td><td class="reason1"></td><td class="point1"></td><td class="direction"></td><td class="point2"></td><td class="reason2"></td><td class="player2"></td><td class="server2"></td></tr>');
     }
   }
   var pos;
-  $('.item').draggable({
+  $('.item1').draggable({
     start: function(event, ui) {
       pos = $(this).position();
       $(this).css('opacity', 0.5);
@@ -160,23 +344,32 @@
     },
   });
   
+  
+  $('.item2').draggable({
+    start: function(event, ui) {
+      pos = $(this).position();
+      $(this).css('opacity', 0.5);
+      $(this).css('transition', '0s');
+    },
+    stop: function(event, ui) {
+      $(this).css('top', pos.top + 'px');
+      $(this).css('left', pos.left + 'px');
+      $(this).css('transition', '0.5s ease');
+      $(this).css('opacity', 1.0);
+    },
+  });
+  
   $(document).on('click', 'table', function() {
   //$("table").click(function(){
     //var clickRow = $(this).parent(); // クリックしたtdの親trを得る
     //clickRow.after("<tr><th>5</th><td>モンスターハンター XX</td><td>2017年8月25日</td></tr>"); // 親trの後ろに追加したい行を入れる
     
+    var num;
+    num = $(".score_row").length;
     
-    $(this).append('<tr><th>5</th><td>モンスターハンター XX</td><td>2017年8月25日</td></tr>');
+    $(this).append('<tr class="score_row"><td class="number">' + (num + 1) + '</td><td class="server1"></td><td class="player1"></td><td class="reason1"></td><td class="point1"></td><td class="direction"></td><td class="point2"></td><td class="reason2"></td><td class="player2"></td><td class="server2"></td></tr>');
   });
   
-    $("table tr aaaa").on('click','tr',function(){
-    //var clickRow = $(this).parent(); // クリックしたtdの親trを得る
-    //clickRow.after("<tr><th>5</th><td>モンスターハンター XX</td><td>2017年8月25日</td></tr>"); // 親trの後ろに追加したい行を入れる
-    
-    
-    $(this).append('<tr><th>5</th><td>モンスターハンター XX</td><td>2017年8月25日</td></tr>');
-  });
-  var selectedIdx = 0;
   $(document).on('click', '.seaTabs_tab', function() {
     if ($(this).text() == '+') {
       var newIdx = $(".seaTabs_tab").length;

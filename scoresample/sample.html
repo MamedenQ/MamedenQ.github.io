@@ -42,10 +42,11 @@
 
 #score {
   border: 1px solid #999;
+  width: 100%;
 }
 
 #score_scroll {
-  height: 50vh;
+  height: 40vh;
 }
 
   #sortdata .ui-selecting { background: #FECA40; }
@@ -215,6 +216,13 @@
 	opacity: 1;
 }
 
+.circle{
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: skyblue;/*背景色*/
+}
+
   </style>
   <title>Document</title>
 </head>
@@ -222,11 +230,11 @@
 
 <div class="seaTabs">
   <div class="seaTabs_switch">
-    <div class="seaTabs_tab seaTabs_switch_active" idx="0">Tab 1</div>
+    <div class="seaTabs_tab seaTabs_switch_active" idx="0">1セット</div>
     <!--
     <div class="seaTabs_tab" idx="1">Tab 2</div>
     -->
-    <div class="seaTabs_tab" idx="1">+</div>
+    <div class="seaTabs_tab" idx="1">＋</div>
   </div>
   <div class="seaTabs_content">
     <div class="seaTabs_item seaTabs_content_active">
@@ -239,7 +247,7 @@
   <table id="score">
 <thead>
   <tr>
-    <th>#</th>
+    <th>＃</th>
     <th>サーバー</th>
     <th>プレーヤー</th>
     <th>事由</th>
@@ -294,12 +302,12 @@
 </div>
 <br />
 <br />
-<div class="item1" kind="item1">test</div>
-</div>
+<br />
+<div class="circle item1" kind="item1"></div>
 <br />
 <br />
-<div class="item2" kind="item2">test</div>
-</div>
+<br />
+<div class="circle item2" kind="item2" number="1" player="テスト">1</div>
 <!--
 <div class="seaTabs_item">Tab 2 content</div>-->
     <div class="seaTabs_item">Tab 3 content</div>
@@ -308,7 +316,7 @@
   <script>
   $( ".seaTabs" ).tabs();
   //$('#sortdata').sortable();
-  $('#sortdata').selectable();
+  //$('#sortdata').selectable();
   $('#score').droppable({
     drop: dropItem,
   });
@@ -319,7 +327,12 @@
     } else if (_kind == 'item2') {
       var num;
       num = $(".score_row").length;
-      $('#score').append('<tr class="score_row"><td class="number">' + (num + 1) + '</td><td class="server1">3:一郎</td><td class="player1"></td><td class="reason1"></td><td class="point1"></td><td class="direction"></td><td class="point2"></td><td class="reason2"></td><td class="player2"></td><td class="server2"></td></tr>');
+      var number;
+      number = ui.draggable.attr('number');
+      var player;
+      player = ui.draggable.attr('player');
+      
+      $('#score').append('<tr class="score_row"><td class="number">' + (num + 1) + '</td><td class="server1">' + number + ':' + player + '</td><td class="player1"></td><td class="reason1"></td><td class="point1"></td><td class="direction"></td><td class="point2"></td><td class="reason2"></td><td class="player2"></td><td class="server2"></td></tr>');
     }
   }
   var pos;
@@ -377,12 +390,12 @@
   });
   
   $(document).on('click', '.seaTabs_tab', function() {
-    if ($(this).text() == '+') {
+    if ($(this).text() == '＋') {
       var newIdx = $(".seaTabs_tab").length;
       //alert(newIdx);
-      $('.seaTabs_switch').append('<div class="seaTabs_tab" idx="' + newIdx + '">+</div>');
-      $('.seaTabs_content').append('<div class="seaTabs_item">Tab ' + (newIdx + 1) + ' content</div>');
-      $(this).text('added');
+      $('.seaTabs_switch').append('<div class="seaTabs_tab" idx="' + newIdx + '">＋</div>');
+      $('.seaTabs_content').append('<div class="seaTabs_item">added</div>');
+      $(this).text(newIdx + 'セット');
     }
        for (var i = 0; i < $(".seaTabs_tab").length; i++) {
          //if ($(this) == $('.seaTabs_tab').eq(i).get(0)) {

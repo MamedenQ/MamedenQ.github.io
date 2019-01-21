@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <script src="../jquery-3.3.1.min.js" charset="utf-8"></script>
 <!--
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
@@ -41,6 +42,10 @@
 
 #score {
   border: 1px solid #999;
+}
+
+#score_scroll {
+  height: 50vh;
 }
 
   #sortdata .ui-selecting { background: #FECA40; }
@@ -230,7 +235,7 @@
 
 
 
-
+<div id="score_scroll" style="overflow:auto;">
   <table id="score">
 <thead>
   <tr>
@@ -286,6 +291,7 @@
   </tr>
 </tbody>
 </table>
+</div>
 <br />
 <br />
 <div class="item1" kind="item1">test</div>
@@ -301,7 +307,7 @@
 </body>
   <script>
   $( ".seaTabs" ).tabs();
-  $('#sortdata').sortable();
+  //$('#sortdata').sortable();
   $('#sortdata').selectable();
   $('#score').droppable({
     drop: dropItem,

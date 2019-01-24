@@ -303,11 +303,24 @@
 <br />
 <br />
 <br />
+<br />
+<br />
+<br />
 <div class="circle item1" kind="item1"></div>
 <br />
 <br />
 <br />
+<br />
+<br />
+<br />
 <div class="circle item2" kind="item2" number="1" player="テスト">1</div>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<div class="circle spike">1</div>
 <!--
 <div class="seaTabs_item">Tab 2 content</div>-->
     <div class="seaTabs_item">Tab 3 content</div>
@@ -334,7 +347,34 @@
       
       $('#score').append('<tr class="score_row"><td class="number">' + (num + 1) + '</td><td class="server1">' + number + ':' + player + '</td><td class="player1"></td><td class="reason1"></td><td class="point1"></td><td class="direction"></td><td class="point2"></td><td class="reason2"></td><td class="player2"></td><td class="server2"></td></tr>');
     }
+    
+    //alert($(window).width());
   }
+  
+  $('.spike').droppable({
+    drop: dropItem2,
+  });
+  function dropItem2(event, ui) {
+    var _kind = ui.draggable.attr('kind');
+    if (_kind == 'item1') {
+      alert('test');
+    } else if (_kind == 'item2') {
+      var num;
+      num = $(".score_row").length;
+      var number;
+      number = ui.draggable.attr('number');
+      var player;
+      player = ui.draggable.attr('player');
+      var r = $('#score tbody tr').eq(num - 1).children('td');
+      r.eq(2).text(number + ':' + player);
+      r.eq(3).text('スパイク');
+      r.eq(4).text(10);
+    }
+    
+    //alert($(window).width());
+  }
+  
+  
   var pos;
   $('.item1').draggable({
     start: function(event, ui) {

@@ -433,8 +433,9 @@
     if ($(this).text() == '＋') {
       var newIdx = $(".seaTabs_tab").length;
       //alert(newIdx);
-      $('.seaTabs_switch').append('<div class="seaTabs_tab" idx="' + newIdx + '">＋</div>');
-      $('.seaTabs_content').append('<div class="seaTabs_item">added</div>');
+      //$('.seaTabs_switch').append('<div class="seaTabs_tab" idx="' + newIdx + '">＋</div>');
+      $('.seaTabs_switch').append(createTabIndex(newIdx));
+      $('.seaTabs_content').append(createTabItem(newIdx));
       $(this).text(newIdx + 'セット');
     }
        for (var i = 0; i < $(".seaTabs_tab").length; i++) {
@@ -451,6 +452,17 @@
       }
     
   });
+  
+  function createTabIndex(newIdx) {
+    var s = '<div class="seaTabs_tab" idx="' + newIdx + '">＋</div>';
+    return s;
+  }
+  
+  function createTabItem(newIdx) {
+    var s = '<div class="seaTabs_item">added</div>';
+    return s;
+  }
+  
   
   </script>
 </html>

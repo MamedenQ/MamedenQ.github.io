@@ -8,7 +8,7 @@ var data = [
         spike:{
           total:10,
           point:5,
-          miss:3
+          miss:2
         },
         serve:{
           total:10,

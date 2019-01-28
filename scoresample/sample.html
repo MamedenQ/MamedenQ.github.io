@@ -27,21 +27,133 @@
   <script src="../jquery-ui-touch-punch.js"></script>
   
   <style>
-  .item1 {
+.item_parent {
+  position:relative;
+  background: gray;
+  width: 100%;
+  height: 260px;
+}
+
+
+/*  .item1 {
+    top:0px;
+    left:0px;
   background: gray;
   width: 100px;
   height: 40px;
   position: absolute;
 }
 .item2 {
+    top:0px;
+    left:0px;
   background: gray;
   width: 100px;
   height: 40px;
   position: absolute;
 }
+*/
+
+/*.player {
+  background: gray;
+  width: 100px;
+  height: 40px;
+}
+*/
+.rc11 {
+  position: absolute;
+  top:0px;
+  left:0px;
+}
+
+.rc12 {
+  position: absolute;
+  top:0px;
+  left:90px;
+}
+
+.rc21 {
+  position: absolute;
+  top:90px;
+  left:90px;
+}
+
+.rc31 {
+  position: absolute;
+  top:180px;
+  left:90px;
+}
+
+.item{
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 80px;
+}
+
+.item:hover {
+  cursor: default;
+}
+
+.line1 {
+  line-height: 80px;
+}
+
+.line2 {
+  line-height: 40px;
+}
+
+.lt_player {
+  background: skyblue;/*背景色*/
+}
+
+.rt_player {
+  background: orange;/*背景色*/
+}
+
+.point_action {
+  background: green;/*背景色*/
+}
+/*.p1 {
+  position:relative;
+}
+
+.c1 {
+background: skyblue;
+width:40px;
+height:40px;
+}
+
+.r11 {
+position:absolute;
+top:10px;
+left:10px;
+}
+
+.r12 {
+position:absolute;
+top:10px;
+left:40px;
+}
+
+.c2 {
+background: skyblue;
+width:40px;
+height:40px;
+}
+
+.r21 {
+position:absolute;
+top:60px;
+left:10px;
+}*/
 
 #score {
   width: 100%;
+}
+
+.direction {
+  text-align: center;
 }
 /*
 table {
@@ -270,13 +382,6 @@ th + th,td{
 	opacity: 1;
 }
 
-.circle{
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background: skyblue;/*背景色*/
-}
-
   </style>
   <title>Document</title>
 </head>
@@ -339,7 +444,7 @@ th + th,td{
     <td class="server2"></td>
   </tr>
 -->
-  <tr class="score_row">
+<!--   <tr class="score_row">
     <td class="number">1</td>
     <td class="server1"></td>
     <td class="player1"></td>
@@ -350,37 +455,39 @@ th + th,td{
     <td class="reason2"></td>
     <td class="player2"></td>
     <td class="server2"></td>
-  </tr>
+  </tr> -->
 </tbody>
 </table>
 </div>
+<!-- <div style="position:relative">
+  <div style="background: skyblue;width:40px;height:40px;position:absolute;left:10px;">1</div>
+  <div style="background: orange;width:40px;height:40px;position:absolute">1</div>
+</div>
+ -->
+<!-- <div class="p1">
+  <div class="c1 r11">1</div>
+  <div class="c2 r12">1</div>
+</div>
+ -->
+ <!-- <div class="item item1" kind="item1"></div>
 <br />
 <br />
 <br />
 <br />
-<br />
-<br />
-<div class="circle item1" kind="item1"></div>
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<div class="circle item2" kind="item2" number="1" player="テスト">1</div>
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<div class="circle spike">1</div>
-<!--
-<div class="seaTabs_item">Tab 2 content</div>-->
+ -->
+<div class="item_parent">
+  <div class="rc21 item spike point_action" kind="スパイク">スパイク</div>
+
+  <div class="rc11 item player lt_player" number="1" name="テスト1" team="lt">テスト1</div>
+  <div class="rc12 item player rt_player" number="2" name="テスト2" team="rt">テスト2</div>
+</div>
+<div class="seaTabs_item">Tab 2 content</div>
     <div class="seaTabs_item">Tab 3 content</div>
 </div></div>
 </body>
   <script>
+  var pointLt = 0;
+  var pointRt = 0;
   $( ".seaTabs" ).tabs();
   //$('#sortdata').sortable();
   //$('#sortdata').selectable();
@@ -388,49 +495,83 @@ th + th,td{
     drop: dropItem,
   });
   function dropItem(event, ui) {
-    var _kind = ui.draggable.attr('kind');
-    if (_kind == 'item1') {
-      alert('test');
-    } else if (_kind == 'item2') {
-      var num;
-      num = $(".score_row").length;
-      var number;
-      number = ui.draggable.attr('number');
-      var player;
-      player = ui.draggable.attr('player');
-      
-      $('#score').append('<tr class="score_row"><td class="number">' + (num + 1) + '</td><td class="server1">' + number + ':' + player + '</td><td class="player1"></td><td class="reason1"></td><td class="point1"></td><td class="direction"></td><td class="point2"></td><td class="reason2"></td><td class="player2"></td><td class="server2"></td></tr>');
+    // var _kind = ui.draggable.attr('kind');
+    // if (_kind == 'item1') {
+    //   alert('test');
+    // } else if (_kind == 'item2') {
+    var num;
+    num = $(".score_row").length;
+    var number;
+    number = ui.draggable.attr('number');
+    var name;
+    name = ui.draggable.attr('name');
+    var team;
+    team = ui.draggable.attr('team');
+
+    $('#score').append(createNewRow(num + 1));
+
+    var r = $('#score tbody tr').eq(num).children('td');
+    var colServer;
+    var direct;
+    if(team == 'lt') {
+      colServer = 1;
+      direct = '＞＞＞';
+    } else {
+      colServer = 9;
+      direct = '＜＜＜';
     }
-    
-    //alert($(window).width());
+    r.eq(colServer).text(number + ':' + name);
+
+    var colDirection = 5;
+    r.eq(colDirection).text(direct);
   }
   
   $('.spike').droppable({
-    drop: dropItem2,
+    drop: pointAction,
   });
-  function dropItem2(event, ui) {
-    var _kind = ui.draggable.attr('kind');
-    if (_kind == 'item1') {
-      alert('test');
-    } else if (_kind == 'item2') {
-      var num;
-      num = $(".score_row").length;
-      var number;
-      number = ui.draggable.attr('number');
-      var player;
-      player = ui.draggable.attr('player');
-      var r = $('#score tbody tr').eq(num - 1).children('td');
-      r.eq(2).text(number + ':' + player);
-      r.eq(3).text('スパイク');
-      r.eq(4).text(10);
+  function pointAction(event, ui) {
+    // var _kind = ui.draggable.attr('kind');
+    // if (_kind == 'item1') {
+    //   alert('test');
+    // } else if (_kind == 'item2') {
+    var num;
+    num = $(".score_row").length;
+    var number;
+    number = ui.draggable.attr('number');
+    var name;
+    name = ui.draggable.attr('name');
+    var team;
+    team = ui.draggable.attr('team');
+
+    var colPlayer, colReason, colPoint;
+    var point;
+    if(team == 'lt') {
+      colPlayer = 2;
+      colReason = 3;
+      colPoint = 4;
+      pointLt = pointLt + 1;
+      point = pointLt;
+    } else {
+      colPlayer = 8;
+      colReason = 7;
+      colPoint = 6;
+      pointRt = pointRt + 1;
+      point = pointRt;
     }
+
+    var r = $('#score tbody tr').eq(num - 1).children('td');
+    r.eq(colPlayer).text(number + ':' + name);
+    // r.eq(3).text('スパイク');
+    r.eq(colReason).text($(this).attr('kind'));
+    r.eq(colPoint).text(point);
+    // }
     
     //alert($(window).width());
   }
   
   
   var pos;
-  $('.item1').draggable({
+  $('.player').draggable({
     start: function(event, ui) {
       pos = $(this).position();
       $(this).css('opacity', 0.5);
@@ -458,19 +599,19 @@ th + th,td{
   });
   
   
-  $('.item2').draggable({
-    start: function(event, ui) {
-      pos = $(this).position();
-      $(this).css('opacity', 0.5);
-      $(this).css('transition', '0s');
-    },
-    stop: function(event, ui) {
-      $(this).css('top', pos.top + 'px');
-      $(this).css('left', pos.left + 'px');
-      $(this).css('transition', '0.5s ease');
-      $(this).css('opacity', 1.0);
-    },
-  });
+  // $('.item2').draggable({
+  //   start: function(event, ui) {
+  //     pos = $(this).position();
+  //     $(this).css('opacity', 0.5);
+  //     $(this).css('transition', '0s');
+  //   },
+  //   stop: function(event, ui) {
+  //     $(this).css('top', pos.top + 'px');
+  //     $(this).css('left', pos.left + 'px');
+  //     $(this).css('transition', '0.5s ease');
+  //     $(this).css('opacity', 1.0);
+  //   },
+  // });
   
   $(document).on('click', 'table', function() {
   //$("table").click(function(){
@@ -507,6 +648,11 @@ th + th,td{
     
   });
   
+  function createNewRow(newIdx) {
+    var s = $('#score').append('<tr class="score_row"><td class="number">' + newIdx + '</td><td class="server1"></td><td class="player1"></td><td class="reason1"></td><td class="point1"></td><td class="direction"></td><td class="point2"></td><td class="reason2"></td><td class="player2"></td><td class="server2"></td></tr>');
+    return s;
+  }
+
   function createTabIndex(newIdx) {
     var s = '<div class="seaTabs_tab" idx="' + newIdx + '">＋</div>';
     return s;
@@ -520,3 +666,65 @@ th + th,td{
   
   </script>
 </html>
+<!--
+今年の集計を行い、各部門の優秀成長選手を選出
+　スパイク
+　サーブ
+　レシーブ
+　ブロック
+　総合（計算方法は全体の成長率を見て）
+＞１月と１２月ではなく、全体での成長率を出す。
+　計算方法を確立させる
+
+何か渡したいけど、会費がないから難しい
+＞当日の飲み代タダ
+　欠席者はどうする？
+　○ボール貯金で賄う
+
+＞スコアシステム、集計システムを確立させる
+　Jsonデータを生成するExcelでもいい。
+　まずは集計システムから先
+
+[
+  {
+    year:2019,
+    month:1,
+    data:[
+      {
+        name:XXX,
+        spike:{
+          total:10,
+          point:5,
+          miss:4
+        },
+        serve:{
+          total:10,
+          point:5,
+          miss:4
+        },
+        receive:{
+          total:10,
+          point:5,
+          miss:4
+        },
+        block:{
+          total:10,
+          point:5,
+          miss:4
+        }
+      },
+      {
+
+      },
+    ]
+  },
+  {
+    year:2019,
+    month:2,
+    data:[
+      {},{},
+    ]
+  },
+]
+
+-->

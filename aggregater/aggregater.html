@@ -1,0 +1,156 @@
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <script src="../jquery-3.3.1.min.js" charset="utf-8"></script>
+
+  <style type="text/css">
+  table{
+  margin:0 auto;
+  border-radius:10px;
+  -webkit-border-radius:10px;
+  -moz-border-radius:10px;
+  border:1px solid #666;
+  border-spacing: 0;
+  overflow:hidden;
+}
+td,th{
+  border-bottom:1px solid #666;
+}
+td,th{
+  padding:10px;
+}
+th{
+  background:#cecece;
+}
+table tbody tr:last-child th,
+table tbody tr:last-child td{
+  border-bottom: none;
+}
+th + th,td{
+  border-left:1px solid #666;
+}
+  </style>
+</head>
+<body>
+  <button class="clear">clear</button>
+  <button class="add">add</button>
+  <table>
+    <thead>
+      <tr>
+        <th rowspan="2">#</th>
+        <th rowspan="2">name</th>
+        <th colspan="5">spike</th>
+        <th colspan="5">serve</th>
+        <th colspan="5">receive</th>
+        <th colspan="5">block</th>
+      </tr>
+      <tr>
+        <th>total</th>
+        <th>point</th>
+        <th>miss</th>
+        <th>effect</th>
+        <th>determined</th>
+
+        <th>total</th>
+        <th>point</th>
+        <th>miss</th>
+        <th>effect</th>
+        <th>determined</th>
+
+        <th>total</th>
+        <th>point</th>
+        <th>miss</th>
+        <th>effect</th>
+        <th>determined</th>
+
+        <th>total</th>
+        <th>point</th>
+        <th>miss</th>
+        <th>effect</th>
+        <th>determined</th>
+      </tr>
+    </thead>
+    <tbody id="data">
+<!--       <tr>
+        <td></td>
+        <td></td>
+        <td></td><td></td><td></td><td></td><td></td>
+        <td></td><td></td><td></td><td></td><td></td>
+        <td></td><td></td><td></td><td></td><td></td>
+        <td></td><td></td><td></td><td></td><td></td>
+      </tr> -->
+    </tbody>
+  </table>
+</body>
+<script type="text/javascript">
+  $(document).on('click', '.clear', function() {
+    $('#data').children().remove();
+  });
+
+  $(document).on('click', '.add', function() {
+    $('#data').append(createNewRowEmpty());
+  });
+
+  function createNewRowEmpty() {
+    var s = "<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
+    return s;
+  };
+
+  function createNewRow(data) {
+    var header = "<td></td><td></td>";
+    var spike = createData();
+    var serve = createData();
+    var receive = createData();
+    var block = createData();
+
+    var s = "<tr>" + spike + serve + receive + block + "</tr>";
+    return s;
+  };
+  function createData(total, point, miss) {
+    var data = "<td>" + total + "</td><td>" + total + "</td><td>" + total + "</td><td>" + calcEffect(total, point, miss) + "</td><td>" + calcEffect(total, point) + "</td>";
+    return data;
+  }
+  function calcEffect(total, point, miss) {
+    return ((point - miss) / total) * 100;
+  }
+  function calcDetermined(total, point) {
+    return ((point - miss) / total) * 100;
+  }
+
+  var year = 2019;
+  var month = 1;
+
+  function loadData() {
+    $.getJSON("./data.json" , function(data) {
+      // var
+      //   tableObj = $("#data"),
+      //   len = data.length;
+
+      // for(var i = 0; i < len; i++) {
+      //   tableObj.append($("<li>").attr({"id":data[i].id}).text(data[i].name));
+      //   tableObj.append();
+      // }
+
+      data.forEach(ym);
+
+    });
+  };
+
+  function ym(value) {
+    console.log("test");
+    if(value.year == year) {
+      if(value.month == month) {
+        value.data.forEach(personal);
+      }
+    }
+  };
+
+  function personal(value) {
+      var tableObj = $("#data");
+      tableObj.append(createNewRowEmpty());
+  };
+
+  loadData();
+</script>
+</html>

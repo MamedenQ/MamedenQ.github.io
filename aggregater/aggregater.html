@@ -67,6 +67,16 @@ td.nm{
     <option value='11'>11</option>
     <option value='12'>12</option>
 </select>
+<br>
+<select class='team'>
+  <option value='-1' selected>ALL</option>
+</select>
+<select class='player'>
+  <option value='-1' selected>ALL</option>
+</select>
+<select class='sex'>
+  <option value='-1' selected>ALL</option>
+</select>
   <button class="extract">抽出</button>
 <br>
 <br>
@@ -125,10 +135,32 @@ td.nm{
   </table>
 </body>
 <script type="text/javascript">
+  //*******************************************
+  // 変数
+  //*******************************************
   var year = 2019;
   var month = 1;
+  var playerid = -1;
+  var teamid = -1;
+  var sexid = -1;
   var row = 1;
 
+  //*******************************************
+  // 値初期設定
+  //*******************************************
+  dict.forEach(function(value) {
+    $('.player').append("<option value='" + value.id + "'>" + player[value.id] + "</option>");
+  });
+  for(var i = 0; i < team.all; i++) {
+    $('.team').append("<option value='" + i + "'>" + team[i] + "</option>");
+  }
+  for(var i = 0; i < sex.all; i++) {
+    $('.sex').append("<option value='" + i + "'>" + sex[i] + "</option>");
+  }
+
+  //*******************************************
+  // コンボ変更イベント
+  //*******************************************
   $('.year').change(function() {
       year = $('.year').val();
       if(year == 0) {
@@ -139,32 +171,65 @@ td.nm{
         $(".month").prop("disabled", false);
       }
   });
-
   $('.month').change(function() {
-      month = $('.month').val();
+    month = $('.month').val();
+  });
+  $('.team').change(function() {
+    teamid = $('.team').val();
+    if(teamid == -1) {
+      $(".player").prop("disabled", false);
+    } else {
+      $(".player").prop("disabled", true);
+      $('.player').val(-1);
+      playerid = -1;
+    }
+  });
+  $('.player').change(function() {
+    playerid = $('.player').val();
+    if(playerid == -1) {
+      $(".team").prop("disabled", false);
+      $(".sex").prop("disabled", false);
+    } else {
+      $(".team").prop("disabled", true);
+      $('.team').val(-1);
+      teamid = -1;
+
+      $(".sex").prop("disabled", true);
+      $('.sex').val(-1);
+      sexid = -1;
+    }
+  });
+  $('.sex').change(function() {
+    sexid = $('.sex').val();
   });
 
+  //*******************************************
+  // 抽出
+  //*******************************************
   $(document).on('click', '.extract', function() {
     $('#data').children().remove();
     row = 1;
     loadData();
   });
 
-  function createNewRow(newRow, value) {
-    var header = "<td>" + newRow + "</td><td class='nm'>" + value.name + "</td>";
-    var spike = createData(value.spike.total,
-      value.spike.point,
-      value.spike.miss);
-    var serve = createData(value.serve.total,
-      value.serve.point,
-      value.serve.miss);
-    var block = createData(value.block.total,
-      value.block.point,
-      value.block.miss);
-    var receive = createReceiveData(value.receive.total,
-      value.receive.a,
-      value.receive.b,
-      value.receive.miss);
+  //*******************************************
+  // 一覧の行追加
+  //*******************************************
+  function createNewRow(newRow, playerdata) {
+    var header = "<td>" + newRow + "</td><td class='nm'>" + player[playerdata.playerid] + "</td>";
+    var spike = createData(playerdata.spike.total,
+      playerdata.spike.point,
+      playerdata.spike.miss);
+    var serve = createData(playerdata.serve.total,
+      playerdata.serve.point,
+      playerdata.serve.miss);
+    var block = createData(playerdata.block.total,
+      playerdata.block.point,
+      playerdata.block.miss);
+    var receive = createReceiveData(playerdata.receive.total,
+      playerdata.receive.a,
+      playerdata.receive.b,
+      playerdata.receive.miss);
 
     var s = "<tr>" + header + spike + serve + block + receive + "</tr>";
     return s;
@@ -174,70 +239,156 @@ td.nm{
     return data;
   }
   function calcEffect(total, point, miss) {
-    return ((point - miss) / total) * 100;
+    var v;
+    if(total > 0) {
+      v = ((point - miss) / total) * 100;
+      v = Math.round(v * 10) / 10;
+    } else {
+      v = "0.0";
+    }
+    return v;
   }
   function calcDetermined(total, point) {
-    return (point / total) * 100;
+    var v;
+    if(total > 0) {
+      v = (point / total) * 100;
+      v = Math.round(v * 10) / 10;
+    } else {
+      v = "0.0";
+    }
+    return v;
   }
   function createReceiveData(total, a, b, miss) {
     var data = "<td>" + total + "</td><td>" + a + "</td><td>" + b + "</td><td>" + miss + "</td><td>" + calcReceiveEffect(total, a, b, miss) + "%</td><td>" + calcReceiveDetermined(total, a, b) + "%</td>";
     return data;
   }
   function calcReceiveEffect(total, a, b, miss) {
-    return ((a + b - miss) / total) * 100;
+    var v;
+    if(total > 0) {
+      v = ((a + b - miss) / total) * 100;
+      v = Math.round(v * 10) / 10;
+    } else {
+      v = "0.0";
+    }
+    return v;
   }
   function calcReceiveDetermined(total, a, b) {
-    return ((a + b) / total) * 100;
+    var v;
+    if(total > 0) {
+      v = ((a + b) / total) * 100;
+      v = Math.round(v * 10) / 10;
+    } else {
+      v = "0.0";
+    }
+    return v;
   }
 
+  //*******************************************
+  // json読み込み
+  //*******************************************
   function loadData() {
     var data = [];
     data.push(data2019);
     data.push(data2020);
 
-    data.forEach(y);
+    data.forEach(eachYear);
   };
 
-  function y(value) {
-    console.log("year[" + value.year + "]");
+  //*******************************************
+  // json繰り返し項目の処理
+  //*******************************************
+  function eachYear(yearData) {
+    console.log("year[" + yearData.year + "]");
 
     var disp = false;
 
     if(year == 0) {
       disp = true;
-    } else if(value.year == year) {
+    } else if(yearData.year == year) {
       disp = true;
     }
 
     if(disp) {
-      value.data.forEach(m);
+      yearData.data.forEach(eachMonth);
     }
   };
-
-  function m(value) {
-    console.log("month[" + value.month + "]");
+  function eachMonth(monthData) {
+    console.log("month[" + monthData.month + "]");
     var disp = false;
     if(month == 0) {
       disp = true;
-    } else if(value.month == month) {
+    } else if(monthData.month == month) {
       disp = true;
     }
 
     if(disp) {
       console.log("match");
-      value.data.forEach(personal);
+      monthData.data.forEach(eachPlayer);
     }
   };
-
-  function personal(value) {
-    console.log("name[" + value.name + "]");
-    var tableObj = $("#data");
-    // tableObj.append(createNewRowEmpty());
-    tableObj.append(createNewRow(row, value));
-    row = row + 1;
+  function eachPlayer(playerdata) {
+    console.log("name[" + player[playerdata.playerid] + "]");
+    var disp = false;
+    if(playerid == -1) {
+      if(teamid == -1) {
+        disp = true;
+      } else {
+        var belongTeamId = getTeamId(playerdata.playerid);
+        console.log("teamid[" + teamid + "] belongTeamId[" + belongTeamId + "]");
+        if(belongTeamId == teamid) {
+          console.log("team match");
+          disp = true;
+        }
+      }
+      if(disp) {
+        console.log("sex判定");
+        if(sexid != -1) {
+          var sex = getSexId(playerdata.playerid);
+          console.log("sex[" + sex + "]");
+          if(sex != sexid) {
+            console.log("sex mismatch");
+            disp = false;
+          }
+        }
+      }
+    } else if(playerid == playerdata.playerid) {
+      disp = true;
+    }
+    
+    if(disp) {
+      console.log("match player");
+      var tableObj = $("#data");
+      tableObj.append(createNewRow(row, playerdata));
+      row++;
+    }
   };
+  //*******************************************
+  // jsonから抽出
+  //*******************************************
+  function getTeamId(playerId) {
+    var id = -1;
+    dict.forEach(function(value) {
+      if(playerId == value.id) {
+        id = value.teamid;
+      }
+    });
+    return id;
+  }
+  function getSexId(playerId) {
+    var id = -1;
+    dict.forEach(function(value) {
+      if(playerId == value.id) {
+        id = value.sex;
+      }
+    });
+    return id;
+  }
 
   loadData();
-
+/*
+  別ページでjsonを読み込んで値編集する（何も入力しない場合は0から）
+  編集後はjsonを出力する。
+  それをjsファイルに手動反映
+*/
 </script>
 </html>

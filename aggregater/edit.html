@@ -1,0 +1,389 @@
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <script src="../jquery-3.3.1.min.js" charset="utf-8"></script>
+  <script src="../jquery-ui.min.js"></script>
+  <script src="../jquery-ui-touch-punch.js"></script>
+  <script src="./dict.js" charset="utf-8"></script>
+  <style type="text/css">
+    table{
+    margin:0 auto;
+    border-radius:10px;
+    -webkit-border-radius:10px;
+    -moz-border-radius:10px;
+    border:1px solid #666;
+    border-spacing: 0;
+    overflow:hidden;
+  }
+  td,th{
+    border-bottom:1px solid #666;
+  }
+  td,th{
+    padding:10px;
+  }
+  th{
+    background:#cecece;
+  }
+  table tbody tr:last-child th,
+  table tbody tr:last-child td{
+    border-bottom: none;
+  }
+  th + th,td{
+    border-left:1px solid #666;
+  }
+  td:first-child{
+    border-left:0px solid #666;
+  }
+  
+  td{
+    text-align: center;
+  }
+  td.nm{
+    text-align: left;
+  }
+    </style>
+</head>
+<body>
+<textarea id="inputjson"></textarea>
+<br>
+<button id="in">読み込み</button>
+<!-- <div id="row" style="display:none">
+    <tr>
+        <td>1</td>
+        <td>name</td>
+        <td id="test">
+            <button class="minus">－</button>
+            <input type="text" class="spike_point" maxlength="2" size="2" value="0" style="text-align:center">
+            <button class="plus">＋</button>
+        </td>
+        <td>
+            <button class="minus">－</button>
+            <input type="text" class="spike_miss" maxlength="2" size="2" value="0" style="text-align:center">
+            <button class="plus">＋</button>
+        </td>
+        <td>
+            <button class="minus">－</button>
+            <input type="text" class="spike_else" maxlength="2" size="2" value="0" style="text-align:center">
+            <button class="plus">＋</button>
+        </td>
+        <td>
+            <button class="minus">－</button>
+            <input type="text" class="serve_point" maxlength="2" size="2" value="0" style="text-align:center">
+            <button class="plus">＋</button>
+        </td>
+        <td>
+            <button class="minus">－</button>
+            <input type="text" class="serve_miss" maxlength="2" size="2" value="0" style="text-align:center">
+            <button class="plus">＋</button>
+        </td>
+        <td>
+            <button class="minus">－</button>
+            <input type="text" class="serve_else" maxlength="2" size="2" value="0" style="text-align:center">
+            <button class="plus">＋</button>
+        </td>
+        <td>
+            <button class="minus">－</button>
+            <input type="text" class="block_point" maxlength="2" size="2" value="0" style="text-align:center">
+            <button class="plus">＋</button>
+        </td>
+        <td>
+            <button class="minus">－</button>
+            <input type="text" class="block_miss" maxlength="2" size="2" value="0" style="text-align:center">
+            <button class="plus">＋</button>
+        </td>
+        <td>
+            <button class="minus">－</button>
+            <input type="text" class="block_else" maxlength="2" size="2" value="0" style="text-align:center">
+            <button class="plus">＋</button>
+        </td>
+        <td>
+            <button class="minus">－</button>
+            <input type="text" class="reception_a" maxlength="2" size="2" value="0" style="text-align:center">
+            <button class="plus">＋</button>
+        </td>
+        <td>
+            <button class="minus">－</button>
+            <input type="text" class="reception_b" maxlength="2" size="2" value="0" style="text-align:center">
+            <button class="plus">＋</button>
+        </td>
+        <td>
+            <button class="minus">－</button>
+            <input type="text" class="reception_miss" maxlength="2" size="2" value="0" style="text-align:center">
+            <button class="plus">＋</button>
+        </td>
+        <td>
+            <button class="minus">－</button>
+            <input type="text" class="reception_else" maxlength="2" size="2" value="0" style="text-align:center">
+            <button class="plus">＋</button>
+        </td>
+    </tr>
+</div> -->
+<table>
+    <thead>
+        <tr>
+        <th colspan="2">基本情報</th>
+        <th colspan="3">スパイク</th>
+        <th colspan="3">サーブ</th>
+        <th colspan="3">ブロック</th>
+        <th colspan="4">レセプション</th>
+        </tr>
+        <tr>
+        <th>#</th>
+        <th>名前</th>
+
+        <th>得<br>点</th>
+        <th>失<br>点</th>
+        <th>そ<br>の<br>他</th>
+
+        <th>得<br>点</th>
+        <th>失<br>点</th>
+        <th>そ<br>の<br>他</th>
+
+        <th>得<br>点</th>
+        <th>失<br>点</th>
+        <th>そ<br>の<br>他</th>
+
+        <th>A<br>カ<br>ッ<br>ト</th>
+        <th>B<br>カ<br>ッ<br>ト</th>
+        <th>失<br>点</th>
+        <th>そ<br>の<br>他</th>
+        </tr>
+    </thead>
+    <tbody id="data">
+        <!-- <tr>
+            <td>1</td>
+            <td>name</td>
+            <td>
+                <button class="minus">－</button><br>
+                <input type="text" class="spike_point" maxlength="2" size="2" value="0" style="text-align:center"><br>
+                <button class="plus">＋</button>
+            </td>
+            <td>
+                <button class="minus">－</button><br>
+                <input type="text" class="spike_miss" maxlength="2" size="2" value="0" style="text-align:center"><br>
+                <button class="plus">＋</button>
+            </td>
+            <td>
+                <button class="minus">－</button>
+                <input type="text" class="spike_else" maxlength="2" size="2" value="0" style="text-align:center">
+                <button class="plus">＋</button>
+            </td>
+            <td>
+                <button class="minus">－</button>
+                <input type="text" class="serve_point" maxlength="2" size="2" value="0" style="text-align:center">
+                <button class="plus">＋</button>
+            </td>
+            <td>
+                <button class="minus">－</button>
+                <input type="text" class="serve_miss" maxlength="2" size="2" value="0" style="text-align:center">
+                <button class="plus">＋</button>
+            </td>
+            <td>
+                <button class="minus">－</button>
+                <input type="text" class="serve_else" maxlength="2" size="2" value="0" style="text-align:center">
+                <button class="plus">＋</button>
+            </td>
+            <td>
+                <button class="minus">－</button>
+                <input type="text" class="block_point" maxlength="2" size="2" value="0" style="text-align:center">
+                <button class="plus">＋</button>
+            </td>
+            <td>
+                <button class="minus">－</button>
+                <input type="text" class="block_miss" maxlength="2" size="2" value="0" style="text-align:center">
+                <button class="plus">＋</button>
+            </td>
+            <td>
+                <button class="minus">－</button>
+                <input type="text" class="block_else" maxlength="2" size="2" value="0" style="text-align:center">
+                <button class="plus">＋</button>
+            </td>
+            <td>
+                <button class="minus">－</button>
+                <input type="text" class="reception_a" maxlength="2" size="2" value="0" style="text-align:center">
+                <button class="plus">＋</button>
+            </td>
+            <td>
+                <button class="minus">－</button>
+                <input type="text" class="reception_b" maxlength="2" size="2" value="0" style="text-align:center">
+                <button class="plus">＋</button>
+            </td>
+            <td>
+                <button class="minus">－</button>
+                <input type="text" class="reception_miss" maxlength="2" size="2" value="0" style="text-align:center">
+                <button class="plus">＋</button>
+            </td>
+            <td>
+                <button class="minus">－</button>
+                <input type="text" class="reception_else" maxlength="2" size="2" value="0" style="text-align:center">
+                <button class="plus">＋</button>
+            </td>
+        </tr> -->
+    </tbody>
+    </table>
+    <button id="out">書き込み</button>
+    <!-- <button id="add">add</button> -->
+    <!-- <button id="copy">コピー</button> -->
+    <br>
+<textarea id="outputjson"></textarea>
+</body>
+<script type="text/javascript">
+  $('#data').sortable();
+  var idx = 1;
+  function init() {
+    $('#data').children().remove();
+    idx = 1;
+    dict.forEach(function(dictData) {
+        var name = player[dictData.id];
+        $('#data').append(createNewRow(idx, dictData.id, name));
+        idx++;
+    });
+
+    var v = $('#inputjson').val();
+    if(v != "") {
+        for (var i = 0; i < $(".player").length; i++) {
+        var row = $(".player").eq(i);
+        var playerid = row.attr('playerid');
+        var obj = $.parseJSON(v);
+        obj.data.forEach(function(monthData) {
+            monthData.data.forEach(function(playerData) {
+                if(playerid == playerData.playerid) {
+                    row.find('.spike_point').val(playerData.spike.point);
+                    row.find('.spike_miss').val(playerData.spike.miss);
+                    row.find('.spike_else').val(playerData.spike.etc);
+
+                    row.find('.serve_point').val(playerData.serve.point);
+                    row.find('.serve_miss').val(playerData.serve.miss);
+                    row.find('.serve_else').val(playerData.serve.etc);
+
+                    row.find('.block_point').val(playerData.block.point);
+                    row.find('.block_miss').val(playerData.block.miss);
+                    row.find('.block_else').val(playerData.block.etc);
+
+                    row.find('.reception_a').val(playerData.receive.a);
+                    row.find('.reception_b').val(playerData.receive.b);
+                    row.find('.reception_miss').val(playerData.receive.miss);
+                    row.find('.reception_else').val(playerData.receive.etc);
+                }
+            });
+        });
+      }
+    }
+  };
+  
+//   $(document).on('click', '#add', function() {
+//     //   $('#data').append($('.cpy').eq(0).clone());
+//   });
+$(document).on('click', '#out', function() {
+    var data = createJsonYearData(2019, 1);
+    // alert(JSON.stringify(data));
+    $('#outputjson').val(JSON.stringify(data, null, "    "));
+  });
+  $(document).on('click', '#in', function() {
+      init();
+  });
+  function createJsonYearData(year, month) {
+      var d = [];
+      d.push(createJsonMonthlyData(month));
+      var data = {
+        year: year,
+        data: d,
+      };
+      return data;
+  }
+  function createJsonMonthlyData(month) {
+      var d = [];
+      for (var i = 0; i < $(".player").length; i++) {
+        var row = $(".player").eq(i);
+        var playerid = row.attr('playerid');
+        var s = createJsonPlayerData(playerid, row);
+        d.push(s);
+      }
+      var data = {
+          month: month,
+          data: d,
+      }
+
+      return data;
+  }
+  function createJsonPlayerData(playerid, row) {
+    var spikePoint, spikeMiss, spikeEtc;
+    spikePoint = Number(row.find('.spike_point').val());
+    spikeMiss = Number(row.find('.spike_miss').val());
+    spikeEtc = Number(row.find('.spike_else').val());
+    var servePoint, serveMiss, serveEtc;
+    servePoint = Number(row.find('.serve_point').val());
+    serveMiss = Number(row.find('.serve_miss').val());
+    serveEtc = Number(row.find('.serve_else').val());
+    var receiveA, receiveB, receiveMiss, receiveEtc;
+    receiveA = Number(row.find('.reception_a').val());
+    receiveB = Number(row.find('.reception_b').val());
+    receiveMiss = Number(row.find('.reception_miss').val());
+    receiveEtc = Number(row.find('.reception_else').val());
+    var blockPoint, blockMiss, blockEtc;
+    blockPoint = Number(row.find('.block_point').val());
+    blockMiss = Number(row.find('.block_miss').val());
+    blockEtc = Number(row.find('.block_else').val());
+    var d = {
+        playerid: playerid,
+        spike: createJsonPoint(spikePoint, spikeMiss, spikeEtc),
+        serve: createJsonPoint(servePoint, serveMiss, serveEtc),
+        receive: createJsonReception(receiveA, receiveB, receiveMiss, receiveEtc),
+        block: createJsonPoint(blockPoint, blockMiss, blockEtc),
+    }
+    return d;
+  }
+  function createJsonPoint(point, miss, etc) {
+      var d = {
+        total: point + miss + etc,
+        point: point,
+        miss: miss,
+        etc: etc,
+      };
+
+      return d;
+  }
+  function createJsonReception(a, b, miss, etc) {
+      var d = {
+        total: a + b + miss + etc,
+        a: a,
+        b: b,
+        miss: miss,
+        etc: etc,
+      };
+
+      return d;
+  }
+  //*******************************************
+  // 一覧のイベント
+  //*******************************************
+  $(document).on('click', '.minus', function() {
+    updown($(this), -1);
+  });
+  $(document).on('click', '.plus', function() {
+    updown($(this), 1);
+  });
+  function updown(item, val) {
+    var input = item.parent().children('input');
+    var v = Number(input.val()) + val;
+    if(v >= 0) {
+        input.val(v);
+    }
+  }
+  //*******************************************
+  // 一覧の行追加
+  //*******************************************
+  function createNewRow(idx, id, name) {
+    var s = "<tr class='player' playerid='" + id + "'><td>" + idx + "</td><td>" + name + "</td><td id='test'><button class='plus'>＋</button><br><input type='text' class='spike_point' maxlength='2' size='2' value='0' style='text-align:center'><br><button class='minus'>－</button></td><td><button class='plus'>＋</button><br><input type='text' class='spike_miss' maxlength='2' size='2' value='0' style='text-align:center'><br><button class='minus'>－</button></td><td><button class='plus'>＋</button><br><input type='text' class='spike_else' maxlength='2' size='2' value='0' style='text-align:center'><br><button class='minus'>－</button></td><td><button class='plus'>＋</button><br><input type='text' class='serve_point' maxlength='2' size='2' value='0' style='text-align:center'><br><button class='minus'>－</button></td><td><button class='plus'>＋</button><br><input type='text' class='serve_miss' maxlength='2' size='2' value='0' style='text-align:center'><br><button class='minus'>－</button></td><td><button class='plus'>＋</button><br><input type='text' class='serve_else' maxlength='2' size='2' value='0' style='text-align:center'><br><button class='minus'>－</button></td><td><button class='plus'>＋</button><br><input type='text' class='block_point' maxlength='2' size='2' value='0' style='text-align:center'><br><button class='minus'>－</button></td><td><button class='plus'>＋</button><br><input type='text' class='block_miss' maxlength='2' size='2' value='0' style='text-align:center'><br><button class='minus'>－</button></td><td><button class='plus'>＋</button><br><input type='text' class='block_else' maxlength='2' size='2' value='0' style='text-align:center'><br><button class='minus'>－</button></td><td><button class='plus'>＋</button><br><input type='text' class='reception_a' maxlength='2' size='2' value='0' style='text-align:center'><br><button class='minus'>－</button></td><td><button class='plus'>＋</button><br><input type='text' class='reception_b' maxlength='2' size='2' value='0' style='text-align:center'><br><button class='minus'>－</button></td><td><button class='plus'>＋</button><br><input type='text' class='reception_miss' maxlength='2' size='2' value='0' style='text-align:center'><br><button class='minus'>－</button></td><td><button class='plus'>＋</button><br><input type='text' class='reception_else' maxlength='2' size='2' value='0' style='text-align:center'><br><button class='minus'>－</button></td></tr>";
+
+    return s;
+  };
+  function createData(total, point, miss) {
+    var data = "<td>" + total + "</td><td>" + point + "</td><td>" + miss + "</td><td>" + calcEffect(total, point, miss) + "%</td><td>" + calcDetermined(total, point) + "%</td>";
+    return data;
+  }
+
+  init();
+</script>
+</html>

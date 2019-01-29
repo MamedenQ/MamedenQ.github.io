@@ -6,7 +6,8 @@ var data2020 =
         month:2,
         data:[
           {
-            name:"ふじわら",
+            // name:"ふじわら",
+            playerid:2,
             spike:{
               total:10,
               point:5,
@@ -30,7 +31,8 @@ var data2020 =
             },
           },
           {
-            name:"いけだ",
+            // name:"いけだ",
+            playerid:2,
             spike:{
               total:5,
               point:2,

@@ -12,6 +12,7 @@
   <script src="../bootstrap-4.2.1-dist/js/bootstrap.min.js"></script>
 
   <style type="text/css">
+  /*
   table.aggregate_table{
   margin:0 auto;
   border-radius:10px;
@@ -40,12 +41,13 @@ th + th,td{
 td:first-child{
   border-left:0px solid #666;
 }
-
+*/
 td{
   text-align: right;
 }
 td.nm{
   text-align: left;
+  width: 200px;
 }
   </style>
 </head>
@@ -91,7 +93,7 @@ td.nm{
 <!--   <p>※１　①総数②得点③失点④効果率⑤決定率</p>
   <p>※２　①総数②Aカット③Bカット④失点⑤A率⑥B率</p>
  -->  
-  <table class="aggregate_table">
+  <table class="table table-striped table-hover table-bordered">
     <thead>
       <tr>
         <th colspan="2">基本情報</th>

@@ -8,8 +8,11 @@
   <script src="./data2020.js" charset="utf-8"></script>
   <script src="./dict.js" charset="utf-8"></script>
 
+  <link href="../bootstrap-4.2.1-dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="../bootstrap-4.2.1-dist/js/bootstrap.min.js"></script>
+
   <style type="text/css">
-  table{
+  table.aggregate_table{
   margin:0 auto;
   border-radius:10px;
   -webkit-border-radius:10px;
@@ -47,12 +50,13 @@ td.nm{
   </style>
 </head>
 <body>
-<select class='year'>
+<div class="form-inline">
+<select class='year form-control' style="width:100px">
     <option value='0'>ALL</option>
     <option value='2019' selected>2019</option>
     <option value='2020'>2020</option>
-</select>
-<select class='month'>
+</select>　
+<select class='month form-control' style="width:100px">
     <option value='0'>ALL</option>
     <option value='1' selected>1</option>
     <option value='2'>2</option>
@@ -67,23 +71,27 @@ td.nm{
     <option value='11'>11</option>
     <option value='12'>12</option>
 </select>
+</div>
 <br>
-<select class='team'>
+<div class="form-inline">
+    <select class='team form-control' style="width:100px">
+  <option value='-1' selected>ALL</option>
+</select>　
+<select class='player form-control' style="width:100px">
+  <option value='-1' selected>ALL</option>
+</select>　
+<select class='sex form-control' style="width:100px">
   <option value='-1' selected>ALL</option>
 </select>
-<select class='player'>
-  <option value='-1' selected>ALL</option>
-</select>
-<select class='sex'>
-  <option value='-1' selected>ALL</option>
-</select>
-  <button class="extract">抽出</button>
+</div>
+<br>
+  <button class="extract btn btn-primary">抽出</button>
 <br>
 <br>
 <!--   <p>※１　①総数②得点③失点④効果率⑤決定率</p>
   <p>※２　①総数②Aカット③Bカット④失点⑤A率⑥B率</p>
  -->  
-  <table>
+  <table class="aggregate_table">
     <thead>
       <tr>
         <th colspan="2">基本情報</th>

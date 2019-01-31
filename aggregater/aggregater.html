@@ -264,6 +264,13 @@ td:first-child{
     }
   }
 
+  function setAllVisible() {
+    setVisible('.spike_cell', $('#disp_spike').prop('checked'));
+    setVisible('.serve_cell', $('#disp_serve').prop('checked'));
+    setVisible('.block_cell', $('#disp_block').prop('checked'));
+    setVisible('.reception_cell', $('#disp_reception').prop('checked'));
+  }
+
   //*******************************************
   // 抽出
   //*******************************************
@@ -384,6 +391,16 @@ td:first-child{
   //*******************************************
   // json読み込み
   //*******************************************
+  function loadData() {
+    // var data = [];
+    // data.push(data2019);
+    // data.push(data2020);
+
+    // data.forEach(eachYear);
+    loadData2();
+    setAllVisible();
+  };
+
   function loadData2() {
     var data = [];
     // var idx = 1;
@@ -465,8 +482,8 @@ td:first-child{
       var dt = {};
       var hit = false;
 
-      data.forEach(function(playerData) {
-        if(!hit) {
+      data.forEach(function (playerData) {
+        if (!hit) {
           if (playerData.playerid == playerid) {
             dt = playerData;
             hit = true;
@@ -476,22 +493,13 @@ td:first-child{
 
       return dt;
     }
-    
-    data.forEach(function(playerData) {
+
+    data.forEach(function (playerData) {
       var tableObj = $("#data");
       tableObj.append(createNewRow(row, playerData));
       row++;
     });
   }
-
-  function loadData() {
-    // var data = [];
-    // data.push(data2019);
-    // data.push(data2020);
-
-    // data.forEach(eachYear);
-    loadData2();
-  };
 
   //*******************************************
   // 判定処理
@@ -636,10 +644,10 @@ td:first-child{
 
   loadData();
 /*
-              別ページでjsonを読み込んで値編集する（何も入力しない場合は0から）
-              編集後はjsonを出力する。
-              それをjsファイルに手動反映
-            */
+                    別ページでjsonを読み込んで値編集する（何も入力しない場合は0から）
+                    編集後はjsonを出力する。
+                    それをjsファイルに手動反映
+                  */
 </script>
 
 </html>

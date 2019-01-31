@@ -175,11 +175,11 @@ td:first-child{
   //*******************************************
   // 変数
   //*******************************************
-  var year = 2019;
-  var month = 1;
-  var playerid = -1;
-  var teamid = -1;
-  var sexid = -1;
+  var extractYear = 2019;
+  var extractMonth = 1;
+  var extractPlayerId = -1;
+  var extractTeamId = -1;
+  var extractSexId = -1;
   var row = 1;
 
   //*******************************************
@@ -199,45 +199,45 @@ td:first-child{
   // コンボ変更イベント
   //*******************************************
   $('.year').change(function () {
-    year = $('.year').val();
-    if (year == 0) {
+    extractYear = $('.year').val();
+    if (extractYear == 0) {
       $(".month").prop("disabled", true);
       $('.month').val(0);
-      month = 0;
+      extractMonth = 0;
     } else {
       $(".month").prop("disabled", false);
     }
   });
   $('.month').change(function () {
-    month = $('.month').val();
+    extractMonth = $('.month').val();
   });
   $('.team').change(function () {
-    teamid = $('.team').val();
-    if (teamid == -1) {
+    extractTeamId = $('.team').val();
+    if (extractTeamId == -1) {
       $(".player").prop("disabled", false);
     } else {
       $(".player").prop("disabled", true);
       $('.player').val(-1);
-      playerid = -1;
+      extractPlayerId = -1;
     }
   });
   $('.player').change(function () {
-    playerid = $('.player').val();
-    if (playerid == -1) {
+    extractPlayerId = $('.player').val();
+    if (extractPlayerId == -1) {
       $(".team").prop("disabled", false);
       $(".sex").prop("disabled", false);
     } else {
       $(".team").prop("disabled", true);
       $('.team').val(-1);
-      teamid = -1;
+      extractTeamId = -1;
 
       $(".sex").prop("disabled", true);
       $('.sex').val(-1);
-      sexid = -1;
+      extractSexId = -1;
     }
   });
   $('.sex').change(function () {
-    sexid = $('.sex').val();
+    extractSexId = $('.sex').val();
   });
 
   //*******************************************
@@ -384,13 +384,165 @@ td:first-child{
   //*******************************************
   // json読み込み
   //*******************************************
-  function loadData() {
+  function loadData2() {
     var data = [];
-    data.push(data2019);
-    data.push(data2020);
+    // var idx = 1;
 
-    data.forEach(eachYear);
+    // そのうちdictの順番を入れ替えて表示順調整する予定のため、
+    // dict基準でjson作る
+    dict.forEach(function (dictData) {
+      if (isDispPlayer(dictData.id)) {
+        data.push({
+          "playerid": dictData.id,
+          "spike": {
+            "total": 0,
+            "point": 0,
+            "miss": 0,
+            "etc": 0,
+          },
+          "serve": {
+            "total": 0,
+            "point": 0,
+            "miss": 0,
+            "etc": 0,
+          },
+          "block": {
+            "total": 0,
+            "point": 0,
+            "miss": 0,
+            "etc": 0,
+          },
+          "receive": {
+            "total": 0,
+            "a": 0,
+            "b": 0,
+            "miss": 0,
+            "etc": 0,
+          },
+        });
+        // idx++;
+      }
+    });
+
+    var yearData = [];
+    yearData.push(data2019);
+    yearData.push(data2020);
+
+    yearData.forEach(function (yearData) {
+      if (isDispYear(yearData.year)) {
+        yearData.data.forEach(function (monthData) {
+          if (isDispMonth(monthData.month)) {
+            monthData.data.forEach(function (playerData) {
+              if (isDispPlayer(playerData.playerid)) {
+                var dt = getPlayerData(playerData.playerid);
+                add(dt.spike, playerData.spike);
+                add(dt.serve, playerData.serve);
+                add(dt.block, playerData.block);
+                addReceive(dt.receive, playerData.receive);
+              }
+
+              function add(dt, addDt) {
+                dt.point += addDt.point;
+                dt.miss += addDt.miss;
+                dt.etc += addDt.etc;
+                dt.total += addDt.total;
+              };
+              function addReceive(dt, addDt) {
+                dt.a += addDt.a;
+                dt.b += addDt.b;
+                dt.miss += addDt.miss;
+                dt.etc += addDt.etc;
+                dt.total += addDt.total;
+              };
+            });
+          }
+        });
+      }
+    });
+
+    function getPlayerData(playerid) {
+      // {}でhash作っておいてそこからアクセスした方が早い？
+      var dt = {};
+      var hit = false;
+
+      data.forEach(function(playerData) {
+        if(!hit) {
+          if (playerData.playerid == playerid) {
+            dt = playerData;
+            hit = true;
+          }
+        }
+      });
+
+      return dt;
+    }
+    
+    data.forEach(function(playerData) {
+      var tableObj = $("#data");
+      tableObj.append(createNewRow(row, playerData));
+      row++;
+    });
+  }
+
+  function loadData() {
+    // var data = [];
+    // data.push(data2019);
+    // data.push(data2020);
+
+    // data.forEach(eachYear);
+    loadData2();
   };
+
+  //*******************************************
+  // 判定処理
+  //*******************************************
+  function isDispPlayer(playerid) {
+    var disp = false;
+    if (playerid == -1) {
+      if (extractTeamId == -1) {
+        disp = true;
+      } else {
+        var belongTeamId = getTeamId(playerid);
+        if (belongTeamId == extractTeamId) {
+          disp = true;
+        }
+      }
+      if (disp) {
+        if (extractSexId != -1) {
+          var sex = getSexId(playerid);
+          if (sex != extractSexId) {
+            disp = false;
+          }
+        }
+      }
+    } else if (playerid == playerid) {
+      disp = true;
+    }
+
+    return disp;
+  }
+  function isDispYear(year) {
+    var disp = false;
+
+    if (extractYear == 0) {
+      disp = true;
+    } else if (year == extractYear) {
+      disp = true;
+    }
+
+    return disp;
+  }
+  function isDispMonth(month) {
+    var disp = false;
+
+    if (extractMonth == 0) {
+      disp = true;
+    } else if (month == extractMonth) {
+      disp = true;
+    }
+
+    return disp;
+  }
 
   //*******************************************
   // json繰り返し項目の処理
@@ -400,9 +552,9 @@ td:first-child{
 
     var disp = false;
 
-    if (year == 0) {
+    if (extractYear == 0) {
       disp = true;
-    } else if (yearData.year == year) {
+    } else if (yearData.year == extractYear) {
       disp = true;
     }
 
@@ -413,9 +565,9 @@ td:first-child{
   function eachMonth(monthData) {
     console.log("month[" + monthData.month + "]");
     var disp = false;
-    if (month == 0) {
+    if (extractMonth == 0) {
       disp = true;
-    } else if (monthData.month == month) {
+    } else if (monthData.month == extractMonth) {
       disp = true;
     }
 
@@ -427,29 +579,29 @@ td:first-child{
   function eachPlayer(playerdata) {
     console.log("name[" + player[playerdata.playerid] + "]");
     var disp = false;
-    if (playerid == -1) {
-      if (teamid == -1) {
+    if (extractPlayerId == -1) {
+      if (extractTeamId == -1) {
         disp = true;
       } else {
         var belongTeamId = getTeamId(playerdata.playerid);
-        console.log("teamid[" + teamid + "] belongTeamId[" + belongTeamId + "]");
-        if (belongTeamId == teamid) {
+        console.log("teamid[" + extractTeamId + "] belongTeamId[" + belongTeamId + "]");
+        if (belongTeamId == extractTeamId) {
           console.log("team match");
           disp = true;
         }
       }
       if (disp) {
         console.log("sex判定");
-        if (sexid != -1) {
+        if (extractSexId != -1) {
           var sex = getSexId(playerdata.playerid);
           console.log("sex[" + sex + "]");
-          if (sex != sexid) {
+          if (sex != extractSexId) {
             console.log("sex mismatch");
             disp = false;
           }
         }
       }
-    } else if (playerid == playerdata.playerid) {
+    } else if (extractPlayerId == playerdata.playerid) {
       disp = true;
     }
 
@@ -484,10 +636,10 @@ td:first-child{
 
   loadData();
 /*
-      別ページでjsonを読み込んで値編集する（何も入力しない場合は0から）
-      編集後はjsonを出力する。
-      それをjsファイルに手動反映
-    */
+              別ページでjsonを読み込んで値編集する（何も入力しない場合は0から）
+              編集後はjsonを出力する。
+              それをjsファイルに手動反映
+            */
 </script>
 
 </html>

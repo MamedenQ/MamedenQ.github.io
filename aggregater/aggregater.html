@@ -49,6 +49,10 @@ td.nm{
   text-align: left;
   width: 200px;
 }
+
+.col_invisible {
+  display: none;
+}
   </style>
 </head>
 <body>
@@ -89,7 +93,25 @@ td.nm{
 <br>
   <button class="extract btn btn-primary">抽出</button>
 <br>
-<br>
+<!-- <div class="form-inline">
+</div> -->
+<div class="btn-group" data-toggle="buttons">
+    <label class="btn btn-success active">
+      <input type="checkbox" autocomplete="off" id="disp_spike" style="display:none" checked>スパイク
+    </label>
+    <label class="btn btn-success active">
+      <input type="checkbox" autocomplete="off" id="disp_serve" style="display:none" checked>サーブ
+    </label>
+    <label class="btn btn-success active">
+        <input type="checkbox" autocomplete="off" id="disp_block" style="display:none" checked>ブロック
+    </label>
+    <label class="btn btn-success active">
+      <input type="checkbox" autocomplete="off" id="disp_reception" style="display:none" checked>レセプション
+    </label>
+
+      
+    </div>
+  <br><br>
 <!--   <p>※１　①総数②得点③失点④効果率⑤決定率</p>
   <p>※２　①総数②Aカット③Bカット④失点⑤A率⑥B率</p>
  -->  
@@ -98,39 +120,39 @@ td.nm{
     <thead>
       <tr>
         <th colspan="2">基本情報</th>
-        <th colspan="5">スパイク</th>
-        <th colspan="5">サーブ</th>
-        <th colspan="5">ブロック</th>
-        <th colspan="6">レセプション</th>
+        <th colspan="5" class='spike_cell'>スパイク</th>
+        <th colspan="5" class='serve_cell'>サーブ</th>
+        <th colspan="5" class='block_cell'>ブロック</th>
+        <th colspan="6" class='reception_cell'>レセプション</th>
       </tr>
       <tr>
         <th>#</th>
         <th>名前</th>
 
-        <th>総<br>数</th>
-        <th>得<br>点</th>
-        <th>失<br>点</th>
-        <th>効<br>果<br>率</th>
-        <th>決<br>定<br>率</th>
+        <th class='spike_cell'>総<br>数</th>
+        <th class='spike_cell'>得<br>点</th>
+        <th class='spike_cell'>失<br>点</th>
+        <th class='spike_cell'>効<br>果<br>率</th>
+        <th class='spike_cell'>決<br>定<br>率</th>
 
-        <th>総<br>数</th>
-        <th>得<br>点</th>
-        <th>失<br>点</th>
-        <th>効<br>果<br>率</th>
-        <th>決<br>定<br>率</th>
+        <th class='serve_cell'>総<br>数</th>
+        <th class='serve_cell'>得<br>点</th>
+        <th class='serve_cell'>失<br>点</th>
+        <th class='serve_cell'>効<br>果<br>率</th>
+        <th class='serve_cell'>決<br>定<br>率</th>
 
-        <th>総<br>数</th>
-        <th>得<br>点</th>
-        <th>失<br>点</th>
-        <th>効<br>果<br>率</th>
-        <th>決<br>定<br>率</th>
+        <th class='block_cell'>総<br>数</th>
+        <th class='block_cell'>得<br>点</th>
+        <th class='block_cell'>失<br>点</th>
+        <th class='block_cell'>効<br>果<br>率</th>
+        <th class='block_cell'>決<br>定<br>率</th>
 
-        <th>総<br>数</th>
-        <th>A<br>カ<br>ッ<br>ト</th>
-        <th>B<br>カ<br>ッ<br>ト</th>
-        <th>失<br>点</th>
-        <th>A<br>率</th>
-        <th>B<br>率</th>
+        <th class='reception_cell'>総<br>数</th>
+        <th class='reception_cell'>A<br>カ<br>ッ<br>ト</th>
+        <th class='reception_cell'>B<br>カ<br>ッ<br>ト</th>
+        <th class='reception_cell'>失<br>点</th>
+        <th class='reception_cell'>A<br>率</th>
+        <th class='reception_cell'>B<br>率</th>
       </tr>
     </thead>
     <tbody id="data">
@@ -216,6 +238,53 @@ td.nm{
   });
 
   //*******************************************
+  // 列表示・非表示チェック
+  //*******************************************
+  // $(document).on('click', '#disp_spike', function() {
+  //   if($(this).children('input').prop('checked') == true) {
+  //     console.log('true');
+  //     $('.spike_cell').removeClass('col_invisible');
+  //   } else {
+  //     console.log('false');
+  //     $('.spike_cell').addClass('col_invisible');
+  //   }
+  //   // $('.block_cell').addClass('col_invisible');
+  //   // console.log('check');
+  // });
+    $('#disp_spike').change(function () {
+      setVisible('.spike_cell', $(this).prop('checked'));
+    });
+    $('#disp_serve').change(function () {
+      setVisible('.serve_cell', $(this).prop('checked'));
+    });
+    $('#disp_block').change(function () {
+      setVisible('.block_cell', $(this).prop('checked'));
+    });
+    $('#disp_reception').change(function () {
+      setVisible('.reception_cell', $(this).prop('checked'));
+    });
+
+  function setVisible(selector, visible) {
+    if(visible) {
+      $(selector).removeClass('col_invisible');
+    } else {
+      $(selector).addClass('col_invisible');
+    }
+  }
+
+    // $(document).on('click', '#disp_spike', function () {
+    //   if ($(this).children('input').prop('checked') == true) {
+    //     console.log('true');
+    //     $('.spike_cell').removeClass('col_invisible');
+    //   } else {
+    //     console.log('false');
+    //     $('.spike_cell').addClass('col_invisible');
+    //   }
+    //   // $('.block_cell').addClass('col_invisible');
+    //   // console.log('check');
+    // });
+  
+  //*******************************************
   // 抽出
   //*******************************************
   $(document).on('click', '.extract', function() {
@@ -229,13 +298,13 @@ td.nm{
   //*******************************************
   function createNewRow(newRow, playerdata) {
     var header = "<td>" + newRow + "</td><td class='nm'>" + player[playerdata.playerid] + "</td>";
-    var spike = createData(playerdata.spike.total,
+    var spike = createSpikeData(playerdata.spike.total,
       playerdata.spike.point,
       playerdata.spike.miss);
-    var serve = createData(playerdata.serve.total,
+    var serve = createServeData(playerdata.serve.total,
       playerdata.serve.point,
       playerdata.serve.miss);
-    var block = createData(playerdata.block.total,
+    var block = createBlockData(playerdata.block.total,
       playerdata.block.point,
       playerdata.block.miss);
     var receive = createReceiveData(playerdata.receive.total,
@@ -246,10 +315,39 @@ td.nm{
     var s = "<tr>" + header + spike + serve + block + receive + "</tr>";
     return s;
   };
-  function createData(total, point, miss) {
-    var data = "<td>" + total + "</td><td>" + point + "</td><td>" + miss + "</td><td>" + calcEffect(total, point, miss) + "%</td><td>" + calcDetermined(total, point) + "%</td>";
-    return data;
-  }
+    function createSpikeData(total, point, miss) {
+      var data = "<td class='spike_cell'>" +
+        total + "</td><td class='spike_cell'>" +
+        point + "</td><td class='spike_cell'>" +
+        miss + "</td><td class='spike_cell'>" +
+        calcEffect(total, point, miss) +
+        "%</td><td class='spike_cell'>" +
+        calcDetermined(total, point) + "%</td>";
+
+      return data;
+    }
+    function createServeData(total, point, miss) {
+      var data = "<td class='serve_cell'>" +
+        total + "</td><td class='serve_cell'>" +
+        point + "</td><td class='serve_cell'>" +
+        miss + "</td><td class='serve_cell'>" +
+        calcEffect(total, point, miss) +
+        "%</td><td class='serve_cell'>" +
+        calcDetermined(total, point) + "%</td>";
+
+      return data;
+    }
+    function createBlockData(total, point, miss) {
+      var data = "<td class='block_cell'>" +
+        total + "</td><td class='block_cell'>" +
+        point + "</td><td class='block_cell'>" +
+        miss + "</td><td class='block_cell'>" +
+        calcEffect(total, point, miss) +
+        "%</td><td class='block_cell'>" +
+        calcDetermined(total, point) + "%</td>";
+
+      return data;
+    }
   function calcEffect(total, point, miss) {
     var v;
     if(total > 0) {
@@ -271,7 +369,15 @@ td.nm{
     return v;
   }
   function createReceiveData(total, a, b, miss) {
-    var data = "<td>" + total + "</td><td>" + a + "</td><td>" + b + "</td><td>" + miss + "</td><td>" + calcReceiveEffect(total, a, b, miss) + "%</td><td>" + calcReceiveDetermined(total, a, b) + "%</td>";
+    var data = "<td class='reception_cell'>" +
+      total + "</td><td class='reception_cell'>" +
+      a + "</td><td class='reception_cell'>" +
+      b + "</td><td class='reception_cell'>" +
+      miss + "</td><td class='reception_cell'>" +
+      calcReceiveEffect(total, a, b, miss) +
+      "%</td><td class='reception_cell'>" +
+      calcReceiveDetermined(total, a, b) + "%</td>";
+
     return data;
   }
   function calcReceiveEffect(total, a, b, miss) {

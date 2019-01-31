@@ -1,4 +1,5 @@
 <html>
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -12,7 +13,7 @@
   <script src="../bootstrap-4.2.1-dist/js/bootstrap.min.js"></script>
 
   <style type="text/css">
-  /*
+    /*
   table.aggregate_table{
   margin:0 auto;
   border-radius:10px;
@@ -42,60 +43,62 @@ td:first-child{
   border-left:0px solid #666;
 }
 */
-td{
-  text-align: right;
-}
-td.nm{
-  text-align: left;
-  width: 200px;
-}
+    td {
+      text-align: right;
+    }
 
-.col_invisible {
-  display: none;
-}
+    td.nm {
+      text-align: left;
+      width: 200px;
+    }
+
+    .col_invisible {
+      display: none;
+    }
   </style>
 </head>
+
 <body>
-<div class="form-inline">
-<select class='year form-control' style="width:100px">
-    <option value='0'>ALL</option>
-    <option value='2019' selected>2019</option>
-    <option value='2020'>2020</option>
-</select>　
-<select class='month form-control' style="width:100px">
-    <option value='0'>ALL</option>
-    <option value='1' selected>1</option>
-    <option value='2'>2</option>
-    <option value='3'>3</option>
-    <option value='4'>4</option>
-    <option value='5'>5</option>
-    <option value='6'>6</option>
-    <option value='7'>7</option>
-    <option value='8'>8</option>
-    <option value='9'>9</option>
-    <option value='10'>10</option>
-    <option value='11'>11</option>
-    <option value='12'>12</option>
-</select>
-</div>
-<br>
-<div class="form-inline">
+  <div class="form-inline">
+    <select class='year form-control' style="width:100px">
+      <option value='0'>ALL</option>
+      <option value='2019' selected>2019</option>
+      <option value='2020'>2020</option>
+    </select>　
+    <select class='month form-control' style="width:100px">
+      <option value='0'>ALL</option>
+      <option value='1' selected>1</option>
+      <option value='2'>2</option>
+      <option value='3'>3</option>
+      <option value='4'>4</option>
+      <option value='5'>5</option>
+      <option value='6'>6</option>
+      <option value='7'>7</option>
+      <option value='8'>8</option>
+      <option value='9'>9</option>
+      <option value='10'>10</option>
+      <option value='11'>11</option>
+      <option value='12'>12</option>
+    </select>
+  </div>
+  <br>
+  <div class="form-inline">
     <select class='team form-control' style="width:100px">
-  <option value='-1' selected>ALL</option>
-</select>　
-<select class='player form-control' style="width:100px">
-  <option value='-1' selected>ALL</option>
-</select>　
-<select class='sex form-control' style="width:100px">
-  <option value='-1' selected>ALL</option>
-</select>
-</div>
-<br>
+      <option value='-1' selected>ALL</option>
+    </select>　
+    <select class='player form-control' style="width:100px">
+      <option value='-1' selected>ALL</option>
+    </select>　
+    <select class='sex form-control' style="width:100px">
+      <option value='-1' selected>ALL</option>
+    </select>
+  </div>
+  <br>
   <button class="extract btn btn-primary">抽出</button>
-<br>
-<!-- <div class="form-inline">
+  <br>
+  <!-- <div class="form-inline">
 </div> -->
-<div class="btn-group" data-toggle="buttons">
+  <div class="btn-group" data-toggle="buttons">
     <label class="btn btn-success active">
       <input type="checkbox" autocomplete="off" id="disp_spike" style="display:none" checked>スパイク
     </label>
@@ -103,60 +106,60 @@ td.nm{
       <input type="checkbox" autocomplete="off" id="disp_serve" style="display:none" checked>サーブ
     </label>
     <label class="btn btn-success active">
-        <input type="checkbox" autocomplete="off" id="disp_block" style="display:none" checked>ブロック
+      <input type="checkbox" autocomplete="off" id="disp_block" style="display:none" checked>ブロック
     </label>
     <label class="btn btn-success active">
       <input type="checkbox" autocomplete="off" id="disp_reception" style="display:none" checked>レセプション
     </label>
 
-      
-    </div>
+
+  </div>
   <br><br>
-<!--   <p>※１　①総数②得点③失点④効果率⑤決定率</p>
+  <!--   <p>※１　①総数②得点③失点④効果率⑤決定率</p>
   <p>※２　①総数②Aカット③Bカット④失点⑤A率⑥B率</p>
- -->  
- <div class="table-responsive">
-  <table class="table table-striped table-hover table-bordered">
-    <thead>
-      <tr>
-        <th colspan="2">基本情報</th>
-        <th colspan="5" class='spike_cell'>スパイク</th>
-        <th colspan="5" class='serve_cell'>サーブ</th>
-        <th colspan="5" class='block_cell'>ブロック</th>
-        <th colspan="6" class='reception_cell'>レセプション</th>
-      </tr>
-      <tr>
-        <th>#</th>
-        <th>名前</th>
+ -->
+  <div class="table-responsive">
+    <table class="table table-striped table-hover table-bordered">
+      <thead>
+        <tr>
+          <th colspan="2">基本情報</th>
+          <th colspan="5" class='spike_cell'>スパイク</th>
+          <th colspan="5" class='serve_cell'>サーブ</th>
+          <th colspan="5" class='block_cell'>ブロック</th>
+          <th colspan="6" class='reception_cell'>レセプション</th>
+        </tr>
+        <tr>
+          <th>#</th>
+          <th>名前</th>
 
-        <th class='spike_cell'>総<br>数</th>
-        <th class='spike_cell'>得<br>点</th>
-        <th class='spike_cell'>失<br>点</th>
-        <th class='spike_cell'>効<br>果<br>率</th>
-        <th class='spike_cell'>決<br>定<br>率</th>
+          <th class='spike_cell'>総<br>数</th>
+          <th class='spike_cell'>得<br>点</th>
+          <th class='spike_cell'>失<br>点</th>
+          <th class='spike_cell'>効<br>果<br>率</th>
+          <th class='spike_cell'>決<br>定<br>率</th>
 
-        <th class='serve_cell'>総<br>数</th>
-        <th class='serve_cell'>得<br>点</th>
-        <th class='serve_cell'>失<br>点</th>
-        <th class='serve_cell'>効<br>果<br>率</th>
-        <th class='serve_cell'>決<br>定<br>率</th>
+          <th class='serve_cell'>総<br>数</th>
+          <th class='serve_cell'>得<br>点</th>
+          <th class='serve_cell'>失<br>点</th>
+          <th class='serve_cell'>効<br>果<br>率</th>
+          <th class='serve_cell'>決<br>定<br>率</th>
 
-        <th class='block_cell'>総<br>数</th>
-        <th class='block_cell'>得<br>点</th>
-        <th class='block_cell'>失<br>点</th>
-        <th class='block_cell'>効<br>果<br>率</th>
-        <th class='block_cell'>決<br>定<br>率</th>
+          <th class='block_cell'>総<br>数</th>
+          <th class='block_cell'>得<br>点</th>
+          <th class='block_cell'>失<br>点</th>
+          <th class='block_cell'>効<br>果<br>率</th>
+          <th class='block_cell'>決<br>定<br>率</th>
 
-        <th class='reception_cell'>総<br>数</th>
-        <th class='reception_cell'>A<br>カ<br>ッ<br>ト</th>
-        <th class='reception_cell'>B<br>カ<br>ッ<br>ト</th>
-        <th class='reception_cell'>失<br>点</th>
-        <th class='reception_cell'>A<br>率</th>
-        <th class='reception_cell'>B<br>率</th>
-      </tr>
-    </thead>
-    <tbody id="data">
-<!--       <tr>
+          <th class='reception_cell'>総<br>数</th>
+          <th class='reception_cell'>A<br>カ<br>ッ<br>ト</th>
+          <th class='reception_cell'>B<br>カ<br>ッ<br>ト</th>
+          <th class='reception_cell'>失<br>点</th>
+          <th class='reception_cell'>A<br>率</th>
+          <th class='reception_cell'>B<br>率</th>
+        </tr>
+      </thead>
+      <tbody id="data">
+        <!--       <tr>
         <td></td>
         <td></td>
         <td></td><td></td><td></td><td></td><td></td>
@@ -164,8 +167,8 @@ td.nm{
         <td></td><td></td><td></td><td></td><td></td>
         <td></td><td></td><td></td><td></td><td></td>
       </tr> -->
-    </tbody>
-  </table>
+      </tbody>
+    </table>
   </div>
 </body>
 <script type="text/javascript">
@@ -182,35 +185,35 @@ td.nm{
   //*******************************************
   // 値初期設定
   //*******************************************
-  dict.forEach(function(value) {
+  dict.forEach(function (value) {
     $('.player').append("<option value='" + value.id + "'>" + player[value.id] + "</option>");
   });
-  for(var i = 0; i < team.all; i++) {
+  for (var i = 0; i < team.all; i++) {
     $('.team').append("<option value='" + i + "'>" + team[i] + "</option>");
   }
-  for(var i = 0; i < sex.all; i++) {
+  for (var i = 0; i < sex.all; i++) {
     $('.sex').append("<option value='" + i + "'>" + sex[i] + "</option>");
   }
 
   //*******************************************
   // コンボ変更イベント
   //*******************************************
-  $('.year').change(function() {
-      year = $('.year').val();
-      if(year == 0) {
-        $(".month").prop("disabled", true);
-        $('.month').val(0);
-        month = 0;
-      } else {
-        $(".month").prop("disabled", false);
-      }
+  $('.year').change(function () {
+    year = $('.year').val();
+    if (year == 0) {
+      $(".month").prop("disabled", true);
+      $('.month').val(0);
+      month = 0;
+    } else {
+      $(".month").prop("disabled", false);
+    }
   });
-  $('.month').change(function() {
+  $('.month').change(function () {
     month = $('.month').val();
   });
-  $('.team').change(function() {
+  $('.team').change(function () {
     teamid = $('.team').val();
-    if(teamid == -1) {
+    if (teamid == -1) {
       $(".player").prop("disabled", false);
     } else {
       $(".player").prop("disabled", true);
@@ -218,9 +221,9 @@ td.nm{
       playerid = -1;
     }
   });
-  $('.player').change(function() {
+  $('.player').change(function () {
     playerid = $('.player').val();
-    if(playerid == -1) {
+    if (playerid == -1) {
       $(".team").prop("disabled", false);
       $(".sex").prop("disabled", false);
     } else {
@@ -233,61 +236,38 @@ td.nm{
       sexid = -1;
     }
   });
-  $('.sex').change(function() {
+  $('.sex').change(function () {
     sexid = $('.sex').val();
   });
 
   //*******************************************
   // 列表示・非表示チェック
   //*******************************************
-  // $(document).on('click', '#disp_spike', function() {
-  //   if($(this).children('input').prop('checked') == true) {
-  //     console.log('true');
-  //     $('.spike_cell').removeClass('col_invisible');
-  //   } else {
-  //     console.log('false');
-  //     $('.spike_cell').addClass('col_invisible');
-  //   }
-  //   // $('.block_cell').addClass('col_invisible');
-  //   // console.log('check');
-  // });
-    $('#disp_spike').change(function () {
-      setVisible('.spike_cell', $(this).prop('checked'));
-    });
-    $('#disp_serve').change(function () {
-      setVisible('.serve_cell', $(this).prop('checked'));
-    });
-    $('#disp_block').change(function () {
-      setVisible('.block_cell', $(this).prop('checked'));
-    });
-    $('#disp_reception').change(function () {
-      setVisible('.reception_cell', $(this).prop('checked'));
-    });
+  $('#disp_spike').change(function () {
+    setVisible('.spike_cell', $(this).prop('checked'));
+  });
+  $('#disp_serve').change(function () {
+    setVisible('.serve_cell', $(this).prop('checked'));
+  });
+  $('#disp_block').change(function () {
+    setVisible('.block_cell', $(this).prop('checked'));
+  });
+  $('#disp_reception').change(function () {
+    setVisible('.reception_cell', $(this).prop('checked'));
+  });
 
   function setVisible(selector, visible) {
-    if(visible) {
+    if (visible) {
       $(selector).removeClass('col_invisible');
     } else {
       $(selector).addClass('col_invisible');
     }
   }
 
-    // $(document).on('click', '#disp_spike', function () {
-    //   if ($(this).children('input').prop('checked') == true) {
-    //     console.log('true');
-    //     $('.spike_cell').removeClass('col_invisible');
-    //   } else {
-    //     console.log('false');
-    //     $('.spike_cell').addClass('col_invisible');
-    //   }
-    //   // $('.block_cell').addClass('col_invisible');
-    //   // console.log('check');
-    // });
-  
   //*******************************************
   // 抽出
   //*******************************************
-  $(document).on('click', '.extract', function() {
+  $(document).on('click', '.extract', function () {
     $('#data').children().remove();
     row = 1;
     loadData();
@@ -315,42 +295,42 @@ td.nm{
     var s = "<tr>" + header + spike + serve + block + receive + "</tr>";
     return s;
   };
-    function createSpikeData(total, point, miss) {
-      var data = "<td class='spike_cell'>" +
-        total + "</td><td class='spike_cell'>" +
-        point + "</td><td class='spike_cell'>" +
-        miss + "</td><td class='spike_cell'>" +
-        calcEffect(total, point, miss) +
-        "%</td><td class='spike_cell'>" +
-        calcDetermined(total, point) + "%</td>";
+  function createSpikeData(total, point, miss) {
+    var data = "<td class='spike_cell'>" +
+      total + "</td><td class='spike_cell'>" +
+      point + "</td><td class='spike_cell'>" +
+      miss + "</td><td class='spike_cell'>" +
+      calcEffect(total, point, miss) +
+      "%</td><td class='spike_cell'>" +
+      calcDetermined(total, point) + "%</td>";
 
-      return data;
-    }
-    function createServeData(total, point, miss) {
-      var data = "<td class='serve_cell'>" +
-        total + "</td><td class='serve_cell'>" +
-        point + "</td><td class='serve_cell'>" +
-        miss + "</td><td class='serve_cell'>" +
-        calcEffect(total, point, miss) +
-        "%</td><td class='serve_cell'>" +
-        calcDetermined(total, point) + "%</td>";
+    return data;
+  }
+  function createServeData(total, point, miss) {
+    var data = "<td class='serve_cell'>" +
+      total + "</td><td class='serve_cell'>" +
+      point + "</td><td class='serve_cell'>" +
+      miss + "</td><td class='serve_cell'>" +
+      calcEffect(total, point, miss) +
+      "%</td><td class='serve_cell'>" +
+      calcDetermined(total, point) + "%</td>";
 
-      return data;
-    }
-    function createBlockData(total, point, miss) {
-      var data = "<td class='block_cell'>" +
-        total + "</td><td class='block_cell'>" +
-        point + "</td><td class='block_cell'>" +
-        miss + "</td><td class='block_cell'>" +
-        calcEffect(total, point, miss) +
-        "%</td><td class='block_cell'>" +
-        calcDetermined(total, point) + "%</td>";
+    return data;
+  }
+  function createBlockData(total, point, miss) {
+    var data = "<td class='block_cell'>" +
+      total + "</td><td class='block_cell'>" +
+      point + "</td><td class='block_cell'>" +
+      miss + "</td><td class='block_cell'>" +
+      calcEffect(total, point, miss) +
+      "%</td><td class='block_cell'>" +
+      calcDetermined(total, point) + "%</td>";
 
-      return data;
-    }
+    return data;
+  }
   function calcEffect(total, point, miss) {
     var v;
-    if(total > 0) {
+    if (total > 0) {
       v = ((point - miss) / total) * 100;
       v = Math.round(v * 10) / 10;
     } else {
@@ -360,7 +340,7 @@ td.nm{
   }
   function calcDetermined(total, point) {
     var v;
-    if(total > 0) {
+    if (total > 0) {
       v = (point / total) * 100;
       v = Math.round(v * 10) / 10;
     } else {
@@ -382,7 +362,7 @@ td.nm{
   }
   function calcReceiveEffect(total, a, b, miss) {
     var v;
-    if(total > 0) {
+    if (total > 0) {
       v = ((a + b - miss) / total) * 100;
       v = Math.round(v * 10) / 10;
     } else {
@@ -392,7 +372,7 @@ td.nm{
   }
   function calcReceiveDetermined(total, a, b) {
     var v;
-    if(total > 0) {
+    if (total > 0) {
       v = ((a + b) / total) * 100;
       v = Math.round(v * 10) / 10;
     } else {
@@ -420,26 +400,26 @@ td.nm{
 
     var disp = false;
 
-    if(year == 0) {
+    if (year == 0) {
       disp = true;
-    } else if(yearData.year == year) {
+    } else if (yearData.year == year) {
       disp = true;
     }
 
-    if(disp) {
+    if (disp) {
       yearData.data.forEach(eachMonth);
     }
   };
   function eachMonth(monthData) {
     console.log("month[" + monthData.month + "]");
     var disp = false;
-    if(month == 0) {
+    if (month == 0) {
       disp = true;
-    } else if(monthData.month == month) {
+    } else if (monthData.month == month) {
       disp = true;
     }
 
-    if(disp) {
+    if (disp) {
       console.log("match");
       monthData.data.forEach(eachPlayer);
     }
@@ -447,33 +427,33 @@ td.nm{
   function eachPlayer(playerdata) {
     console.log("name[" + player[playerdata.playerid] + "]");
     var disp = false;
-    if(playerid == -1) {
-      if(teamid == -1) {
+    if (playerid == -1) {
+      if (teamid == -1) {
         disp = true;
       } else {
         var belongTeamId = getTeamId(playerdata.playerid);
         console.log("teamid[" + teamid + "] belongTeamId[" + belongTeamId + "]");
-        if(belongTeamId == teamid) {
+        if (belongTeamId == teamid) {
           console.log("team match");
           disp = true;
         }
       }
-      if(disp) {
+      if (disp) {
         console.log("sex判定");
-        if(sexid != -1) {
+        if (sexid != -1) {
           var sex = getSexId(playerdata.playerid);
           console.log("sex[" + sex + "]");
-          if(sex != sexid) {
+          if (sex != sexid) {
             console.log("sex mismatch");
             disp = false;
           }
         }
       }
-    } else if(playerid == playerdata.playerid) {
+    } else if (playerid == playerdata.playerid) {
       disp = true;
     }
-    
-    if(disp) {
+
+    if (disp) {
       console.log("match player");
       var tableObj = $("#data");
       tableObj.append(createNewRow(row, playerdata));
@@ -485,8 +465,8 @@ td.nm{
   //*******************************************
   function getTeamId(playerId) {
     var id = -1;
-    dict.forEach(function(value) {
-      if(playerId == value.id) {
+    dict.forEach(function (value) {
+      if (playerId == value.id) {
         id = value.teamid;
       }
     });
@@ -494,8 +474,8 @@ td.nm{
   }
   function getSexId(playerId) {
     var id = -1;
-    dict.forEach(function(value) {
-      if(playerId == value.id) {
+    dict.forEach(function (value) {
+      if (playerId == value.id) {
         id = value.sex;
       }
     });
@@ -504,9 +484,10 @@ td.nm{
 
   loadData();
 /*
-  別ページでjsonを読み込んで値編集する（何も入力しない場合は0から）
-  編集後はjsonを出力する。
-  それをjsファイルに手動反映
-*/
+      別ページでjsonを読み込んで値編集する（何も入力しない場合は0から）
+      編集後はjsonを出力する。
+      それをjsファイルに手動反映
+    */
 </script>
+
 </html>

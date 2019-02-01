@@ -15,6 +15,7 @@
 </head>
 <body>
 	<div id="chart"></div>
+	<div id="chart2"></div>
 </body>
 <script>
 var chart = c3.generate({
@@ -26,5 +27,12 @@ var chart = c3.generate({
       ]
     }
 });
+
+var chart2 = c3.generate({ 
+bindto: '#chart2',
+data: { columns: [ ['data1', 30], ['data2', 120], ],
+	type : 'donut' },
+	donut: { title: "Iris Petal Width" } }
+	); 
 </script>
 </html>

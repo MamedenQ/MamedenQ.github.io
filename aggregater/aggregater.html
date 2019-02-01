@@ -4,15 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <script src="../jquery-3.3.1.min.js" charset="utf-8"></script>
-
+  <link href="../bootstrap-4.2.1-dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="../bootstrap-4.2.1-dist/js/bootstrap.min.js"></script>
+  <!-- <script src="../d3js/d3.v3.min.js"></script> -->
+  <script src="../listjs/list.js"></script>
   <script src="./data2019.js" charset="utf-8"></script>
   <script src="./data2020.js" charset="utf-8"></script>
   <script src="./dict.js" charset="utf-8"></script>
-
-  <link href="../bootstrap-4.2.1-dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="../bootstrap-4.2.1-dist/js/bootstrap.min.js"></script>
-<script src="../d3js/d3.v3.min.js"></script>
-<script src="../listjs/list.js"></script>
 
   <style type="text/css">
     /*
@@ -57,13 +55,14 @@ td:first-child{
     .col_invisible {
       display: none;
     }
-    
+
     .sort.desc:after {
-  content:"▼";
-}
-.sort.asc:after {
-  content:"▲";
-}
+      content: "▼";
+    }
+
+    .sort.asc:after {
+      content: "▲";
+    }
   </style>
 </head>
 
@@ -652,17 +651,17 @@ td:first-child{
   }
 
   loadData();
-  
-  var options = {
-  valueNames: [ 'spike_effect','spike_det', 'serve_effect', 'serve_det', 'block_effect', 'block_det' ]
-};
-var userList = new List('player_list', options);
 
-/*
-                      別ページでjsonを読み込んで値編集する（何も入力しない場合は0から）
-                      編集後はjsonを出力する。
-                      それをjsファイルに手動反映
-                    */
+  var options = {
+    valueNames: ['spike_effect', 'spike_det', 'serve_effect', 'serve_det', 'block_effect', 'block_det']
+  };
+  var userList = new List('player_list', options);
+
+  /*
+                        別ページでjsonを読み込んで値編集する（何も入力しない場合は0から）
+                        編集後はjsonを出力する。
+                        それをjsファイルに手動反映
+                      */
 </script>
 
 </html>

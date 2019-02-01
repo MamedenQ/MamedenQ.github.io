@@ -57,6 +57,13 @@ td:first-child{
     .col_invisible {
       display: none;
     }
+    
+    .sort.desc:after {
+  content:"▼";
+}
+.sort.asc:after {
+  content:"▲";
+}
   </style>
 </head>
 
@@ -125,7 +132,7 @@ td:first-child{
       <thead>
         <tr>
           <th colspan="2">基本情報</th>
-          <th colspan="5" class='spike_cell sort' data-sort="spike_total">スパイク</th>
+          <th colspan="5" class='spike_cell'>スパイク</th>
           <th colspan="5" class='serve_cell'>サーブ</th>
           <th colspan="5" class='block_cell'>ブロック</th>
           <th colspan="6" class='reception_cell'>レセプション</th>
@@ -137,20 +144,20 @@ td:first-child{
           <th class='spike_cell'>総<br>数</th>
           <th class='spike_cell'>得<br>点</th>
           <th class='spike_cell'>失<br>点</th>
-          <th class='spike_cell'>効<br>果<br>率</th>
-          <th class='spike_cell'>決<br>定<br>率</th>
+          <th class='spike_cell sort' data-sort="spike_effect">効<br>果<br>率</th>
+          <th class='spike_cell sort' data-sort="spike_det">決<br>定<br>率</th>
 
           <th class='serve_cell'>総<br>数</th>
           <th class='serve_cell'>得<br>点</th>
           <th class='serve_cell'>失<br>点</th>
-          <th class='serve_cell'>効<br>果<br>率</th>
-          <th class='serve_cell'>決<br>定<br>率</th>
+          <th class='serve_cell sort' data-sort="serve_effect">効<br>果<br>率</th>
+          <th class='serve_cell sort' data-sort="serve_det">決<br>定<br>率</th>
 
           <th class='block_cell'>総<br>数</th>
           <th class='block_cell'>得<br>点</th>
           <th class='block_cell'>失<br>点</th>
-          <th class='block_cell'>効<br>果<br>率</th>
-          <th class='block_cell'>決<br>定<br>率</th>
+          <th class='block_cell sort' data-sort="block_effect">効<br>果<br>率</th>
+          <th class='block_cell sort' data-sort="block_det">決<br>定<br>率</th>
 
           <th class='reception_cell'>総<br>数</th>
           <th class='reception_cell'>A<br>カ<br>ッ<br>ト</th>
@@ -305,12 +312,12 @@ td:first-child{
     return s;
   };
   function createSpikeData(total, point, miss) {
-    var data = "<td class='spike_cell spike_total'>" +
+    var data = "<td class='spike_cell'>" +
       total + "</td><td class='spike_cell'>" +
       point + "</td><td class='spike_cell'>" +
-      miss + "</td><td class='spike_cell'>" +
+      miss + "</td><td class='spike_cell spike_effect'>" +
       calcEffect(total, point, miss) +
-      "%</td><td class='spike_cell'>" +
+      "%</td><td class='spike_cell  spike_det'>" +
       calcDetermined(total, point) + "%</td>";
 
     return data;
@@ -319,9 +326,9 @@ td:first-child{
     var data = "<td class='serve_cell'>" +
       total + "</td><td class='serve_cell'>" +
       point + "</td><td class='serve_cell'>" +
-      miss + "</td><td class='serve_cell'>" +
+      miss + "</td><td class='serve_cell serve_effect'>" +
       calcEffect(total, point, miss) +
-      "%</td><td class='serve_cell'>" +
+      "%</td><td class='serve_cell  serve_det'>" +
       calcDetermined(total, point) + "%</td>";
 
     return data;
@@ -330,9 +337,9 @@ td:first-child{
     var data = "<td class='block_cell'>" +
       total + "</td><td class='block_cell'>" +
       point + "</td><td class='block_cell'>" +
-      miss + "</td><td class='block_cell'>" +
+      miss + "</td><td class='block_cell block_effect'>" +
       calcEffect(total, point, miss) +
-      "%</td><td class='block_cell'>" +
+      "%</td><td class='block_cell  block_det'>" +
       calcDetermined(total, point) + "%</td>";
 
     return data;
@@ -647,7 +654,7 @@ td:first-child{
   loadData();
   
   var options = {
-  valueNames: [ 'spike_total' ]
+  valueNames: [ 'spike_effect','spike_det', 'serve_effect', 'serve_det', 'block_effect', 'block_det' ]
 };
 var userList = new List('player_list', options);
 

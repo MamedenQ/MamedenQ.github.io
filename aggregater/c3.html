@@ -30,9 +30,10 @@ var chart = c3.generate({
 
 var chart2 = c3.generate({ 
 bindto: '#chart2',
-data: { columns: [ ['data1', 30], ['data2', 120], ],
+data: { columns: [ ['spike', 15], ['block', 20], 
+['serve', 10],],
 	type : 'donut' },
-	donut: { title: "Iris Petal Width" } }
+	donut: { title: "得点要因" } }
 	); 
 </script>
 </html>

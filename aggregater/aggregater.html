@@ -12,6 +12,8 @@
   <script src="./data2020.js" charset="utf-8"></script>
   <script src="./dict.js" charset="utf-8"></script>
 
+  <script src="./common.js" charset="utf-8"></script>
+
   <style type="text/css">
     /*
   table.aggregate_table{
@@ -190,6 +192,9 @@ td:first-child{
   var extractSexId = -1;
   var row = 1;
 
+    var searchYear;
+    var searchMonth;
+
   //*******************************************
   // 値初期設定
   //*******************************************
@@ -292,7 +297,7 @@ td:first-child{
   // 一覧の行追加
   //*******************************************
   function createNewRow(newRow, playerdata) {
-    var header = "<td>" + newRow + "</td><td class='nm'>" + player[playerdata.playerid] + "</td>";
+    var header = "<td>" + newRow + "</td><td class='nm'><a href='./playerdetail.html?year=" + searchYear + "&month=" + searchMonth + "&playerid=" + playerdata.playerid + "'>" + player[playerdata.playerid] + "</a></td>";
     var spike = createSpikeData(playerdata.spike.total,
       playerdata.spike.point,
       playerdata.spike.miss);
@@ -316,7 +321,7 @@ td:first-child{
       point + "</td><td class='spike_cell'>" +
       miss + "</td><td class='spike_cell spike_effect'>" +
       calcEffect(total, point, miss) +
-      "%</td><td class='spike_cell  spike_det'>" +
+      "</td><td class='spike_cell  spike_det'>" +
       calcDetermined(total, point) + "%</td>";
 
     return data;
@@ -327,7 +332,7 @@ td:first-child{
       point + "</td><td class='serve_cell'>" +
       miss + "</td><td class='serve_cell serve_effect'>" +
       calcEffect(total, point, miss) +
-      "%</td><td class='serve_cell  serve_det'>" +
+      "</td><td class='serve_cell  serve_det'>" +
       calcDetermined(total, point) + "%</td>";
 
     return data;
@@ -338,21 +343,12 @@ td:first-child{
       point + "</td><td class='block_cell'>" +
       miss + "</td><td class='block_cell block_effect'>" +
       calcEffect(total, point, miss) +
-      "%</td><td class='block_cell  block_det'>" +
+      "</td><td class='block_cell  block_det'>" +
       calcDetermined(total, point) + "%</td>";
 
     return data;
   }
-  function calcEffect(total, point, miss) {
-    var v;
-    if (total > 0) {
-      v = ((point - miss) / total) * 100;
-      v = Math.round(v * 10) / 10;
-    } else {
-      v = "0.0";
-    }
-    return v;
-  }
+  
   function calcDetermined(total, point) {
     var v;
     if (total > 0) {
@@ -400,107 +396,14 @@ td:first-child{
   // json読み込み
   //*******************************************
   function loadData() {
-    // var data = [];
-    // data.push(data2019);
-    // data.push(data2020);
-
-    // data.forEach(eachYear);
     loadData2();
     setAllVisible();
   };
 
   function loadData2() {
-    var data = [];
-    // var idx = 1;
-
-    // そのうちdictの順番を入れ替えて表示順調整する予定のため、
-    // dict基準でjson作る
-    dict.forEach(function (dictData) {
-      if (isDispPlayer(dictData.id)) {
-        data.push({
-          "playerid": dictData.id,
-          "spike": {
-            "total": 0,
-            "point": 0,
-            "miss": 0,
-            "etc": 0,
-          },
-          "serve": {
-            "total": 0,
-            "point": 0,
-            "miss": 0,
-            "etc": 0,
-          },
-          "block": {
-            "total": 0,
-            "point": 0,
-            "miss": 0,
-            "etc": 0,
-          },
-          "receive": {
-            "total": 0,
-            "a": 0,
-            "b": 0,
-            "miss": 0,
-            "etc": 0,
-          },
-        });
-        // idx++;
-      }
-    });
-
-    var yearData = [];
-    yearData.push(data2019);
-    yearData.push(data2020);
-
-    yearData.forEach(function (yearData) {
-      if (isDispYear(yearData.year)) {
-        yearData.data.forEach(function (monthData) {
-          if (isDispMonth(monthData.month)) {
-            monthData.data.forEach(function (playerData) {
-              if (isDispPlayer(playerData.playerid)) {
-                var dt = getPlayerData(playerData.playerid);
-                add(dt.spike, playerData.spike);
-                add(dt.serve, playerData.serve);
-                add(dt.block, playerData.block);
-                addReceive(dt.receive, playerData.receive);
-              }
-
-              function add(dt, addDt) {
-                dt.point += addDt.point;
-                dt.miss += addDt.miss;
-                dt.etc += addDt.etc;
-                dt.total += addDt.total;
-              };
-              function addReceive(dt, addDt) {
-                dt.a += addDt.a;
-                dt.b += addDt.b;
-                dt.miss += addDt.miss;
-                dt.etc += addDt.etc;
-                dt.total += addDt.total;
-              };
-            });
-          }
-        });
-      }
-    });
-
-    function getPlayerData(playerid) {
-      // {}でhash作っておいてそこからアクセスした方が早い？
-      var dt = {};
-      var hit = false;
-
-      data.forEach(function (playerData) {
-        if (!hit) {
-          if (playerData.playerid == playerid) {
-            dt = playerData;
-            hit = true;
-          }
-        }
-      });
-
-      return dt;
-    }
+    var data = loadJson(extractPlayerId, extractYear, extractMonth, extractTeamId, extractSexId);
+    searchYear = extractYear;
+    searchMonth = extractMonth;
 
     data.forEach(function (playerData) {
       var tableObj = $("#data");
@@ -509,153 +412,13 @@ td:first-child{
     });
   }
 
-  //*******************************************
-  // 判定処理
-  //*******************************************
-  function isDispPlayer(playerid) {
-    var disp = false;
-    if (playerid == -1) {
-      if (extractTeamId == -1) {
-        disp = true;
-      } else {
-        var belongTeamId = getTeamId(playerid);
-        if (belongTeamId == extractTeamId) {
-          disp = true;
-        }
-      }
-      if (disp) {
-        if (extractSexId != -1) {
-          var sex = getSexId(playerid);
-          if (sex != extractSexId) {
-            disp = false;
-          }
-        }
-      }
-    } else if (playerid == playerid) {
-      disp = true;
-    }
-
-    return disp;
-  }
-  function isDispYear(year) {
-    var disp = false;
-
-    if (extractYear == 0) {
-      disp = true;
-    } else if (year == extractYear) {
-      disp = true;
-    }
-
-    return disp;
-  }
-  function isDispMonth(month) {
-    var disp = false;
-
-    if (extractMonth == 0) {
-      disp = true;
-    } else if (month == extractMonth) {
-      disp = true;
-    }
-
-    return disp;
-  }
-
-  //*******************************************
-  // json繰り返し項目の処理
-  //*******************************************
-  function eachYear(yearData) {
-    console.log("year[" + yearData.year + "]");
-
-    var disp = false;
-
-    if (extractYear == 0) {
-      disp = true;
-    } else if (yearData.year == extractYear) {
-      disp = true;
-    }
-
-    if (disp) {
-      yearData.data.forEach(eachMonth);
-    }
-  };
-  function eachMonth(monthData) {
-    console.log("month[" + monthData.month + "]");
-    var disp = false;
-    if (extractMonth == 0) {
-      disp = true;
-    } else if (monthData.month == extractMonth) {
-      disp = true;
-    }
-
-    if (disp) {
-      console.log("match");
-      monthData.data.forEach(eachPlayer);
-    }
-  };
-  function eachPlayer(playerdata) {
-    console.log("name[" + player[playerdata.playerid] + "]");
-    var disp = false;
-    if (extractPlayerId == -1) {
-      if (extractTeamId == -1) {
-        disp = true;
-      } else {
-        var belongTeamId = getTeamId(playerdata.playerid);
-        console.log("teamid[" + extractTeamId + "] belongTeamId[" + belongTeamId + "]");
-        if (belongTeamId == extractTeamId) {
-          console.log("team match");
-          disp = true;
-        }
-      }
-      if (disp) {
-        console.log("sex判定");
-        if (extractSexId != -1) {
-          var sex = getSexId(playerdata.playerid);
-          console.log("sex[" + sex + "]");
-          if (sex != extractSexId) {
-            console.log("sex mismatch");
-            disp = false;
-          }
-        }
-      }
-    } else if (extractPlayerId == playerdata.playerid) {
-      disp = true;
-    }
-
-    if (disp) {
-      console.log("match player");
-      var tableObj = $("#data");
-      tableObj.append(createNewRow(row, playerdata));
-      row++;
-    }
-  };
-  //*******************************************
-  // jsonから抽出
-  //*******************************************
-  function getTeamId(playerId) {
-    var id = -1;
-    dict.forEach(function (value) {
-      if (playerId == value.id) {
-        id = value.teamid;
-      }
-    });
-    return id;
-  }
-  function getSexId(playerId) {
-    var id = -1;
-    dict.forEach(function (value) {
-      if (playerId == value.id) {
-        id = value.sex;
-      }
-    });
-    return id;
-  }
-
   loadData();
 
-  var options = {
-    valueNames: ['spike_effect', 'spike_det', 'serve_effect', 'serve_det', 'block_effect', 'block_det']
-  };
-  var userList = new List('player_list', options);
+  // ソート機能は一旦停止
+  // var options = {
+  //   valueNames: ['spike_effect', 'spike_det', 'serve_effect', 'serve_det', 'block_effect', 'block_det']
+  // };
+  // var userList = new List('player_list', options);
 
   /*
                         別ページでjsonを読み込んで値編集する（何も入力しない場合は0から）

@@ -15,56 +15,120 @@
 	<!-- Load d3.js and c3.js -->
 	<script src="../d3js/d3.v5.min.js" charset="utf-8"></script>
 	<script src="../c3js/c3.js"></script>
+
+	<script src="./data2019.js" charset="utf-8"></script>
+	<script src="./data2020.js" charset="utf-8"></script>
+	<script src="./dict.js" charset="utf-8"></script>
+
+	<script src="./common.js" charset="utf-8"></script>
 </head>
 
 <body>
-	<div id="chart" style="width:30%"></div>
+	<div id="chart1" style="width:30%"></div>
 	<div id="chart2" style="width:30%"></div>
 </body>
 <script>
-	var chart = c3.generate({
-		bindto: '#chart',
-		data: {
-			columns: [
-				['data1', 30, 200, 100, 400, 150, 250],
-				['data2', 50, 20, 10, 40, 15, 25]
-			]
-		}
-	});
+	// IF
+	// プレーヤデータ
+	// 絞り込みデータ
+	// 年月日＞仕様は一緒
+	// var extractYear = 2019;
+	// var extractMonth = 1;
+	// var extractPlayerId = -1;
 
-	var chart2 = c3.generate({
-		bindto: '#chart2',
-		data: {
-			columns: [['spike', 15], ['block', 20],
-			['serve', 10],],
-			type: 'donut'
-		},
-		donut: { title: "得点要因" }
+	// var chart = c3.generate({
+	// 	bindto: '#chart',
+	// 	data: {
+	// 		columns: [
+	// 			['data1', 30, 200, 100, 400, 150, 250],
+	// 			['data2', 50, 20, 10, 40, 15, 25]
+	// 		]
+	// 	}
+	// });
+
+	// var chart2 = c3.generate({
+	// 	bindto: '#chart2',
+	// 	data: {
+	// 		columns: [['spike', 15], ['block', 20],
+	// 		['serve', 10],],
+	// 		type: 'donut'
+	// 	},
+	// 	donut: { title: "得点要因" }
+	// }
+	// );
+
+	function loadData() {
+		var query = getQuery();
+		// console.log(query);
+
+		var data = loadJson(query.playerid, query.year, query.month, -1, -1);
+
+		// data.forEach(function (playerData) {
+		// 	// var tableObj = $("#data");
+		// 	// tableObj.append(createNewRow(row, playerData));
+		// 	// row++;
+
+
+		// 	// データ用のjsonを作り上げる
+		// 	createPointDistribution()
+		// });
+		var player = data[0];
+		console.log(player);
+		createPointDistribution(player.spike.point, player.block.point, player.serve.point);
+
+		var spikeEffect = calcEffectNum(player.spike.total, player.spike.point, player.spike.miss);
+		var serveEffect = calcEffectNum(player.serve.total, player.serve.point, player.serve.miss);
+		var blockEffect = calcEffectNum(player.block.total, player.block.point, player.block.miss);
+
+		createEffectDistribution(spikeEffect, blockEffect, serveEffect);
+		// data.array.forEach(element => {
+		// 	if(element.playerid == query.playerid) {
+
+		// 	}
+		// });
+
 	}
-	);
 
-	// クエリ文字列取得
-	function getQuery() {
-		var data = {};
-
-		var query = $(location).attr('search');
-		var params = query.split("?");
-		params = params[1].split("&");
-
-		for (i = 0; i < params.length; i++) {
-			var vol = params[i].split("=");
-			data[vol[0]] = vol[1];
+	// 得点分布（どの得点要因が多いか）
+	// 効果率分布（全体の効果率のうち、何がどれぐらいの割合か）
+	// ドーナツで表す
+	// 積み上げで月ごとで出せるようになると経過分析ができる
+	function createPointDistribution(spike, block, serve) {
+		// console.log("spike" + spike);
+		// console.log("block" + block);
+		// console.log("serve" + serve);
+		var chart2 = c3.generate({
+			bindto: '#chart1',
+			data: {
+				columns: [['spike', spike], ['block', block],
+				['serve', serve],],
+				type: 'donut'
+			},
+			donut: { title: "得点割合" }
 		}
-
-		var hash = $(location).attr('hash');
-		var h = hash.split("#");
-
-		data['#'] = h[1];
-
-		return data;
+		);
 	}
 
-	console.log(getQuery());
+	function createEffectDistribution(spike, block, serve) {
+		// console.log("spike" + spike);
+		// console.log("block" + block);
+		// console.log("serve" + serve);
+		var chart2 = c3.generate({
+			bindto: '#chart2',
+			data: {
+				columns: [['spike', spike], ['block', block],
+				['serve', serve],],
+				type: 'donut'
+			},
+			donut: { title: "得点割合" }
+		}
+		);
+	}
+
+	loadData();
+
+	// var data = getQuery();
+	// console.log(data);
 </script>
 
 </html>

@@ -349,16 +349,6 @@ td:first-child{
     return data;
   }
   
-  function calcDetermined(total, point) {
-    var v;
-    if (total > 0) {
-      v = (point / total) * 100;
-      v = Math.round(v * 10) / 10;
-    } else {
-      v = "0.0";
-    }
-    return v;
-  }
   function createReceiveData(total, a, b, miss) {
     var data = "<td class='reception_cell'>" +
       total + "</td><td class='reception_cell'>" +
@@ -406,9 +396,11 @@ td:first-child{
     searchMonth = extractMonth;
 
     data.forEach(function (playerData) {
+    if (!playerData.isEmpty) {
       var tableObj = $("#data");
       tableObj.append(createNewRow(row, playerData));
       row++;
+    }
     });
   }
 

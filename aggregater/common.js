@@ -9,6 +9,7 @@ function loadJson(_playerid, _year, _month, _teamid, _sex) {
         if (isDispPlayer(_playerid, _teamid, _sex, dictData.id)) {
             data.push({
                 "playerid": dictData.id,
+                "isEmpty": true,
                 "spike": {
                     "total": 0,
                     "point": 0,
@@ -56,6 +57,7 @@ function loadJson(_playerid, _year, _month, _teamid, _sex) {
                             add(dt.serve, playerData.serve);
                             add(dt.block, playerData.block);
                             addReceive(dt.receive, playerData.receive);
+                            dt.isEmpty = false;
                         }
 
                         function add(dt, addDt) {
@@ -217,3 +219,14 @@ function calcEffectNum(total, point, miss) {
 
     return v;
 }
+function calcDetermined(total, point) {
+    var v;
+    if (total > 0) {
+      v = (point / total) * 100;
+      v = Math.round(v * 10) / 10;
+    } else {
+      v = "0.0";
+    }
+    return v;
+  }
+  

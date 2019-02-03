@@ -21,12 +21,30 @@
 	<script src="./dict.js" charset="utf-8"></script>
 
 	<script src="./common.js" charset="utf-8"></script>
+	
+	<style>
+	.clearfix::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+.graph {
+float:left;
+width:50%;
+}
+	</style>
 </head>
 
 <body>
-	<div id="chart1" style="width:30%;float:left"></div>
-	<div id="chart2" style="width:30%;float:left"></div>
-	<div id="chart3" style="width:30%;float:left"></div>
+<br /><br />
+<div class="clearfix">
+	<div id="chart1" class="graph"></div>
+	<div id="chart4" class="graph"></div>
+		</div><br /><br />
+<div class="clearfix">
+	<div id="chart2" class="graph"></div>
+
+	<div id="chart3" class="graph"></div>
 </body>
 <script>
 	// IF
@@ -74,7 +92,7 @@
 		// 	createPointDistribution()
 		// });
 		var player = data[0];
-		console.log(player);
+		//console.log(player);
 		createPointDistribution(player.spike.point, player.block.point, player.serve.point);
 
 		var spikeEffect = calcEffectNum(player.spike.total, player.spike.point, player.spike.miss);
@@ -85,8 +103,28 @@
 
 		createMissDistribution(player.spike.miss, player.block.miss, player.serve.miss);
 
+    var spikeDet = calcDetermined(player.spike.total, player.spike.point);
+		var serveDet = calcDetermined(player.serve.total, player.serve.point);
+		var blockDet = calcDetermined(player.block.total, player.block.point);
+		
+	  createDetDistribution(spikeDet, serveDet, blockDet);
 	}
 
+function createDetDistribution(spike, block, serve) {
+		// console.log("spike" + spike);
+		// console.log("block" + block);
+		// console.log("serve" + serve);
+		var chart2 = c3.generate({
+			bindto: '#chart4',
+			data: {
+				columns: [['spike', spike], ['block', block],
+				['serve', serve],],
+				type: 'donut'
+			},
+			donut: { title: "決定率割合" }
+		}
+		);
+	}
 	// 得点分布（どの得点要因が多いか）
 	// 効果率分布（全体の効果率のうち、何がどれぐらいの割合か）
 	// ドーナツで表す

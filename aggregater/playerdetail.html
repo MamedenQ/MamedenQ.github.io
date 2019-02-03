@@ -24,8 +24,9 @@
 </head>
 
 <body>
-	<div id="chart1" style="width:30%"></div>
-	<div id="chart2" style="width:30%"></div>
+	<div id="chart1" style="width:30%;float:left"></div>
+	<div id="chart2" style="width:30%;float:left"></div>
+	<div id="chart3" style="width:30%;float:left"></div>
 </body>
 <script>
 	// IF
@@ -81,11 +82,8 @@
 		var blockEffect = calcEffectNum(player.block.total, player.block.point, player.block.miss);
 
 		createEffectDistribution(spikeEffect, blockEffect, serveEffect);
-		// data.array.forEach(element => {
-		// 	if(element.playerid == query.playerid) {
 
-		// 	}
-		// });
+		createMissDistribution(player.spike.miss, player.block.miss, player.serve.miss);
 
 	}
 
@@ -98,7 +96,7 @@
 		// console.log("block" + block);
 		// console.log("serve" + serve);
 		var chart2 = c3.generate({
-			bindto: '#chart1',
+			bindto: '#chart2',
 			data: {
 				columns: [['spike', spike], ['block', block],
 				['serve', serve],],
@@ -114,13 +112,29 @@
 		// console.log("block" + block);
 		// console.log("serve" + serve);
 		var chart2 = c3.generate({
-			bindto: '#chart2',
+			bindto: '#chart1',
 			data: {
 				columns: [['spike', spike], ['block', block],
 				['serve', serve],],
 				type: 'donut'
 			},
-			donut: { title: "得点割合" }
+			donut: { title: "効果率割合" }
+		}
+		);
+	}
+
+	function createMissDistribution(spike, block, serve) {
+		// console.log("spike" + spike);
+		// console.log("block" + block);
+		// console.log("serve" + serve);
+		var chart2 = c3.generate({
+			bindto: '#chart3',
+			data: {
+				columns: [['spike', spike], ['block', block],
+				['serve', serve],],
+				type: 'donut'
+			},
+			donut: { title: "ミス割合" }
 		}
 		);
 	}

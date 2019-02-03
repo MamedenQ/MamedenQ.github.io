@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <script src="../jquery-3.3.1.min.js" charset="utf-8"></script>
+
+    <!-- <script src="./data2019.js" charset="utf-8"></script>
+    <script src="./data2020.js" charset="utf-8"></script>
+
+    <script src="./common.js" charset="utf-8"></script> -->
+    <script src="./dict.js" charset="utf-8"></script>
+</head>
+
+<body>
+    <!-- <textarea id="inputjson"></textarea>
+    <br>
+    <button id="in" class="btn btn-primary">読み込み</button> -->
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>名前</th>
+            </tr>
+        </thead>
+        <tbody id="data">
+        </tbody>
+    </table>
+    <!-- <button id="add" class="btn btn-primary">追加</button>
+    <br> -->
+    <button id="out" class="btn btn-primary">書き込み</button>
+    <br>
+    <textarea id="outputjson"></textarea>
+</body>
+<script>
+    // $(document).on('click', '#add', function () {
+    //     var r = "<tr><th>" + idx + "</th><th><input class='player_name' type='text' value='' playerid='" + dictData.id + "'></th></tr>"
+    //     var tableObj = $("#data");
+    //     tableObj.append(r);
+    //     idx++;
+    // });
+    $(document).on('click', '#out', function () {
+        var data = createJsonPlayerData();
+        $('#outputjson').val(JSON.stringify(data, null, "    "));
+    });
+    function createJsonPlayerData() {
+        var json = {};
+        $(".player_name").each(function () {
+            var id = $(this).attr('playerid');
+            var v = $(this).val();
+            json[id] = v;
+        });
+
+        return json;
+    }
+    var idx = 1;
+    function loadData() {
+        dict.forEach(function (dictData) {
+            var tableObj = $("#data");
+            var r = "<tr><th>" + idx + "</th><th><input class='player_name' type='text' value='" + player[dictData.id] + "' playerid='" + dictData.id + "'></th></tr>"
+            tableObj.append(r);
+            idx++;
+        });
+    }
+
+    loadData();
+</script>
+
+</html>

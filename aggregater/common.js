@@ -204,6 +204,8 @@ function calcEffect(total, point, miss) {
     var style = "";
     if (Number(v) < 0) {
         v = "<span style='color:red'>" + v + "%</span>";
+    } else {
+        v = "<span style=''>" + v + "%</span>";
     }
 
     return v;

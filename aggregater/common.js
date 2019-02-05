@@ -14,12 +14,21 @@ function loadJson(_playerid, _year, _month, _teamid, _sex) {
                     "total": 0,
                     "point": 0,
                     "miss": 0,
+                    "miss_detail": {
+                        "net": 0,
+                        "out": 0,
+                        "block": 0
+                    },
                     "etc": 0,
                 },
                 "serve": {
                     "total": 0,
                     "point": 0,
                     "miss": 0,
+                    "miss_detail": {
+                        "net": 0,
+                        "out": 0
+                    },
                     "etc": 0,
                 },
                 "block": {
@@ -42,7 +51,7 @@ function loadJson(_playerid, _year, _month, _teamid, _sex) {
 
     var yearData = [];
     yearData.push(data2019);
-    yearData.push(data2020);
+    // yearData.push(data2020);
 
     yearData.forEach(function (yearData) {
         if (isDispYear(_year, yearData.year)) {
@@ -51,10 +60,15 @@ function loadJson(_playerid, _year, _month, _teamid, _sex) {
                     monthData.data.forEach(function (playerData) {
                         if (isDispPlayer(_playerid, _teamid, _sex, playerData.playerid)) {
                             var dt = getPlayerData(playerData.playerid);
+                            if ("playerid" in dt) {
+                            } else {
+                                console.log('no base data!!');
+                                return;
+                            }
                             // console.log("dt");
                             // console.log(dt);
-                            add(dt.spike, playerData.spike);
-                            add(dt.serve, playerData.serve);
+                            addSpike(dt.spike, playerData.spike);
+                            addServe(dt.serve, playerData.serve);
                             add(dt.block, playerData.block);
                             addReceive(dt.receive, playerData.receive);
                             dt.isEmpty = false;
@@ -65,6 +79,23 @@ function loadJson(_playerid, _year, _month, _teamid, _sex) {
                             dt.miss += addDt.miss;
                             dt.etc += addDt.etc;
                             dt.total += addDt.total;
+                        };
+                        function addSpike(dt, addDt) {
+                            dt.point += addDt.point;
+                            dt.miss += addDt.miss;
+                            dt.etc += addDt.etc;
+                            dt.total += addDt.total;
+                            dt.miss_detail.net += addDt.miss_detail.net;
+                            dt.miss_detail.out += addDt.miss_detail.out;
+                            dt.miss_detail.block += addDt.miss_detail.block;
+                        };
+                        function addServe(dt, addDt) {
+                            dt.point += addDt.point;
+                            dt.miss += addDt.miss;
+                            dt.etc += addDt.etc;
+                            dt.total += addDt.total;
+                            dt.miss_detail.net += addDt.miss_detail.net;
+                            dt.miss_detail.out += addDt.miss_detail.out;
                         };
                         function addReceive(dt, addDt) {
                             dt.a += addDt.a;
@@ -205,6 +236,7 @@ function calcEffect(total, point, miss) {
     if (Number(v) < 0) {
         v = "<span style='color:red'>" + v + "%</span>";
     } else {
+        console.log(v);
         v = "<span style=''>" + v + "%</span>";
     }
 
@@ -216,19 +248,18 @@ function calcEffectNum(total, point, miss) {
         v = ((point - miss) / total) * 100;
         v = Math.round(v * 10) / 10;
     } else {
-        v = "0.0";
+        v = 0;
     }
 
-    return v;
+    return v.toFixed(1);
 }
 function calcDetermined(total, point) {
     var v;
     if (total > 0) {
-      v = (point / total) * 100;
-      v = Math.round(v * 10) / 10;
+        v = (point / total) * 100;
+        v = Math.round(v * 10) / 10;
     } else {
-      v = "0.0";
+        v = 0;
     }
-    return v;
-  }
-  
+    return v.toFixed(1);
+}

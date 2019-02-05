@@ -129,10 +129,12 @@ td:first-child{
   <p>※２　①総数②Aカット③Bカット④失点⑤A率⑥B率</p>
  -->
   <div class="table-responsive">
+  <!-- <div> -->
     <table class="table table-striped table-hover table-bordered" id="player_list">
       <thead>
         <tr>
           <th colspan="2">基本情報</th>
+          <th colspan="3">総合</th>
           <th colspan="5" class='spike_cell'>スパイク</th>
           <th colspan="5" class='serve_cell'>サーブ</th>
           <th colspan="5" class='block_cell'>ブロック</th>
@@ -141,6 +143,9 @@ td:first-child{
         <tr>
           <th>#</th>
           <th>名前</th>
+          <th>効<br>果<br>率</th>
+          <th>決<br>定<br>率</th>
+          <th>開<br>き</th>
 
           <th class='spike_cell'>総<br>数</th>
           <th class='spike_cell'>得<br>点</th>
@@ -298,7 +303,20 @@ td:first-child{
   // 一覧の行追加
   //*******************************************
   function createNewRow(newRow, playerdata) {
-    var header = "<td>" + newRow + "</td><td class='nm'><a href='./playerdetail.html?year=" + searchYear + "&month=" + searchMonth + "&playerid=" + playerdata.playerid + "'>" + player[playerdata.playerid] + "</a></td>";
+    var total = playerdata.spike.total + playerdata.block.total + playerdata.serve.total;
+    var point = playerdata.spike.point + playerdata.block.point + playerdata.serve.point;
+    var miss = playerdata.spike.miss + playerdata.block.miss + playerdata.serve.miss;
+    var hiraki = -1 * (calcEffectNum(total, point, miss) - calcDetermined(total, point));
+
+    var header = "<td>" + newRow + "</td><td class='nm'><a href='./playerdetail.html?year=" +
+      searchYear + "&month=" +
+      searchMonth + "&playerid=" +
+      playerdata.playerid + "'>" +
+      player[playerdata.playerid] + "</a></td><td>" + 
+      calcEffect(total, point, miss) + "</td><td>" + 
+      calcDetermined(total, point) + "%</td><td>" + 
+      hiraki.toFixed(1) + "%" + 
+      "</td>";
     var spike = createSpikeData(playerdata.spike.total,
       playerdata.spike.point,
       playerdata.spike.miss);
@@ -370,9 +388,9 @@ td:first-child{
       v = ((d) / total) * 100;
       v = Math.round(v * 10) / 10;
     } else {
-      v = "0.0";
+      v = 0;
     }
-    return v;
+    return v.toFixed(1);
   }
   function calcReceiveEffect(total, a, b, miss) {
     var v;
@@ -380,9 +398,9 @@ td:first-child{
       v = ((a + b - miss) / total) * 100;
       v = Math.round(v * 10) / 10;
     } else {
-      v = "0.0";
+      v = 0;
     }
-    return v;
+    return v.toFixed(1);
   }
   function calcReceiveDetermined(total, a, b) {
     var v;
@@ -390,9 +408,9 @@ td:first-child{
       v = ((a + b) / total) * 100;
       v = Math.round(v * 10) / 10;
     } else {
-      v = "0.0";
+      v = 0;
     }
-    return v;
+    return v.toFixed(1);
   }
 
   //*******************************************

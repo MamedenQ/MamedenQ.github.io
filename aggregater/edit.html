@@ -374,6 +374,8 @@
             block.total = block.point + block.miss + block.etc;
             playerdata.block = block;
 
+            playerdata.miss_etc = value[16];
+            
             data.push(playerdata);
         });
 

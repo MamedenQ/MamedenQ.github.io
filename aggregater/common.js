@@ -44,6 +44,7 @@ function loadJson(_playerid, _year, _month, _teamid, _sex) {
                     "miss": 0,
                     "etc": 0,
                 },
+                "miss_etc": 0,
             });
             // idx++;
         }
@@ -71,6 +72,7 @@ function loadJson(_playerid, _year, _month, _teamid, _sex) {
                             addServe(dt.serve, playerData.serve);
                             add(dt.block, playerData.block);
                             addReceive(dt.receive, playerData.receive);
+                            dt.miss_etc += playerData.miss_etc;
                             dt.isEmpty = false;
                         }
 

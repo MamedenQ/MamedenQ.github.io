@@ -40,7 +40,8 @@ var data2019 =
             "miss": 2,
             "etc": 2,
             "total": 8
-          }
+          },
+          "miss_etc": 1
         },
         {
           "playerid": 1,
@@ -76,7 +77,8 @@ var data2019 =
             "miss": 1,
             "etc": 0,
             "total": 2
-          }
+          },
+          "miss_etc": 0
         },
         {
           "playerid": 2,
@@ -112,7 +114,8 @@ var data2019 =
             "miss": 1,
             "etc": 0,
             "total": 1
-          }
+          },
+          "miss_etc": 3
         },
         {
           "playerid": 3,
@@ -148,7 +151,8 @@ var data2019 =
             "miss": 0,
             "etc": 0,
             "total": 0
-          }
+          },
+          "miss_etc": 0
         },
         {
           "playerid": 4,
@@ -184,7 +188,8 @@ var data2019 =
             "miss": 0,
             "etc": 0,
             "total": 0
-          }
+          },
+          "miss_etc": 1
         },
         {
           "playerid": 5,
@@ -220,7 +225,8 @@ var data2019 =
             "miss": 2,
             "etc": 2,
             "total": 4
-          }
+          },
+          "miss_etc": 2
         },
         {
           "playerid": 6,
@@ -256,7 +262,8 @@ var data2019 =
             "miss": 0,
             "etc": 1,
             "total": 1
-          }
+          },
+          "miss_etc": 1
         },
         {
           "playerid": 7,
@@ -292,7 +299,8 @@ var data2019 =
             "miss": 0,
             "etc": 0,
             "total": 0
-          }
+          },
+          "miss_etc": 5
         },
         {
           "playerid": 8,
@@ -328,7 +336,8 @@ var data2019 =
             "miss": 0,
             "etc": 0,
             "total": 1
-          }
+          },
+          "miss_etc": 1
         },
         {
           "playerid": 9,
@@ -364,7 +373,8 @@ var data2019 =
             "miss": 0,
             "etc": 0,
             "total": 0
-          }
+          },
+          "miss_etc": 0
         },
         {
           "playerid": 10,
@@ -400,7 +410,8 @@ var data2019 =
             "miss": 0,
             "etc": 0,
             "total": 0
-          }
+          },
+          "miss_etc": 4
         },
         {
           "playerid": 100,
@@ -436,7 +447,8 @@ var data2019 =
             "miss": 0,
             "etc": 2,
             "total": 2
-          }
+          },
+          "miss_etc": 1
         },
         {
           "playerid": 101,
@@ -472,7 +484,8 @@ var data2019 =
             "miss": 0,
             "etc": 0,
             "total": 0
-          }
+          },
+          "miss_etc": 0
         },
         {
           "playerid": 102,
@@ -508,7 +521,8 @@ var data2019 =
             "miss": 0,
             "etc": 0,
             "total": 0
-          }
+          },
+          "miss_etc": 0
         },
         {
           "playerid": 103,
@@ -544,7 +558,8 @@ var data2019 =
             "miss": 0,
             "etc": 0,
             "total": 0
-          }
+          },
+          "miss_etc": 6
         },
         {
           "playerid": 104,
@@ -580,7 +595,8 @@ var data2019 =
             "miss": 0,
             "etc": 0,
             "total": 0
-          }
+          },
+          "miss_etc": 4
         },
         {
           "playerid": 105,
@@ -616,7 +632,8 @@ var data2019 =
             "miss": 0,
             "etc": 0,
             "total": 0
-          }
+          },
+          "miss_etc": 5
         },
         {
           "playerid": 106,
@@ -652,7 +669,8 @@ var data2019 =
             "miss": 0,
             "etc": 0,
             "total": 0
-          }
+          },
+          "miss_etc": 1
         },
         {
           "playerid": 107,
@@ -688,7 +706,8 @@ var data2019 =
             "miss": 2,
             "etc": 2,
             "total": 5
-          }
+          },
+          "miss_etc": 2
         },
         {
           "playerid": 108,
@@ -724,7 +743,8 @@ var data2019 =
             "miss": 0,
             "etc": 0,
             "total": 0
-          }
+          },
+          "miss_etc": 2
         },
         {
           "playerid": 109,
@@ -760,7 +780,8 @@ var data2019 =
             "miss": 0,
             "etc": 0,
             "total": 0
-          }
+          },
+          "miss_etc": 4
         },
         {
           "playerid": 110,
@@ -796,7 +817,8 @@ var data2019 =
             "miss": 0,
             "etc": 0,
             "total": 0
-          }
+          },
+          "miss_etc": 1
         },
         {
           "playerid": 111,
@@ -832,7 +854,8 @@ var data2019 =
             "miss": 1,
             "etc": 0,
             "total": 1
-          }
+          },
+          "miss_etc": 5
         },
         {
           "playerid": 112,
@@ -868,7 +891,8 @@ var data2019 =
             "miss": 0,
             "etc": 0,
             "total": 0
-          }
+          },
+          "miss_etc": 3
         },
         {
           "playerid": 113,
@@ -904,7 +928,8 @@ var data2019 =
             "miss": 0,
             "etc": 0,
             "total": 1
-          }
+          },
+          "miss_etc": 0
         },
         {
           "playerid": 114,
@@ -940,7 +965,8 @@ var data2019 =
             "miss": 0,
             "etc": 0,
             "total": 0
-          }
+          },
+          "miss_etc": 6
         }
       ]
     }

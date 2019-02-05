@@ -91,7 +91,7 @@ td:first-child{
       <option value='12'>12</option>
     </select>
   </div>
-  <br>
+  <!-- <br>
   <div class="form-inline">
     <select class='team form-control' style="width:100px">
       <option value='-1' selected>ALL</option>
@@ -102,7 +102,7 @@ td:first-child{
     <select class='sex form-control' style="width:100px">
       <option value='-1' selected>ALL</option>
     </select>
-  </div>
+  </div> -->
   <br>
   <button class="extract btn btn-primary">抽出</button>
   <br>
@@ -118,18 +118,16 @@ td:first-child{
     <label class="btn btn-success active">
       <input type="checkbox" autocomplete="off" id="disp_block" style="display:none" checked>ブロック
     </label>
-    <label class="btn btn-success active">
-      <input type="checkbox" autocomplete="off" id="disp_reception" style="display:none" checked>レセプション
+    <label class="btn btn-success">
+      <input type="checkbox" autocomplete="off" id="disp_reception" style="display:none">レセプション
     </label>
-
-
   </div>
-  <br><br>
+  <br>
   <!--   <p>※１　①総数②得点③失点④効果率⑤決定率</p>
   <p>※２　①総数②Aカット③Bカット④失点⑤A率⑥B率</p>
  -->
   <div class="table-responsive">
-  <!-- <div> -->
+    <!-- <div> -->
     <table class="table table-striped table-hover table-bordered" id="player_list">
       <thead>
         <tr>
@@ -139,6 +137,7 @@ td:first-child{
           <th colspan="5" class='serve_cell'>サーブ</th>
           <th colspan="5" class='block_cell'>ブロック</th>
           <th colspan="7" class='reception_cell'>レセプション</th>
+          <th rowspan="2">そ<br>の<br>他<br>ミ<br>ス</th>
         </tr>
         <tr>
           <th>#</th>
@@ -305,17 +304,17 @@ td:first-child{
   function createNewRow(newRow, playerdata) {
     var total = playerdata.spike.total + playerdata.block.total + playerdata.serve.total;
     var point = playerdata.spike.point + playerdata.block.point + playerdata.serve.point;
-    var miss = playerdata.spike.miss + playerdata.block.miss + playerdata.serve.miss;
+    var miss = playerdata.spike.miss + playerdata.block.miss + playerdata.serve.miss + playerdata.receive.miss + playerdata.miss_etc;
     var hiraki = -1 * (calcEffectNum(total, point, miss) - calcDetermined(total, point));
 
     var header = "<td>" + newRow + "</td><td class='nm'><a href='./playerdetail.html?year=" +
       searchYear + "&month=" +
       searchMonth + "&playerid=" +
       playerdata.playerid + "'>" +
-      player[playerdata.playerid] + "</a></td><td>" + 
-      calcEffect(total, point, miss) + "</td><td>" + 
-      calcDetermined(total, point) + "%</td><td>" + 
-      hiraki.toFixed(1) + "%" + 
+      player[playerdata.playerid] + "</a></td><td>" +
+      calcEffect(total, point, miss) + "</td><td>" +
+      calcDetermined(total, point) + "%</td><td>" +
+      hiraki.toFixed(1) + "%" +
       "</td>";
     var spike = createSpikeData(playerdata.spike.total,
       playerdata.spike.point,
@@ -330,8 +329,8 @@ td:first-child{
       playerdata.receive.a,
       playerdata.receive.b,
       playerdata.receive.miss);
-
-    var s = "<tr>" + header + spike + serve + block + receive + "</tr>";
+    var missEtc = "<td>" + playerdata.miss_etc + "</td>";
+    var s = "<tr>" + header + spike + serve + block + receive + missEtc + "</tr>";
     return s;
   };
   function createSpikeData(total, point, miss) {

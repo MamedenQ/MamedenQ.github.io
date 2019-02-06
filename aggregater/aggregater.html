@@ -302,8 +302,8 @@ td:first-child{
   // 一覧の行追加
   //*******************************************
   function createNewRow(newRow, playerdata) {
-    var total = playerdata.spike.total + playerdata.block.total + playerdata.serve.total;
-    var point = playerdata.spike.point + playerdata.block.point + playerdata.serve.point;
+    var total = playerdata.spike.total + playerdata.block.total + playerdata.serve.total + playerdata.receive.total;
+    var point = playerdata.spike.point + playerdata.block.point + playerdata.serve.point + playerdata.receive.a;
     var miss = playerdata.spike.miss + playerdata.block.miss + playerdata.serve.miss + playerdata.receive.miss + playerdata.miss_etc;
     var hiraki = -1 * (calcEffectNum(total, point, miss) - calcDetermined(total, point));
 

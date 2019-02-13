@@ -3,8 +3,8 @@ function loadJson(_playerid, _year, _month, _teamid, _sex) {
     // この引数をそのうちjsonオブジェクトにする
     var data = [];
     var total = {
-                "playerid": dictData.id,
-                "isEmpty": true,
+                "playerid": 999,
+                "isEmpty": false,
                 "spike": {
                     "total": 0,
                     "point": 0,
@@ -42,6 +42,8 @@ function loadJson(_playerid, _year, _month, _teamid, _sex) {
                 "miss_etc": 0,
             };
 
+    //data.push(total);
+    
     // そのうちdictの順番を入れ替えて表示順調整する予定のため、
     // dict基準でjson作る
     dict.forEach(function (dictData) {
@@ -102,7 +104,7 @@ function loadJson(_playerid, _year, _month, _teamid, _sex) {
                             var dt = getPlayerData(playerData.playerid);
                             if ("playerid" in dt) {
                             } else {
-                                console.log('no base data!!');
+                                console.log('no base data!!' + playerData.playerid);
                                 return;
                             }
                             // console.log("dt");
@@ -113,6 +115,12 @@ function loadJson(_playerid, _year, _month, _teamid, _sex) {
                             addReceive(dt.receive, playerData.receive);
                             dt.miss_etc += playerData.miss_etc;
                             dt.isEmpty = false;
+                            
+                            addSpike(total.spike, playerData.spike);
+                            addServe(total.serve, playerData.serve);
+                            add(total.block, playerData.block);
+                            addReceive(total.receive, playerData.receive);
+                            total.miss_etc += playerData.miss_etc;
                         }
 
                         function add(dt, addDt) {
@@ -169,6 +177,9 @@ function loadJson(_playerid, _year, _month, _teamid, _sex) {
     }
     // }
     // function getJsonAndFunc(func) {
+    
+    data.push(total);
+    
     return data;
 }
 
@@ -277,7 +288,7 @@ function calcEffect(total, point, miss) {
     if (Number(v) < 0) {
         v = "<span style='color:red'>" + v + "%</span>";
     } else {
-        console.log(v);
+        //console.log(v);
         v = "<span style=''>" + v + "%</span>";
     }
 

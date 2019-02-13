@@ -85,9 +85,16 @@
 
 	function loadData() {
 		var query = getQuery();
-		// console.log(query);
+		//console.log(query);
 
-		var data = loadJson(query.playerid, query.year, query.month, -1, -1);
+    var id;
+    if (query.playerid == 999) {
+      id = -1;
+    } else {
+      id = query.playerid;
+    }
+
+		var data = loadJson(id, query.year, query.month, -1, -1);
 
 		// data.forEach(function (playerData) {
 		// 	// var tableObj = $("#data");
@@ -98,7 +105,17 @@
 		// 	// データ用のjsonを作り上げる
 		// 	createPointDistribution()
 		// });
-		var player = data[0];
+		var player;
+		
+    if (query.playerid == 999) {
+      player = data[data.length - 1];
+      //console.log(player);
+    } else {
+      player = data[0];
+    }
+    
+    //player = data[0];
+    
 		console.log(player);
 		createPointDistribution(player.spike.point, player.block.point, player.serve.point);
 
@@ -114,7 +131,7 @@
 		var serveDet = calcDetermined(player.serve.total, player.serve.point);
 		var blockDet = calcDetermined(player.block.total, player.block.point);
 
-		createDetDistribution(spikeDet, serveDet, blockDet);
+		createDetDistribution(spikeDet, blockDet, serveDet);
 
 			var spikeMissNet = player.spike.miss_detail.net;
 			var spikeMissOut = player.spike.miss_detail.out;

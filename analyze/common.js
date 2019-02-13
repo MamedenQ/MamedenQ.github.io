@@ -3,7 +3,7 @@ function loadJson(_playerid, _year, _month, _teamid, _sex) {
     // この引数をそのうちjsonオブジェクトにする
     var data = [];
     var total = {
-        "playerid": 999,
+        "playerid": -1,
         "isEmpty": false,
         "spike": {
             "total": 0,

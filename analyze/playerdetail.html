@@ -100,14 +100,7 @@
 		var query = getQuery();
 		//console.log(query);
 
-		var id;
-		if (query.playerid == 999) {
-			id = -1;
-		} else {
-			id = query.playerid;
-		}
-
-		var data = loadJson(id, query.year, query.month, -1, -1);
+		var data = loadJson(query.playerid, query.year, query.month, -1, -1);
 
 		// data.forEach(function (playerData) {
 		// 	// var tableObj = $("#data");
@@ -120,7 +113,7 @@
 		// });
 		var player;
 
-		if (query.playerid == 999) {
+		if (query.playerid == -1) {
 			player = data[data.length - 1];
 			//console.log(player);
 		} else {

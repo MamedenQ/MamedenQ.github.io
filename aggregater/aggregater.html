@@ -112,11 +112,11 @@ td:first-child{
     <label class="btn btn-success active">
       <input type="checkbox" autocomplete="off" id="disp_spike" style="display:none" checked>スパイク
     </label>
-    <label class="btn btn-success active">
-      <input type="checkbox" autocomplete="off" id="disp_serve" style="display:none" checked>サーブ
+    <label class="btn btn-success">
+      <input type="checkbox" autocomplete="off" id="disp_serve" style="display:none">サーブ
     </label>
-    <label class="btn btn-success active">
-      <input type="checkbox" autocomplete="off" id="disp_block" style="display:none" checked>ブロック
+    <label class="btn btn-success">
+      <input type="checkbox" autocomplete="off" id="disp_block" style="display:none">ブロック
     </label>
     <label class="btn btn-success">
       <input type="checkbox" autocomplete="off" id="disp_reception" style="display:none">レセプション
@@ -132,7 +132,7 @@ td:first-child{
       <thead>
         <tr>
           <th colspan="2">基本情報</th>
-          <th colspan="3">総合</th>
+          <th colspan="5">総合</th>
           <th colspan="5" class='spike_cell'>スパイク</th>
           <th colspan="5" class='serve_cell'>サーブ</th>
           <th colspan="5" class='block_cell'>ブロック</th>
@@ -142,6 +142,8 @@ td:first-child{
         <tr>
           <th>#</th>
           <th>名前</th>
+          <th>得<br>点</th>
+          <th>失<br>点</th>
           <th>効<br>果<br>率</th>
           <th>決<br>定<br>率</th>
           <th>開<br>き</th>
@@ -312,6 +314,8 @@ td:first-child{
       searchMonth + "&playerid=" +
       playerdata.playerid + "'>" +
       player[playerdata.playerid] + "</a></td><td>" +
+      playerdata.total.point + "</td><td>" +
+      playerdata.total.miss + "</td><td>" +
       calcEffect(total, point, miss) + "</td><td>" +
       calcDetermined(total, point) + "%</td><td>" +
       hiraki.toFixed(1) + "%" +

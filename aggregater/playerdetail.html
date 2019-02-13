@@ -129,7 +129,7 @@
 
 		//player = data[0];
 
-		console.log(player);
+		// console.log(player);
 		var spikeEffect = calcEffectNum(player.spike.total, player.spike.point, player.spike.miss);
 		var serveEffect = calcEffectNum(player.serve.total, player.serve.point, player.serve.miss);
 		var blockEffect = calcEffectNum(player.block.total, player.block.point, player.block.miss);
@@ -161,9 +161,9 @@
 	}
 
 	function createEffectDistributionDonut(spike, block, serve) {
-		console.log("spike" + spike);
-		console.log("block" + block);
-		console.log("serve" + serve);
+		// console.log("spike" + spike);
+		// console.log("block" + block);
+		// console.log("serve" + serve);
 		var chart2 = c3.generate({
 			bindto: '#chartEffectDistDonut',
 			data: {

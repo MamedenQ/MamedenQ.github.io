@@ -118,43 +118,6 @@ var data2019 =
           "miss_etc": 3
         },
         {
-          "playerid": 3,
-          "spike": {
-            "point": 0,
-            "miss": 0,
-            "miss_detail": {
-              "net": 0,
-              "out": 0,
-              "block": 0
-            },
-            "etc": 0,
-            "total": 0
-          },
-          "serve": {
-            "point": 0,
-            "miss": 0,
-            "miss_detail": {
-              "net": 0,
-              "out": 0
-            },
-            "etc": 0,
-            "total": 0
-          },
-          "receive": {
-            "a": 0,
-            "b": 0,
-            "miss": 0,
-            "total": 0
-          },
-          "block": {
-            "point": 0,
-            "miss": 0,
-            "etc": 0,
-            "total": 0
-          },
-          "miss_etc": 0
-        },
-        {
           "playerid": 4,
           "spike": {
             "point": 1,
@@ -340,43 +303,6 @@ var data2019 =
           "miss_etc": 1
         },
         {
-          "playerid": 9,
-          "spike": {
-            "point": 0,
-            "miss": 0,
-            "miss_detail": {
-              "net": 0,
-              "out": 0,
-              "block": 0
-            },
-            "etc": 0,
-            "total": 0
-          },
-          "serve": {
-            "point": 0,
-            "miss": 0,
-            "miss_detail": {
-              "net": 0,
-              "out": 0
-            },
-            "etc": 0,
-            "total": 0
-          },
-          "receive": {
-            "a": 0,
-            "b": 0,
-            "miss": 0,
-            "total": 0
-          },
-          "block": {
-            "point": 0,
-            "miss": 0,
-            "etc": 0,
-            "total": 0
-          },
-          "miss_etc": 0
-        },
-        {
           "playerid": 10,
           "spike": {
             "point": 4,
@@ -449,80 +375,6 @@ var data2019 =
             "total": 2
           },
           "miss_etc": 1
-        },
-        {
-          "playerid": 101,
-          "spike": {
-            "point": 0,
-            "miss": 0,
-            "miss_detail": {
-              "net": 0,
-              "out": 0,
-              "block": 0
-            },
-            "etc": 0,
-            "total": 0
-          },
-          "serve": {
-            "point": 0,
-            "miss": 0,
-            "miss_detail": {
-              "net": 0,
-              "out": 0
-            },
-            "etc": 0,
-            "total": 0
-          },
-          "receive": {
-            "a": 0,
-            "b": 0,
-            "miss": 0,
-            "total": 0
-          },
-          "block": {
-            "point": 0,
-            "miss": 0,
-            "etc": 0,
-            "total": 0
-          },
-          "miss_etc": 0
-        },
-        {
-          "playerid": 102,
-          "spike": {
-            "point": 0,
-            "miss": 0,
-            "miss_detail": {
-              "net": 0,
-              "out": 0,
-              "block": 0
-            },
-            "etc": 0,
-            "total": 0
-          },
-          "serve": {
-            "point": 0,
-            "miss": 0,
-            "miss_detail": {
-              "net": 0,
-              "out": 0
-            },
-            "etc": 0,
-            "total": 0
-          },
-          "receive": {
-            "a": 0,
-            "b": 0,
-            "miss": 0,
-            "total": 0
-          },
-          "block": {
-            "point": 0,
-            "miss": 0,
-            "etc": 0,
-            "total": 0
-          },
-          "miss_etc": 0
         },
         {
           "playerid": 103,

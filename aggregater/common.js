@@ -40,6 +40,10 @@ function loadJson(_playerid, _year, _month, _teamid, _sex) {
             "etc": 0,
         },
         "miss_etc": 0,
+        "total": {
+            "point": 0,
+            "miss": 0,
+        },
     };
 
     //data.push(total);
@@ -86,6 +90,10 @@ function loadJson(_playerid, _year, _month, _teamid, _sex) {
                     "etc": 0,
                 },
                 "miss_etc": 0,
+                "total": {
+                    "point": 0,
+                    "miss": 0,
+                },
             });
             // idx++;
         }
@@ -113,6 +121,7 @@ function loadJson(_playerid, _year, _month, _teamid, _sex) {
                             addServe(dt.serve, playerData.serve);
                             add(dt.block, playerData.block);
                             addReceive(dt.receive, playerData.receive);
+                            addTotal(dt, playerData);
                             dt.miss_etc += playerData.miss_etc;
                             dt.isEmpty = false;
 
@@ -120,6 +129,7 @@ function loadJson(_playerid, _year, _month, _teamid, _sex) {
                             addServe(total.serve, playerData.serve);
                             add(total.block, playerData.block);
                             addReceive(total.receive, playerData.receive);
+                            addTotal(total, playerData);
                             total.miss_etc += playerData.miss_etc;
                         }
 
@@ -152,6 +162,21 @@ function loadJson(_playerid, _year, _month, _teamid, _sex) {
                             dt.miss += addDt.miss;
                             dt.etc += addDt.etc;
                             dt.total += addDt.total;
+                        };
+                        function addTotal(dt, addDt) {
+                            var point = 0;
+                            point += addDt.spike.point;
+                            point += addDt.block.point;
+                            point += addDt.serve.point;
+                            dt.total.point += point;
+
+                            var miss = 0;
+                            miss += addDt.spike.miss;
+                            miss += addDt.block.miss;
+                            miss += addDt.serve.miss;
+                            miss += addDt.miss_etc;
+                            miss += addDt.receive.miss;
+                            dt.total.miss += miss;
                         };
                     });
                 }

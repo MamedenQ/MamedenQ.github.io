@@ -33,24 +33,37 @@
 			float: left;
 			width: 50%;
 		}
+
+		.bar {
+			float: left;
+			width: 40%;
+			/* padding-left: 30px;
+			padding-right: 30px; */
+			margin-left: 5%;
+			margin-right: 5%;
+		}
 	</style>
 </head>
 
 <body>
 	<br /><br />
 	<div class="clearfix">
-		<div id="chart1" class="graph"></div>
-		<div id="chart4" class="graph"></div>
+		<div id="chartEffectDistBar" class="bar"></div>
+		<div id="chartEffectDistDonut" class="graph"></div>
 	</div><br /><br />
 	<div class="clearfix">
-		<div id="chart2" class="graph"></div>
-
-		<div id="chart3" class="graph"></div>
+		<div id="chartDetDistBar" class="bar"></div>
+		<div id="chartDetDistDonut" class="graph"></div>
 	</div><br /><br />
 	<div class="clearfix">
-		<div id="chart5" class="graph"></div>
+		<div id="chartPointDist" class="graph"></div>
 
-		<div id="chart6" class="graph"></div>
+		<div id="charMissDist" class="graph"></div>
+	</div><br /><br />
+	<div class="clearfix">
+		<div id="chartSpikeMissDetailDist" class="graph"></div>
+
+		<div id="chartServeMissDetailDist" class="graph"></div>
 	</div>
 </body>
 <script>
@@ -87,55 +100,57 @@
 		var query = getQuery();
 		//console.log(query);
 
-    var id;
-    if (query.playerid == 999) {
-      id = -1;
-    } else {
-      id = query.playerid;
-    }
+		var id;
+		if (query.playerid == 999) {
+			id = -1;
+		} else {
+			id = query.playerid;
+		}
 
 		var data = loadJson(id, query.year, query.month, -1, -1);
 
 		// data.forEach(function (playerData) {
 		// 	// var tableObj = $("#data");
 		// 	// tableObj.append(createNewRow(row, playerData));
-		// 	// row++;
+		// 	// row++;ß
 
 
 		// 	// データ用のjsonを作り上げる
 		// 	createPointDistribution()
 		// });
 		var player;
-		
-    if (query.playerid == 999) {
-      player = data[data.length - 1];
-      //console.log(player);
-    } else {
-      player = data[0];
-    }
-    
-    //player = data[0];
-    
-		console.log(player);
-		createPointDistribution(player.spike.point, player.block.point, player.serve.point);
 
+		if (query.playerid == 999) {
+			player = data[data.length - 1];
+			//console.log(player);
+		} else {
+			player = data[0];
+		}
+
+		//player = data[0];
+
+		console.log(player);
 		var spikeEffect = calcEffectNum(player.spike.total, player.spike.point, player.spike.miss);
 		var serveEffect = calcEffectNum(player.serve.total, player.serve.point, player.serve.miss);
 		var blockEffect = calcEffectNum(player.block.total, player.block.point, player.block.miss);
 
-		createEffectDistribution(spikeEffect, blockEffect, serveEffect);
-
-		createMissDistribution(player.spike.miss, player.block.miss, player.serve.miss);
+		createEffectDistributionBar(spikeEffect, blockEffect, serveEffect);
+		createEffectDistributionDonut(spikeEffect, blockEffect, serveEffect);
 
 		var spikeDet = calcDetermined(player.spike.total, player.spike.point);
 		var serveDet = calcDetermined(player.serve.total, player.serve.point);
 		var blockDet = calcDetermined(player.block.total, player.block.point);
 
-		createDetDistribution(spikeDet, blockDet, serveDet);
+		createDetDistributionBar(spikeDet, blockDet, serveDet);
+		createDetDistributionDonut(spikeDet, blockDet, serveDet);
 
-			var spikeMissNet = player.spike.miss_detail.net;
-			var spikeMissOut = player.spike.miss_detail.out;
-			var spikeMissBlock = player.spike.miss_detail.block;
+		createPointDistribution(player.spike.point, player.block.point, player.serve.point);
+
+		createMissDistribution(player.spike.miss, player.block.miss, player.serve.miss);
+
+		var spikeMissNet = player.spike.miss_detail.net;
+		var spikeMissOut = player.spike.miss_detail.out;
+		var spikeMissBlock = player.spike.miss_detail.block;
 
 		createSpikeMissDetailDistribution(spikeMissNet, spikeMissOut, spikeMissBlock);
 
@@ -145,12 +160,80 @@
 		createServeMissDetailDistribution(serveMissNet, serveMissOut);
 	}
 
-	function createDetDistribution(spike, block, serve) {
+	function createEffectDistributionDonut(spike, block, serve) {
+		console.log("spike" + spike);
+		console.log("block" + block);
+		console.log("serve" + serve);
+		var chart2 = c3.generate({
+			bindto: '#chartEffectDistDonut',
+			data: {
+				columns: [['spike', spike], ['block', block],
+				['serve', serve],],
+				type: 'donut'
+			},
+			donut: { title: "効果率割合" }
+		}
+		);
+	}
+	function createEffectDistributionBar(spike, block, serve) {
+		var chart = c3.generate({
+			bindto: '#chartEffectDistBar',
+			data: {
+				columns: [
+					['spike', spike],
+					['block', block],
+					['serve', serve],
+				],
+				type: 'bar'
+			},
+			bar: {
+				width: {
+					ratio: 0.5 // this makes bar width 50% of length between ticks
+				}
+				// or
+				//width: 100 // this makes bar width 100px
+			},
+			axis: {
+				x: {
+					type: 'category',
+					categories: ['']
+				},
+				y: {
+					tick: {
+						// format: d3.format("%")
+						format: function (d) { return d + "%"; }
+					}
+				}
+			},
+			grid: {
+				// x: {
+				// 	show: true
+				// },
+				y: {
+					show: true
+				}
+			},
+			// bar: { title: "効果率割合" }
+			title: {
+				show: false,
+				text: '効果率',
+				position: 'top-center',   // top-left, top-center and top-right
+				// padding: {
+				// 	top: 20,
+				// 	right: 20,
+				// 	bottom: 40,
+				// 	left: 50
+				// }
+			},
+		});
+	}
+
+	function createDetDistributionDonut(spike, block, serve) {
 		// console.log("spike" + spike);
 		// console.log("block" + block);
 		// console.log("serve" + serve);
 		var chart2 = c3.generate({
-			bindto: '#chart4',
+			bindto: '#chartDetDistDonut',
 			data: {
 				columns: [['spike', spike], ['block', block],
 				['serve', serve],],
@@ -160,6 +243,59 @@
 		}
 		);
 	}
+	function createDetDistributionBar(spike, block, serve) {
+
+		var chart = c3.generate({
+			bindto: '#chartDetDistBar',
+			data: {
+				columns: [
+					['spike', spike],
+					['block', block],
+					['serve', serve],
+				],
+				type: 'bar'
+			},
+			bar: {
+				width: {
+					ratio: 0.5 // this makes bar width 50% of length between ticks
+				}
+				// or
+				//width: 100 // this makes bar width 100px
+			},
+			axis: {
+				x: {
+					type: 'category',
+					categories: ['']
+				},
+				y: {
+					tick: {
+						// format: d3.format("%")
+						format: function (d) { return d + "%"; }
+					}
+				}
+			},
+			grid: {
+				// x: {
+				// 	show: true
+				// },
+				y: {
+					show: true
+				}
+			},
+			title: {
+				show: false,
+				text: '決定率',
+				position: 'top-center',   // top-left, top-center and top-right
+				// padding: {
+				// 	top: 20,
+				// 	right: 20,
+				// 	bottom: 40,
+				// 	left: 50
+				// }
+			},
+		});
+	}
+
 	// 得点分布（どの得点要因が多いか）
 	// 効果率分布（全体の効果率のうち、何がどれぐらいの割合か）
 	// ドーナツで表す
@@ -169,7 +305,7 @@
 		// console.log("block" + block);
 		// console.log("serve" + serve);
 		var chart2 = c3.generate({
-			bindto: '#chart2',
+			bindto: '#chartPointDist',
 			data: {
 				columns: [['spike', spike], ['block', block],
 				['serve', serve],],
@@ -180,28 +316,14 @@
 		);
 	}
 
-	function createEffectDistribution(spike, block, serve) {
-		// console.log("spike" + spike);
-		// console.log("block" + block);
-		// console.log("serve" + serve);
-		var chart2 = c3.generate({
-			bindto: '#chart1',
-			data: {
-				columns: [['spike', spike], ['block', block],
-				['serve', serve],],
-				type: 'donut'
-			},
-			donut: { title: "効果率割合" }
-		}
-		);
-	}
+
 
 	function createMissDistribution(spike, block, serve) {
 		// console.log("spike" + spike);
 		// console.log("block" + block);
 		// console.log("serve" + serve);
 		var chart2 = c3.generate({
-			bindto: '#chart3',
+			bindto: '#charMissDist',
 			data: {
 				columns: [['spike', spike], ['block', block],
 				['serve', serve],],
@@ -214,7 +336,7 @@
 
 	function createSpikeMissDetailDistribution(net, out, block) {
 		var chart2 = c3.generate({
-			bindto: '#chart5',
+			bindto: '#chartSpikeMissDetailDist',
 			data: {
 				columns: [['ネット', net], ['アウト', out],
 				['ブロック', block],],
@@ -227,7 +349,7 @@
 
 	function createServeMissDetailDistribution(net, out) {
 		var chart2 = c3.generate({
-			bindto: '#chart6',
+			bindto: '#chartServeMissDetailDist',
 			data: {
 				columns: [['ネット', net], ['アウト', out],
 				],

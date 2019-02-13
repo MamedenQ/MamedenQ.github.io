@@ -132,7 +132,7 @@ td:first-child{
       <thead>
         <tr>
           <th colspan="2">基本情報</th>
-          <th colspan="5">総合</th>
+          <th colspan="8">総合</th>
           <th colspan="5" class='spike_cell'>スパイク</th>
           <th colspan="5" class='serve_cell'>サーブ</th>
           <th colspan="5" class='block_cell'>ブロック</th>
@@ -147,6 +147,9 @@ td:first-child{
           <th>効<br>果<br>率</th>
           <th>決<br>定<br>率</th>
           <th>開<br>き</th>
+          <th>勝<br>率</th>
+          <th>勝<br>セ<br>ッ<br>ト</th>
+          <th>総<br>セ<br>ッ<br>ト</th>
 
           <th class='spike_cell'>総<br>数</th>
           <th class='spike_cell'>得<br>点</th>
@@ -318,8 +321,10 @@ td:first-child{
       playerdata.total.miss + "</td><td>" +
       calcEffect(total, point, miss) + "</td><td>" +
       calcDetermined(total, point) + "%</td><td>" +
-      hiraki.toFixed(1) + "%" +
-      "</td>";
+      hiraki.toFixed(1) + "%</td><td>" +
+      0 + "%</td><td>" +
+      0 + "</td><td>" +
+      0 + "</td>";
     var spike = createSpikeData(playerdata.spike.total,
       playerdata.spike.point,
       playerdata.spike.miss);

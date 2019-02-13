@@ -2,6 +2,45 @@
 function loadJson(_playerid, _year, _month, _teamid, _sex) {
     // この引数をそのうちjsonオブジェクトにする
     var data = [];
+    var total = {
+                "playerid": dictData.id,
+                "isEmpty": true,
+                "spike": {
+                    "total": 0,
+                    "point": 0,
+                    "miss": 0,
+                    "miss_detail": {
+                        "net": 0,
+                        "out": 0,
+                        "block": 0
+                    },
+                    "etc": 0,
+                },
+                "serve": {
+                    "total": 0,
+                    "point": 0,
+                    "miss": 0,
+                    "miss_detail": {
+                        "net": 0,
+                        "out": 0
+                    },
+                    "etc": 0,
+                },
+                "block": {
+                    "total": 0,
+                    "point": 0,
+                    "miss": 0,
+                    "etc": 0,
+                },
+                "receive": {
+                    "total": 0,
+                    "a": 0,
+                    "b": 0,
+                    "miss": 0,
+                    "etc": 0,
+                },
+                "miss_etc": 0,
+            };
 
     // そのうちdictの順番を入れ替えて表示順調整する予定のため、
     // dict基準でjson作る

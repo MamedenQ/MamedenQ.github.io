@@ -79,7 +79,8 @@
             visibility: hidden;
         }
 
-        .point {
+        .point,
+        .serve_detail {
             background: orange;
             width: 70px;
             height: 70px;
@@ -95,6 +96,20 @@
   width: 100%;
   height: 260px; */
         }
+
+        .flex {
+            padding: 2.5% 0;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+        }
+
+        .active_player {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: blueviolet;
+        }
     </style>
 </head>
 
@@ -107,16 +122,34 @@
     <br>
     <button id="in" class="btn btn-primary">読み込み</button>
 
-    <div class="item_parent" style="margin-left:30%">
-    <div style="background-color: blueviolet;border-radius: 50%;width:70px;height: 70px;" class="drag invisible"></div>
-    <div class="drop point invisible serve" name="serve">サーブ</div>
-    <div class="drop point invisible spike" name="spike">スパイク</div>
-    <!-- <div class="drop point invisible fake" name="fake">フェイント</div> -->
-    <div class="drop point invisible block" name="block">ブロック</div>
-    <div class="drop point invisible receive" name="receive">レシーブ</div>
-    <!-- <div class="drop point invisible libero" name="libero">リベロスイッチ</div> -->
-    <div class="drop point invisible miss" name="miss">その他ミス</div>
-    <!-- <div class="drop point invisible faul" name="faul">ファウル</div> -->
+    <div class="item_parent">
+        <div class="flex">
+            <p class="active_player" playerid="0">しんや</p>
+            <p class="active_player" playerid="1">ふじわら</p>
+            <p class="active_player" playerid="2">2</p>
+            <p class="active_player" playerid="3">3</p>
+            <p class="active_player" playerid="4">4</p>
+            <p class="active_player" playerid="5">5</p>
+            <p class="active_player" playerid="6">6</p>
+            <p class="active_player" playerid="7">7</p>
+            <p class="active_player" playerid="8">8</p>
+        </div>
+
+        <!-- <div style="background-color: blueviolet;border-radius: 50%;width:70px;height: 70px;" class="drag invisible"></div> -->
+        <div class="drop point invisible serve" name="serve">サーブ</div>
+        <div class="drop point invisible spike" name="spike">スパイク</div>
+        <!-- <div class="drop point invisible fake" name="fake">フェイント</div> -->
+        <div class="drop point invisible block" name="block">ブロック</div>
+        <div class="drop point invisible receive" name="receive">レシーブ</div>
+        <!-- <div class="drop point invisible libero" name="libero">リベロスイッチ</div> -->
+        <div class="drop point invisible miss" name="miss">その他ミス</div>
+        <!-- <div class="drop point invisible faul" name="faul">ファウル</div> -->
+        <div class="drop point invisible cancel" name="cancel">キャンセル</div>
+
+        <div class="drop serve_detail invisible serve_point" name="serve_point">ポイント</div>
+        <div class="drop serve_detail invisible serve_miss_out" name="serve_miss_out">アウト</div>
+        <div class="drop serve_detail invisible serve_miss_net" name="serve_miss_net">ネット</div>
+        <div class="drop serve_detail invisible serve_cancel" name="serve_cancel">キャンセル</div>
     </div>
 
     <!-- <div id="row" style="display:none">
@@ -358,6 +391,8 @@
     $(document).on('click', '#in', function () {
         init();
     });
+    // プレーヤID、スパイク得点、、、をカンマ区切りで行ごとの文字列を変換
+    //　プレーヤIDはXXX:名前で来るため、:をsplitするように修正する
     $(document).on('click', '#in2', function () {
         var v = $('#inputjson2').val();
         console.log
@@ -367,13 +402,17 @@
                 console.log("empty!!!");
                 return;
             }
-            console.log(row);
+            // console.log(row);
             var playerdata = {};
             // value.split(',').forEach(function(value) {
             // });
             var value = row.split(',');
             for (var i = 0; i < value.length; i++) {
-                value[i] = Number(value[i]);
+                if(i == 0) {
+                    value[i] = value[i].split(":")[0];
+                } else {
+                    value[i] = Number(value[i]);
+                }
             }
             playerdata.playerid = value[0];
 
@@ -415,6 +454,8 @@
             playerdata.block = block;
 
             playerdata.miss_etc = value[16];
+
+            playerdata.win = value[17];
 
             data.push(playerdata);
         });
@@ -547,11 +588,123 @@
         },
     });
 
-    function dispaction(obj, isFull) {
+    var inputdata = {};
+    // spike:
+    // ラリー:R
+    // ポイント:P
+    // ネット:N
+    // アウト:O
+    // ブロック:B
+
+    // serve:
+    // ラリー:R
+    // ポイント:P
+    // ネット:N
+    // アウト:O
+
+    // block
+    // ポイント:P
+    // ミス:M
+    // ラリー:R
+
+    // reception
+    // A:A
+    // B:B
+    // ミス:M
+
+    // etc
+    // ミス:M
+
+    var pos;
+    var playerid;
+    $(document).on('click', '.active_player', function () {
+        var active = $(this);
+        $('.active_player').each(function () {
+            if ($(this).attr('playerid') != active.attr('playerid')) {
+                $(this).css('transition', '0.5s ease');
+                $(this).css('opacity', 0.2);
+            }
+        });
+
+        pos = $(this).position();
+        playerid = $(this).attr('playerid');
+        dispactionPoint($(this), true);
+    });
+
+    $(document).on('click', '.serve', function () {
+        erasePoint();
+        dispactionServe($(this), true);
+    });
+    $(document).on('click', '.serve_point', function () {
+        erasePoint();
+        fadeInPlayer();
+    });
+    $(document).on('click', '.cancel', function () {
+        erasePoint();
+        fadeInPlayer();
+    });
+    $(document).on('click', '.serve_cancel', function () {
+        eraseServe();
+        fadeInPlayer();
+    });
+    $(document).on('click', '.serve_point', function () {
+        // console.log("Z" + inputdata["0"] + "Z")
+        if (!inputdata[playerid]) {
+            createPlayerData(playerid);
+        }
+
+        inputdata[playerid].serve += "P";
+
+        eraseServe();
+        fadeInPlayer();
+
+        console.log(inputdata);
+    });
+
+    function createPlayerData(id) {
+        inputdata[id] = {
+            spike: "",
+            serve: "",
+            block: "",
+            receive: "",
+            etc: "",
+        };
+    }
+
+
+
+    function erasePoint() {
+        for (var i = 0; i < $(".point").length; i++) {
+            $('.point').eq(i).removeClass('visible');
+            $('.point').eq(i).addClass('invisible');
+        }
+    }
+    function eraseServe() {
+        for (var i = 0; i < $(".serve_detail").length; i++) {
+            $('.serve_detail').eq(i).removeClass('visible');
+            $('.serve_detail').eq(i).addClass('invisible');
+        }
+    }
+
+    function fadeInPlayer() {
+        $('.active_player').each(function () {
+            $(this).css('transition', '0.5s ease');
+            $(this).css('opacity', 1.0);
+        });
+    }
+
+    function dispactionPoint(obj, isFull) {
+        dispaction(obj, ".point", isFull);
+    }
+    function dispactionServe(obj, isFull) {
+        dispaction(obj, ".serve_detail", isFull);
+    }
+
+    function dispaction(obj, target, isFull) {
         // 周りに丸を並べる
         // サーブ、スパイク、フェイント、ブロック、レシーブ
         // 失点、リベロ、ファウル
-        var num = $(".point").length;
+        var num = $(target).length;
         // console.log(num);
         var range;
         var len;
@@ -564,27 +717,29 @@
         }
 
         var ang = range / num;
-        var pos = obj.position();
+        // console.log($('.item_Parent').width);
+        pos.left = $(window).width() / 2;
+        var top = pos.top + 250;
 
         for (var i = 0; i < num; i++) {
             // 座標を算出
             //var curang = (ang / 2) + ang * i;
             var curang = ang * (i + 1);
             var x = len * Math.cos(curang / 180 * Math.PI) + pos.left;
-            var y = len * Math.sin(curang / 180 * Math.PI) + pos.top;
+            var y = len * Math.sin(curang / 180 * Math.PI) + top;
             // console.log('x' + x + ',y' + y);
 
-            $('.point').eq(i).css('top', y + 'px');
-            $('.point').eq(i).css('left', x + 'px');
+            $(target).eq(i).css('top', y + 'px');
+            $(target).eq(i).css('left', x + 'px');
             // $('.point').eq(i).css('visibility', '');
             // $('.point').eq(i).css('transition', '0.5s ease');
 
             // classで指定されているvisibilityをcssメソッド（style?）で上書きすることができない。
-            $('.point').eq(i).removeClass('invisible');
-            $('.point').eq(i).addClass('visible');
+            $(target).eq(i).removeClass('invisible');
+            $(target).eq(i).addClass('visible');
         }
 
-        obj.css('z-index', '1');
+        // obj.css('z-index', '1');
     }
 </script>
 

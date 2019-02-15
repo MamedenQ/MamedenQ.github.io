@@ -1,0 +1,97 @@
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <script src="../jquery-3.3.1.min.js" charset="utf-8"></script>
+    <script src="../jquery-ui.min.js"></script>
+    <script src="../jquery-ui-touch-punch.js"></script>
+    <script src="./dict.js" charset="utf-8"></script>
+    <link href="../bootstrap-4.2.1-dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="../bootstrap-4.2.1-dist/js/bootstrap.min.js"></script>
+    <style type="text/css">
+    </style>
+</head>
+
+<body>
+    <textarea id="inputjson2" style="width:100%;height:10%"></textarea>
+    <br><br><br>
+    <button id="in2" class="btn btn-primary">numbers data読み込み</button>
+    <br><br><br>
+    <textarea id="inputjson" style="width:100%;height:60%"></textarea>
+</body>
+<script type="text/javascript">
+    // プレーヤID、スパイク得点、、、をカンマ区切りで行ごとの文字列を変換
+    //　プレーヤIDはXXX:名前で来るため、:をsplitするように修正する
+    $(document).on('click', '#in2', function () {
+        var v = $('#inputjson2').val();
+        console.log
+        var data = [];
+        v.split(/\n/).forEach(function (row) {
+            if (row == "") {
+                console.log("empty!!!");
+                return;
+            }
+            // console.log(row);
+            var playerdata = {};
+            // value.split(',').forEach(function(value) {
+            // });
+            var value = row.split(',');
+            for (var i = 0; i < value.length; i++) {
+                if(i == 0) {
+                    value[i] = value[i].split(":")[0];
+                } else {
+                    value[i] = Number(value[i]);
+                }
+            }
+            playerdata.playerid = value[0];
+
+            var spike = {};
+            spike.point = value[1];
+            spike.miss = value[2] + value[3] + value[4];
+            spike.miss_detail = {
+                net: value[2],
+                out: value[3],
+                block: value[4],
+            };
+            spike.etc = value[5];
+            spike.total = spike.point + spike.miss + spike.etc;
+            playerdata.spike = spike;
+
+            var serve = {};
+            serve.point = value[6];
+            serve.miss = value[7] + value[8];
+            serve.miss_detail = {
+                net: value[7],
+                out: value[8],
+            };
+            serve.etc = value[9];
+            serve.total = serve.point + serve.miss + serve.etc;
+            playerdata.serve = serve;
+
+            var receive = {};
+            receive.a = value[10];
+            receive.b = value[11];
+            receive.miss = value[12];
+            receive.total = receive.a + receive.b + receive.miss;
+            playerdata.receive = receive;
+
+            var block = {};
+            block.point = value[13];
+            block.miss = value[14];
+            block.etc = value[15];
+            block.total = block.point + block.miss + block.etc;
+            playerdata.block = block;
+
+            playerdata.miss_etc = value[16];
+
+            playerdata.win = value[17];
+
+            data.push(playerdata);
+        });
+
+        $('#inputjson').val(JSON.stringify(data, null, "    "));
+    });
+</script>
+
+</html>

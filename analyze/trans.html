@@ -38,7 +38,7 @@
             // });
             var value = row.split(',');
             for (var i = 0; i < value.length; i++) {
-                if(i == 0) {
+                if (i == 0) {
                     value[i] = value[i].split(":")[0];
                 } else {
                     value[i] = Number(value[i]);
@@ -86,6 +86,7 @@
             playerdata.miss_etc = value[16];
 
             playerdata.win = value[17];
+            playerdata.set = value[18];
 
             data.push(playerdata);
         });

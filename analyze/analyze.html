@@ -312,6 +312,19 @@ td:first-child{
     var miss = playerdata.spike.miss + playerdata.block.miss + playerdata.serve.miss + playerdata.receive.miss + playerdata.miss_etc;
     var hiraki = -1 * (calcEffectNum(total, point, miss) - calcDetermined(total, point));
 
+    var win;
+    var set;
+    var winper;
+
+    if(playerdata.set > 0) {
+      win = playerdata.win;
+      set = playerdata.set;
+      winper = ((win / set) * 100).toFixed(1);
+    } else {
+      win = "-";
+      set = "-";
+      winper = "-";
+    }
     var header = "<td>" + newRow + "</td><td class='nm'><a href='./playerdetail.html?year=" +
       searchYear + "&month=" +
       searchMonth + "&playerid=" +
@@ -322,9 +335,9 @@ td:first-child{
       calcEffect(total, point, miss) + "</td><td>" +
       calcDetermined(total, point) + "%</td><td>" +
       hiraki.toFixed(1) + "%</td><td>" +
-      0 + "%</td><td>" +
-      0 + "</td><td>" +
-      0 + "</td>";
+      winper + "%</td><td>" +
+      win + "</td><td>" +
+      set + "</td>";
     var spike = createSpikeData(playerdata.spike.total,
       playerdata.spike.point,
       playerdata.spike.miss);

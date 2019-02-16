@@ -44,6 +44,7 @@
                     value[i] = Number(value[i]);
                 }
             }
+            if (value[18] == 1) {
             playerdata.playerid = value[0];
 
             var spike = {};
@@ -89,6 +90,7 @@
             playerdata.set = value[18];
 
             data.push(playerdata);
+            }
         });
 
         $('#inputjson').val(JSON.stringify(data, null, "    "));

@@ -214,6 +214,226 @@ function loadJson(_playerid, _year, _month, _teamid, _sex) {
     return data;
 }
 
+function loadJsonMonth(_playerid, _year, _month, _teamid, _sex) {
+    // この引数をそのうちjsonオブジェクトにする
+    var data = [];
+    var total = {
+        "month": "0",
+        "playerid": -1,
+        "isEmpty": false,
+        "spike": {
+            "total": 0,
+            "point": 0,
+            "miss": 0,
+            "miss_detail": {
+                "net": 0,
+                "out": 0,
+                "block": 0
+            },
+            "etc": 0,
+        },
+        "serve": {
+            "total": 0,
+            "point": 0,
+            "miss": 0,
+            "miss_detail": {
+                "net": 0,
+                "out": 0
+            },
+            "etc": 0,
+        },
+        "block": {
+            "total": 0,
+            "point": 0,
+            "miss": 0,
+            "etc": 0,
+        },
+        "receive": {
+            "total": 0,
+            "a": 0,
+            "b": 0,
+            "miss": 0,
+            "etc": 0,
+        },
+        "miss_etc": 0,
+        "win": 0,
+        "set": 0,
+        "total": {
+            "point": 0,
+            "miss": 0,
+        },
+    };
+
+    //data.push(total);
+
+    // そのうちdictの順番を入れ替えて表示順調整する予定のため、
+    // dict基準でjson作る
+    // dict.forEach(function (dictData) {
+    //     if (isDispPlayer(_playerid, _teamid, _sex, dictData.id)) {
+    for (var i = 1; i <= 12; i++) {
+        data.push({
+            "month": i,
+            "playerid": _playerid,
+            "isEmpty": false,
+            "spike": {
+                "total": 0,
+                "point": 0,
+                "miss": 0,
+                "miss_detail": {
+                    "net": 0,
+                    "out": 0,
+                    "block": 0
+                },
+                "etc": 0,
+            },
+            "serve": {
+                "total": 0,
+                "point": 0,
+                "miss": 0,
+                "miss_detail": {
+                    "net": 0,
+                    "out": 0
+                },
+                "etc": 0,
+            },
+            "block": {
+                "total": 0,
+                "point": 0,
+                "miss": 0,
+                "etc": 0,
+            },
+            "receive": {
+                "total": 0,
+                "a": 0,
+                "b": 0,
+                "miss": 0,
+                "etc": 0,
+            },
+            "miss_etc": 0,
+            "win": 0,
+            "set": 0,
+            "total": {
+                "point": 0,
+                "miss": 0,
+            },
+        });
+        // idx++;
+        //     }
+        // });
+    }
+
+    var yearData = [];
+    yearData.push(data2019);
+    // yearData.push(data2020);
+
+    yearData.forEach(function (yearData) {
+        if (isDispYear(_year, yearData.year)) {
+            yearData.data.forEach(function (monthData) {
+                if (isDispMonth(_month, monthData.month)) {
+                    monthData.data.forEach(function (playerData) {
+                        if (isDispPlayer(_playerid, _teamid, _sex, playerData.playerid)) {
+                            var dt = getPlayerData(playerData.playerid, monthData.month);
+                            if ("playerid" in dt) {
+                            } else {
+                                console.log('no base data!!' + playerData.playerid);
+                                return;
+                            }
+                            // console.log("dt");
+                            // console.log(dt);
+                            addSpike(dt.spike, playerData.spike);
+                            addServe(dt.serve, playerData.serve);
+                            add(dt.block, playerData.block);
+                            addReceive(dt.receive, playerData.receive);
+                            addTotal(dt, playerData);
+                            dt.miss_etc += playerData.miss_etc;
+                            dt.win += playerData.win;
+                            dt.set += playerData.set;
+                            dt.isEmpty = false;
+
+                            addSpike(total.spike, playerData.spike);
+                            addServe(total.serve, playerData.serve);
+                            add(total.block, playerData.block);
+                            addReceive(total.receive, playerData.receive);
+                            addTotal(total, playerData);
+                            total.miss_etc += playerData.miss_etc;
+                        }
+
+                        function add(dt, addDt) {
+                            dt.point += addDt.point;
+                            dt.miss += addDt.miss;
+                            dt.etc += addDt.etc;
+                            dt.total += addDt.total;
+                        };
+                        function addSpike(dt, addDt) {
+                            dt.point += addDt.point;
+                            dt.miss += addDt.miss;
+                            dt.etc += addDt.etc;
+                            dt.total += addDt.total;
+                            dt.miss_detail.net += addDt.miss_detail.net;
+                            dt.miss_detail.out += addDt.miss_detail.out;
+                            dt.miss_detail.block += addDt.miss_detail.block;
+                        };
+                        function addServe(dt, addDt) {
+                            dt.point += addDt.point;
+                            dt.miss += addDt.miss;
+                            dt.etc += addDt.etc;
+                            dt.total += addDt.total;
+                            dt.miss_detail.net += addDt.miss_detail.net;
+                            dt.miss_detail.out += addDt.miss_detail.out;
+                        };
+                        function addReceive(dt, addDt) {
+                            dt.a += addDt.a;
+                            dt.b += addDt.b;
+                            dt.miss += addDt.miss;
+                            dt.etc += addDt.etc;
+                            dt.total += addDt.total;
+                        };
+                        function addTotal(dt, addDt) {
+                            var point = 0;
+                            point += addDt.spike.point;
+                            point += addDt.block.point;
+                            point += addDt.serve.point;
+                            dt.total.point += point;
+
+                            var miss = 0;
+                            miss += addDt.spike.miss;
+                            miss += addDt.block.miss;
+                            miss += addDt.serve.miss;
+                            miss += addDt.miss_etc;
+                            miss += addDt.receive.miss;
+                            dt.total.miss += miss;
+                        };
+                    });
+                }
+            });
+        }
+    });
+
+    function getPlayerData(playerid, month) {
+        // {}でhash作っておいてそこからアクセスした方が早い？
+        var dt = {};
+        var hit = false;
+
+        data.forEach(function (playerData) {
+            if (!hit) {
+                if (playerData.playerid == playerid &&
+                    playerData.month == month) {
+                    dt = playerData;
+                    hit = true;
+                }
+            }
+        });
+
+        return dt;
+    }
+    // }
+    // function getJsonAndFunc(func) {
+
+    data.push(total);
+
+    return data;
+}
+
 //*******************************************
 // 判定処理
 //*******************************************

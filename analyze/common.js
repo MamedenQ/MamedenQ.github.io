@@ -40,6 +40,8 @@ function loadJson(_playerid, _year, _month, _teamid, _sex) {
             "etc": 0,
         },
         "miss_etc": 0,
+        "win": 0,
+        "set": 0,
         "total": {
             "point": 0,
             "miss": 0,
@@ -90,6 +92,8 @@ function loadJson(_playerid, _year, _month, _teamid, _sex) {
                     "etc": 0,
                 },
                 "miss_etc": 0,
+                "win": 0,
+                "set": 0,
                 "total": {
                     "point": 0,
                     "miss": 0,
@@ -123,6 +127,8 @@ function loadJson(_playerid, _year, _month, _teamid, _sex) {
                             addReceive(dt.receive, playerData.receive);
                             addTotal(dt, playerData);
                             dt.miss_etc += playerData.miss_etc;
+                            dt.win += playerData.win;
+                            dt.set += playerData.set;
                             dt.isEmpty = false;
 
                             addSpike(total.spike, playerData.spike);

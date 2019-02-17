@@ -103,6 +103,9 @@ td:first-child{
       <option value='-1' selected>ALL</option>
     </select>
   </div> -->
+  <select class='player form-control' style="width:100px">
+    <option value='-1' selected>ALL</option>
+  </select>　
   <br>
   <button class="extract btn btn-primary">抽出</button>
   <br>
@@ -307,8 +310,8 @@ td:first-child{
   // 一覧の行追加
   //*******************************************
   function createNewRow(newRow, playerdata) {
-    var total = playerdata.spike.total + playerdata.block.total + playerdata.serve.total + playerdata.receive.total;
-    var point = playerdata.spike.point + playerdata.block.point + playerdata.serve.point + playerdata.receive.a;
+    var total = playerdata.spike.total + playerdata.block.total + playerdata.serve.total;
+    var point = playerdata.spike.point + playerdata.block.point + playerdata.serve.point;
     var miss = playerdata.spike.miss + playerdata.block.miss + playerdata.serve.miss + playerdata.receive.miss + playerdata.miss_etc;
     var hiraki = -1 * (calcEffectNum(total, point, miss) - calcDetermined(total, point));
 
@@ -316,7 +319,7 @@ td:first-child{
     var set;
     var winper;
 
-    if(playerdata.set > 0) {
+    if (playerdata.set > 0) {
       win = playerdata.win;
       set = playerdata.set;
       winper = ((win / set) * 100).toFixed(1);
@@ -443,7 +446,14 @@ td:first-child{
   };
 
   function loadData2() {
-    var data = loadJson(extractPlayerId, extractYear, extractMonth, extractTeamId, extractSexId);
+    var data;
+    if (extractPlayerId != -1 && extractYear != 0 && extractMonth == 0) {
+      console.log("month");
+      data = loadJsonMonth(extractPlayerId, extractYear, extractMonth, extractTeamId, extractSexId);
+    } else {
+      data = loadJson(extractPlayerId, extractYear, extractMonth, extractTeamId, extractSexId);
+    }
+
     searchYear = extractYear;
     searchMonth = extractMonth;
 

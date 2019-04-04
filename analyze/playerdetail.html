@@ -46,6 +46,7 @@
 </head>
 
 <body>
+	<div class="playername"></div>
 	<br /><br />
 	<div class="clearfix">
 		<div id="chartEffectDistBar" class="bar"></div>
@@ -108,47 +109,48 @@
 		// 	// row++;ß
 
 
+		$('.playername').val(player[data.playerid]);
 		// 	// データ用のjsonを作り上げる
 		// 	createPointDistribution()
 		// });
-		var player;
+		var playerdata;
 
-		if (query.playerid == -1) {
-			player = data[data.length - 1];
-			//console.log(player);
+		if (query.playerdataid == -1) {
+			playerdata = data[data.length - 1];
+			//console.log(playerdata);
 		} else {
-			player = data[0];
+			playerdata = data[0];
 		}
 
-		//player = data[0];
+		//playerdata = data[0];
 
-		// console.log(player);
-		var spikeEffect = calcEffectNum(player.spike.total, player.spike.point, player.spike.miss);
-		var serveEffect = calcEffectNum(player.serve.total, player.serve.point, player.serve.miss);
-		var blockEffect = calcEffectNum(player.block.total, player.block.point, player.block.miss);
+		// console.log(playerdata);
+		var spikeEffect = calcEffectNum(playerdata.spike.total, playerdata.spike.point, playerdata.spike.miss);
+		var serveEffect = calcEffectNum(playerdata.serve.total, playerdata.serve.point, playerdata.serve.miss);
+		var blockEffect = calcEffectNum(playerdata.block.total, playerdata.block.point, playerdata.block.miss);
 
 		createEffectDistributionBar(spikeEffect, blockEffect, serveEffect);
 		createEffectDistributionDonut(spikeEffect, blockEffect, serveEffect);
 
-		var spikeDet = calcDetermined(player.spike.total, player.spike.point);
-		var serveDet = calcDetermined(player.serve.total, player.serve.point);
-		var blockDet = calcDetermined(player.block.total, player.block.point);
+		var spikeDet = calcDetermined(playerdata.spike.total, playerdata.spike.point);
+		var serveDet = calcDetermined(playerdata.serve.total, playerdata.serve.point);
+		var blockDet = calcDetermined(playerdata.block.total, playerdata.block.point);
 
 		createDetDistributionBar(spikeDet, blockDet, serveDet);
 		createDetDistributionDonut(spikeDet, blockDet, serveDet);
 
-		createPointDistribution(player.spike.point, player.block.point, player.serve.point);
+		createPointDistribution(playerdata.spike.point, playerdata.block.point, playerdata.serve.point);
 
-		createMissDistribution(player.spike.miss, player.block.miss, player.serve.miss);
+		createMissDistribution(playerdata.spike.miss, playerdata.block.miss, playerdata.serve.miss);
 
-		var spikeMissNet = player.spike.miss_detail.net;
-		var spikeMissOut = player.spike.miss_detail.out;
-		var spikeMissBlock = player.spike.miss_detail.block;
+		var spikeMissNet = playerdata.spike.miss_detail.net;
+		var spikeMissOut = playerdata.spike.miss_detail.out;
+		var spikeMissBlock = playerdata.spike.miss_detail.block;
 
 		createSpikeMissDetailDistribution(spikeMissNet, spikeMissOut, spikeMissBlock);
 
-		var serveMissNet = player.serve.miss_detail.net;
-		var serveMissOut = player.serve.miss_detail.out;
+		var serveMissNet = playerdata.serve.miss_detail.net;
+		var serveMissOut = playerdata.serve.miss_detail.out;
 
 		createServeMissDetailDistribution(serveMissNet, serveMissOut);
 	}

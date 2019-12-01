@@ -8,47 +8,113 @@
     <script src="../jquery-3.3.1.min.js" charset="utf-8"></script>
     <title>Document</title>
 </head>
+<style>
+    .item_invisible {
+        display: none;
+    }
+</style>
 
 <body>
     <p class="action">
         <input type="radio" name="action" value="spike" checked="checked">spike
         <input type="radio" name="action" value="block">block
+        <input type="radio" name="action" value="receive">receive
     </p>
 
     <p class="kind">
         <input type="radio" name="kind" value="point" checked="checked">point
-        <input type="radio" name="kind" value="miss">miss
         <input type="radio" name="kind" value="rally">rally
+        <input type="radio" name="kind" value="miss">miss
     </p>
+
+    <p class="kind_receive item_invisible">
+        <input type="radio" name="kind" value="a">A
+        <input type="radio" name="kind" value="b">B
+        <input type="radio" name="kind" value="rally">rally
+        <input type="radio" name="kind" value="miss">miss
+    </p>
+
+    <!-- <p class="team">
+        <input type="radio" name="team" value="a" checked="checked">A
+        <input type="radio" name="team" value="b">B
+    </p> -->
+
+    <p class="no">
+        <input type="radio" name="no" team="a" value="1" checked="checked">1
+        <input type="radio" name="no" team="a" value="2">2
+        <input type="radio" name="no" team="a" value="3">3
+        <input type="radio" name="no" team="a" value="4">4
+        <input type="radio" name="no" team="a" value="5">5
+        <input type="radio" name="no" team="a" value="6">6
+    </p>
+
+    <p class="no">
+        <input type="radio" name="no" team="b" value="1">1
+        <input type="radio" name="no" team="b" value="2">2
+        <input type="radio" name="no" team="b" value="3">3
+        <input type="radio" name="no" team="b" value="4">4
+        <input type="radio" name="no" team="b" value="5">5
+        <input type="radio" name="no" team="b" value="6">6
+    </p>
+
     <button class="det">det</button>
+    <br>
+    <textarea id="outputjson"></textarea>
+
 </body>
 <script>
+    var idx = 1;
     var data = [
-        {
-            team: a,
-            no: 4,
-            action: serve,
-            kind: rally,
-        },
-        {
-            team: a,
-            no: 1,
-            action: spike,
-            kind: point,
-        },
-        {
-            team: b,
-            no: 2,
-            action: serve,
-            kind: point,
-        }];
+    ];
     $(document).on('click', '.det', function () {
-        data.push({
-            team: a,
-            no: 3,
-            action:
-        });
+        pushData(idx, getTeam(), getNo(), getAction(), getKind());
+        idx = idx + 1;
+        $('#outputjson').val(JSON.stringify(data, null, "    "));
     });
+
+    $(document).on('click', '[name=action]', function () {
+        if ($('input[name=action]:checked').val() == 'receive') {
+            setVisible('.kind_receive', true);
+            setVisible('.kind', false);
+            $('input[name=kind]:eq(3)').prop('checked', true);
+        } else {
+            setVisible('.kind_receive', false);
+            setVisible('.kind', true);
+            $('input[name=kind]:eq(0)').prop('checked', true);
+        }
+    });
+
+    function getTeam() {
+        // console.log($('input[name=no]:checked').attr('team'));
+        return $('input[name=no]:checked').attr('team');
+    }
+    function getNo() {
+        return $('input[name=no]:checked').val();
+    }
+    function getAction() {
+        return $('input[name=action]:checked').val();
+    }
+    function getKind() {
+        return $('input[name=kind]:checked').val();
+    }
+
+    function pushData(idx, team, no, action, kind) {
+        data.push({
+            index: idx,
+            team: team,
+            no: no,
+            action: action,
+            kind: kind,
+        });
+    }
+
+    function setVisible(selector, visible) {
+        if (visible) {
+            $(selector).removeClass('item_invisible');
+        } else {
+            $(selector).addClass('item_invisible');
+        }
+    }
 </script>
 
 </html>

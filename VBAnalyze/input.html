@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="../jquery-3.3.1.min.js" charset="utf-8"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <p class="action">
+        <input type="radio" name="action" value="spike" checked="checked">spike
+        <input type="radio" name="action" value="block">block
+    </p>
+
+    <p class="kind">
+        <input type="radio" name="kind" value="point" checked="checked">point
+        <input type="radio" name="kind" value="miss">miss
+        <input type="radio" name="kind" value="rally">rally
+    </p>
+    <button class="det">det</button>
+</body>
+<script>
+    var data = [
+        {
+            team: a,
+            no: 4,
+            action: serve,
+            kind: rally,
+        },
+        {
+            team: a,
+            no: 1,
+            action: spike,
+            kind: point,
+        },
+        {
+            team: b,
+            no: 2,
+            action: serve,
+            kind: point,
+        }];
+    $(document).on('click', '.det', function () {
+        data.push({
+            team: a,
+            no: 3,
+            action:
+        });
+    });
+</script>
+
+</html>

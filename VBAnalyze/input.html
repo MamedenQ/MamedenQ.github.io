@@ -34,6 +34,8 @@
         width: 150px;
         height: 80px;
         margin: 10px;
+        position: absolute;
+        border-radius: 5px;
     }
 
     .score label:hover {
@@ -42,8 +44,69 @@
         cursor: pointer;
     }
 
+    .row1 {
+        top: 20px;
+    }
 
+    .row2 {
+        top: 130px;
+    }
 
+    .row3 {
+        top: 240px;
+    }
+
+    .row4 {
+        top: 350px;
+    }
+
+    .row5 {
+        top: 460px;
+    }
+
+    .row6 {
+        top: 570px;
+    }
+
+    .row7 {
+        top: 680px;
+    }
+
+    .row8 {
+        top: 790px;
+    }
+
+    .col1 {
+        left: 20px;
+    }
+
+    .col2 {
+        left: 130px;
+    }
+
+    .col3 {
+        left: 240px;
+    }
+
+    .col4 {
+        left: 350px;
+    }
+
+    .col5 {
+        left: 460px;
+    }
+
+    .col6 {
+        left: 570px;
+    }
+
+    .col7 {
+        left: 680px;
+    }
+
+    .col8 {
+        left: 790px;
+    }
 
     /* .select-os input {
         display: none;
@@ -108,60 +171,79 @@ https://www.image-map.net/
 
     <div class="score">
         <input type="radio" id="spike" name="action" value="spike" checked>
-        <label for="spike">
+        <label for="spike" class="row1 col1">
             spike
         </label>
         <br>
         <input type="radio" id="block" name="action" value="block">
-        <label for="block">
+        <label for="block" class="row2 col1">
             block
         </label>
         <br>
         <input type="radio" id="receive" name="action" value="receive">
-        <label for="receive">
+        <label for="receive" class="row3 col1">
             receive
         </label>
         <br>
         <input type="radio" id="serve" name="action" value="serve">
-        <label for="serve">
+        <label for="serve" class="row4 col1">
             serve
         </label>
         <br>
         <input type="radio" id="match" name="action" value="match">
-        <label for="match">
+        <label for="match" class="row5 col1">
             match
         </label>
         <br>
         <input type="radio" id="faul" name="action" value="faul">
-        <label for="faul">
+        <label for="faul" class="row6 col1">
             faul
         </label>
     </div>
 
-    <div class="score">
+    <div class="score kind">
         <input type="radio" id="point" name="kind" value="point" checked>
-        <label for="point">
+        <label for="point" class="row1 col2">
             point
         </label>
         <br>
         <input type="radio" id="rally" name="kind" value="rally">
-        <label for="rally">
+        <label for="rally" class="row2 col2">
             rally
         </label>
         <br>
         <input type="radio" id="miss" name="kind" value="miss">
-        <label for="miss">
+        <label for="miss" class="row3 col2">
             miss
         </label>
     </div>
 
-    <p class="kind_receive item_invisible">
-        <input type="radio" name="kind" value="a">A
-        <input type="radio" name="kind" value="b">B
-        <input type="radio" name="kind" value="c">C
-        <input type="radio" name="kind" value="rally">rally
-        <input type="radio" name="kind" value="miss">miss
-    </p>
+    <div class="score kind_receive item_invisible">
+        <input type="radio" id="a" name="kind" value="A">
+        <label for="a" class="row1 col2">
+            A
+        </label>
+        <br>
+        <input type="radio" id="b" name="kind" value="B">
+        <label for="b" class="row2 col2">
+            B
+        </label>
+        <br>
+        <input type="radio" id="c" name="kind" value="C">
+        <label for="c" class="row3 col2">
+            C
+        </label>
+        <br>
+        <input type="radio" id="rally_receive" name="kind" value="rally">
+        <label for="rally_receive" class="row4 col2">
+            rally
+        </label>
+        <br>
+        <input type="radio" id="miss_receive" name="kind" value="miss">
+        <label for="miss_receive" class="row5 col2">
+            miss
+        </label>
+    </div>
 
     <p class="no">
         <input type="radio" name="no" team="a" value="1" checked="checked">1
@@ -236,10 +318,12 @@ https://www.image-map.net/
 
     $(document).on('click', '[name=action]', function () {
         if ($('input[name=action]:checked').val() == 'receive') {
+            // console.log("receive");
             setVisible('.kind_receive', true);
             setVisible('.kind', false);
             $('input[name=kind]:eq(3)').prop('checked', true);
         } else {
+            // console.log("not receive");
             setVisible('.kind_receive', false);
             setVisible('.kind', true);
             $('input[name=kind]:eq(0)').prop('checked', true);

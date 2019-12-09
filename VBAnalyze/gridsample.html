@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    /* https://grid.layoutit.com/?id=cFy6gyh */
+    html {
+        height: 100%;
+    }
+
+    body {
+        height: 100%;
+        margin: 0;
+    }
+
+    .grid-container {
+        height: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-areas: "spike rally coat coat""block point coat coat""receive miss coat coat""serve a coat coat""other_miss b coat coat""faul c coat coat""score score score function";
+    }
+
+    .grid-container div {
+        margin: 5px;
+        background: chocolate;
+    }
+
+    .spike {
+        grid-area: spike;
+    }
+
+    .block {
+        grid-area: block;
+    }
+
+    .receive {
+        grid-area: receive;
+    }
+
+    .serve {
+        grid-area: serve;
+    }
+
+    .other_miss {
+        grid-area: other_miss;
+    }
+
+    .faul {
+        grid-area: faul;
+    }
+
+    .rally {
+        grid-area: rally;
+    }
+
+    .point {
+        grid-area: point;
+    }
+
+    .miss {
+        grid-area: miss;
+    }
+
+    .a {
+        grid-area: a;
+    }
+
+    .b {
+        grid-area: b;
+    }
+
+    .c {
+        grid-area: c;
+    }
+
+    .function {
+        grid-area: function;
+    }
+
+    .coat {
+        grid-area: coat;
+    }
+
+    .score {
+        grid-area: score;
+    }
+</style>
+
+<body>
+    <div class="grid-container">
+        <div class="spike"></div>
+        <div class="block"></div>
+        <div class="receive"></div>
+        <div class="serve"></div>
+        <div class="other_miss"></div>
+        <div class="faul"></div>
+        <div class="rally"></div>
+        <div class="point"></div>
+        <div class="miss"></div>
+        <div class="a"></div>
+        <div class="b"></div>
+        <div class="c"></div>
+        <div class="function"></div>
+        <div class="coat"></div>
+        <div class="score"></div>
+    </div>
+</body>
+
+</html>

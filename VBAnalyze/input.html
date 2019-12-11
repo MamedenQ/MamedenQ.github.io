@@ -24,10 +24,19 @@
     .grid-container {
         height: 100%;
         display: grid;
-        grid-template-columns: 100px 1fr 1fr 1fr 1fr 100px;
+        grid-template-columns: 100px 1fr 1fr 1fr 1fr 1fr 100px;
         grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-        grid-template-areas: "navi_a serve rally coat coat navi_b""navi_a spike point coat coat navi_b""navi_a block miss coat coat navi_b""navi_a receive a coat coat navi_b""navi_a other_miss b coat coat navi_b""navi_a faul c coat coat navi_b""navi_a score score score function navi_b";
+        grid-template-areas: "navi_a serve rally detail1 coat coat navi_b""navi_a spike point detail2 coat coat navi_b""navi_a block miss detail3 coat coat navi_b""navi_a receive a detail4 coat coat navi_b""navi_a other_miss b detail5 coat coat navi_b""navi_a faul c detail6 coat coat navi_b""navi_a score score score function function navi_b";
     }
+
+    /* 
+    "navi_a serve rally detail1 coat coat navi_b"
+    "navi_a spike point detail2 coat coat navi_b"
+    "navi_a block miss detail3 coat coat navi_b"
+    "navi_a receive a detail4 coat coat navi_b"
+    "navi_a other_miss b detail5 coat coat navi_b"
+    "navi_a faul c detail6 coat coat navi_b"
+    "navi_a score score score function function navi_b"; */
 
     .grid-container div {
         /* margin: 5px; */
@@ -183,6 +192,30 @@
         grid-area: score;
     }
 
+    .detail1 {
+        grid-area: detail1;
+    }
+
+    .detail2 {
+        grid-area: detail2;
+    }
+
+    .detail3 {
+        grid-area: detail3;
+    }
+
+    .detail4 {
+        grid-area: detail4;
+    }
+
+    .detail5 {
+        grid-area: detail5;
+    }
+
+    .detail6 {
+        grid-area: detail6;
+    }
+
     .grid_style {
         border: 2px solid #ddd;
         width: 100%;
@@ -270,6 +303,37 @@
         cursor: pointer;
     }
 
+    .detail input {
+        display: none;
+    }
+
+    .detail input[type="radio"]:checked+label {
+        color: #000;
+        border: 2px solid #000;
+        background-color: #eaeaea;
+    }
+
+    .detail label {
+        color: #ddd;
+        border: 2px solid #ddd;
+        text-align: center;
+        display: inline-block;
+        /* padding: 5px 0px; */
+        /* width: 150px;
+        height: 80px; */
+        width: 100%;
+        height: 100%;
+        /* margin: 10px; */
+        /* position: absolute; */
+        border-radius: 5px;
+    }
+
+    .detail label:hover {
+        color: #aaa;
+        border: 2px solid #aaa;
+        cursor: pointer;
+    }
+
     .item_invisible {
         display: none;
     }
@@ -348,6 +412,42 @@
             <input type="radio" id="kind_c" name="kind" value="C">
             <label for="kind_c">
                 C
+            </label>
+        </div>
+        <div class="detail d1 detail_1_label">
+            <input type="radio" id="detail_1" name="detail" value="1" checked>
+            <label for="detail_1">
+                D1
+            </label>
+        </div>
+        <div class="detail d2 detail_2_label">
+            <input type="radio" id="detail_2" name="detail" value="2">
+            <label for="detail_2">
+                D2
+            </label>
+        </div>
+        <div class="detail d3 detail_3_label">
+            <input type="radio" id="detail_3" name="detail" value="3">
+            <label for="detail_3">
+                D3
+            </label>
+        </div>
+        <div class="detail d4 detail_4_label">
+            <input type="radio" id="detail_4" name="detail" value="4">
+            <label for="detail_4">
+                D4
+            </label>
+        </div>
+        <div class="detail d5 detail_5_label">
+            <input type="radio" id="detail_5" name="detail" value="5">
+            <label for="detail_5">
+                D5
+            </label>
+        </div>
+        <div class="detail d6 detail_6_label">
+            <input type="radio" id="detail_6" name="detail" value="6">
+            <label for="detail_6">
+                D6
             </label>
         </div>
         <div class="function grid_style">
@@ -463,29 +563,55 @@
     function toggleKind() {
         var kind = $('input[name=action]:checked').val();
         if (kind == 'receive') {
-            setVisible('.kind_rally_label', true);
-            setVisible('.kind_point_label', true);
-            setVisible('.kind_miss_label', true);
-            setVisible('.kind_a_label', true);
-            setVisible('.kind_b_label', true);
-            setVisible('.kind_c_label', true);
+            setEnabled("#kind_rally", true);
+            setEnabled("#kind_point", true);
+            setEnabled("#kind_miss", true);
+            setEnabled("#kind_a", true);
+            setEnabled("#kind_b", true);
+            setEnabled("#kind_c", true);
+
+            // setVisible('.kind_rally_label', true);
+            // setVisible('.kind_point_label', true);
+            // setVisible('.kind_miss_label', true);
+            // setVisible('.kind_a_label', true);
+            // setVisible('.kind_b_label', true);
+            // setVisible('.kind_c_label', true);
         } else if (kind == 'other_miss' || kind == 'faul') {
-            setVisible('.kind_rally_label', false);
-            setVisible('.kind_point_label', false);
-            setVisible('.kind_miss_label', false);
-            setVisible('.kind_a_label', false);
-            setVisible('.kind_b_label', false);
-            setVisible('.kind_c_label', false);
+            setEnabled("#kind_rally", false);
+            setEnabled("#kind_point", false);
+            setEnabled("#kind_miss", false);
+            setEnabled("#kind_a", false);
+            setEnabled("#kind_b", false);
+            setEnabled("#kind_c", false);
+
+            // setVisible('.kind_rally_label', false);
+            // setVisible('.kind_point_label', false);
+            // setVisible('.kind_miss_label', false);
+            // setVisible('.kind_a_label', false);
+            // setVisible('.kind_b_label', false);
+            // setVisible('.kind_c_label', false);
         } else {
-            setVisible('.kind_rally_label', true);
-            setVisible('.kind_point_label', true);
-            setVisible('.kind_miss_label', true);
-            setVisible('.kind_a_label', false);
-            setVisible('.kind_b_label', false);
-            setVisible('.kind_c_label', false);
+            setEnabled("#kind_rally", true);
+            setEnabled("#kind_point", true);
+            setEnabled("#kind_miss", true);
+            setEnabled("#kind_a", false);
+            setEnabled("#kind_b", false);
+            setEnabled("#kind_c", false);
+
+            // setVisible('.kind_rally_label', true);
+            // setVisible('.kind_point_label', true);
+            // setVisible('.kind_miss_label', true);
+            // setVisible('.kind_a_label', false);
+            // setVisible('.kind_b_label', false);
+            // setVisible('.kind_c_label', false);
         }
         $('input[name=kind]:eq(0)').prop('checked', true);
+        $('input[name=detail]:eq(0)').prop('checked', true);
     }
+
+    $(document).on('click', '[name=kind]', function () {
+        $('input[name=detail]:eq(0)').prop('checked', true);
+    });
 
     function getAction() {
         return $('input[name=action]:checked').val();

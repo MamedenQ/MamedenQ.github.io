@@ -11,7 +11,177 @@
     <title>Document</title>
 </head>
 <style>
+    /* https://grid.layoutit.com/?id=cFy6gyh */
+    html {
+        height: 100%;
+    }
+
+    body {
+        height: 100%;
+        margin: 0;
+    }
+
+    .grid-container {
+        height: 100%;
+        display: grid;
+        grid-template-columns: 100px 1fr 1fr 1fr 1fr 100px;
+        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-areas: "navi_a serve rally coat coat navi_b""navi_a spike point coat coat navi_b""navi_a block miss coat coat navi_b""navi_a receive a coat coat navi_b""navi_a other_miss b coat coat navi_b""navi_a faul c coat coat navi_b""navi_a score score score function navi_b";
+    }
+
+    .grid-container div {
+        /* margin: 5px; */
+        /* background: chocolate; */
+        /* margin: 1px; */
+        /* padding: 5px; */
+    }
+
+    .spike {
+        grid-area: spike;
+    }
+
+    .block {
+        grid-area: block;
+    }
+
+    .receive {
+        grid-area: receive;
+    }
+
+    .serve {
+        grid-area: serve;
+    }
+
+    .other_miss {
+        grid-area: other_miss;
+    }
+
+    .faul {
+        grid-area: faul;
+    }
+
+    .rally {
+        grid-area: rally;
+    }
+
+    .point {
+        grid-area: point;
+    }
+
+    .miss {
+        grid-area: miss;
+    }
+
+    .a {
+        grid-area: a;
+    }
+
+    .b {
+        grid-area: b;
+    }
+
+    .c {
+        grid-area: c;
+    }
+
+    .function {
+        grid-area: function;
+    }
+
+    .coat {
+        grid-area: coat;
+    }
+
+    .navi_a {
+        grid-area: navi_a;
+    }
+
+    .navi_b {
+        grid-area: navi_b;
+    }
+
+    .score {
+        grid-area: score;
+    }
+
+    .grid_style {
+        border: 2px solid #ddd;
+        width: 100%;
+        height: 100%;
+        border-radius: 5px;
+        /* margin: -1px; */
+    }
+
+    .action input {
+        display: none;
+    }
+
+    .action input[type="radio"]:checked+label {
+        color: #bf9701;
+        border: 2px solid #bf9701;
+        background-color: #fbf4dc;
+    }
+
+    .action label {
+        color: #ddd;
+        border: 2px solid #ddd;
+        text-align: center;
+        display: inline-block;
+        /* padding: 5px 0px; */
+        /* width: 150px;
+        height: 80px; */
+        width: 100%;
+        height: 100%;
+        /* margin: 10px; */
+        /* position: absolute; */
+        border-radius: 5px;
+    }
+
+    .action label:hover {
+        color: #aaa;
+        border: 2px solid #aaa;
+        cursor: pointer;
+    }
+
+
+    .kind input {
+        display: none;
+    }
+
+    .kind input[type="radio"]:checked+label {
+        color: #3275bc;
+        border: 2px solid #3275bc;
+        background-color: #d0e6fd;
+    }
+
+    .kind label {
+        color: #ddd;
+        border: 2px solid #ddd;
+        text-align: center;
+        display: inline-block;
+        /* padding: 5px 0px; */
+        /* width: 150px;
+        height: 80px; */
+        width: 100%;
+        height: 100%;
+        /* margin: 10px; */
+        /* position: absolute; */
+        border-radius: 5px;
+    }
+
+    .kind label:hover {
+        color: #aaa;
+        border: 2px solid #aaa;
+        cursor: pointer;
+    }
+
     .item_invisible {
+        display: none;
+    }
+</style>
+
+<style>
+    /* .item_invisible {
         display: none;
     }
 
@@ -30,7 +200,6 @@
         border: 2px solid #ddd;
         text-align: center;
         display: inline-block;
-        /* padding: 5px 0px; */
         width: 150px;
         height: 80px;
         margin: 10px;
@@ -106,7 +275,7 @@
 
     .col8 {
         left: 790px;
-    }
+    } */
 
     /* .select-os input {
         display: none;
@@ -169,7 +338,7 @@ https://www.image-map.net/
         </label>
     </div> -->
 
-    <div class="score">
+    <!-- <div class="score">
         <input type="radio" id="spike" name="action" value="spike" checked>
         <label for="spike" class="row1 col1">
             spike
@@ -250,13 +419,94 @@ https://www.image-map.net/
         <input type="radio" name="no" team="b" value="4">4
         <input type="radio" name="no" team="b" value="5">5
         <input type="radio" name="no" team="b" value="6">6
-    </p>
+    </p> -->
 
-    <button class="det">det</button>
+    <div class="grid-container">
+        <div class="action serve">
+            <input type="radio" id="action_serve" name="action" value="serve" checked>
+            <label for="action_serve">
+                serve
+            </label>
+        </div>
+        <div class="action spike">
+            <input type="radio" id="action_spike" name="action" value="spike">
+            <label for="action_spike">
+                spike
+            </label>
+        </div>
+        <div class="action block">
+            <input type="radio" id="action_block" name="action" value="block">
+            <label for="action_block">
+                block
+            </label>
+        </div>
+        <div class="action receive">
+            <input type="radio" id="action_receive" name="action" value="receive">
+            <label for="action_receive">
+                receive
+            </label>
+        </div>
+        <div class="action other_miss">
+            <input type="radio" id="action_other_miss" name="action" value="other_miss">
+            <label for="action_other_miss">
+                miss
+            </label>
+        </div>
+        <div class="action faul">
+            <input type="radio" id="action_faul" name="action" value="faul">
+            <label for="action_faul">
+                faul
+            </label>
+        </div>
+
+        <div class="kind rally">
+            <input type="radio" id="kind_rally" name="kind" value="rally" checked>
+            <label for="kind_rally">
+                rally
+            </label>
+        </div>
+        <div class="kind point">
+            <input type="radio" id="kind_point" name="kind" value="point">
+            <label for="kind_point">
+                point
+            </label>
+        </div>
+        <div class="kind miss">
+            <input type="radio" id="kind_miss" name="kind" value="miss">
+            <label for="kind_miss">
+                miss
+            </label>
+        </div>
+        <div class="kind a kind_a_label">
+            <input type="radio" id="kind_a" name="kind" value="A">
+            <label for="kind_a">
+                A
+            </label>
+        </div>
+        <div class="kind b kind_b_label">
+            <input type="radio" id="kind_b" name="kind" value="B">
+            <label for="kind_b">
+                B
+            </label>
+        </div>
+        <div class="kind c kind_c_label">
+            <input type="radio" id="kind_c" name="kind" value="C">
+            <label for="kind_c">
+                C
+            </label>
+        </div>
+        <div class="function grid_style"></div>
+        <div class="coat grid_style"></div>
+        <div class="score grid_style"></div>
+        <div class="navi_a grid_style"></div>
+        <div class="navi_b grid_style"></div>
+    </div>
+
+    <!-- <button class="det">det</button>
     <button class="undo">undo</button>
     <button class="redo">redo</button>
     <br>
-    <textarea id="outputjson" style="width:100%;height:300px"></textarea>
+    <textarea id="outputjson" style="width:100%;height:300px"></textarea> -->
 
 </body>
 <script>
@@ -269,10 +519,11 @@ https://www.image-map.net/
     var scoreBk = [];
 
     updateUndoRedoButton();
+    toggleReceiveABC();
 
-    $(document).on('click', '.spike_area', function () {
-        alert('spike_area');
-    });
+    // $(document).on('click', '.spike_area', function () {
+    //     alert('spike_area');
+    // });
 
     $(document).on('click', '.det', function () {
         pushScore(getTeam(), getNo(), getAction(), getKind());
@@ -306,18 +557,21 @@ https://www.image-map.net/
     });
 
     $(document).on('click', '[name=action]', function () {
-        if ($('input[name=action]:checked').val() == 'receive') {
-            // console.log("receive");
-            setVisible('.kind_receive', true);
-            setVisible('.kind', false);
-            $('input[name=kind]:eq(3)').prop('checked', true);
-        } else {
-            // console.log("not receive");
-            setVisible('.kind_receive', false);
-            setVisible('.kind', true);
-            $('input[name=kind]:eq(0)').prop('checked', true);
-        }
+        toggleReceiveABC();
+        $('input[name=kind]:eq(0)').prop('checked', true);
     });
+
+    function toggleReceiveABC() {
+        if ($('input[name=action]:checked').val() == 'receive') {
+            setVisible('.kind_a_label', true);
+            setVisible('.kind_b_label', true);
+            setVisible('.kind_c_label', true);
+        } else {
+            setVisible('.kind_a_label', false);
+            setVisible('.kind_b_label', false);
+            setVisible('.kind_c_label', false);
+        }
+    }
 
     function getTeam() {
         // a,b
@@ -379,6 +633,10 @@ https://www.image-map.net/
         } else {
             $(selector).addClass('item_invisible');
         }
+    }
+
+    function setEnabled(selector, enabled) {
+        $(selector).prop("disabled", !enabled);
     }
 
     function updateUndoRedoButton() {

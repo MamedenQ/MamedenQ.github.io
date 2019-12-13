@@ -475,7 +475,9 @@
             <div class="b8 grid_style_team_b" value="8"></div>
             <div class="b9 grid_style_team_b" value="9"></div>
         </div>
-        <div class="score grid_style"></div>
+        <div class="score grid_style">
+            <div id='scorearea' style="height: 100%;overflow:auto;"></div>
+        </div>
         <div class="navi_a grid_style"></div>
         <div class="navi_b grid_style"></div>
     </div>
@@ -496,6 +498,8 @@
     var score = [];
     var scoreBk = [];
 
+    // $('.player').css('background', color(5));
+
     updateUndoRedoButton();
     toggleKind();
 
@@ -506,13 +510,13 @@
     function outputlog() {
         console.log(JSON.stringify(score, null, "    "));
     }
-    $(document).on('click', '.det', function () {
-        pushScore(getTeam(), getNo(), getAction(), getKind());
-        scoreBk = [];
-        updateUndoRedoButton();
-        outputlog();
-        // $('#outputjson').val(JSON.stringify(score, null, "    "));
-    });
+    // $(document).on('click', '.det', function () {
+    //     pushScore(getTeam(), getNo(), getAction(), getKind());
+    //     scoreBk = [];
+    //     updateUndoRedoButton();
+    //     outputlog();
+    //     // $('#outputjson').val(JSON.stringify(score, null, "    "));
+    // });
 
     $(document).on('click', '.undo', function () {
         if (score.length < 1) {
@@ -520,6 +524,7 @@
         }
         scoreBk.push(score.pop());
         updateUndoRedoButton();
+        createScoreObj();
         outputlog();
         // $('#outputjson').val(JSON.stringify(score, null, "    "));
     });
@@ -532,6 +537,7 @@
         popdata.index = score.length + 1;
         score.push(popdata);
         updateUndoRedoButton();
+        createScoreObj();
         outputlog();
         // $('#outputjson').val(JSON.stringify(score, null, "    "));
     });
@@ -544,7 +550,7 @@
         addScore("a");
     });
 
-    $(document).on('click', '.grid_style_team_a', function (event) {
+    $(document).on('click', '.grid_style_team_b', function (event) {
         addScore("b");
     });
 
@@ -553,6 +559,7 @@
         pushScore(team, no, getAction(), getKind());
         scoreBk = [];
         updateUndoRedoButton();
+        createScoreObj();
         outputlog();
     }
 
@@ -674,6 +681,164 @@
             $(".redo").prop("disabled", false);
         }
     }
+
+    var radius = 40;
+    let campus_w = $("#scorearea").innerWidth();
+    let campus_h = $("#scorearea").innerHeight();
+
+    function createScoreObj() {
+        d3.select("svg").remove();
+        var svg = d3.select("#scorearea").append("svg")
+            .attr({
+                width: 10 + radius * 2 * score.length + 5 * score.length,
+                height: campus_h,
+                'overflow': 'scroll',
+            });
+
+        // グループ生成
+        var g = svg.selectAll('g')
+            .data(score)
+            .enter()
+            .append('g')
+            .attr({
+                // 座標設定を動的に行う
+                transform: function (d, i) {
+                    console.log("transform " + i);
+                    var x = 5 + radius + radius * 2 * i + 5 * i;
+                    var y = campus_h / 2;
+
+                    // if (d.id == 1) {
+                    //     x = id1x;
+                    // } else {
+                    //     x = id2x;
+                    // }
+
+                    // y = pady + (i * spacey);
+                    // y = campus_h / 2;
+
+                    return "translate(" + x + "," + y + ")";
+                },
+            });
+
+        var circle = g.append('circle')
+        circle.attr({
+            'r': radius,
+            // 'r': function (d, i) {
+            //     // return d.r;
+            //     return radius;
+            // },
+            'fill': function (d, i) {
+                var idx;
+                if (d.team == "a") {
+                    idx = 0;
+                } else {
+                    idx = 1;
+                }
+                return color(idx);
+            },
+            // 'fill': none,
+            // 'stroke': function(d, i) { return color(d.id); },
+            // 'visibility': function (d, i) {
+            //     if (d.timeout) {
+            //         return 'hidden';
+            //     } else {
+            //         return '';
+            //     }
+            // },
+        })
+            // .on('mouseover', function (d) {
+            //     // d3.select(this).attr({
+            //     //   r: radius + 5,
+            //     // });
+            // })
+            // .on('mouseout', function (d) {
+            //     // d3.select(this).attr({
+            //     //   r: radius,
+            //     // });
+            // })
+            //   .on('dblclick', function(d) {
+            //     // alert(d.point);
+            //     d.func();
+            //   })
+            .on('click', function (d) {
+                // alert(d.point);
+                // d.func();
+                alert(d);
+            });
+        // テキスト生成
+        g.append('text')
+            .attr({
+                // 真ん中若干下に配置されるように、文字色は白に。
+                'text-anchor': "middle",
+                'dy': ".35em",
+                'fill': "white",
+                'cursor': "default",
+                // 'visibility': function (d, i) {
+                //     if (d.timeout) {
+                //         return 'hidden';
+                //     } else {
+                //         return '';
+                //     }
+                // },
+            })
+            // .text(function (d, i) { return d.no; })
+            .text(function (d, i) { return d.no + ":name"; })
+            .on('click', function (d) {
+                // alert(d.point);
+                d.func();
+            });
+
+        // テキスト生成
+        g.append('text')
+            .attr({
+                // 真ん中若干下に配置されるように、文字色は白に。
+                'text-anchor': "middle",
+                'dy': ".15em",
+                'fill': "white",
+                'cursor': "default",
+                // 'visibility': function (d, i) {
+                //     if (d.timeout) {
+                //         return 'hidden';
+                //     } else {
+                //         return '';
+                //     }
+                // },
+                transform: function (d, i) {
+                    var y;
+
+                    y = -18;
+
+                    return "translate(0," + y + ")";
+                },
+            })
+            .text(function (d, i) { return d.action; });
+
+        // テキスト生成
+        g.append('text')
+            .attr({
+                // 真ん中若干下に配置されるように、文字色は白に。
+                'text-anchor': "middle",
+                'dy': ".15em",
+                'fill': "white",
+                'cursor': "default",
+                // 'visibility': function (d, i) {
+                //     if (d.timeout) {
+                //         return 'hidden';
+                //     } else {
+                //         return '';
+                //     }
+                // },
+                transform: function (d, i) {
+                    var y;
+
+                    y = 23;
+
+                    return "translate(0," + y + ")";
+                },
+            })
+            .text(function (d, i) { return d.kind; });
+    }
+
 </script>
 
 </html>

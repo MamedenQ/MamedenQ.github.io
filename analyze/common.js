@@ -429,7 +429,7 @@ function loadJsonMonth(_playerid, _year, _month, _teamid, _sex) {
     // }
     // function getJsonAndFunc(func) {
 
-    data.push(total);
+    // data.push(total);
 
     return data;
 }

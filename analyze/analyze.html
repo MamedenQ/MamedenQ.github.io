@@ -15,36 +15,6 @@
   <script src="./common.js" charset="utf-8"></script>
 
   <style type="text/css">
-    /*
-  table.aggregate_table{
-  margin:0 auto;
-  border-radius:10px;
-  -webkit-border-radius:10px;
-  -moz-border-radius:10px;
-  border:1px solid #666;
-  border-spacing: 0;
-  overflow:hidden;
-}
-td,th{
-  border-bottom:1px solid #666;
-}
-td,th{
-  padding:10px;
-}
-th{
-  background:#cecece;
-}
-table tbody tr:last-child th,
-table tbody tr:last-child td{
-  border-bottom: none;
-}
-th + th,td{
-  border-left:1px solid #666;
-}
-td:first-child{
-  border-left:0px solid #666;
-}
-*/
     td {
       text-align: right;
     }
@@ -154,11 +124,16 @@ td:first-child{
           <th>勝<br>セ<br>ッ<br>ト</th>
           <th>総<br>セ<br>ッ<br>ト</th>
 
-          <th class='spike_cell'>総<br>数</th>
+          <!-- <th class='spike_cell'>総<br>数</th>
           <th class='spike_cell'>得<br>点</th>
           <th class='spike_cell'>失<br>点</th>
           <th class='spike_cell sort' data-sort="spike_effect">効<br>果<br>率</th>
-          <th class='spike_cell sort' data-sort="spike_det">決<br>定<br>率</th>
+          <th class='spike_cell sort' data-sort="spike_det">決<br>定<br>率</th> -->
+          <th class='spike_cell'>総<br>数<br>①</th>
+          <th class='spike_cell'>得<br>点<br>②</th>
+          <th class='spike_cell'>失<br>点<br>③</th>
+          <th class='spike_cell sort' data-sort="spike_effect">効<br>果<br>率<br>(②－③)／①</th>
+          <th class='spike_cell sort' data-sort="spike_det">決<br>定<br>率<br>②／①</th>
 
           <th class='serve_cell'>総<br>数</th>
           <th class='serve_cell'>得<br>点</th>
@@ -328,9 +303,17 @@ td:first-child{
       set = "-";
       winper = "-";
     }
+    var targetMonth;
+
+    if (extractPlayerId != -1) {
+      targetMonth = playerdata.month;
+    } else {
+      targetMonth = searchMonth;
+    }
+
     var header = "<td>" + newRow + "</td><td class='nm'><a href='./playerdetail.html?year=" +
       searchYear + "&month=" +
-      searchMonth + "&playerid=" +
+      targetMonth + "&playerid=" +
       playerdata.playerid + "'>" +
       player[playerdata.playerid] + "</a></td><td>" +
       playerdata.total.point + "</td><td>" +
@@ -448,7 +431,7 @@ td:first-child{
   function loadData2() {
     var data;
     if (extractPlayerId != -1 && extractYear != 0 && extractMonth == 0) {
-      console.log("month");
+      // console.log("month");
       data = loadJsonMonth(extractPlayerId, extractYear, extractMonth, extractTeamId, extractSexId);
     } else {
       data = loadJson(extractPlayerId, extractYear, extractMonth, extractTeamId, extractSexId);

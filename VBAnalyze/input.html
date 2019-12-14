@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="../jquery-3.3.1.min.js" charset="utf-8"></script>
+    <script src="jquery.rwdImageMaps.min.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <title>Document</title>
+</head>
+<style>
+    /* https://grid.layoutit.com/?id=cFy6gyh */
+    html {
+        height: 100%;
+    }
+
+    body {
+        height: 100%;
+        margin: 0;
+    }
+
+    .grid-container {
+        height: 100%;
+        display: grid;
+        grid-template-columns: 100px 1fr 1fr 1fr 1fr 1fr 100px;
+        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-areas: "navi_a serve rally detail1 coat coat navi_b""navi_a spike point detail2 coat coat navi_b""navi_a block miss detail3 coat coat navi_b""navi_a receive a detail4 coat coat navi_b""navi_a other_miss b detail5 coat coat navi_b""navi_a faul c detail6 coat coat navi_b""navi_a score score score function function navi_b";
+    }
+
+    /* 
+    "navi_a serve rally detail1 coat coat navi_b"
+    "navi_a spike point detail2 coat coat navi_b"
+    "navi_a block miss detail3 coat coat navi_b"
+    "navi_a receive a detail4 coat coat navi_b"
+    "navi_a other_miss b detail5 coat coat navi_b"
+    "navi_a faul c detail6 coat coat navi_b"
+    "navi_a score score score function function navi_b"; */
+
+    .grid-container div {
+        /* margin: 5px; */
+        /* background: chocolate; */
+        /* margin: 1px; */
+        /* padding: 5px; */
+    }
+
+    .spike {
+        grid-area: spike;
+    }
+
+    .block {
+        grid-area: block;
+    }
+
+    .receive {
+        grid-area: receive;
+    }
+
+    .serve {
+        grid-area: serve;
+    }
+
+    .other_miss {
+        grid-area: other_miss;
+    }
+
+    .faul {
+        grid-area: faul;
+    }
+
+    .rally {
+        grid-area: rally;
+    }
+
+    .point {
+        grid-area: point;
+    }
+
+    .miss {
+        grid-area: miss;
+    }
+
+    .a {
+        grid-area: a;
+    }
+
+    .b {
+        grid-area: b;
+    }
+
+    .c {
+        grid-area: c;
+    }
+
+    .function {
+        grid-area: function;
+    }
+
+    /* .coat {
+        grid-area: coat;
+    } */
+    .coat {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-areas: "b9 b8 b7""b6 b5 b4""b3 b2 b1""a1 a2 a3""a4 a5 a6""a7 a8 a9";
+        grid-area: coat;
+    }
+
+    .a1 {
+        grid-area: a1;
+    }
+
+    .a2 {
+        grid-area: a2;
+    }
+
+    .a3 {
+        grid-area: a3;
+    }
+
+    .a4 {
+        grid-area: a4;
+    }
+
+    .a5 {
+        grid-area: a5;
+    }
+
+    .a6 {
+        grid-area: a6;
+    }
+
+    .a7 {
+        grid-area: a7;
+    }
+
+    .a8 {
+        grid-area: a8;
+    }
+
+    .a9 {
+        grid-area: a9;
+    }
+
+    .b1 {
+        grid-area: b1;
+    }
+
+    .b2 {
+        grid-area: b2;
+    }
+
+    .b3 {
+        grid-area: b3;
+    }
+
+    .b4 {
+        grid-area: b4;
+    }
+
+    .b5 {
+        grid-area: b5;
+    }
+
+    .b6 {
+        grid-area: b6;
+    }
+
+    .b7 {
+        grid-area: b7;
+    }
+
+    .b8 {
+        grid-area: b8;
+    }
+
+    .b9 {
+        grid-area: b9;
+    }
+
+    .navi_a {
+        grid-area: navi_a;
+    }
+
+    .navi_b {
+        grid-area: navi_b;
+    }
+
+    .score {
+        grid-area: score;
+    }
+
+    .detail1 {
+        grid-area: detail1;
+    }
+
+    .detail2 {
+        grid-area: detail2;
+    }
+
+    .detail3 {
+        grid-area: detail3;
+    }
+
+    .detail4 {
+        grid-area: detail4;
+    }
+
+    .detail5 {
+        grid-area: detail5;
+    }
+
+    .detail6 {
+        grid-area: detail6;
+    }
+
+    .grid_style {
+        border: 2px solid #ddd;
+        width: 100%;
+        height: 100%;
+        border-radius: 5px;
+        /* margin: -1px; */
+    }
+
+    .grid_style_team_a {
+        border: 2px solid #ddd;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        /* margin: -1px; */
+    }
+
+    .grid_style_team_b {
+        border: 2px solid #ddd;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        /* margin: -1px; */
+    }
+
+    .action input {
+        display: none;
+    }
+
+    .action input[type="radio"]:checked+label {
+        color: #bf9701;
+        border: 2px solid #bf9701;
+        background-color: #fbf4dc;
+    }
+
+    .action label {
+        color: #ddd;
+        border: 2px solid #ddd;
+        text-align: center;
+        display: inline-block;
+        /* padding: 5px 0px; */
+        /* width: 150px;
+        height: 80px; */
+        width: 100%;
+        height: 100%;
+        /* margin: 10px; */
+        /* position: absolute; */
+        border-radius: 5px;
+    }
+
+    .action label:hover {
+        color: #aaa;
+        border: 2px solid #aaa;
+        cursor: pointer;
+    }
+
+
+    .kind input {
+        display: none;
+    }
+
+    .kind input[type="radio"]:checked+label {
+        color: #3275bc;
+        border: 2px solid #3275bc;
+        background-color: #d0e6fd;
+    }
+
+    .kind label {
+        color: #ddd;
+        border: 2px solid #ddd;
+        text-align: center;
+        display: inline-block;
+        /* padding: 5px 0px; */
+        /* width: 150px;
+        height: 80px; */
+        width: 100%;
+        height: 100%;
+        /* margin: 10px; */
+        /* position: absolute; */
+        border-radius: 5px;
+    }
+
+    .kind label:hover {
+        color: #aaa;
+        border: 2px solid #aaa;
+        cursor: pointer;
+    }
+
+    .detail input {
+        display: none;
+    }
+
+    .detail input[type="radio"]:checked+label {
+        color: #000;
+        border: 2px solid #000;
+        background-color: #eaeaea;
+    }
+
+    .detail label {
+        color: #ddd;
+        border: 2px solid #ddd;
+        text-align: center;
+        display: inline-block;
+        /* padding: 5px 0px; */
+        /* width: 150px;
+        height: 80px; */
+        width: 100%;
+        height: 100%;
+        /* margin: 10px; */
+        /* position: absolute; */
+        border-radius: 5px;
+    }
+
+    .detail label:hover {
+        color: #aaa;
+        border: 2px solid #aaa;
+        cursor: pointer;
+    }
+
+    .item_invisible {
+        display: none;
+    }
+</style>
+
+<body>
+    <div class="grid-container">
+        <div class="action serve">
+            <input type="radio" id="action_serve" name="action" value="serve" checked>
+            <label for="action_serve">
+                serve
+            </label>
+        </div>
+        <div class="action spike">
+            <input type="radio" id="action_spike" name="action" value="spike">
+            <label for="action_spike">
+                spike
+            </label>
+        </div>
+        <div class="action block">
+            <input type="radio" id="action_block" name="action" value="block">
+            <label for="action_block">
+                block
+            </label>
+        </div>
+        <div class="action receive">
+            <input type="radio" id="action_receive" name="action" value="receive">
+            <label for="action_receive">
+                receive
+            </label>
+        </div>
+        <div class="action other_miss">
+            <input type="radio" id="action_other_miss" name="action" value="other_miss">
+            <label for="action_other_miss">
+                miss
+            </label>
+        </div>
+        <div class="action faul">
+            <input type="radio" id="action_faul" name="action" value="faul">
+            <label for="action_faul">
+                faul
+            </label>
+        </div>
+
+        <div class="kind rally kind_rally_label">
+            <input type="radio" id="kind_rally" name="kind" value="rally" checked>
+            <label for="kind_rally">
+                rally
+            </label>
+        </div>
+        <div class="kind point kind_point_label">
+            <input type="radio" id="kind_point" name="kind" value="point">
+            <label for="kind_point">
+                point
+            </label>
+        </div>
+        <div class="kind miss kind_miss_label">
+            <input type="radio" id="kind_miss" name="kind" value="miss">
+            <label for="kind_miss">
+                miss
+            </label>
+        </div>
+        <div class="kind a kind_a_label">
+            <input type="radio" id="kind_a" name="kind" value="A">
+            <label for="kind_a">
+                A
+            </label>
+        </div>
+        <div class="kind b kind_b_label">
+            <input type="radio" id="kind_b" name="kind" value="B">
+            <label for="kind_b">
+                B
+            </label>
+        </div>
+        <div class="kind c kind_c_label">
+            <input type="radio" id="kind_c" name="kind" value="C">
+            <label for="kind_c">
+                C
+            </label>
+        </div>
+        <div class="detail d1 detail_1_label">
+            <input type="radio" id="detail_1" name="detail" value="1" checked>
+            <label for="detail_1">
+                D1
+            </label>
+        </div>
+        <div class="detail d2 detail_2_label">
+            <input type="radio" id="detail_2" name="detail" value="2">
+            <label for="detail_2">
+                D2
+            </label>
+        </div>
+        <div class="detail d3 detail_3_label">
+            <input type="radio" id="detail_3" name="detail" value="3">
+            <label for="detail_3">
+                D3
+            </label>
+        </div>
+        <div class="detail d4 detail_4_label">
+            <input type="radio" id="detail_4" name="detail" value="4">
+            <label for="detail_4">
+                D4
+            </label>
+        </div>
+        <div class="detail d5 detail_5_label">
+            <input type="radio" id="detail_5" name="detail" value="5">
+            <label for="detail_5">
+                D5
+            </label>
+        </div>
+        <div class="detail d6 detail_6_label">
+            <input type="radio" id="detail_6" name="detail" value="6">
+            <label for="detail_6">
+                D6
+            </label>
+        </div>
+        <div class="function grid_style">
+            <button class="undo">undo</button>
+            <button class="redo">redo</button>
+        </div>
+        <div class="coat grid_style">
+            <div class="a1 grid_style_team_a" value="1"></div>
+            <div class="a2 grid_style_team_a" value="2"></div>
+            <div class="a3 grid_style_team_a" value="3"></div>
+            <div class="a4 grid_style_team_a" value="4"></div>
+            <div class="a5 grid_style_team_a" value="5"></div>
+            <div class="a6 grid_style_team_a" value="6"></div>
+            <div class="a7 grid_style_team_a" value="7"></div>
+            <div class="a8 grid_style_team_a" value="8"></div>
+            <div class="a9 grid_style_team_a" value="9"></div>
+
+            <div class="b1 grid_style_team_b" value="1"></div>
+            <div class="b2 grid_style_team_b" value="2"></div>
+            <div class="b3 grid_style_team_b" value="3"></div>
+            <div class="b4 grid_style_team_b" value="4"></div>
+            <div class="b5 grid_style_team_b" value="5"></div>
+            <div class="b6 grid_style_team_b" value="6"></div>
+            <div class="b7 grid_style_team_b" value="7"></div>
+            <div class="b8 grid_style_team_b" value="8"></div>
+            <div class="b9 grid_style_team_b" value="9"></div>
+        </div>
+        <div class="score grid_style">
+            <div id='scorearea' style="height: 100%;overflow:auto;"></div>
+        </div>
+        <div class="navi_a grid_style"></div>
+        <div class="navi_b grid_style"></div>
+    </div>
+
+    <!-- <button class="det">det</button>
+    <button class="undo">undo</button>
+    <button class="redo">redo</button>
+    <br>
+    <textarea id="outputjson" style="width:100%;height:300px"></textarea> -->
+
+</body>
+<script>
+    jQuery('img[usemap]').rwdImageMaps();
+
+    var color = d3.scale.category20();
+    //$('.player').css('background', color(5));
+
+    var score = [];
+    var scoreBk = [];
+
+    // $('.player').css('background', color(5));
+
+    updateUndoRedoButton();
+    toggleKind();
+
+    // $(document).on('click', '.spike_area', function () {
+    //     alert('spike_area');
+    // });
+
+    function outputlog() {
+        console.log(JSON.stringify(score, null, "    "));
+    }
+    // $(document).on('click', '.det', function () {
+    //     pushScore(getTeam(), getNo(), getAction(), getKind());
+    //     scoreBk = [];
+    //     updateUndoRedoButton();
+    //     outputlog();
+    //     // $('#outputjson').val(JSON.stringify(score, null, "    "));
+    // });
+
+    $(document).on('click', '.undo', function () {
+        if (score.length < 1) {
+            return;
+        }
+        scoreBk.push(score.pop());
+        updateUndoRedoButton();
+        createScoreObj();
+        outputlog();
+        // $('#outputjson').val(JSON.stringify(score, null, "    "));
+    });
+
+    $(document).on('click', '.redo', function () {
+        if (scoreBk.length < 1) {
+            return;
+        }
+        popdata = scoreBk.pop();
+        popdata.index = score.length + 1;
+        score.push(popdata);
+        updateUndoRedoButton();
+        createScoreObj();
+        outputlog();
+        // $('#outputjson').val(JSON.stringify(score, null, "    "));
+    });
+
+    $(document).on('click', '.save', function () {
+
+    });
+
+    $(document).on('click', '.grid_style_team_a', function (event) {
+        addScore("a");
+    });
+
+    $(document).on('click', '.grid_style_team_b', function (event) {
+        addScore("b");
+    });
+
+    function addScore(team) {
+        var no = $(event.target).attr('value');
+        pushScore(team, no, getAction(), getKind());
+        scoreBk = [];
+        updateUndoRedoButton();
+        createScoreObj();
+        outputlog();
+    }
+
+    function deleteScore(deleteIndex) {
+        var result = confirm("削除しますか？");
+
+        if (!result) {
+            return;
+        }
+
+        var newData = score.filter(function (s, index) {
+            if (s.index != deleteIndex) return true;
+        });
+
+        score = newData;
+
+        createScoreObj();
+        outputlog();
+    }
+
+    function getMaxIndex() {
+        if (score.length == 0) {
+            return 0;
+        }
+
+        return maxIndex = Math.max.apply(null, score.map(function (s) { return s.index; }));
+    }
+
+    $(document).on('click', '[name=action]', function () {
+        toggleKind();
+    });
+
+    function toggleKind() {
+        var kind = $('input[name=action]:checked').val();
+        if (kind == 'receive') {
+            setEnabled("#kind_rally", true);
+            setEnabled("#kind_point", true);
+            setEnabled("#kind_miss", true);
+            setEnabled("#kind_a", true);
+            setEnabled("#kind_b", true);
+            setEnabled("#kind_c", true);
+
+            // setVisible('.kind_rally_label', true);
+            // setVisible('.kind_point_label', true);
+            // setVisible('.kind_miss_label', true);
+            // setVisible('.kind_a_label', true);
+            // setVisible('.kind_b_label', true);
+            // setVisible('.kind_c_label', true);
+        } else if (kind == 'other_miss' || kind == 'faul') {
+            setEnabled("#kind_rally", false);
+            setEnabled("#kind_point", false);
+            setEnabled("#kind_miss", false);
+            setEnabled("#kind_a", false);
+            setEnabled("#kind_b", false);
+            setEnabled("#kind_c", false);
+
+            // setVisible('.kind_rally_label', false);
+            // setVisible('.kind_point_label', false);
+            // setVisible('.kind_miss_label', false);
+            // setVisible('.kind_a_label', false);
+            // setVisible('.kind_b_label', false);
+            // setVisible('.kind_c_label', false);
+        } else {
+            setEnabled("#kind_rally", true);
+            setEnabled("#kind_point", true);
+            setEnabled("#kind_miss", true);
+            setEnabled("#kind_a", false);
+            setEnabled("#kind_b", false);
+            setEnabled("#kind_c", false);
+
+            // setVisible('.kind_rally_label', true);
+            // setVisible('.kind_point_label', true);
+            // setVisible('.kind_miss_label', true);
+            // setVisible('.kind_a_label', false);
+            // setVisible('.kind_b_label', false);
+            // setVisible('.kind_c_label', false);
+        }
+        $('input[name=kind]:eq(0)').prop('checked', true);
+        $('input[name=detail]:eq(0)').prop('checked', true);
+    }
+
+    $(document).on('click', '[name=kind]', function () {
+        $('input[name=detail]:eq(0)').prop('checked', true);
+    });
+
+    function getAction() {
+        return $('input[name=action]:checked').val();
+    }
+    function getKind() {
+        var kind = $('input[name=action]:checked').val();
+        if (kind == 'other_miss' || kind == 'faul') {
+            return "";
+        }
+        return $('input[name=kind]:checked').val();
+    }
+    function getDetail() {
+        // spike
+        // 普通に得点、ブロックアウト
+        // アウト、ネット、ブロック
+
+        // block
+        // 普通に得点
+        // アウト、吸い込み
+
+        // receive
+        // 得点したときはスパイク扱い（フェイント）とかにするか
+        // 弾いて落とす、次がつなげられない
+
+        // serve
+        // エース
+        // アウト、ネット
+    }
+    function pushScore(team, no, action, kind) {
+        score.push({
+            // index: score.length + 1,
+            index: getMaxIndex() + 1,
+            team: team,
+            no: no,
+            action: action,
+            kind: kind,
+        });
+    }
+
+    function setVisible(selector, visible) {
+        if (visible) {
+            $(selector).removeClass('item_invisible');
+        } else {
+            $(selector).addClass('item_invisible');
+        }
+    }
+
+    function setEnabled(selector, enabled) {
+        $(selector).prop("disabled", !enabled);
+    }
+
+    function updateUndoRedoButton() {
+        if (score.length < 1) {
+            $(".undo").prop("disabled", true);
+        } else {
+            $(".undo").prop("disabled", false);
+        }
+        if (scoreBk.length < 1) {
+            $(".redo").prop("disabled", true);
+        } else {
+            $(".redo").prop("disabled", false);
+        }
+    }
+
+    var radius = 40;
+    let campus_w = $("#scorearea").innerWidth();
+    let campus_h = $("#scorearea").innerHeight();
+
+    // サーブ　丸
+    // スパイク　
+    // ブロック　四角
+    // レシーブ 
+    // ミス
+    // ファウル
+    // 画像にする
+
+    function createScoreObj() {
+        d3.select("svg").remove();
+        var svg = d3.select("#scorearea").append("svg")
+            .attr({
+                width: 10 + radius * 2 * score.length + 5 * score.length,
+                height: campus_h,
+                'overflow': 'scroll',
+            });
+
+        // グループ生成
+        var g = svg.selectAll('g')
+            .data(score)
+            .enter()
+            .append('g')
+            .attr({
+                // 座標設定を動的に行う
+                transform: function (d, i) {
+                    console.log("transform " + i);
+                    var x = 5 + radius + radius * 2 * i + 5 * i;
+                    var y = campus_h / 2;
+
+                    return "translate(" + x + "," + y + ")";
+                },
+            });
+
+        var circle = g.append('circle')
+        circle.attr({
+            'r': radius,
+            'fill': function (d, i) {
+                var idx;
+                if (d.team == "a") {
+                    idx = 0;
+                } else {
+                    idx = 1;
+                }
+                return color(idx);
+            },
+        })
+            // .on('mouseover', function (d) {
+            //     d3.select(this).attr({
+            //         r: radius + 5,
+            //     });
+            // })
+            // .on('mouseout', function (d) {
+            //     d3.select(this).attr({
+            //         r: radius,
+            //     });
+            // })
+            .on('click', function (d) {
+                deleteScore(d.index);
+            });
+        // テキスト生成
+        g.append('text')
+            .attr({
+                // 真ん中若干下に配置されるように、文字色は白に。
+                'text-anchor': "middle",
+                'dy': ".35em",
+                'fill': "white",
+                'cursor': "default",
+            })
+            .text(function (d, i) { return d.no + ":name"; })
+            .on('click', function (d) {
+                deleteScore(d.index);
+            });
+
+        // テキスト生成
+        g.append('text')
+            .attr({
+                // 真ん中若干下に配置されるように、文字色は白に。
+                'text-anchor': "middle",
+                'dy': ".15em",
+                'fill': "white",
+                'cursor': "default",
+                // 'visibility': function (d, i) {
+                //     if (d.timeout) {
+                //         return 'hidden';
+                //     } else {
+                //         return '';
+                //     }
+                // },
+                transform: function (d, i) {
+                    return "translate(0,-18)";
+                },
+            })
+            .text(function (d, i) { return d.action; })
+            .on('click', function (d) {
+                deleteScore(d.index);
+            });
+
+        // テキスト生成
+        g.append('text')
+            .attr({
+                // 真ん中若干下に配置されるように、文字色は白に。
+                'text-anchor': "middle",
+                'dy': ".15em",
+                'fill': "white",
+                'cursor': "default",
+                // 'visibility': function (d, i) {
+                //     if (d.timeout) {
+                //         return 'hidden';
+                //     } else {
+                //         return '';
+                //     }
+                // },
+                transform: function (d, i) {
+                    return "translate(0,23)";
+                },
+            })
+            .text(function (d, i) { return d.kind; })
+            .on('click', function (d) {
+                deleteScore(d.index);
+            });
+    }
+
+    // チャート作りたい
+    // 決定数とミス数で赤青のレーダーチャート作って、効果率がどれぐらいか見える化
+    // https://www.google.com/imgres?imgurl=https%3A%2F%2Fwww.marorika.com%2Fwp-content%2Fuploads%2F2019%2F05%2Fchart-js-sample.gif&imgrefurl=https%3A%2F%2Fwww.marorika.com%2Fentry%2Fchart-js-library&docid=zDq-sPOyesj68M&tbnid=xC_2YShCwcLazM%3A&vet=10ahUKEwim6ZnL_LLmAhXpyosBHZ-ZCysQMwiSAShBMEE..i&w=686&h=490&safe=off&bih=693&biw=1440&q=html%20js%20d3%20%E5%9B%B3%E5%BD%A2&ved=0ahUKEwim6ZnL_LLmAhXpyosBHZ-ZCysQMwiSAShBMEE&iact=mrc&uact=8
+
+    // vue.jsでSPAにしたい
+    // github pages で公開方法
+    // https://qiita.com/tiwu_official/items/43dc554ec43dd951812a
+    // https://qiita.com/abouch/items/35d7a202f3e74c7d4c3e
+
+    ダイアログ
+    https://www.seleqt.net/design/free-modal-window-libraries-plugins/
+
+    file:///Users/miura/Documents/proj/web/MamedenQ.github.io/vuesample/index.html
+</script>
+
+</html>

@@ -563,6 +563,31 @@
         outputlog();
     }
 
+    function deleteScore(deleteIndex) {
+        var result = confirm("削除しますか？");
+
+        if (!result) {
+            return;
+        }
+
+        var newData = score.filter(function (s, index) {
+            if (s.index != deleteIndex) return true;
+        });
+
+        score = newData;
+
+        createScoreObj();
+        outputlog();
+    }
+
+    function getMaxIndex() {
+        if (score.length == 0) {
+            return 0;
+        }
+
+        return maxIndex = Math.max.apply(null, score.map(function (s) { return s.index; }));
+    }
+
     $(document).on('click', '[name=action]', function () {
         toggleKind();
     });
@@ -649,7 +674,8 @@
     }
     function pushScore(team, no, action, kind) {
         score.push({
-            index: score.length + 1,
+            // index: score.length + 1,
+            index: getMaxIndex() + 1,
             team: team,
             no: no,
             action: action,
@@ -686,6 +712,14 @@
     let campus_w = $("#scorearea").innerWidth();
     let campus_h = $("#scorearea").innerHeight();
 
+    // サーブ　丸
+    // スパイク　
+    // ブロック　四角
+    // レシーブ 
+    // ミス
+    // ファウル
+    // 画像にする
+
     function createScoreObj() {
         d3.select("svg").remove();
         var svg = d3.select("#scorearea").append("svg")
@@ -707,15 +741,6 @@
                     var x = 5 + radius + radius * 2 * i + 5 * i;
                     var y = campus_h / 2;
 
-                    // if (d.id == 1) {
-                    //     x = id1x;
-                    // } else {
-                    //     x = id2x;
-                    // }
-
-                    // y = pady + (i * spacey);
-                    // y = campus_h / 2;
-
                     return "translate(" + x + "," + y + ")";
                 },
             });
@@ -723,10 +748,6 @@
         var circle = g.append('circle')
         circle.attr({
             'r': radius,
-            // 'r': function (d, i) {
-            //     // return d.r;
-            //     return radius;
-            // },
             'fill': function (d, i) {
                 var idx;
                 if (d.team == "a") {
@@ -736,34 +757,19 @@
                 }
                 return color(idx);
             },
-            // 'fill': none,
-            // 'stroke': function(d, i) { return color(d.id); },
-            // 'visibility': function (d, i) {
-            //     if (d.timeout) {
-            //         return 'hidden';
-            //     } else {
-            //         return '';
-            //     }
-            // },
         })
             // .on('mouseover', function (d) {
-            //     // d3.select(this).attr({
-            //     //   r: radius + 5,
-            //     // });
+            //     d3.select(this).attr({
+            //         r: radius + 5,
+            //     });
             // })
             // .on('mouseout', function (d) {
-            //     // d3.select(this).attr({
-            //     //   r: radius,
-            //     // });
+            //     d3.select(this).attr({
+            //         r: radius,
+            //     });
             // })
-            //   .on('dblclick', function(d) {
-            //     // alert(d.point);
-            //     d.func();
-            //   })
             .on('click', function (d) {
-                // alert(d.point);
-                // d.func();
-                alert(d);
+                deleteScore(d.index);
             });
         // テキスト生成
         g.append('text')
@@ -773,19 +779,10 @@
                 'dy': ".35em",
                 'fill': "white",
                 'cursor': "default",
-                // 'visibility': function (d, i) {
-                //     if (d.timeout) {
-                //         return 'hidden';
-                //     } else {
-                //         return '';
-                //     }
-                // },
             })
-            // .text(function (d, i) { return d.no; })
             .text(function (d, i) { return d.no + ":name"; })
             .on('click', function (d) {
-                // alert(d.point);
-                d.func();
+                deleteScore(d.index);
             });
 
         // テキスト生成
@@ -804,14 +801,13 @@
                 //     }
                 // },
                 transform: function (d, i) {
-                    var y;
-
-                    y = -18;
-
-                    return "translate(0," + y + ")";
+                    return "translate(0,-18)";
                 },
             })
-            .text(function (d, i) { return d.action; });
+            .text(function (d, i) { return d.action; })
+            .on('click', function (d) {
+                deleteScore(d.index);
+            });
 
         // テキスト生成
         g.append('text')
@@ -829,16 +825,28 @@
                 //     }
                 // },
                 transform: function (d, i) {
-                    var y;
-
-                    y = 23;
-
-                    return "translate(0," + y + ")";
+                    return "translate(0,23)";
                 },
             })
-            .text(function (d, i) { return d.kind; });
+            .text(function (d, i) { return d.kind; })
+            .on('click', function (d) {
+                deleteScore(d.index);
+            });
     }
 
+    // チャート作りたい
+    // 決定数とミス数で赤青のレーダーチャート作って、効果率がどれぐらいか見える化
+    // https://www.google.com/imgres?imgurl=https%3A%2F%2Fwww.marorika.com%2Fwp-content%2Fuploads%2F2019%2F05%2Fchart-js-sample.gif&imgrefurl=https%3A%2F%2Fwww.marorika.com%2Fentry%2Fchart-js-library&docid=zDq-sPOyesj68M&tbnid=xC_2YShCwcLazM%3A&vet=10ahUKEwim6ZnL_LLmAhXpyosBHZ-ZCysQMwiSAShBMEE..i&w=686&h=490&safe=off&bih=693&biw=1440&q=html%20js%20d3%20%E5%9B%B3%E5%BD%A2&ved=0ahUKEwim6ZnL_LLmAhXpyosBHZ-ZCysQMwiSAShBMEE&iact=mrc&uact=8
+
+    // vue.jsでSPAにしたい
+    // github pages で公開方法
+    // https://qiita.com/tiwu_official/items/43dc554ec43dd951812a
+    // https://qiita.com/abouch/items/35d7a202f3e74c7d4c3e
+
+    ダイアログ
+    https://www.seleqt.net/design/free-modal-window-libraries-plugins/
+
+    file:///Users/miura/Documents/proj/web/MamedenQ.github.io/vuesample/index.html
 </script>
 
 </html>

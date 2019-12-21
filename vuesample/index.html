@@ -13,17 +13,371 @@
     </style> -->
 </head>
 
-<!-- <body>
-</body> -->
 <div id="app" v-cloak>
-    <router-link to="/page1">トップページ</router-link>
-    <router-link to="/page2">ユーザー一覧ページ</router-link>
-    <router-view>(ここにコンテンツが表示される)</router-view>
+    <div class="grid-main">
+        <div class="header grid_style">
+            <router-link to="/page1">スコア入力</router-link>
+            <router-link to="/page2">ユーザー一覧ページ</router-link>
+        </div>
+        <div class="contents">
+            <router-view>(ここにコンテンツが表示される)</router-view>
+        </div>
+        <div class="footer grid_style"></div>
+    </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
-<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue-router@3.1.3/dist/vue-router.js"></script>
 <script src="router.js" type="module"></script>
+<style>
+    /* https://grid.layoutit.com/?id=cFy6gyh */
+    html {
+        height: 100%;
+    }
+
+    body {
+        height: 100%;
+        margin: 0;
+    }
+
+    #app {
+        height: 100%;
+        margin: 0;
+    }
+
+    .grid-main {
+        height: 100%;
+        display: grid;
+        grid-template-columns: 100px 1fr 100px;
+        grid-template-rows: 100px 1fr 100px;
+        grid-template-areas: "header header header""navi_a contents navi_b""footer footer footer"
+    }
+
+    .header {
+        grid-area: header;
+    }
+
+    .contents {
+        grid-area: contents;
+    }
+
+    .footer {
+        grid-area: footer;
+    }
+
+    .grid-scoreinput {
+        height: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-areas: "grid-action grid-kind detail1 coat coat""grid-action grid-kind detail2 coat coat""grid-action grid-kind detail3 coat coat""grid-action grid-kind detail4 coat coat""grid-action grid-kind detail5 coat coat""grid-action grid-kind detail6 coat coat""score score score function function";
+    }
+
+    .grid-action {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-areas: "serve""spike""block""receive""other_miss""faul";
+        grid-area: grid-action;
+    }
+
+    .grid-kind {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-areas: "rally""point""miss""a""b""c";
+        grid-area: grid-kind;
+    }
+
+    .coat {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-areas: "b9 b8 b7""b6 b5 b4""b3 b2 b1""a1 a2 a3""a4 a5 a6""a7 a8 a9";
+        grid-area: coat;
+    }
+
+    .spike {
+        grid-area: spike;
+    }
+
+    .block {
+        grid-area: block;
+    }
+
+    .receive {
+        grid-area: receive;
+    }
+
+    .serve {
+        grid-area: serve;
+    }
+
+    .other_miss {
+        grid-area: other_miss;
+    }
+
+    .faul {
+        grid-area: faul;
+    }
+
+    .rally {
+        grid-area: rally;
+    }
+
+    .point {
+        grid-area: point;
+    }
+
+    .miss {
+        grid-area: miss;
+    }
+
+    .a {
+        grid-area: a;
+    }
+
+    .b {
+        grid-area: b;
+    }
+
+    .c {
+        grid-area: c;
+    }
+
+    .function {
+        grid-area: function;
+    }
+
+    .a1 {
+        grid-area: a1;
+    }
+
+    .a2 {
+        grid-area: a2;
+    }
+
+    .a3 {
+        grid-area: a3;
+    }
+
+    .a4 {
+        grid-area: a4;
+    }
+
+    .a5 {
+        grid-area: a5;
+    }
+
+    .a6 {
+        grid-area: a6;
+    }
+
+    .a7 {
+        grid-area: a7;
+    }
+
+    .a8 {
+        grid-area: a8;
+    }
+
+    .a9 {
+        grid-area: a9;
+    }
+
+    .b1 {
+        grid-area: b1;
+    }
+
+    .b2 {
+        grid-area: b2;
+    }
+
+    .b3 {
+        grid-area: b3;
+    }
+
+    .b4 {
+        grid-area: b4;
+    }
+
+    .b5 {
+        grid-area: b5;
+    }
+
+    .b6 {
+        grid-area: b6;
+    }
+
+    .b7 {
+        grid-area: b7;
+    }
+
+    .b8 {
+        grid-area: b8;
+    }
+
+    .b9 {
+        grid-area: b9;
+    }
+
+    .navi_a {
+        grid-area: navi_a;
+    }
+
+    .navi_b {
+        grid-area: navi_b;
+    }
+
+    .score {
+        grid-area: score;
+    }
+
+    .detail1 {
+        grid-area: detail1;
+    }
+
+    .detail2 {
+        grid-area: detail2;
+    }
+
+    .detail3 {
+        grid-area: detail3;
+    }
+
+    .detail4 {
+        grid-area: detail4;
+    }
+
+    .detail5 {
+        grid-area: detail5;
+    }
+
+    .detail6 {
+        grid-area: detail6;
+    }
+
+    .grid_style {
+        border: 2px solid #ddd;
+        width: 100%;
+        height: 100%;
+        border-radius: 5px;
+        /* margin: -1px; */
+    }
+
+    .grid_style_team_a {
+        border: 2px solid #ddd;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        /* margin: -1px; */
+    }
+
+    .grid_style_team_b {
+        border: 2px solid #ddd;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        /* margin: -1px; */
+    }
+
+    .action input {
+        display: none;
+    }
+
+    .action input[type="radio"]:checked+label {
+        color: #bf9701;
+        border: 2px solid #bf9701;
+        background-color: #fbf4dc;
+    }
+
+    .action label {
+        color: #ddd;
+        border: 2px solid #ddd;
+        text-align: center;
+        display: inline-block;
+        /* padding: 5px 0px; */
+        /* width: 150px;
+        height: 80px; */
+        width: 100%;
+        height: 100%;
+        /* margin: 10px; */
+        /* position: absolute; */
+        border-radius: 5px;
+    }
+
+    .action label:hover {
+        color: #aaa;
+        border: 2px solid #aaa;
+        cursor: pointer;
+    }
+
+
+    .kind input {
+        display: none;
+    }
+
+    .kind input[type="radio"]:checked+label {
+        color: #3275bc;
+        border: 2px solid #3275bc;
+        background-color: #d0e6fd;
+    }
+
+    .kind label {
+        color: #ddd;
+        border: 2px solid #ddd;
+        text-align: center;
+        display: inline-block;
+        /* padding: 5px 0px; */
+        /* width: 150px;
+        height: 80px; */
+        width: 100%;
+        height: 100%;
+        /* margin: 10px; */
+        /* position: absolute; */
+        border-radius: 5px;
+    }
+
+    .kind label:hover {
+        color: #aaa;
+        border: 2px solid #aaa;
+        cursor: pointer;
+    }
+
+    .detail input {
+        display: none;
+    }
+
+    .detail input[type="radio"]:checked+label {
+        color: #000;
+        border: 2px solid #000;
+        background-color: #eaeaea;
+    }
+
+    .detail label {
+        color: #ddd;
+        border: 2px solid #ddd;
+        text-align: center;
+        display: inline-block;
+        /* padding: 5px 0px; */
+        /* width: 150px;
+        height: 80px; */
+        width: 100%;
+        height: 100%;
+        /* margin: 10px; */
+        /* position: absolute; */
+        border-radius: 5px;
+    }
+
+    .detail label:hover {
+        color: #aaa;
+        border: 2px solid #aaa;
+        cursor: pointer;
+    }
+
+    .item_invisible {
+        display: none;
+    }
+</style>
 
 </html>

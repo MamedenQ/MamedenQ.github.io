@@ -36,16 +36,11 @@ const template = `
             <div v-bind:class="item.classGrid" v-on:click="addScore(item)" v-for="item of itemTeam"></div>
         </div>
         <div class="score grid_style" style="overflow-x:auto; overflow-y:hidden;">
-            <!--
-            <div id='scorearea' style="height: 100%;overflow:auto;"></div>
-            -->
-            <svg v-bind:width="score.length * 90" style="background: gray; height: 100%; overflow: scroll;">
-            <!--
-                <circle r="40" cx="50" cy="50"></circle>
-                <circle r="40" cx="140" cy="50"></circle>
-                <circle r="40" cx="230" cy="50"></circle>
-            -->
-                <circle r="40" v-bind:cx="50 + 90 * (item.index - 1)" cy="50" v-for="item of score"></circle>
+            <svg v-bind:width="score.length * 90" style="height: 100%; overflow: scroll;">
+                <circle v-bind:fill="scoreColor(item.team)" r="40" v-bind:cx="50 + 90 * idx" cy="50" v-on:click="onClickScore(item)" v-for="(item, idx) of score"></circle>
+                <text text-anchor="middle" v-bind:x="10 + 90 * idx + 40" v-bind:y="35" v-on:click="onClickScore(item)" v-for="(item, idx) of score">{{item.no}}</text>
+                <text text-anchor="middle" v-bind:x="10 + 90 * idx + 40" v-bind:y="55" v-on:click="onClickScore(item)" v-for="(item, idx) of score">{{item.action}}</text>
+                <text text-anchor="middle" v-bind:x="10 + 90 * idx + 40" v-bind:y="75" v-on:click="onClickScore(item)" v-for="(item, idx) of score">{{item.kind}}</text>
             </svg>
         </div>
     </div>
@@ -55,6 +50,9 @@ export default {
     template,
     data: function () {
         return {
+            // colorTeamA: color(0),
+            // colorTeamB: color(1),
+            scoreColor: color,
             message: "home page",
             score: [],
             scoreBk: [],
@@ -286,7 +284,6 @@ export default {
             }
             this.scoreBk.push(this.score.pop());
             this.updateUndoRedoButton();
-            this.createScoreObj();
             this.outputlog();
         },
         redo() {
@@ -297,17 +294,18 @@ export default {
             popdata.index = this.score.length + 1;
             this.score.push(popdata);
             this.updateUndoRedoButton();
-            this.createScoreObj();
             this.outputlog();
         },
         save() {
 
         },
+        onClickScore(item) {
+            this.deleteScore(item.index);
+        },
         addScore(item) {
             this.pushScore(item.team, item.no, this.modelAction, this.getKind(), this.modelDetail);
             this.scoreBk = [];
             this.updateUndoRedoButton();
-            this.createScoreObj();
             this.outputlog();
         },
         deleteScore(deleteIndex) {
@@ -323,7 +321,6 @@ export default {
 
             this.score = newData;
 
-            this.createScoreObj();
             this.outputlog();
         },
         getMaxIndex() {
@@ -354,11 +351,7 @@ export default {
         onChangeKind() {
             this.modelDetail = "D1";
         },
-        // getAction() {
-        //     return $('input[name=action]:checked').val();
-        // },
         getKind() {
-            // var kind = $('input[name=action]:checked').val();
             if (this.modelKind == 'other_miss' || this.modelKind == 'faul') {
                 return "";
             }
@@ -382,27 +375,22 @@ export default {
         //     // アウト、ネット
         // },
         pushScore(team, no, action, kind, detail) {
+            var teamcode;
+            if (team == "a") {
+                teamcode = 0;
+            } else {
+                teamcode = 1;
+            }
+
             this.score.push({
-                // index: score.length + 1,
                 index: this.getMaxIndex() + 1,
-                team: team,
+                team: teamcode,
                 no: no,
                 action: action,
                 kind: kind,
                 detail: detail,
             });
         },
-        // setVisible(selector, visible) {
-        //     if (visible) {
-        //         $(selector).removeClass('item_invisible');
-        //     } else {
-        //         $(selector).addClass('item_invisible');
-        //     }
-        // < button class= "btn01" v- on: click = 'isActive01=!isActive01' > こちらをクリック</button >
-        // <div class="hoge01" v-bind: class='{active:isActive01}'>        // },
-        // setEnabled(selector, enabled) {
-        //     $(selector).prop("disabled", !enabled);
-        // },
         updateUndoRedoButton() {
             if (this.score.length < 1) {
                 this.undoEnabled = false;
@@ -415,9 +403,7 @@ export default {
                 this.redoEnabled = true;
             }
         },
-        createScoreObj() {
-            // ドラッグドロップ
-            // https://www.kabanoki.net/1712/#i-4
-        }
+        // ドラッグドロップ
+        // https://www.kabanoki.net/1712/#i-4
     },
 }

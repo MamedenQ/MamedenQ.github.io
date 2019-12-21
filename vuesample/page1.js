@@ -18,48 +18,25 @@ const template = `
                 </label>
             </div>
         </div>
-
-        <div class="detail d1 detail_1_label">
-            <input type="radio" id="detail_1" name="detail" value="1" v-model="modelDetail" checked>
-            <label for="detail_1">
-                D1
-            </label>
+        
+        <div class="grid-detail" v-for="item of itemDetail">
+            <div v-bind:class="item.classGrid">
+                <input type="radio" v-bind:id="item.id" name="detail" v-bind:value="item.name" v-model="modelDetail">
+                <label v-bind:for="item.id">
+                    {{item.name}}
+                </label>
+            </div>
         </div>
-        <div class="detail d2 detail_2_label">
-            <input type="radio" id="detail_2" name="detail" value="2" v-model="modelDetail">
-            <label for="detail_2">
-                D2
-            </label>
-        </div>
-        <div class="detail d3 detail_3_label">
-            <input type="radio" id="detail_3" name="detail" value="3" v-model="modelDetail">
-            <label for="detail_3">
-                D3
-            </label>
-        </div>
-        <div class="detail d4 detail_4_label">
-            <input type="radio" id="detail_4" name="detail" value="4" v-model="modelDetail">
-            <label for="detail_4">
-                D4
-            </label>
-        </div>
-        <div class="detail d5 detail_5_label">
-            <input type="radio" id="detail_5" name="detail" value="5" v-model="modelDetail">
-            <label for="detail_5">
-                D5
-            </label>
-        </div>
-        <div class="detail d6 detail_6_label">
-            <input type="radio" id="detail_6" name="detail" value="6" v-model="modelDetail">
-            <label for="detail_6">
-                D6
-            </label>
-        </div>
+        
         <div class="function grid_style">
             <button class="undo" v-bind:disabled="!undoEnabled" v-on:click="undo">undo</button>
             <button class="redo" v-bind:disabled="!redoEnabled" v-on:click="redo">redo</button>
         </div>
-        <div class="coat grid_style">
+        <div class="coat grid_style" v-for="item of itemTeam">
+            <div v-bind:class="item.classGrid" v-on:click="addScore(item)"></div>
+            
+            
+            <!--
             <div class="a1 grid_style_team_a" value="1" v-on:click="addScore('a', 1)"></div>
             <div class="a2 grid_style_team_a" value="2" v-on:click="addScore('a', 2)"></div>
             <div class="a3 grid_style_team_a" value="3"></div>
@@ -79,6 +56,7 @@ const template = `
             <div class="b7 grid_style_team_b" value="7"></div>
             <div class="b8 grid_style_team_b" value="8"></div>
             <div class="b9 grid_style_team_b" value="9"></div>
+            -->
         </div>
         <div class="score grid_style">
             <div id='scorearea' style="height: 100%;overflow:auto;"></div>
@@ -169,13 +147,46 @@ export default {
                     classGrid: "kind c kind_c_label",
                     receive: true,
                 },
-            ]
-            // items: [
-            //     { name: 'いちご', cls: "item_invisible" },
-            //     { name: 'りんご', id: "abc" },
-            //     { name: 'みかん' },
-            //     { name: 'ぶどう', cls: "item_invisible" }
-            // ],
+            ],
+            itemDetail: [
+                {
+                    name: "D1",
+                    id: "detail_1",
+                    classGrid: "detail detail1 detail_1_label",
+                },
+                {
+                    name: "D2",
+                    id: "detail_2",
+                    classGrid: "detail detail2 detail_2_label",
+                },
+                {
+                    name: "D3",
+                    id: "detail_3",
+                    classGrid: "detail detail3 detail_3_label",
+                },
+                {
+                    name: "D4",
+                    id: "detail_4",
+                    classGrid: "detail detail4 detail_4_label",
+                },
+                {
+                    name: "D5",
+                    id: "detail_5",
+                    classGrid: "detail detail5 detail_5_label",
+                },
+                {
+                    name: "D6",
+                    id: "detail_6",
+                    classGrid: "detail detail6 detail_6_label",
+                },
+            ],
+            itemTeam :[
+                {
+                    team: "a",
+                    no: "1",
+                    classGrid: "a1 grid_style_team_a",
+                },
+            ],
         }
     },
     mounted() {
@@ -194,9 +205,9 @@ export default {
     //     }
     // },
     methods: {
-        // test(s) {
-        //     alert(s);
-        // },
+        test(s) {
+            alert(s.abc);
+        },
         outputlog() {
             console.log(JSON.stringify(this.score, null, "    "));
         },
@@ -223,8 +234,8 @@ export default {
         save() {
 
         },
-        addScore(team, no) {
-            this.pushScore(team, no, this.modelAction, this.getKind(), this.modelDetail);
+        addScore(item) {
+            this.pushScore(item.team, item.no, this.modelAction, this.getKind(), this.modelDetail);
             this.scoreBk = [];
             this.updateUndoRedoButton();
             this.createScoreObj();
@@ -269,10 +280,10 @@ export default {
             }
 
             this.modelKind = "rally";
-            this.modelDetail = "1";
+            this.modelDetail = "D1";
         },
         onChangeKind() {
-            this.modelDetail = "1";
+            this.modelDetail = "D1";
         },
         // getAction() {
         //     return $('input[name=action]:checked').val();

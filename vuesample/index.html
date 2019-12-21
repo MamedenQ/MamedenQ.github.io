@@ -70,7 +70,7 @@
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
         grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-        grid-template-areas: "grid-action grid-kind detail1 coat coat""grid-action grid-kind detail2 coat coat""grid-action grid-kind detail3 coat coat""grid-action grid-kind detail4 coat coat""grid-action grid-kind detail5 coat coat""grid-action grid-kind detail6 coat coat""score score score function function";
+        grid-template-areas: "grid-action grid-kind grid-detail coat coat""grid-action grid-kind grid-detail coat coat""grid-action grid-kind grid-detail coat coat""grid-action grid-kind grid-detail coat coat""grid-action grid-kind grid-detail coat coat""grid-action grid-kind grid-detail coat coat""score score score function function";
     }
 
     .grid-action {
@@ -88,7 +88,15 @@
         grid-template-areas: "rally""point""miss""a""b""c";
         grid-area: grid-kind;
     }
-
+    
+    .grid-detail {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-areas: "detail1""detail2""detail3""detail4""detail5""detail6";
+        grid-area: grid-detail;
+    }
+    
     .coat {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;

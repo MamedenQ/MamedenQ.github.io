@@ -35,8 +35,18 @@ const template = `
         <div class="coat grid_style">
             <div v-bind:class="item.classGrid" v-on:click="addScore(item)" v-for="item of itemTeam"></div>
         </div>
-        <div class="score grid_style">
+        <div class="score grid_style" style="overflow-x:auto; overflow-y:hidden;">
+            <!--
             <div id='scorearea' style="height: 100%;overflow:auto;"></div>
+            -->
+            <svg v-bind:width="score.length * 90" style="background: gray; height: 100%; overflow: scroll;">
+            <!--
+                <circle r="40" cx="50" cy="50"></circle>
+                <circle r="40" cx="140" cy="50"></circle>
+                <circle r="40" cx="230" cy="50"></circle>
+            -->
+                <circle r="40" v-bind:cx="50 + 90 * (item.index - 1)" cy="50" v-for="item of score"></circle>
+            </svg>
         </div>
     </div>
 `;

@@ -1,7 +1,7 @@
 const template = `
     <div class="grid-scoreinput">
-        <div class="grid-action" v-for="item of itemAction">
-            <div v-bind:class="item.classGrid">
+        <div class="grid-action">
+            <div v-bind:class="item.classGrid" v-for="item of itemAction">
                 <input type="radio" v-bind:id="item.id" name="action" v-bind:value="item.name" v-on:change="onChangeAction" v-model="modelAction">
                 <label v-bind:for="item.id">
                     {{item.name}}
@@ -9,8 +9,8 @@ const template = `
             </div>
         </div>
 
-        <div class="grid-kind" v-for="item of itemKind">
-            <div v-bind:class="item.classGrid">
+        <div class="grid-kind">
+            <div v-bind:class="item.classGrid" v-for="item of itemKind">
                 <input type="radio" v-if="item.receive" v-bind:id="item.id" name="kind" v-bind:value="item.name" v-on:change="onChangeKind" v-model="modelKind" v-bind:disabled="!kindReceiveEnabled">
                 <input type="radio" v-else v-bind:id="item.id" name="kind" v-bind:value="item.name" v-on:change="onChangeKind" v-model="modelKind" v-bind:disabled="!kindCommonEnabled">
                 <label v-bind:for="item.id">
@@ -19,8 +19,8 @@ const template = `
             </div>
         </div>
         
-        <div class="grid-detail" v-for="item of itemDetail">
-            <div v-bind:class="item.classGrid">
+        <div class="grid-detail">
+            <div v-bind:class="item.classGrid" v-for="item of itemDetail">
                 <input type="radio" v-bind:id="item.id" name="detail" v-bind:value="item.name" v-model="modelDetail">
                 <label v-bind:for="item.id">
                     {{item.name}}
@@ -32,31 +32,8 @@ const template = `
             <button class="undo" v-bind:disabled="!undoEnabled" v-on:click="undo">undo</button>
             <button class="redo" v-bind:disabled="!redoEnabled" v-on:click="redo">redo</button>
         </div>
-        <div class="coat grid_style" v-for="item of itemTeam">
-            <div v-bind:class="item.classGrid" v-on:click="addScore(item)"></div>
-            
-            
-            <!--
-            <div class="a1 grid_style_team_a" value="1" v-on:click="addScore('a', 1)"></div>
-            <div class="a2 grid_style_team_a" value="2" v-on:click="addScore('a', 2)"></div>
-            <div class="a3 grid_style_team_a" value="3"></div>
-            <div class="a4 grid_style_team_a" value="4"></div>
-            <div class="a5 grid_style_team_a" value="5"></div>
-            <div class="a6 grid_style_team_a" value="6"></div>
-            <div class="a7 grid_style_team_a" value="7"></div>
-            <div class="a8 grid_style_team_a" value="8"></div>
-            <div class="a9 grid_style_team_a" value="9"></div>
-
-            <div class="b1 grid_style_team_b" value="1"></div>
-            <div class="b2 grid_style_team_b" value="2"></div>
-            <div class="b3 grid_style_team_b" value="3"></div>
-            <div class="b4 grid_style_team_b" value="4"></div>
-            <div class="b5 grid_style_team_b" value="5"></div>
-            <div class="b6 grid_style_team_b" value="6"></div>
-            <div class="b7 grid_style_team_b" value="7"></div>
-            <div class="b8 grid_style_team_b" value="8"></div>
-            <div class="b9 grid_style_team_b" value="9"></div>
-            -->
+        <div class="coat grid_style">
+            <div v-bind:class="item.classGrid" v-on:click="addScore(item)" v-for="item of itemTeam"></div>
         </div>
         <div class="score grid_style">
             <div id='scorearea' style="height: 100%;overflow:auto;"></div>
@@ -180,11 +157,96 @@ export default {
                     classGrid: "detail detail6 detail_6_label",
                 },
             ],
-            itemTeam :[
+            itemTeam: [
                 {
                     team: "a",
                     no: "1",
                     classGrid: "a1 grid_style_team_a",
+                },
+                {
+                    team: "a",
+                    no: "2",
+                    classGrid: "a2 grid_style_team_a",
+                },
+                {
+                    team: "a",
+                    no: "3",
+                    classGrid: "a3 grid_style_team_a",
+                },
+                {
+                    team: "a",
+                    no: "4",
+                    classGrid: "a4 grid_style_team_a",
+                },
+                {
+                    team: "a",
+                    no: "5",
+                    classGrid: "a5 grid_style_team_a",
+                },
+                {
+                    team: "a",
+                    no: "6",
+                    classGrid: "a6 grid_style_team_a",
+                },
+                {
+                    team: "a",
+                    no: "7",
+                    classGrid: "a7 grid_style_team_a",
+                },
+                {
+                    team: "a",
+                    no: "8",
+                    classGrid: "a8 grid_style_team_a",
+                },
+                {
+                    team: "a",
+                    no: "9",
+                    classGrid: "a9 grid_style_team_a",
+                },
+                {
+                    team: "b",
+                    no: "1",
+                    classGrid: "b1 grid_style_team_b",
+                },
+                {
+                    team: "b",
+                    no: "2",
+                    classGrid: "b2 grid_style_team_b",
+                },
+                {
+                    team: "b",
+                    no: "3",
+                    classGrid: "b3 grid_style_team_b",
+                },
+                {
+                    team: "b",
+                    no: "4",
+                    classGrid: "b4 grid_style_team_b",
+                },
+                {
+                    team: "b",
+                    no: "5",
+                    classGrid: "b5 grid_style_team_b",
+                },
+                {
+                    team: "b",
+                    no: "6",
+                    classGrid: "b6 grid_style_team_b",
+                },
+                {
+                    team: "b",
+                    no: "7",
+                    classGrid: "b7 grid_style_team_b",
+                },
+                {
+                    team: "b",
+                    no: "8",
+                    classGrid: "b8 grid_style_team_b",
+                },
+                {
+                    team: "b",
+                    no: "9",
+                    classGrid: "b9 grid_style_team_b",
                 },
             ],
         }
@@ -205,9 +267,6 @@ export default {
     //     }
     // },
     methods: {
-        test(s) {
-            alert(s.abc);
-        },
         outputlog() {
             console.log(JSON.stringify(this.score, null, "    "));
         },

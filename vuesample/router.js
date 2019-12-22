@@ -1,16 +1,17 @@
-import page1 from "./page1.js";
+import scoreinput from "./scoreinput.js";
 import page2 from "./page2.js";
 
-var router = new VueRouter({
+export default new VueRouter({
+    // var router = new VueRouter({
     mode: 'history',
     // base:'/app/public/',
     routes: [
         {
-            path: '/page1',
+            path: '/scoreinput',
             // component: {
             //     template: page1.template
             // }
-            component: page1,
+            component: scoreinput,
         },
         {
             path: '/page2',
@@ -21,8 +22,3 @@ var router = new VueRouter({
         }
     ]
 });
-// routerをマウント
-var app = new Vue({
-    el: '#app',
-    router: router
-}).$mount('#app');

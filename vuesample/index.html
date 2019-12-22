@@ -14,11 +14,13 @@
 </head>
 
 <div id="app" v-cloak>
+    <emt_recv></emt_recv>
     <div class="grid-main">
         <div class="header grid_style">
-            <router-link to="/page1">スコア入力</router-link>
+            <router-link to="/scoreinput">スコア入力</router-link>
             <router-link to="/page2">ユーザー一覧ページ</router-link>
         </div>
+        <navi_a></navi_a>
         <div class="contents">
             <router-view>(ここにコンテンツが表示される)</router-view>
         </div>
@@ -28,10 +30,53 @@
 
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue-router@3.1.3/dist/vue-router.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.8.4/Sortable.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/2.20.0/vuedraggable.umd.min.js"></script>
 <script src="http://d3js.org/d3.v3.min.js"></script>
-<script src="router.js" type="module"></script>
-<script>
+<script src="main.js" type="module"></script>
+
+<script type="text/javascript">
+    // ホームのボタン
+    // スコア
+    // マスタメンテ
+
+    // 設定内容
+    // 詳細選択有無設定
+    // 色設定
+
+    // レイアウト
+    // svgを作成する
+
+    // 画面間データ連携調査
+
+    // スコア画面のデータ形式から一覧画面へのデータ形式へ変換
+
+    // ローテーション
+    // 人入れ替え
+
+    // ブラウザに保存
+    // QRコードでバックアップ
+
+    // 詳細の選択肢を作成
+    // アクションによって変動
+
     var color = d3.scale.category20();
+
+    // new Vue({
+    //     el: '#emit-example-simple',
+    //     methods: {
+    //         sayHi: function () {
+    //             alert('Hi!')
+    //         }
+    //     }
+    // })
+    // import router from "./router.js";
+
+    // routerをマウント
+    // var app = new Vue({
+    //     el: '#app',
+    //     router: router
+    // }).$mount('#app');
 </script>
 <style>
     /* https://grid.layoutit.com/?id=cFy6gyh */
@@ -44,6 +89,12 @@
         margin: 0;
     }
 
+    ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
     #app {
         height: 100%;
         margin: 0;
@@ -52,9 +103,12 @@
     .grid-main {
         height: 100%;
         display: grid;
-        grid-template-columns: 100px 1fr 100px;
+        /* grid-template-columns: 100px 1fr 100px;
         grid-template-rows: 100px 1fr 100px;
-        grid-template-areas: "header header header""navi_a contents navi_b""footer footer footer"
+        grid-template-areas: "header header header""navi_a contents navi_b""footer footer footer" */
+        grid-template-columns: 70px 1fr;
+        grid-template-rows: 100px 1fr;
+        grid-template-areas: "header header""navi_a contents";
     }
 
     .header {
@@ -65,16 +119,16 @@
         grid-area: contents;
     }
 
-    .footer {
+    /* .footer {
         grid-area: footer;
-    }
+    } */
 
     .grid-scoreinput {
         height: 100%;
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 70px;
         grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 100px;
-        grid-template-areas: "grid-action grid-kind grid-detail coat coat""grid-action grid-kind grid-detail coat coat""grid-action grid-kind grid-detail coat coat""grid-action grid-kind grid-detail coat coat""grid-action grid-kind grid-detail coat coat""grid-action grid-kind grid-detail coat coat""score score score function function";
+        grid-template-areas: "grid-action grid-kind grid-detail coat coat navi_b""grid-action grid-kind grid-detail coat coat navi_b""grid-action grid-kind grid-detail coat coat navi_b""grid-action grid-kind grid-detail coat coat navi_b""grid-action grid-kind grid-detail coat coat navi_b""grid-action grid-kind grid-detail coat coat navi_b""score score score score score navi_b";
     }
 
     .grid-action {
@@ -107,6 +161,22 @@
         grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
         grid-template-areas: "b9 b8 b7""b6 b5 b4""b3 b2 b1""a1 a2 a3""a4 a5 a6""a7 a8 a9";
         grid-area: coat;
+    }
+
+    .navi_a {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 100px;
+        grid-template-areas: "menu1""menu2""menu3""menu4""menu5""menu6""menu7";
+        grid-area: navi_a;
+    }
+
+    .navi_b {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 100px;
+        grid-template-areas: "function1""function2""function3""function4""function5""function6""function7";
+        grid-area: navi_b;
     }
 
     .spike {
@@ -157,8 +227,60 @@
         grid-area: c;
     }
 
-    .function {
-        grid-area: function;
+    .menu1 {
+        grid-area: menu1;
+    }
+
+    .menu2 {
+        grid-area: menu2;
+    }
+
+    .menu3 {
+        grid-area: menu3;
+    }
+
+    .menu4 {
+        grid-area: menu4;
+    }
+
+    .menu5 {
+        grid-area: menu5;
+    }
+
+    .menu6 {
+        grid-area: menu6;
+    }
+
+    .menu7 {
+        grid-area: menu7;
+    }
+
+    .function1 {
+        grid-area: function1;
+    }
+
+    .function2 {
+        grid-area: function2;
+    }
+
+    .function3 {
+        grid-area: function3;
+    }
+
+    .function4 {
+        grid-area: function4;
+    }
+
+    .function5 {
+        grid-area: function5;
+    }
+
+    .function6 {
+        grid-area: function6;
+    }
+
+    .function7 {
+        grid-area: function7;
     }
 
     .a1 {
@@ -231,14 +353,6 @@
 
     .b9 {
         grid-area: b9;
-    }
-
-    .navi_a {
-        grid-area: navi_a;
-    }
-
-    .navi_b {
-        grid-area: navi_b;
     }
 
     .score {

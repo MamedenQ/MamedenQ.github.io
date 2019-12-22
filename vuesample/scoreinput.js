@@ -28,13 +28,74 @@ const template = `
             </div>
         </div>
         
-        <div class="function grid_style">
-            <button class="undo" v-bind:disabled="!undoEnabled" v-on:click="undo">undo</button>
-            <button class="redo" v-bind:disabled="!redoEnabled" v-on:click="redo">redo</button>
+        <div class="navi_b">
+            <div class="function1">
+                <svg v-on:click="save" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                    <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                    <polyline points="7 3 7 8 15 8"></polyline>
+                </svg>
+            </div>
+
+            <div class="function2">
+                <svg v-on:click="load" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+            </div>
+
+            <div class="function3">
+                <svg v-on:click="rotateB" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38"/></svg>
+            </div>
+            <div class="function4">
+                <svg v-on:click="rotateA" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38"/></svg>
+            </div>
+
+            <div class="function5">
+                <svg v-on:click="changeMember" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            </div>
+
+            <div class="function6">
+                <svg v-if="undoEnabled" v-bind:disabled="!undoEnabled" v-on:click="undo" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <!--
+                    <path d="M2.5 2v6h6M2.66 15.57a10 10 0 1 0 .57-8.38"/>
+                    -->
+                    <path d="M10 16l-6-6 6-6"/>
+                    <path d="M20 21v-7a4 4 0 0 0-4-4H5"/>
+                </svg>
+                <svg v-else v-bind:disabled="!undoEnabled" v-on:click="undo" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#cacaca" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <!--
+                    <path d="M2.5 2v6h6M2.66 15.57a10 10 0 1 0 .57-8.38"/>
+                    -->
+                    <path d="M10 16l-6-6 6-6"/>
+                    <path d="M20 21v-7a4 4 0 0 0-4-4H5"/>
+                </svg>
+            </div>
+
+            <div class="function7">
+                <svg v-if="redoEnabled" v-bind:disabled="!redoEnabled" v-on:click="redo" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <!--
+                    <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38"/>
+                    -->
+                    <path d="M14 16l6-6-6-6"/>
+                    <path d="M4 21v-7a4 4 0 0 1 4-4h11"/>
+                </svg>
+                <svg v-else v-bind:disabled="!redoEnabled" v-on:click="redo" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#cacaca" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <!--
+                    <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38"/>
+                    -->
+                    <path d="M14 16l6-6-6-6"/>
+                    <path d="M4 21v-7a4 4 0 0 1 4-4h11"/>
+                </svg>
+            </div>
         </div>
-        <div class="coat grid_style">
-            <div v-bind:class="item.classGrid" v-on:click="addScore(item)" v-for="item of itemTeam"></div>
-        </div>
+
+        <draggable class="coat grid_style" element="ul">
+            <li v-bind:style="'background: ' + scoreColor(0)" v-bind:class="item.classGrid" v-on:click="addScore(item)" v-for="item of itemTeamA" :key="item.team + item.no">
+                {{item.no}}
+            </li>
+            <li v-bind:style="'background: ' + scoreColor(1)" v-bind:class="item.classGrid" v-on:click="addScore(item)" v-for="item of itemTeamB" :key="item.team + item.no">
+                {{item.no}}
+            </li>
+        </draggable>
+
         <div class="score grid_style" style="overflow-x:auto; overflow-y:hidden;">
             <svg v-bind:width="score.length * 90" style="height: 100%; overflow: scroll;">
                 <circle v-bind:fill="scoreColor(item.team)" r="40" v-bind:cx="50 + 90 * idx" cy="50" v-on:click="onClickScore(item)" v-for="(item, idx) of score"></circle>
@@ -50,12 +111,10 @@ export default {
     template,
     data: function () {
         return {
-            // colorTeamA: color(0),
-            // colorTeamB: color(1),
             scoreColor: color,
-            message: "home page",
             score: [],
             scoreBk: [],
+            scoreTempSave: [],
             kindCommonEnabled: true,
             kindReceiveEnabled: false,
             undoEnabled: false,
@@ -165,7 +224,7 @@ export default {
                     classGrid: "detail detail6 detail_6_label",
                 },
             ],
-            itemTeam: [
+            itemTeamA: [
                 {
                     team: "a",
                     no: "1",
@@ -211,6 +270,8 @@ export default {
                     no: "9",
                     classGrid: "a9 grid_style_team_a",
                 },
+            ],
+            itemTeamB: [
                 {
                     team: "b",
                     no: "1",
@@ -263,6 +324,7 @@ export default {
         this.modelAction = "serve";
         this.updateUndoRedoButton();
         this.toggleKind();
+        localStorage.removeItem("score");
     },
     // computed: {
     //     modelAction: {
@@ -285,6 +347,7 @@ export default {
             this.scoreBk.push(this.score.pop());
             this.updateUndoRedoButton();
             this.outputlog();
+            this.$emit('commit1', 'aaa');
         },
         redo() {
             if (this.scoreBk.length < 1) {
@@ -297,7 +360,15 @@ export default {
             this.outputlog();
         },
         save() {
-
+            localStorage.setItem("score", JSON.stringify(this.score));
+        },
+        load() {
+            this.modelAction = "serve";
+            this.scoreBk = [];
+            this.score = JSON.parse(localStorage.getItem("score"));
+            this.updateUndoRedoButton();
+            this.toggleKind();
+            this.outputlog();
         },
         onClickScore(item) {
             this.deleteScore(item.index);
@@ -403,7 +474,23 @@ export default {
                 this.redoEnabled = true;
             }
         },
+        rotateA() {
+
+        },
+        rotateB() {
+
+        },
+        changeMember() {
+
+        },
         // ドラッグドロップ
         // https://www.kabanoki.net/1712/#i-4
+
+        // svg関連まとめサイト
+        // https://www.webcreatorbox.com/webinfo/svg-icons-patterns-illustration
+
+        // https://iconsvg.xyz/
+
+        // https://ikonate.com/#content
     },
 }

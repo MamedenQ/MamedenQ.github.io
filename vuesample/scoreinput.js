@@ -114,43 +114,37 @@ const template = `
             </svg>
         </div>
         <div name="modal" v-if="showModal">
-        <transition>
-            <div class="modal-mask">
-                <div class="modal-wrapper">
-                <div class="modal-container">
+            <transition>
+                <div class="modal-mask">
+                    <div class="modal-wrapper">
+                        <div class="modal-container">
 
-                    <div class="modal-header">
-                    <!--
-                        <slot name="header">
-                            default header
-                        </slot>
-                    -->
-                        <h3 slot="header">スコアの保存</h3>
-                    </div>
+                            <div class="modal-header">
+                                <h3 slot="header">スコアの保存</h3>
+                            </div>
 
-                    <div class="modal-body">
-                    <slot name="body">
-                        試合名<input type="text" v-model="modelTitle"/><br>
-                        日付<input type="date" v-model="modelDate" />
-                    </slot>
-                    </div>
+                            <div class="modal-body">
+                                <slot name="body">
+                                    試合名<input type="text" v-model="modelTitle"/><br>
+                                    日付<input type="date" v-model="modelDate" />
+                                </slot>
+                            </div>
 
-                    <div class="modal-footer">
-                    <slot name="footer">
-                        <button class="modal-default-button" @click="showModal = false">
-                        キャンセル
-                        </button>
-                        <button class="modal-default-button" @click="save">
-                        保存
-                        </button>
-                    </slot>
+                            <div class="modal-footer">
+                                <slot name="footer">
+                                    <button class="modal-default-button" @click="showModal = false">
+                                        キャンセル
+                                    </button>
+                                    <button class="modal-default-button" @click="save">
+                                        保存
+                                    </button>
+                                </slot>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                </div>
-            </div>
-        </transition>
+            </transition>
         </div>
-  <button id="show-modal" @click="showModal = !showModal">Show Modal</button>
     </div>
 `;
 

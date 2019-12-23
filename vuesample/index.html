@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css">
     <title>Vue Sample</title>
     <!-- <style type="text/css">
         [v-cloak] {
@@ -15,6 +16,7 @@
 
 <div id="app" v-cloak>
     <emt_recv></emt_recv>
+    <!-- <div v-on:commit1="handler"></div> -->
     <div class="grid-main">
         <div class="header grid_style">
             <router-link to="/scoreinput">スコア入力</router-link>
@@ -44,39 +46,46 @@
     // 詳細選択有無設定
     // 色設定
 
-    // レイアウト
-    // svgを作成する
-
+    // ＝＝＝＝＝調査項目
     // 画面間データ連携調査
+    // ここでemitをやっている　今までとは違う構造のため参考になるかも
+    // https://jp.vuejs.org/v2/examples/modal.html
+
+    // svg作成方法
+
+    // グリッドの列幅調整かオーバーレイ 画面出してメンバー交代
+
+    // templateに文字列でDOMを入れているが、分けれる方法があるかも
+    // https://jp.vuejs.org/v2/examples/modal.html
+
+    // ＝＝＝＝＝レイアウト
+    // バレーボールっぽいsvgを作成する
+
+    // ＝＝＝＝＝未実装
+    // メニュー構成
+
+    // 試合のセットごとの得点設定（直接入力）
+
+    // スコア入力画面のタイトルと日付、他情報
+
+    // スコア入力画面の一時保存、保存機能
+    // 一時保存と保存で閉じるを分ける
 
     // スコア画面のデータ形式から一覧画面へのデータ形式へ変換
 
-    // ローテーション
     // 人入れ替え
 
+    // jsonを出力してコード反映できるようにする
     // ブラウザに保存
-    // QRコードでバックアップ
 
-    // 詳細の選択肢を作成
-    // アクションによって変動
+    // 分析方法は試合複数選択や日付で絞り込み
+
+    // 前回保存を読み込むときは前回データから変更箇所があるかをフラグで管理しメッセージを出す
+
+    // 閲覧・分析画面
+    // マスタメンテ画面
 
     var color = d3.scale.category20();
-
-    // new Vue({
-    //     el: '#emit-example-simple',
-    //     methods: {
-    //         sayHi: function () {
-    //             alert('Hi!')
-    //         }
-    //     }
-    // })
-    // import router from "./router.js";
-
-    // routerをマウント
-    // var app = new Vue({
-    //     el: '#app',
-    //     router: router
-    // }).$mount('#app');
 </script>
 <style>
     /* https://grid.layoutit.com/?id=cFy6gyh */
@@ -87,6 +96,7 @@
     body {
         height: 100%;
         margin: 0;
+        font-family: 'Rounded Mplus 1c';
     }
 
     ul {
@@ -157,9 +167,9 @@
 
     .coat {
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: 70px 70px 70px;
         grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
-        grid-template-areas: "b9 b8 b7""b6 b5 b4""b3 b2 b1""a1 a2 a3""a4 a5 a6""a7 a8 a9";
+        grid-template-areas: "b7 b8 b9""b4 b5 b6""b3 b2 b1""a1 a2 a3""a6 a5 a4""a9 a8 a7";
         grid-area: coat;
     }
 
@@ -395,7 +405,7 @@
         border: 2px solid #ddd;
         width: 100%;
         height: 100%;
-        border-radius: 50%;
+        border-radius: 5px;
         /* margin: -1px; */
     }
 
@@ -403,7 +413,7 @@
         border: 2px solid #ddd;
         width: 100%;
         height: 100%;
-        border-radius: 50%;
+        border-radius: 5px;
         /* margin: -1px; */
     }
 
@@ -503,6 +513,70 @@
 
     .item_invisible {
         display: none;
+    }
+
+    .modal-mask {
+        position: fixed;
+        z-index: 9998;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, .5);
+        display: table;
+        transition: opacity .3s ease;
+    }
+
+    .modal-wrapper {
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    .modal-container {
+        width: 300px;
+        margin: 0px auto;
+        padding: 20px 30px;
+        background-color: #fff;
+        border-radius: 2px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
+        transition: all .3s ease;
+        font-family: Helvetica, Arial, sans-serif;
+    }
+
+    .modal-header h3 {
+        margin-top: 0;
+        color: #42b983;
+    }
+
+    .modal-body {
+        margin: 20px 0;
+    }
+
+    .modal-default-button {
+        float: right;
+    }
+
+    /*
+ * The following styles are auto-applied to elements with
+ * transition="modal" when their visibility is toggled
+ * by Vue.js.
+ *
+ * You can easily play with the modal transition by editing
+ * these styles.
+ */
+
+    .modal-enter {
+        opacity: 0;
+    }
+
+    .modal-leave-active {
+        opacity: 0;
+    }
+
+    .modal-enter .modal-container,
+    .modal-leave-active .modal-container {
+        -webkit-transform: scale(1.1);
+        transform: scale(1.1);
     }
 </style>
 

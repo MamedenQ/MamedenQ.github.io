@@ -72,6 +72,12 @@ var app = new Vue({
     //         alert('abc');
     //     },
     // }
+    // methods: {
+    //     handler: function (msg) {
+    //         console.log(msg);
+    //         alert(msg);
+    //     },
+    // },
 }).$mount('#app');
 
 // app.component('score_input_event', {

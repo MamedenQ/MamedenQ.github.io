@@ -21,16 +21,16 @@ const template = `
         
         <div class="grid-detail">
             <div v-bind:class="item.classGrid" v-for="item of itemDetail">
-                <input type="radio" v-bind:id="item.id" name="detail" v-bind:value="item.name" v-model="modelDetail">
+                <input type="radio" v-bind:id="item.id" name="detail" v-bind:value="item.name" v-model="modelDetail" v-bind:disabled="!item.isEnabled">
                 <label v-bind:for="item.id">
-                    {{item.name}}
+                    {{item.label}}
                 </label>
             </div>
         </div>
         
         <div class="navi_b">
             <div class="function1">
-                <svg v-on:click="save" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                <svg v-on:click="showModal = true" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
                     <polyline points="17 21 17 13 7 13 7 21"></polyline>
                     <polyline points="7 3 7 8 15 8"></polyline>
@@ -87,14 +87,23 @@ const template = `
             </div>
         </div>
 
-        <draggable class="coat grid_style" element="ul">
-            <li v-bind:style="'background: ' + scoreColor(0)" v-bind:class="item.classGrid" v-on:click="addScore(item)" v-for="item of itemTeamA" :key="item.team + item.no">
-                {{item.no}}
-            </li>
-            <li v-bind:style="'background: ' + scoreColor(1)" v-bind:class="item.classGrid" v-on:click="addScore(item)" v-for="item of itemTeamB" :key="item.team + item.no">
-                {{item.no}}
-            </li>
-        </draggable>
+        <ul class="coat">
+            <li v-if="!item.isEmpty" v-bind:class="item.classGrid" v-on:click="addScore(item)" v-for="item of itemTeamA" :key="item.team + item.no">{{item.no}}</li>
+            <li v-if="!item.isEmpty" v-bind:class="item.classGrid" v-on:click="addScore(item)" v-for="item of itemTeamB" :key="item.team + item.no">{{item.no}}</li>
+            <!--
+            <svg v-bind:class="item.classGrid" v-on:click="addScore(item)" v-for="item of itemTeamA" :key="item.team + item.no" xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5.52 19c.64-2.2 1.84-3 3.22-3h6.52c1.38 0 2.58.8 3.22 3"/>
+                <circle cx="12" cy="10" r="3"/>
+                <circle cx="12" cy="12" r="10"/>
+                <text text-anchor="middle" v-bind:x="0" v-bind:y="0" >{{item.no}}</text>
+            </svg>
+            <svg v-bind:class="item.classGrid" v-on:click="addScore(item)" v-for="item of itemTeamB" :key="item.team + item.no" xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5.52 19c.64-2.2 1.84-3 3.22-3h6.52c1.38 0 2.58.8 3.22 3"/>
+                <circle cx="12" cy="10" r="3"/>
+                <circle cx="12" cy="12" r="10"/>
+            </svg>
+            -->
+        </ul>
 
         <div class="score grid_style" style="overflow-x:auto; overflow-y:hidden;">
             <svg v-bind:width="score.length * 90" style="height: 100%; overflow: scroll;">
@@ -104,6 +113,44 @@ const template = `
                 <text text-anchor="middle" v-bind:x="10 + 90 * idx + 40" v-bind:y="75" v-on:click="onClickScore(item)" v-for="(item, idx) of score">{{item.kind}}</text>
             </svg>
         </div>
+        <div name="modal" v-if="showModal">
+        <transition>
+            <div class="modal-mask">
+                <div class="modal-wrapper">
+                <div class="modal-container">
+
+                    <div class="modal-header">
+                    <!--
+                        <slot name="header">
+                            default header
+                        </slot>
+                    -->
+                        <h3 slot="header">スコアの保存</h3>
+                    </div>
+
+                    <div class="modal-body">
+                    <slot name="body">
+                        試合名<input type="text" v-model="modelTitle"/><br>
+                        日付<input type="date" v-model="modelDate" />
+                    </slot>
+                    </div>
+
+                    <div class="modal-footer">
+                    <slot name="footer">
+                        <button class="modal-default-button" @click="showModal = false">
+                        キャンセル
+                        </button>
+                        <button class="modal-default-button" @click="save">
+                        保存
+                        </button>
+                    </slot>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </transition>
+        </div>
+  <button id="show-modal" @click="showModal = !showModal">Show Modal</button>
     </div>
 `;
 
@@ -122,6 +169,10 @@ export default {
             modelAction: "",
             modelKind: "",
             modelDetail: "",
+            modelTitle: "",
+            modelDate: "2019-11-03",
+            showModal: false,
+            isCancel: false,
             itemAction: [
                 {
                     name: "serve",
@@ -194,34 +245,46 @@ export default {
             ],
             itemDetail: [
                 {
+                    label: "D1",
                     name: "D1",
                     id: "detail_1",
                     classGrid: "detail detail1 detail_1_label",
+                    isEnabled: true,
                 },
                 {
+                    label: "D2",
                     name: "D2",
                     id: "detail_2",
                     classGrid: "detail detail2 detail_2_label",
+                    isEnabled: true,
                 },
                 {
+                    label: "D3",
                     name: "D3",
                     id: "detail_3",
                     classGrid: "detail detail3 detail_3_label",
+                    isEnabled: true,
                 },
                 {
+                    label: "D4",
                     name: "D4",
                     id: "detail_4",
                     classGrid: "detail detail4 detail_4_label",
+                    isEnabled: true,
                 },
                 {
+                    label: "D5",
                     name: "D5",
                     id: "detail_5",
                     classGrid: "detail detail5 detail_5_label",
+                    isEnabled: true,
                 },
                 {
+                    label: "D6",
                     name: "D6",
                     id: "detail_6",
                     classGrid: "detail detail6 detail_6_label",
+                    isEnabled: true,
                 },
             ],
             itemTeamA: [
@@ -229,46 +292,55 @@ export default {
                     team: "a",
                     no: "1",
                     classGrid: "a1 grid_style_team_a",
+                    isEmpty: false,
                 },
                 {
                     team: "a",
                     no: "2",
                     classGrid: "a2 grid_style_team_a",
+                    isEmpty: false,
                 },
                 {
                     team: "a",
                     no: "3",
                     classGrid: "a3 grid_style_team_a",
+                    isEmpty: false,
                 },
                 {
                     team: "a",
                     no: "4",
                     classGrid: "a4 grid_style_team_a",
+                    isEmpty: false,
                 },
                 {
                     team: "a",
                     no: "5",
                     classGrid: "a5 grid_style_team_a",
+                    isEmpty: false,
                 },
                 {
                     team: "a",
                     no: "6",
                     classGrid: "a6 grid_style_team_a",
+                    isEmpty: false,
                 },
                 {
                     team: "a",
                     no: "7",
                     classGrid: "a7 grid_style_team_a",
+                    isEmpty: true,
                 },
                 {
                     team: "a",
                     no: "8",
                     classGrid: "a8 grid_style_team_a",
+                    isEmpty: true,
                 },
                 {
                     team: "a",
                     no: "9",
                     classGrid: "a9 grid_style_team_a",
+                    isEmpty: true,
                 },
             ],
             itemTeamB: [
@@ -276,46 +348,55 @@ export default {
                     team: "b",
                     no: "1",
                     classGrid: "b1 grid_style_team_b",
+                    isEmpty: false,
                 },
                 {
                     team: "b",
                     no: "2",
                     classGrid: "b2 grid_style_team_b",
+                    isEmpty: false,
                 },
                 {
                     team: "b",
                     no: "3",
                     classGrid: "b3 grid_style_team_b",
+                    isEmpty: false,
                 },
                 {
                     team: "b",
                     no: "4",
                     classGrid: "b4 grid_style_team_b",
+                    isEmpty: false,
                 },
                 {
                     team: "b",
                     no: "5",
                     classGrid: "b5 grid_style_team_b",
+                    isEmpty: false,
                 },
                 {
                     team: "b",
                     no: "6",
                     classGrid: "b6 grid_style_team_b",
+                    isEmpty: false,
                 },
                 {
                     team: "b",
                     no: "7",
                     classGrid: "b7 grid_style_team_b",
+                    isEmpty: true,
                 },
                 {
                     team: "b",
                     no: "8",
                     classGrid: "b8 grid_style_team_b",
+                    isEmpty: true,
                 },
                 {
                     team: "b",
                     no: "9",
                     classGrid: "b9 grid_style_team_b",
+                    isEmpty: true,
                 },
             ],
         }
@@ -324,6 +405,7 @@ export default {
         this.modelAction = "serve";
         this.updateUndoRedoButton();
         this.toggleKind();
+        this.onChangeKind();
         localStorage.removeItem("score");
     },
     // computed: {
@@ -347,7 +429,7 @@ export default {
             this.scoreBk.push(this.score.pop());
             this.updateUndoRedoButton();
             this.outputlog();
-            this.$emit('commit1', 'aaa');
+            // this.$emit('commit1', 'aaa');
         },
         redo() {
             if (this.scoreBk.length < 1) {
@@ -360,6 +442,9 @@ export default {
             this.outputlog();
         },
         save() {
+            this.showModal = false;
+            console.log("title:" + this.modelTitle);
+            console.log("date:" + this.modelDate);
             localStorage.setItem("score", JSON.stringify(this.score));
         },
         load() {
@@ -403,6 +488,7 @@ export default {
         },
         onChangeAction() {
             this.toggleKind();
+            this.onChangeKind();
         },
         toggleKind() {
             if (this.modelAction == 'receive') {
@@ -420,7 +506,73 @@ export default {
             this.modelDetail = "D1";
         },
         onChangeKind() {
-            this.modelDetail = "D1";
+            this.changeDetailLabel();
+        },
+        changeDetailLabel() {
+            this.itemDetail[0].label = "";
+            this.itemDetail[1].label = "";
+            this.itemDetail[2].label = "";
+            this.itemDetail[3].label = "";
+            this.itemDetail[4].label = "";
+            this.itemDetail[5].label = "";
+
+            this.itemDetail[0].name = "";
+            this.itemDetail[1].name = "";
+            this.itemDetail[2].name = "";
+            this.itemDetail[3].name = "";
+            this.itemDetail[4].name = "";
+            this.itemDetail[5].name = "";
+
+            this.itemDetail[0].isEnabled = false;
+            this.itemDetail[1].isEnabled = false;
+            this.itemDetail[2].isEnabled = false;
+            this.itemDetail[3].isEnabled = false;
+            this.itemDetail[4].isEnabled = false;
+            this.itemDetail[5].isEnabled = false;
+
+            if (this.modelAction == "serve") {
+                if (this.modelKind == "point") {
+                    this.itemDetail[0].label = "ace";
+                    this.itemDetail[0].name = "ace";
+                    this.itemDetail[0].isEnabled = true;
+                    this.modelDetail = this.itemDetail[0].name;
+                } else if (this.modelKind == "miss") {
+                    this.itemDetail[0].label = "net";
+                    this.itemDetail[1].label = "out";
+                    this.itemDetail[0].name = "net";
+                    this.itemDetail[1].name = "out";
+                    this.itemDetail[0].isEnabled = true;
+                    this.itemDetail[1].isEnabled = true;
+                    this.modelDetail = this.itemDetail[0].name;
+                }
+            } else if (this.modelAction == "spike") {
+                if (this.modelKind == "point") {
+                    this.itemDetail[0].label = "ace";
+                    this.itemDetail[1].label = "in";
+                    this.itemDetail[2].label = "fake";
+                    this.itemDetail[3].label = "blockout";
+                    this.itemDetail[0].name = "ace";
+                    this.itemDetail[1].name = "in";
+                    this.itemDetail[2].name = "fake";
+                    this.itemDetail[3].name = "blockout";
+                    this.itemDetail[0].isEnabled = true;
+                    this.itemDetail[1].isEnabled = true;
+                    this.itemDetail[2].isEnabled = true;
+                    this.itemDetail[3].isEnabled = true;
+                    this.modelDetail = this.itemDetail[0].name;
+                } else if (this.modelKind == "miss") {
+                    this.itemDetail[0].label = "net";
+                    this.itemDetail[1].label = "out";
+                    this.itemDetail[2].label = "block";
+                    this.itemDetail[0].name = "net";
+                    this.itemDetail[1].name = "out";
+                    this.itemDetail[2].name = "block";
+                    this.itemDetail[0].isEnabled = true;
+                    this.itemDetail[1].isEnabled = true;
+                    this.itemDetail[2].isEnabled = true;
+                    this.modelDetail = this.itemDetail[0].name;
+                }
+            }
         },
         getKind() {
             if (this.modelKind == 'other_miss' || this.modelKind == 'faul') {
@@ -428,23 +580,6 @@ export default {
             }
             return this.modelKind;
         },
-        // getDetail() {
-        //     // spike
-        //     // 普通に得点、ブロックアウト
-        //     // アウト、ネット、ブロック
-
-        //     // block
-        //     // 普通に得点
-        //     // アウト、吸い込み
-
-        //     // receive
-        //     // 得点したときはスパイク扱い（フェイント）とかにするか
-        //     // 弾いて落とす、次がつなげられない
-
-        //     // serve
-        //     // エース
-        //     // アウト、ネット
-        // },
         pushScore(team, no, action, kind, detail) {
             var teamcode;
             if (team == "a") {
@@ -475,10 +610,31 @@ export default {
             }
         },
         rotateA() {
-
+            this.rotate(this.itemTeamA);
         },
         rotateB() {
+            this.rotate(this.itemTeamB);
+        },
+        rotate(team) {
+            var temp = -1;
+            var first = true;
+            for (var i = 8; i > 0; i--) {
+                if (team[i].isEmpty) {
+                    continue;
+                }
+                if (first) {
+                    temp = team[i].no;
+                    first = !first;
+                }
+                for (var j = i - 1; j >= 0; j--) {
+                    if (!team[j].isEmpty) {
+                        team[i].no = team[j].no;
+                        break;
+                    }
+                }
+            }
 
+            team[0].no = temp;
         },
         changeMember() {
 

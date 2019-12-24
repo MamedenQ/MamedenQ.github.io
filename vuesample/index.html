@@ -15,19 +15,21 @@
 </head>
 
 <div id="app" v-cloak>
-    <emt_recv></emt_recv>
+    <!-- <emt_recv></emt_recv> -->
     <!-- <div v-on:commit1="handler"></div> -->
+    <!-- <div class="grid-frame"> -->
+    <!-- <input_score v-on:sendMessage="popup"></input_score> -->
     <div class="grid-main">
         <div class="header grid_style">
             <router-link to="/scoreinput">スコア入力</router-link>
             <router-link to="/page2">ユーザー一覧ページ</router-link>
         </div>
-        <navi_a></navi_a>
         <div class="contents">
-            <router-view>(ここにコンテンツが表示される)</router-view>
+            <router-view v-on:send-message="popup">(ここにコンテンツが表示される)</router-view>
         </div>
-        <div class="footer grid_style"></div>
+        <!-- <div class="footer grid_style"></div> -->
     </div>
+    <!-- </div> -->
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
@@ -48,6 +50,11 @@
 
     // ＝＝＝＝＝調査項目
     // 画面間データ連携調査
+    // https://commis.hatenablog.com/entry/2017/11/21/180556
+
+    // ルーターを使った画面遷移
+    // https://router.vuejs.org/ja/guide/essentials/navigation.html
+
     // ここでemitをやっている　今までとは違う構造のため参考になるかも
     // https://jp.vuejs.org/v2/examples/modal.html
 
@@ -62,28 +69,63 @@
     // バレーボールっぽいsvgを作成する
 
     // ＝＝＝＝＝未実装
+    // スコア入力画面
+    // スコア入力画面のタイトルと日付、他情報
+    // スコア入力画面の一時保存、保存機能
+    // 一時保存と保存で閉じるを分ける
+    // 人入れ替え
+    // jsonを出力してコード反映できるようにする
+    // ブラウザに保存
+    // 保存JSON形式を決める
+    // score スコア入力データ
+    // score: [
+    //     {
+    //         id: 20191211_001,
+    //         title: "",
+    //         date: "",
+    //         score: {},
+    //         setcount: [
+    //             {
+    //                 a: 20, b: 25,
+    //             },
+    //             {
+    //                 a: 20, b: 25,
+    //             },
+    //         ],
+    //     },
+    //     {
+    //         id: 20191211_002,
+    //         title: "",
+    //         date: "",
+    //         score: {},
+    //         setcount: [
+    //             {
+    //                 a: 20, b: 25,
+    //             },
+    //             {
+    //                 a: 20, b: 25,
+    //             },
+    //         ],
+    //     },
+    // ]
+    // settings 設定データ
+    // master マスタデータ
+    // 分析データは都度変換するようにする
+
+
+
     // メニュー構成
 
     // 試合のセットごとの得点設定（直接入力）
 
-    // スコア入力画面のタイトルと日付、他情報
-
-    // スコア入力画面の一時保存、保存機能
-    // 一時保存と保存で閉じるを分ける
-
     // スコア画面のデータ形式から一覧画面へのデータ形式へ変換
-
-    // 人入れ替え
-
-    // jsonを出力してコード反映できるようにする
-    // ブラウザに保存
 
     // 分析方法は試合複数選択や日付で絞り込み
 
-    // 前回保存を読み込むときは前回データから変更箇所があるかをフラグで管理しメッセージを出す
-
     // 閲覧・分析画面
     // マスタメンテ画面
+
+    // データ消去　消去したらゴミ箱に入って、さらに消すと本当に消える
 
     var color = d3.scale.category20();
 </script>
@@ -110,15 +152,33 @@
         margin: 0;
     }
 
+    /* .grid-frame {
+        height: 100%;
+        display: grid;
+        grid-column-gap: 10px;
+        grid-row-gap: 10px;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
+        grid-template-areas: "grid-main";
+    } */
+
     .grid-main {
         height: 100%;
         display: grid;
+        grid-column-gap: 10px;
+        grid-row-gap: 10px;
+        /* padding: 10px; */
+        /* margin: 10px; */
         /* grid-template-columns: 100px 1fr 100px;
         grid-template-rows: 100px 1fr 100px;
         grid-template-areas: "header header header""navi_a contents navi_b""footer footer footer" */
-        grid-template-columns: 70px 1fr;
-        grid-template-rows: 100px 1fr;
-        grid-template-areas: "header header""navi_a contents";
+        /* grid-template-columns: 70px 1fr;
+        grid-template-rows: 50px 1fr;
+        grid-template-areas: "header header""navi_a contents"; */
+        grid-template-columns: 1fr;
+        grid-template-rows: 70px;
+        grid-template-areas: "header""contents";
+        /* grid-area: grid-main; */
     }
 
     .header {
@@ -136,13 +196,16 @@
     .grid-scoreinput {
         height: 100%;
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 70px;
+        grid-column-gap: 10px;
+        grid-row-gap: 10px;
+        grid-template-columns: 70px 1fr 1fr 1fr 1fr 1fr 70px;
         grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 100px;
-        grid-template-areas: "grid-action grid-kind grid-detail coat coat navi_b""grid-action grid-kind grid-detail coat coat navi_b""grid-action grid-kind grid-detail coat coat navi_b""grid-action grid-kind grid-detail coat coat navi_b""grid-action grid-kind grid-detail coat coat navi_b""grid-action grid-kind grid-detail coat coat navi_b""score score score score score navi_b";
+        grid-template-areas: "navi_a grid-action grid-kind grid-detail coat coat navi_b""navi_a grid-action grid-kind grid-detail coat coat navi_b""navi_a grid-action grid-kind grid-detail coat coat navi_b""navi_a grid-action grid-kind grid-detail coat coat navi_b""navi_a grid-action grid-kind grid-detail coat coat navi_b""navi_a grid-action grid-kind grid-detail coat coat navi_b""navi_a score score score score score navi_b";
     }
 
     .grid-action {
         display: grid;
+        grid-row-gap: 10px;
         grid-template-columns: 1fr;
         grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
         grid-template-areas: "serve""spike""block""receive""other_miss""faul";
@@ -151,6 +214,7 @@
 
     .grid-kind {
         display: grid;
+        grid-row-gap: 10px;
         grid-template-columns: 1fr;
         grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
         grid-template-areas: "rally""point""miss""a""b""c";
@@ -159,6 +223,7 @@
 
     .grid-detail {
         display: grid;
+        grid-row-gap: 10px;
         grid-template-columns: 1fr;
         grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
         grid-template-areas: "detail1""detail2""detail3""detail4""detail5""detail6";
@@ -167,7 +232,10 @@
 
     .coat {
         display: grid;
-        grid-template-columns: 70px 70px 70px;
+        grid-column-gap: 10px;
+        grid-row-gap: 10px;
+        /* grid-template-columns: 70px 70px 70px; */
+        grid-template-columns: 1fr 1fr 1fr;
         grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
         grid-template-areas: "b7 b8 b9""b4 b5 b6""b3 b2 b1""a1 a2 a3""a6 a5 a4""a9 a8 a7";
         grid-area: coat;
@@ -175,6 +243,8 @@
 
     .navi_a {
         display: grid;
+        grid-column-gap: 10px;
+        grid-row-gap: 10px;
         grid-template-columns: 1fr;
         grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 100px;
         grid-template-areas: "menu1""menu2""menu3""menu4""menu5""menu6""menu7";
@@ -183,6 +253,8 @@
 
     .navi_b {
         display: grid;
+        grid-column-gap: 10px;
+        grid-row-gap: 10px;
         grid-template-columns: 1fr;
         grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 100px;
         grid-template-areas: "function1""function2""function3""function4""function5""function6""function7";
@@ -556,15 +628,6 @@
         float: right;
     }
 
-    /*
- * The following styles are auto-applied to elements with
- * transition="modal" when their visibility is toggled
- * by Vue.js.
- *
- * You can easily play with the modal transition by editing
- * these styles.
- */
-
     .modal-enter {
         opacity: 0;
     }
@@ -578,6 +641,26 @@
         -webkit-transform: scale(1.1);
         transform: scale(1.1);
     }
+
+    /* .btn-flat-bottom-border {
+        float: right;
+        position: relative;
+        display: inline-block;
+        font-weight: bold;
+        padding: 7px 10px 10px 10px;
+        text-decoration: none;
+        color: #FFF;
+        background: #a180dc;
+        transition: .4s;
+    }
+
+    .btn-flat-bottom-border>span {
+        border-bottom: solid 2px #FFF;
+    }
+
+    .btn-flat-bottom-border:hover {
+        background: #91b5fb;
+    } */
 </style>
 
 </html>

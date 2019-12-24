@@ -4,17 +4,16 @@ const template = `
             <div v-bind:class="item.classGrid" v-for="item of itemAction">
                 <input type="radio" v-bind:id="item.id" name="action" v-bind:value="item.name" v-on:change="onChangeAction" v-model="modelAction">
                 <label v-bind:for="item.id">
-                    {{item.name}}
+                    {{item.label}}
                 </label>
             </div>
         </div>
 
         <div class="grid-kind">
             <div v-bind:class="item.classGrid" v-for="item of itemKind">
-                <input type="radio" v-if="item.receive" v-bind:id="item.id" name="kind" v-bind:value="item.name" v-on:change="onChangeKind" v-model="modelKind" v-bind:disabled="!kindReceiveEnabled">
-                <input type="radio" v-else v-bind:id="item.id" name="kind" v-bind:value="item.name" v-on:change="onChangeKind" v-model="modelKind" v-bind:disabled="!kindCommonEnabled">
+                <input type="radio" v-bind:id="item.id" name="kind" v-bind:value="item.name" v-on:change="onChangeKind" v-model="modelKind" v-bind:disabled="!item.isEnabled">
                 <label v-bind:for="item.id">
-                    {{item.name}}
+                    {{item.label}}
                 </label>
             </div>
         </div>
@@ -28,9 +27,9 @@ const template = `
             </div>
         </div>
         
-        <div class="navi_b">
+        <div class="navi_b grid_style">
             <div class="function1">
-                <svg v-on:click="showModal = true" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                <svg v-on:click="showModalSave = true" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
                     <polyline points="17 21 17 13 7 13 7 21"></polyline>
                     <polyline points="7 3 7 8 15 8"></polyline>
@@ -113,7 +112,23 @@ const template = `
                 <text text-anchor="middle" v-bind:x="10 + 90 * idx + 40" v-bind:y="75" v-on:click="onClickScore(item)" v-for="(item, idx) of score">{{item.kind}}</text>
             </svg>
         </div>
-        <div name="modal" v-if="showModal">
+
+        <div class="navi_a grid_style">
+            <div class="menu1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 9v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9"/>
+                    <path d="M9 22V12h6v10M2 10.6L12 2l10 8.6"/>
+                </svg>
+            </div>
+            <div class="menu2">
+                <svg v-on:click="closeScore(true)" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H6M12 5l-7 7 7 7"/></svg>
+            </div>
+            <div class="menu7">
+            <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+            </div>
+        </div>
+
+        <div name="modalSave" v-if="showModalSave">
             <transition>
                 <div class="modal-mask">
                     <div class="modal-wrapper">
@@ -132,7 +147,7 @@ const template = `
 
                             <div class="modal-footer">
                                 <slot name="footer">
-                                    <button class="modal-default-button" @click="showModal = false">
+                                    <button class="modal-default-button" @click="showModalSave = false">
                                         キャンセル
                                     </button>
                                     <button class="modal-default-button" @click="save">
@@ -145,19 +160,55 @@ const template = `
                 </div>
             </transition>
         </div>
+        <div name="modalWarn" v-if="showModalWarn">
+            <transition>
+                <div class="modal-mask">
+                    <div class="modal-wrapper">
+                        <div class="modal-container">
+
+                            <div class="modal-header">
+                                <h3 slot="header">スコア入力の終了</h3>
+                            </div>
+
+                            <div class="modal-body">
+                                <slot name="body">
+                                    スコアが保存されていません。<br>
+                                    入力内容を破棄して画面を移動しますか？
+                                </slot>
+                            </div>
+
+                            <div class="modal-footer">
+                                <slot name="footer">
+                                    <button class="modal-default-button" @click="showModalWarn = false">
+                                        キャンセル
+                                    </button>
+                                    <button class="modal-default-button" @click="closeScore(false)">
+                                        続行
+                                    </button>
+                                </slot>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </transition>
+        </div>
+        <confirm v-if="showModalConfirm" v-on:dialogResult="result" :title="title" :msg="msg" :positive="positive" :negative="negative"></confirm>
     </div>
 `;
 
+import confirm from './confirm.js'
+
 export default {
     template,
+    components: {
+        confirm,
+    },
     data: function () {
         return {
             scoreColor: color,
             score: [],
             scoreBk: [],
             scoreTempSave: [],
-            kindCommonEnabled: true,
-            kindReceiveEnabled: false,
             undoEnabled: false,
             redoEnabled: false,
             modelAction: "",
@@ -165,35 +216,47 @@ export default {
             modelDetail: "",
             modelTitle: "",
             modelDate: "2019-11-03",
-            showModal: false,
+            showModalSave: false,
+            showModalWarn: false,
+            showModalConfirm: false,
+            title: "",
+            msg: "",
+            callbackConfirm: "",
             isCancel: false,
+            isDirty: false,
             itemAction: [
                 {
+                    label: "Serve",
                     name: "serve",
                     id: "action_serve",
                     classGrid: "action serve"
                 },
                 {
+                    label: "Spike",
                     name: "spike",
                     id: "action_spike",
                     classGrid: "action spike"
                 },
                 {
+                    label: "Block",
                     name: "block",
                     id: "action_block",
                     classGrid: "action block"
                 },
                 {
+                    label: "Receive",
                     name: "receive",
                     id: "action_receive",
                     classGrid: "action receive"
                 },
                 {
+                    label: "Other Miss",
                     name: "other_miss",
                     id: "action_other_miss",
                     classGrid: "action other_miss"
                 },
                 {
+                    label: "Faul",
                     name: "faul",
                     id: "action_faul",
                     classGrid: "action faul"
@@ -201,40 +264,46 @@ export default {
             ],
             itemKind: [
                 {
+                    label: "Rally",
                     name: "rally",
                     id: "kind_rally",
                     classGrid: "kind rally kind_rally_label",
-                    receive: false,
+                    isEnabled: true,
                 },
                 {
+                    label: "Point",
                     name: "point",
                     id: "kind_point",
                     classGrid: "kind point kind_point_label",
-                    receive: false,
+                    isEnabled: true,
                 },
                 {
+                    label: "Miss",
                     name: "miss",
                     id: "kind_miss",
                     classGrid: "kind miss kind_miss_label",
-                    receive: false,
+                    isEnabled: true,
                 },
                 {
+                    label: "A",
                     name: "a",
                     id: "kind_a",
                     classGrid: "kind a kind_a_label",
-                    receive: true,
+                    isEnabled: true,
                 },
                 {
+                    label: "B",
                     name: "b",
                     id: "kind_b",
                     classGrid: "kind b kind_b_label",
-                    receive: true,
+                    isEnabled: true,
                 },
                 {
+                    label: "C",
                     name: "c",
                     id: "kind_c",
                     classGrid: "kind c kind_c_label",
-                    receive: true,
+                    isEnabled: true,
                 },
             ],
             itemDetail: [
@@ -400,7 +469,7 @@ export default {
         this.updateUndoRedoButton();
         this.toggleKind();
         this.onChangeKind();
-        localStorage.removeItem("score");
+        // localStorage.removeItem("score");
     },
     // computed: {
     //     modelAction: {
@@ -424,6 +493,7 @@ export default {
             this.updateUndoRedoButton();
             this.outputlog();
             // this.$emit('commit1', 'aaa');
+            this.isDirty = true;
         },
         redo() {
             if (this.scoreBk.length < 1) {
@@ -434,20 +504,64 @@ export default {
             this.score.push(popdata);
             this.updateUndoRedoButton();
             this.outputlog();
+            this.isDirty = true;
         },
         save() {
-            this.showModal = false;
-            console.log("title:" + this.modelTitle);
-            console.log("date:" + this.modelDate);
-            localStorage.setItem("score", JSON.stringify(this.score));
+            // 保存ボタンの制御を行う
+            if (this.modelTitle == "") {
+                return;
+            }
+            this.showModalSave = false;
+            var saveData = {
+                title: this.modelTitle,
+                date: this.modelDate,
+                score: this.score,
+            };
+            localStorage.setItem("score", JSON.stringify(saveData));
+            this.isDirty = false;
         },
         load() {
+            if (!this.isDirty) {
+                this.loadMain();
+                return;
+            }
+            this.title = "確認";
+            this.msg = "入力内容を破棄してデータを読み込みますか？";
+            this.positive = "OK";
+            this.negative = "Cancel";
+            this.showModalConfirm = true;
+
+            this.callbackConfirm = function (result) {
+                if (result) {
+                    this.loadMain();
+                }
+            };
+        },
+        loadMain() {
             this.modelAction = "serve";
             this.scoreBk = [];
-            this.score = JSON.parse(localStorage.getItem("score"));
+            var saveData = JSON.parse(localStorage.getItem("score"));
+            this.score = saveData.score;
+            this.modelTitle = saveData.title;
+            this.modelDate = saveData.date;
             this.updateUndoRedoButton();
             this.toggleKind();
             this.outputlog();
+            this.isDirty = false;
+        },
+        closeScore(isCheck) {
+            this.showModalWarn = false;
+            if (isCheck && this.isDirty) {
+                this.showModalWarn = true;
+                return;
+            }
+
+            this.$router.push({ path: '/page2' });
+        },
+        checkSaved() {
+            if (this.isDirty) {
+                this.showModalWarn = true;
+            }
         },
         onClickScore(item) {
             this.deleteScore(item.index);
@@ -459,19 +573,27 @@ export default {
             this.outputlog();
         },
         deleteScore(deleteIndex) {
-            var result = confirm("削除しますか？");
+            this.title = "削除確認";
+            this.msg = "削除しますか？";
+            this.positive = "OK";
+            this.negative = "Cancel";
+            this.showModalConfirm = true;
 
-            if (!result) {
-                return;
+            this.callbackConfirm = function (result) {
+                if (!result) {
+                    return;
+                }
+
+                var newData = this.score.filter(function (s, index) {
+                    if (s.index != deleteIndex) return true;
+                });
+
+                this.score = newData;
+
+                this.outputlog();
+
+                this.isDirty = true;
             }
-
-            var newData = this.score.filter(function (s, index) {
-                if (s.index != deleteIndex) return true;
-            });
-
-            this.score = newData;
-
-            this.outputlog();
         },
         getMaxIndex() {
             if (this.score.length == 0) {
@@ -485,19 +607,68 @@ export default {
             this.onChangeKind();
         },
         toggleKind() {
+            var kindCommonEnabled;
+            var kindReceiveEnabled;
+
+            this.itemKind[0].label = "Rally";
+            this.itemKind[1].label = "Point";
+            this.itemKind[2].label = "Miss";
+            this.itemKind[3].label = "A";
+            this.itemKind[4].label = "B";
+            this.itemKind[5].label = "C";
+
+            this.itemKind[0].name = "rally";
+            this.itemKind[1].name = "point";
+            this.itemKind[2].name = "miss";
+            this.itemKind[3].name = "a";
+            this.itemKind[4].name = "b";
+            this.itemKind[5].name = "c";
+
             if (this.modelAction == 'receive') {
-                this.kindCommonEnabled = true;
-                this.kindReceiveEnabled = true;
+                kindCommonEnabled = true;
+                kindReceiveEnabled = true;
+                this.modelKind = "rally";
+                this.modelDetail = "D1";
             } else if (this.modelAction == 'other_miss' || this.modelAction == 'faul') {
-                this.kindCommonEnabled = false;
-                this.kindReceiveEnabled = false;
+                this.itemKind[0].label = "";
+                this.itemKind[1].label = "";
+                this.itemKind[2].label = "";
+                this.itemKind[3].label = "";
+                this.itemKind[4].label = "";
+                this.itemKind[5].label = "";
+
+                this.itemKind[0].name = "-";
+                this.itemKind[1].name = "-";
+                this.itemKind[2].name = "-";
+                this.itemKind[3].name = "-";
+                this.itemKind[4].name = "-";
+                this.itemKind[5].name = "-";
+
+                kindCommonEnabled = false;
+                kindReceiveEnabled = false;
+                this.modelKind = "";
+                this.modelDetail = "";
             } else {
-                this.kindCommonEnabled = true;
-                this.kindReceiveEnabled = false;
+                this.itemKind[3].label = "";
+                this.itemKind[4].label = "";
+                this.itemKind[5].label = "";
+
+                this.itemKind[3].name = "-";
+                this.itemKind[4].name = "-";
+                this.itemKind[5].name = "-";
+
+                kindCommonEnabled = true;
+                kindReceiveEnabled = false;
+                this.modelKind = "rally";
+                this.modelDetail = "D1";
             }
 
-            this.modelKind = "rally";
-            this.modelDetail = "D1";
+            this.itemKind[0].isEnabled = kindCommonEnabled;
+            this.itemKind[1].isEnabled = kindCommonEnabled;
+            this.itemKind[2].isEnabled = kindCommonEnabled;
+            this.itemKind[3].isEnabled = kindReceiveEnabled;
+            this.itemKind[4].isEnabled = kindReceiveEnabled;
+            this.itemKind[5].isEnabled = kindReceiveEnabled;
         },
         onChangeKind() {
             this.changeDetailLabel();
@@ -510,12 +681,12 @@ export default {
             this.itemDetail[4].label = "";
             this.itemDetail[5].label = "";
 
-            this.itemDetail[0].name = "";
-            this.itemDetail[1].name = "";
-            this.itemDetail[2].name = "";
-            this.itemDetail[3].name = "";
-            this.itemDetail[4].name = "";
-            this.itemDetail[5].name = "";
+            this.itemDetail[0].name = "-";
+            this.itemDetail[1].name = "-";
+            this.itemDetail[2].name = "-";
+            this.itemDetail[3].name = "-";
+            this.itemDetail[4].name = "-";
+            this.itemDetail[5].name = "-";
 
             this.itemDetail[0].isEnabled = false;
             this.itemDetail[1].isEnabled = false;
@@ -526,13 +697,13 @@ export default {
 
             if (this.modelAction == "serve") {
                 if (this.modelKind == "point") {
-                    this.itemDetail[0].label = "ace";
+                    this.itemDetail[0].label = "Ace";
                     this.itemDetail[0].name = "ace";
                     this.itemDetail[0].isEnabled = true;
                     this.modelDetail = this.itemDetail[0].name;
                 } else if (this.modelKind == "miss") {
-                    this.itemDetail[0].label = "net";
-                    this.itemDetail[1].label = "out";
+                    this.itemDetail[0].label = "Net";
+                    this.itemDetail[1].label = "Out";
                     this.itemDetail[0].name = "net";
                     this.itemDetail[1].name = "out";
                     this.itemDetail[0].isEnabled = true;
@@ -541,10 +712,10 @@ export default {
                 }
             } else if (this.modelAction == "spike") {
                 if (this.modelKind == "point") {
-                    this.itemDetail[0].label = "ace";
-                    this.itemDetail[1].label = "in";
-                    this.itemDetail[2].label = "fake";
-                    this.itemDetail[3].label = "blockout";
+                    this.itemDetail[0].label = "Ace";
+                    this.itemDetail[1].label = "In";
+                    this.itemDetail[2].label = "Fake";
+                    this.itemDetail[3].label = "Blockout";
                     this.itemDetail[0].name = "ace";
                     this.itemDetail[1].name = "in";
                     this.itemDetail[2].name = "fake";
@@ -555,9 +726,9 @@ export default {
                     this.itemDetail[3].isEnabled = true;
                     this.modelDetail = this.itemDetail[0].name;
                 } else if (this.modelKind == "miss") {
-                    this.itemDetail[0].label = "net";
-                    this.itemDetail[1].label = "out";
-                    this.itemDetail[2].label = "block";
+                    this.itemDetail[0].label = "Net";
+                    this.itemDetail[1].label = "Out";
+                    this.itemDetail[2].label = "Block";
                     this.itemDetail[0].name = "net";
                     this.itemDetail[1].name = "out";
                     this.itemDetail[2].name = "block";
@@ -590,6 +761,7 @@ export default {
                 kind: kind,
                 detail: detail,
             });
+            this.isDirty = true;
         },
         updateUndoRedoButton() {
             if (this.score.length < 1) {
@@ -630,8 +802,13 @@ export default {
 
             team[0].no = temp;
         },
+        result(flg) {
+            // console.log("dlg:" + flg);
+            this.callbackConfirm(flg);
+            this.showModalConfirm = false;
+        },
         changeMember() {
-
+            this.$emit('send-message');
         },
         // ドラッグドロップ
         // https://www.kabanoki.net/1712/#i-4

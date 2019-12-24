@@ -1,6 +1,7 @@
 // import page1 from "./page1.js";
 // import page2 from "./page2.js";
 import router from './router.js'
+// import scoreinput from "./scoreinput.js";
 
 const NaviA = {
     template: `
@@ -26,18 +27,18 @@ const NaviA = {
     },
 };
 
-const EmmitReceiver = {
-    template: `
-        <div>
-            <div v-on:commit1="handler"></div>
-        </div>
-    `,
-    methods: {
-        handler(msg) {
-            console.log(msg);
-        },
-    },
-};
+// const EmmitReceiver = {
+//     template: `
+//         <div>
+//             <div v-on:commit1="handler"></div>
+//         </div>
+//     `,
+//     methods: {
+//         handler(msg) {
+//             console.log(msg);
+//         },
+//     },
+// };
 
 // routerをマウント
 var app = new Vue({
@@ -46,8 +47,9 @@ var app = new Vue({
     //     page1,
     // },
     components: {
-        'navi_a': NaviA,
-        'emt_recv': EmmitReceiver,
+        // 'navi_a': NaviA,
+        // 'emt_recv': EmmitReceiver,
+        // 'input_score': scoreinput,
     },
     // template: `
     // <div class="grid-main">
@@ -78,6 +80,14 @@ var app = new Vue({
     //         alert(msg);
     //     },
     // },
+    methods: {
+        popup() {
+            console.log('popup!');
+        }
+    },
+    mounted() {
+        // router.push({ path: '/scoreinput' });
+    }
 }).$mount('#app');
 
 // app.component('score_input_event', {

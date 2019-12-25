@@ -87,6 +87,11 @@ var app = new Vue({
     },
     mounted() {
         // router.push({ path: '/scoreinput' });
+    },
+    data: function () {
+        return {
+            scoreId: "20191225_001",
+        }
     }
 }).$mount('#app');
 

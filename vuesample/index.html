@@ -25,7 +25,7 @@
             <router-link to="/page2">ユーザー一覧ページ</router-link>
         </div>
         <div class="contents">
-            <router-view v-on:send-message="popup">(ここにコンテンツが表示される)</router-view>
+            <router-view v-on:send-message="popup" v-bind:score-id="scoreId">(ここにコンテンツが表示される)</router-view>
         </div>
         <!-- <div class="footer grid_style"></div> -->
     </div>
@@ -64,20 +64,18 @@
 
     // templateに文字列でDOMを入れているが、分けれる方法があるかも
     // https://jp.vuejs.org/v2/examples/modal.html
+    // scriptタグでx-template？的な書き方ができるが、ファイルが別れるため微妙
 
     // ＝＝＝＝＝レイアウト
     // バレーボールっぽいsvgを作成する
 
     // ＝＝＝＝＝未実装
     // スコア入力画面
-    // スコア入力画面のタイトルと日付、他情報
-    // スコア入力画面の一時保存、保存機能
-    // 一時保存と保存で閉じるを分ける
     // 人入れ替え
     // jsonを出力してコード反映できるようにする
-    // ブラウザに保存
-    // 保存JSON形式を決める
-    // score スコア入力データ
+    // 詳細コードが不要な時にもD1とか入ってる
+
+
     // score: [
     //     {
     //         id: 20191211_001,
@@ -93,21 +91,6 @@
     //             },
     //         ],
     //     },
-    //     {
-    //         id: 20191211_002,
-    //         title: "",
-    //         date: "",
-    //         score: {},
-    //         setcount: [
-    //             {
-    //                 a: 20, b: 25,
-    //             },
-    //             {
-    //                 a: 20, b: 25,
-    //             },
-    //         ],
-    //     },
-    // ]
     // settings 設定データ
     // master マスタデータ
     // 分析データは都度変換するようにする

@@ -203,6 +203,9 @@ export default {
     components: {
         confirm,
     },
+    props: {
+        scoreId: String,
+    },
     data: function () {
         return {
             scoreColor: color,
@@ -469,6 +472,7 @@ export default {
         this.updateUndoRedoButton();
         this.toggleKind();
         this.onChangeKind();
+        this.loadMain();
         // localStorage.removeItem("score");
     },
     // computed: {
@@ -512,12 +516,36 @@ export default {
                 return;
             }
             this.showModalSave = false;
-            var saveData = {
+            var data = {
+                id: this.scoreId,
                 title: this.modelTitle,
                 date: this.modelDate,
                 score: this.score,
+                // setcount: [{ a: 0, b: 0 }, { a: 0, b: 0 }, { a: 0, b: 0 }, { a: 0, b: 0 }, { a: 0, b: 0 },],
             };
-            localStorage.setItem("score", JSON.stringify(saveData));
+
+            var saveDatas = JSON.parse(localStorage.getItem("score"));
+            if (saveDatas == null) {
+                saveDatas = [];
+            }
+            var existsData = false;
+            var tmpScoreId = this.scoreId;
+            saveDatas.forEach(function (saveData) {
+                if (saveData.id == tmpScoreId) {
+                    console.log("exists save data.");
+                    saveData.title = data.title;
+                    saveData.date = data.date;
+                    saveData.score = data.score;
+                    existsData = true;
+                }
+            });
+
+            if (!existsData) {
+                console.log("not exists save data.");
+                saveDatas.push(data);
+            }
+
+            localStorage.setItem("score", JSON.stringify(saveDatas));
             this.isDirty = false;
         },
         load() {
@@ -541,9 +569,18 @@ export default {
             this.modelAction = "serve";
             this.scoreBk = [];
             var saveData = JSON.parse(localStorage.getItem("score"));
-            this.score = saveData.score;
-            this.modelTitle = saveData.title;
-            this.modelDate = saveData.date;
+
+            var tmpScoreId = this.scoreId;
+            var filterData = saveData.filter(function (data, index) {
+                if (data.id == tmpScoreId) return true;
+            });
+
+            if (filterData.length == 0) {
+                return;
+            }
+            this.score = filterData[0].score;
+            this.modelTitle = filterData[0].title;
+            this.modelDate = filterData[0].date;
             this.updateUndoRedoButton();
             this.toggleKind();
             this.outputlog();
@@ -808,7 +845,7 @@ export default {
             this.showModalConfirm = false;
         },
         changeMember() {
-            this.$emit('send-message');
+            // this.$emit('send-message');
         },
         // ドラッグドロップ
         // https://www.kabanoki.net/1712/#i-4

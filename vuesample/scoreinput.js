@@ -570,6 +570,10 @@ export default {
             this.scoreBk = [];
             var saveData = JSON.parse(localStorage.getItem("score"));
 
+            if (saveData == null) {
+                saveData = [];
+            }
+            
             var tmpScoreId = this.scoreId;
             var filterData = saveData.filter(function (data, index) {
                 if (data.id == tmpScoreId) return true;

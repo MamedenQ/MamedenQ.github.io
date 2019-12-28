@@ -1,5 +1,5 @@
 const template = `
-    <div class="grid-scoreinput">
+    <div class="grid-scoreinput" v-bind:style="styleChangeArea">
         <div class="grid-action">
             <div v-bind:class="item.classGrid" v-for="item of itemAction">
                 <input type="radio" v-bind:id="item.id" name="action" v-bind:value="item.name" v-on:change="onChangeAction" v-model="modelAction">
@@ -18,7 +18,7 @@ const template = `
             </div>
         </div>
         
-        <div class="grid-detail">
+        <div class="grid-detail" v-show="!showChangeArea">
             <div v-bind:class="item.classGrid" v-for="item of itemDetail">
                 <input type="radio" v-bind:id="item.id" name="detail" v-bind:value="item.name" v-model="modelDetail" v-bind:disabled="!item.isEnabled">
                 <label v-bind:for="item.id">
@@ -41,10 +41,10 @@ const template = `
             </div>
 
             <div class="function3">
-                <svg v-on:click="rotateB" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38"/></svg>
+                <svg v-on:click="rotateA" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38"/></svg>
             </div>
             <div class="function4">
-                <svg v-on:click="rotateA" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38"/></svg>
+                <svg v-on:click="rotateB" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38"/></svg>
             </div>
 
             <div class="function5">
@@ -86,9 +86,13 @@ const template = `
             </div>
         </div>
 
-        <ul class="coat">
-            <li v-if="!item.isEmpty" v-bind:class="item.classGrid" v-on:click="addScore(item)" v-for="item of itemTeamA" :key="item.team + item.no">{{item.no}}</li>
-            <li v-if="!item.isEmpty" v-bind:class="item.classGrid" v-on:click="addScore(item)" v-for="item of itemTeamB" :key="item.team + item.no">{{item.no}}</li>
+        <ul class="coat"> 
+            <li v-bind:class="item.classGrid" v-on:click="addScore(item)" v-for="item of itemTeamA" :key="item.key" class="grid_style_team">{{item.no}}<br>{{item.name}}</li>
+            <li v-bind:class="item.classGrid" v-on:click="addScore(item)" v-for="item of itemTeamB" :key="item.key" class="grid_style_team">{{item.no}}<br>{{item.name}}</li>
+            <!--
+            <li v-bind:class="[ { styleHiddenCoatMember: (!showChangeArea && item.isEmpty)}, item.classGrid ]" v-on:click="addScore(item)" v-for="item of itemTeamA" :key="item.key" class="grid_style_team">{{item.no + " : " + item.name}}</li>
+            <li v-bind:class="[ { styleHiddenCoatMember: (!showChangeArea && item.isEmpty)}, item.classGrid ]" v-on:click="addScore(item)" v-for="item of itemTeamB" :key="item.key" class="grid_style_team">{{item.no + " : " + item.name}}</li>
+            -->
             <!--
             <svg v-bind:class="item.classGrid" v-on:click="addScore(item)" v-for="item of itemTeamA" :key="item.team + item.no" xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M5.52 19c.64-2.2 1.84-3 3.22-3h6.52c1.38 0 2.58.8 3.22 3"/>
@@ -102,6 +106,15 @@ const template = `
                 <circle cx="12" cy="12" r="10"/>
             </svg>
             -->
+        </ul>
+
+        <ul class="change-area" v-show="showChangeArea" style="overflow-x:hidden; overflow-y:scroll;">
+            <li class="member" v-for="member of members" :key="member.no">
+                <input type="radio" v-bind:id="'mem_' + member.no" name="member" v-on:change="onChangeMember(member)" v-bind:value="member.no" v-model="modelMember">
+                <label v-bind:for="'mem_' + member.no">
+                    {{member.no}}<br>{{member.name}}
+                </label>
+            </li>
         </ul>
 
         <div class="score grid_style" style="overflow-x:auto; overflow-y:hidden;">
@@ -206,6 +219,14 @@ export default {
     props: {
         scoreId: String,
     },
+    filters: {
+        memberDisp(str) {
+
+        },
+    },
+    // watch: {
+
+    // },
     data: function () {
         return {
             scoreColor: color,
@@ -218,6 +239,8 @@ export default {
             modelKind: "",
             modelDetail: "",
             modelTitle: "",
+            modelMember: "",
+            selectedMember: null,
             modelDate: "2019-11-03",
             showModalSave: false,
             showModalWarn: false,
@@ -227,6 +250,13 @@ export default {
             callbackConfirm: "",
             isCancel: false,
             isDirty: false,
+            showChangeArea: false,
+            styleChangeArea: {
+                "grid-template-columns": "70px 1fr 1fr 1fr 1fr 1fr 0fr 70px",
+            },
+            // styleHiddenCoatMember: {
+            //     visibility: "hidden",
+            // },
             itemAction: [
                 {
                     label: "Serve",
@@ -354,116 +384,56 @@ export default {
                 },
             ],
             itemTeamA: [
-                {
-                    team: "a",
-                    no: "1",
-                    classGrid: "a1 grid_style_team_a",
-                    isEmpty: false,
-                },
-                {
-                    team: "a",
-                    no: "2",
-                    classGrid: "a2 grid_style_team_a",
-                    isEmpty: false,
-                },
-                {
-                    team: "a",
-                    no: "3",
-                    classGrid: "a3 grid_style_team_a",
-                    isEmpty: false,
-                },
-                {
-                    team: "a",
-                    no: "4",
-                    classGrid: "a4 grid_style_team_a",
-                    isEmpty: false,
-                },
-                {
-                    team: "a",
-                    no: "5",
-                    classGrid: "a5 grid_style_team_a",
-                    isEmpty: false,
-                },
-                {
-                    team: "a",
-                    no: "6",
-                    classGrid: "a6 grid_style_team_a",
-                    isEmpty: false,
-                },
-                {
-                    team: "a",
-                    no: "7",
-                    classGrid: "a7 grid_style_team_a",
-                    isEmpty: true,
-                },
-                {
-                    team: "a",
-                    no: "8",
-                    classGrid: "a8 grid_style_team_a",
-                    isEmpty: true,
-                },
-                {
-                    team: "a",
-                    no: "9",
-                    classGrid: "a9 grid_style_team_a",
-                    isEmpty: true,
-                },
+                { key: "a7", team: "a", no: "", name: "", classGrid: "a7", isEmpty: true, },
+                { key: "a8", team: "a", no: "", name: "", classGrid: "a8", isEmpty: true, },
+                { key: "a9", team: "a", no: "", name: "", classGrid: "a9", isEmpty: true, },
+                { key: "a4", team: "a", no: "", name: "", classGrid: "a4", isEmpty: true, },
+                { key: "a5", team: "a", no: "", name: "", classGrid: "a5", isEmpty: true, },
+                { key: "a6", team: "a", no: "", name: "", classGrid: "a6", isEmpty: true, },
+                { key: "a3", team: "a", no: "", name: "", classGrid: "a3", isEmpty: true, },
+                { key: "a2", team: "a", no: "", name: "", classGrid: "a2", isEmpty: true, },
+                { key: "a1", team: "a", no: "", name: "", classGrid: "a1", isEmpty: true, },
             ],
             itemTeamB: [
-                {
-                    team: "b",
-                    no: "1",
-                    classGrid: "b1 grid_style_team_b",
-                    isEmpty: false,
-                },
-                {
-                    team: "b",
-                    no: "2",
-                    classGrid: "b2 grid_style_team_b",
-                    isEmpty: false,
-                },
-                {
-                    team: "b",
-                    no: "3",
-                    classGrid: "b3 grid_style_team_b",
-                    isEmpty: false,
-                },
-                {
-                    team: "b",
-                    no: "4",
-                    classGrid: "b4 grid_style_team_b",
-                    isEmpty: false,
-                },
-                {
-                    team: "b",
-                    no: "5",
-                    classGrid: "b5 grid_style_team_b",
-                    isEmpty: false,
-                },
-                {
-                    team: "b",
-                    no: "6",
-                    classGrid: "b6 grid_style_team_b",
-                    isEmpty: false,
-                },
-                {
-                    team: "b",
-                    no: "7",
-                    classGrid: "b7 grid_style_team_b",
-                    isEmpty: true,
-                },
-                {
-                    team: "b",
-                    no: "8",
-                    classGrid: "b8 grid_style_team_b",
-                    isEmpty: true,
-                },
-                {
-                    team: "b",
-                    no: "9",
-                    classGrid: "b9 grid_style_team_b",
-                    isEmpty: true,
-                },
+                { key: "b1", team: "b", no: "", name: "", classGrid: "b1", isEmpty: true, },
+                { key: "b2", team: "b", no: "", name: "", classGrid: "b2", isEmpty: true, },
+                { key: "b3", team: "b", no: "", name: "", classGrid: "b3", isEmpty: true, },
+                { key: "b6", team: "b", no: "", name: "", classGrid: "b6", isEmpty: true, },
+                { key: "b5", team: "b", no: "", name: "", classGrid: "b5", isEmpty: true, },
+                { key: "b4", team: "b", no: "", name: "", classGrid: "b4", isEmpty: true, },
+                { key: "b9", team: "b", no: "", name: "", classGrid: "b9", isEmpty: true, },
+                { key: "b8", team: "b", no: "", name: "", classGrid: "b8", isEmpty: true, },
+                { key: "b7", team: "b", no: "", name: "", classGrid: "b7", isEmpty: true, },
+            ],
+            members: [
+                { no: -1, name: "（なし）", },
+                { no: 0, name: "しんや", },
+                { no: 1, name: "ふじわら", },
+                { no: 2, name: "いけだ", },
+                { no: 3, name: "ながおか", },
+                { no: 4, name: "なごや", },
+                { no: 5, name: "のせ", },
+                { no: 6, name: "みさ", },
+                { no: 7, name: "よしはら", },
+                { no: 8, name: "はづき", },
+                { no: 9, name: "ほし", },
+                { no: 10, name: "わだ", },
+                { no: 100, name: "あまちゃん", },
+                { no: 101, name: "ふゆこ", },
+                { no: 102, name: "こまつ", },
+                { no: 103, name: "ひーちゃん", },
+                { no: 104, name: "まんべ", },
+                { no: 105, name: "まりこ", },
+                { no: 106, name: "かわ", },
+                { no: 107, name: "ぶん", },
+                { no: 108, name: "あっきーな", },
+                { no: 109, name: "みずか", },
+                { no: 110, name: "てら", },
+                { no: 111, name: "きく", },
+                { no: 112, name: "たける", },
+                { no: 113, name: "やまぴ", },
+                { no: 114, name: "のん", },
+                { no: 115, name: "せき", },
             ],
         }
     },
@@ -521,6 +491,8 @@ export default {
                 title: this.modelTitle,
                 date: this.modelDate,
                 score: this.score,
+                teama: this.itemTeamA,
+                teamb: this.itemTeamB,
                 // setcount: [{ a: 0, b: 0 }, { a: 0, b: 0 }, { a: 0, b: 0 }, { a: 0, b: 0 }, { a: 0, b: 0 },],
             };
 
@@ -581,6 +553,8 @@ export default {
             this.score = filterData[0].score;
             this.modelTitle = filterData[0].title;
             this.modelDate = filterData[0].date;
+            this.itemTeamA = filterData[0].teama;
+            this.itemTeamB = filterData[0].teamb;
             this.updateUndoRedoButton();
             this.toggleKind();
             this.outputlog();
@@ -604,10 +578,25 @@ export default {
             this.deleteScore(item.index);
         },
         addScore(item) {
-            this.pushScore(item.team, item.no, this.modelAction, this.getKind(), this.modelDetail);
-            this.scoreBk = [];
-            this.updateUndoRedoButton();
-            this.outputlog();
+            if (this.showChangeArea && this.selectedMember != null) {
+                if (this.selectedMember.no == -1) {
+                    item.no = "";
+                    item.name = "";
+                    item.isEmpty = true;
+                } else {
+                    item.no = this.selectedMember.no;
+                    item.name = this.selectedMember.name;
+                    item.isEmpty = false;
+                }
+            } else {
+                if (item.isEmpty) {
+                    return;
+                }
+                this.pushScore(item.team, item.no, this.modelAction, this.getKind(), this.modelDetail);
+                this.scoreBk = [];
+                this.updateUndoRedoButton();
+                this.outputlog();
+            }
         },
         deleteScore(deleteIndex) {
             this.title = "削除確認";
@@ -710,6 +699,9 @@ export default {
         onChangeKind() {
             this.changeDetailLabel();
         },
+        onChangeMember(member) {
+            this.selectedMember = member;
+        },
         changeDetailLabel() {
             this.itemDetail[0].label = "";
             this.itemDetail[1].label = "";
@@ -734,44 +726,67 @@ export default {
 
             if (this.modelAction == "serve") {
                 if (this.modelKind == "point") {
-                    this.itemDetail[0].label = "Ace";
-                    this.itemDetail[0].name = "ace";
-                    this.itemDetail[0].isEnabled = true;
+                    var idx = 0;
+                    this.itemDetail[idx].label = "Ace";
+                    this.itemDetail[idx].name = "ace";
+                    this.itemDetail[idx].isEnabled = true;
+                    idx++;
+
                     this.modelDetail = this.itemDetail[0].name;
                 } else if (this.modelKind == "miss") {
-                    this.itemDetail[0].label = "Net";
-                    this.itemDetail[1].label = "Out";
-                    this.itemDetail[0].name = "net";
-                    this.itemDetail[1].name = "out";
-                    this.itemDetail[0].isEnabled = true;
-                    this.itemDetail[1].isEnabled = true;
+                    var idx = 0;
+                    this.itemDetail[idx].label = "Out";
+                    this.itemDetail[idx].name = "out";
+                    this.itemDetail[idx].isEnabled = true;
+                    idx++;
+
+                    this.itemDetail[idx].label = "Net";
+                    this.itemDetail[idx].name = "net";
+                    this.itemDetail[idx].isEnabled = true;
+                    idx++;
+
                     this.modelDetail = this.itemDetail[0].name;
                 }
             } else if (this.modelAction == "spike") {
                 if (this.modelKind == "point") {
-                    this.itemDetail[0].label = "Ace";
-                    this.itemDetail[1].label = "In";
-                    this.itemDetail[2].label = "Fake";
-                    this.itemDetail[3].label = "Blockout";
-                    this.itemDetail[0].name = "ace";
-                    this.itemDetail[1].name = "in";
-                    this.itemDetail[2].name = "fake";
-                    this.itemDetail[3].name = "blockout";
-                    this.itemDetail[0].isEnabled = true;
-                    this.itemDetail[1].isEnabled = true;
-                    this.itemDetail[2].isEnabled = true;
-                    this.itemDetail[3].isEnabled = true;
+                    var idx = 0;
+                    // this.itemDetail[idx].label = "Ace";
+                    // this.itemDetail[idx].name = "ace";
+                    // this.itemDetail[idx].isEnabled = true;
+                    // idx++;
+
+                    this.itemDetail[idx].label = "In";
+                    this.itemDetail[idx].name = "in";
+                    this.itemDetail[idx].isEnabled = true;
+                    idx++;
+
+                    this.itemDetail[idx].label = "Fake";
+                    this.itemDetail[idx].name = "fake";
+                    this.itemDetail[idx].isEnabled = true;
+                    idx++;
+
+                    this.itemDetail[idx].label = "Blockout";
+                    this.itemDetail[idx].name = "blockout";
+                    this.itemDetail[idx].isEnabled = true;
+                    idx++;
                     this.modelDetail = this.itemDetail[0].name;
                 } else if (this.modelKind == "miss") {
-                    this.itemDetail[0].label = "Net";
-                    this.itemDetail[1].label = "Out";
-                    this.itemDetail[2].label = "Block";
-                    this.itemDetail[0].name = "net";
-                    this.itemDetail[1].name = "out";
-                    this.itemDetail[2].name = "block";
-                    this.itemDetail[0].isEnabled = true;
-                    this.itemDetail[1].isEnabled = true;
-                    this.itemDetail[2].isEnabled = true;
+                    var idx = 0;
+                    this.itemDetail[idx].label = "Out";
+                    this.itemDetail[idx].name = "out";
+                    this.itemDetail[idx].isEnabled = true;
+                    idx++;
+
+                    this.itemDetail[idx].label = "Net";
+                    this.itemDetail[idx].name = "net";
+                    this.itemDetail[idx].isEnabled = true;
+                    idx++;
+
+                    this.itemDetail[idx].label = "Block";
+                    this.itemDetail[idx].name = "block";
+                    this.itemDetail[idx].isEnabled = true;
+                    idx++;
+
                     this.modelDetail = this.itemDetail[0].name;
                 }
             }
@@ -813,31 +828,58 @@ export default {
             }
         },
         rotateA() {
-            this.rotate(this.itemTeamA);
+            var team = [
+                this.itemTeamA[8],
+                this.itemTeamA[7],
+                this.itemTeamA[6],
+                this.itemTeamA[3],
+                this.itemTeamA[4],
+                this.itemTeamA[5],
+                this.itemTeamA[0],
+                this.itemTeamA[1],
+                this.itemTeamA[2],
+            ]
+            this.rotate(team);
         },
         rotateB() {
-            this.rotate(this.itemTeamB);
+            var team = [
+                this.itemTeamB[0],
+                this.itemTeamB[1],
+                this.itemTeamB[2],
+                this.itemTeamB[5],
+                this.itemTeamB[4],
+                this.itemTeamB[3],
+                this.itemTeamB[8],
+                this.itemTeamB[7],
+                this.itemTeamB[6],
+            ]
+            this.rotate(team);
         },
         rotate(team) {
-            var temp = -1;
+            // jsonの順番を変えるようにしないとだめ
+            var tempNo = -1;
+            var tempName = "";
             var first = true;
             for (var i = 8; i > 0; i--) {
                 if (team[i].isEmpty) {
                     continue;
                 }
                 if (first) {
-                    temp = team[i].no;
+                    tempNo = team[i].no;
+                    tempName = team[i].name;
                     first = !first;
                 }
                 for (var j = i - 1; j >= 0; j--) {
                     if (!team[j].isEmpty) {
                         team[i].no = team[j].no;
+                        team[i].name = team[j].name;
                         break;
                     }
                 }
             }
 
-            team[0].no = temp;
+            team[0].no = tempNo;
+            team[0].name = tempName;
         },
         result(flg) {
             // console.log("dlg:" + flg);
@@ -845,6 +887,19 @@ export default {
             this.showModalConfirm = false;
         },
         changeMember() {
+            this.showChangeArea = !this.showChangeArea;
+            if (this.showChangeArea) {
+                this.styleChangeArea = {
+                    "grid-template-columns": "70px 1fr 1fr 0fr 1fr 1fr 1fr 70px",
+                };
+                // this.styleCoatMember.visibility = "visible";
+            } else {
+                this.styleChangeArea = {
+                    "grid-template-columns": "70px 1fr 1fr 1fr 1fr 1fr 0fr 70px",
+                };
+                // this.styleCoatMember.visibility = "hidden";
+            }
+
             // this.$emit('send-message');
         },
         // ドラッグドロップ

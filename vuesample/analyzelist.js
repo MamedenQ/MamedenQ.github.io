@@ -154,41 +154,10 @@ export default {
     },
     data() {
         return {
-            // scoreColor: color,
+            scoreColor: color,
             scoreAnalyze: [],
             modelFilter: "serve",
             modelDisp: "simple",
-
-            members: [
-                { no: -1, name: "（なし）", },
-                { no: 1, name: "しんや", },
-                { no: 2, name: "ふじわら", },
-                { no: 3, name: "いけだ", },
-                { no: 4, name: "ながおか", },
-                { no: 5, name: "なごや", },
-                { no: 6, name: "のせ", },
-                { no: 7, name: "みさ", },
-                { no: 8, name: "よしはら", },
-                { no: 9, name: "はづき", },
-                { no: 10, name: "ほし", },
-                { no: 11, name: "わだ", },
-                { no: 100, name: "あまちゃん", },
-                { no: 101, name: "ふゆこ", },
-                { no: 102, name: "こまつ", },
-                { no: 103, name: "ひーちゃん", },
-                { no: 104, name: "まんべ", },
-                { no: 105, name: "まりこ", },
-                { no: 106, name: "かわ", },
-                { no: 107, name: "ぶん", },
-                { no: 108, name: "あっきーな", },
-                { no: 109, name: "みずか", },
-                { no: 110, name: "てら", },
-                { no: 111, name: "きく", },
-                { no: 112, name: "たける", },
-                { no: 113, name: "やまぴ", },
-                { no: 114, name: "のん", },
-                { no: 115, name: "せき", },
-            ],
         }
     },
     filters: {
@@ -329,7 +298,7 @@ export default {
             }
         },
         getPlayerTemplate(no) {
-            var member = this.members.filter(function (s, index) {
+            var member = members.filter(function (s, index) {
                 if (s.no == no) return true;
             });
             var name;

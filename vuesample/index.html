@@ -24,7 +24,7 @@
             <a href="#" v-on:click="routeScoreInputNew">スコア入力</a>
             <!-- <router-link to="/scoreinput">スコア入力</router-link> -->
             <router-link to="/scorelist">スコアリスト</router-link>
-            <router-link to="/page2">ユーザー一覧ページ</router-link>
+            <!-- <router-link to="/page2">ユーザー一覧ページ</router-link> -->
         </div>
         <div class="contents">
             <router-view v-on:route-score-input="routeScoreInput" v-on:route-analyze-list="routeAnalyzeList"
@@ -191,7 +191,7 @@
         grid-template-rows: 50px 1fr;
         grid-template-areas: "header header""navi_a contents"; */
         grid-template-columns: 1fr;
-        grid-template-rows: 70px;
+        grid-template-rows: 70px 1fr;
         grid-template-areas: "header""contents";
         /* grid-area: grid-main; */
     }
@@ -221,6 +221,36 @@
         grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 100px;
         /* grid-template-areas: "navi_a grid-action grid-kind grid-detail coat coat navi_b""navi_a grid-action grid-kind grid-detail coat coat navi_b""navi_a grid-action grid-kind grid-detail coat coat navi_b""navi_a grid-action grid-kind grid-detail coat coat navi_b""navi_a grid-action grid-kind grid-detail coat coat navi_b""navi_a grid-action grid-kind grid-detail coat coat navi_b""navi_a score score score score score navi_b"; */
         grid-template-areas: "navi_a grid-action grid-kind grid-detail coat coat change-area navi_b""navi_a grid-action grid-kind grid-detail coat coat change-area navi_b""navi_a grid-action grid-kind grid-detail coat coat change-area navi_b""navi_a grid-action grid-kind grid-detail coat coat change-area navi_b""navi_a grid-action grid-kind grid-detail coat coat change-area navi_b""navi_a grid-action grid-kind grid-detail coat coat change-area navi_b""navi_a score score score score score change-area navi_b";
+    }
+
+    .grid-scorelist {
+        height: 100%;
+        display: grid;
+        grid-column-gap: 10px;
+        grid-row-gap: 10px;
+        grid-template-columns: 70px 1fr;
+        grid-template-rows: 1fr;
+        /* grid-template-areas: "navi_a grid-action grid-kind grid-detail coat coat navi_b""navi_a grid-action grid-kind grid-detail coat coat navi_b""navi_a grid-action grid-kind grid-detail coat coat navi_b""navi_a grid-action grid-kind grid-detail coat coat navi_b""navi_a grid-action grid-kind grid-detail coat coat navi_b""navi_a grid-action grid-kind grid-detail coat coat navi_b""navi_a score score score score score navi_b"; */
+        grid-template-areas: "navi_a scorelist";
+    }
+
+    .scorelist {
+        grid-area: scorelist;
+    }
+
+    .grid-analyzelist {
+        height: 100%;
+        display: grid;
+        grid-column-gap: 10px;
+        grid-row-gap: 10px;
+        grid-template-columns: 70px 1fr;
+        grid-template-rows: 1fr;
+        /* grid-template-areas: "navi_a grid-action grid-kind grid-detail coat coat navi_b""navi_a grid-action grid-kind grid-detail coat coat navi_b""navi_a grid-action grid-kind grid-detail coat coat navi_b""navi_a grid-action grid-kind grid-detail coat coat navi_b""navi_a grid-action grid-kind grid-detail coat coat navi_b""navi_a grid-action grid-kind grid-detail coat coat navi_b""navi_a score score score score score navi_b"; */
+        grid-template-areas: "navi_a analyzelist";
+    }
+
+    .analyzelist {
+        grid-area: analyzelist;
     }
 
     .grid-action {

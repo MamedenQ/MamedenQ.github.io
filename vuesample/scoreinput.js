@@ -119,7 +119,7 @@ const template = `
 
         <div class="score grid_style" style="overflow-x:auto; overflow-y:hidden;">
             <svg v-bind:width="score.length * 90" style="height: 100%; overflow: scroll;">
-                <circle v-bind:fill="scoreColor(item.team)" r="40" v-bind:cx="50 + 90 * idx" cy="50" v-on:click="onClickScore(item)" v-for="(item, idx) of score"></circle>
+                <circle v-bind:fill="scoreColor[item.team]" r="40" v-bind:cx="50 + 90 * idx" cy="50" v-on:click="onClickScore(item)" v-for="(item, idx) of score"></circle>
                 <text text-anchor="middle" v-bind:x="10 + 90 * idx + 40" v-bind:y="35" v-on:click="onClickScore(item)" v-for="(item, idx) of score">{{item.no}}</text>
                 <text text-anchor="middle" v-bind:x="10 + 90 * idx + 40" v-bind:y="55" v-on:click="onClickScore(item)" v-for="(item, idx) of score">{{item.action}}</text>
                 <text text-anchor="middle" v-bind:x="10 + 90 * idx + 40" v-bind:y="75" v-on:click="onClickScore(item)" v-for="(item, idx) of score">{{item.kind}}</text>
@@ -229,7 +229,10 @@ export default {
     // },
     data: function () {
         return {
-            scoreColor: color,
+            scoreColor: [
+                "#5acbc0",
+                "#a8a093",
+            ],
             score: [],
             scoreBk: [],
             scoreTempSave: [],
@@ -405,7 +408,36 @@ export default {
                 { key: "b8", team: "b", no: "", name: "", classGrid: "b8", isEmpty: true, },
                 { key: "b7", team: "b", no: "", name: "", classGrid: "b7", isEmpty: true, },
             ],
-            members: members,
+            members: [
+                { no: -1, name: "（なし）", },
+                { no: 1, name: "しんや", },
+                { no: 2, name: "ふじわら", },
+                { no: 3, name: "いけだ", },
+                { no: 4, name: "ながおか", },
+                { no: 5, name: "なごや", },
+                { no: 6, name: "のせ", },
+                { no: 7, name: "みさ", },
+                { no: 8, name: "よしはら", },
+                { no: 9, name: "はづき", },
+                { no: 10, name: "ほし", },
+                { no: 11, name: "わだ", },
+                { no: 100, name: "あまちゃん", },
+                { no: 101, name: "ふゆこ", },
+                { no: 102, name: "こまつ", },
+                { no: 103, name: "ひーちゃん", },
+                { no: 104, name: "まんべ", },
+                { no: 105, name: "まりこ", },
+                { no: 106, name: "かわ", },
+                { no: 107, name: "ぶん", },
+                { no: 108, name: "あっきーな", },
+                { no: 109, name: "みずか", },
+                { no: 110, name: "てら", },
+                { no: 111, name: "きく", },
+                { no: 112, name: "たける", },
+                { no: 113, name: "やまぴ", },
+                { no: 114, name: "のん", },
+                { no: 115, name: "せき", },
+            ],
         }
     },
     mounted() {

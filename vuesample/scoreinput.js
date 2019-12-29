@@ -241,7 +241,7 @@ export default {
             modelTitle: "",
             modelMember: "",
             selectedMember: null,
-            modelDate: "2019-11-03",
+            modelDate: "",
             showModalSave: false,
             showModalWarn: false,
             showModalConfirm: false,
@@ -405,39 +405,18 @@ export default {
                 { key: "b8", team: "b", no: "", name: "", classGrid: "b8", isEmpty: true, },
                 { key: "b7", team: "b", no: "", name: "", classGrid: "b7", isEmpty: true, },
             ],
-            members: [
-                { no: -1, name: "（なし）", },
-                { no: 0, name: "しんや", },
-                { no: 1, name: "ふじわら", },
-                { no: 2, name: "いけだ", },
-                { no: 3, name: "ながおか", },
-                { no: 4, name: "なごや", },
-                { no: 5, name: "のせ", },
-                { no: 6, name: "みさ", },
-                { no: 7, name: "よしはら", },
-                { no: 8, name: "はづき", },
-                { no: 9, name: "ほし", },
-                { no: 10, name: "わだ", },
-                { no: 100, name: "あまちゃん", },
-                { no: 101, name: "ふゆこ", },
-                { no: 102, name: "こまつ", },
-                { no: 103, name: "ひーちゃん", },
-                { no: 104, name: "まんべ", },
-                { no: 105, name: "まりこ", },
-                { no: 106, name: "かわ", },
-                { no: 107, name: "ぶん", },
-                { no: 108, name: "あっきーな", },
-                { no: 109, name: "みずか", },
-                { no: 110, name: "てら", },
-                { no: 111, name: "きく", },
-                { no: 112, name: "たける", },
-                { no: 113, name: "やまぴ", },
-                { no: 114, name: "のん", },
-                { no: 115, name: "せき", },
-            ],
+            members: members,
         }
     },
     mounted() {
+        // this.createDigest("abc");
+        var d = new Date();
+        var format_str = 'YYYY-MM-DD';
+        format_str = format_str.replace(/YYYY/g, d.getFullYear());
+        format_str = format_str.replace(/MM/g, d.getMonth() + 1);
+        format_str = format_str.replace(/DD/g, d.getDate());
+        this.modelDate = format_str;
+
         this.modelAction = "serve";
         this.updateUndoRedoButton();
         this.toggleKind();
@@ -538,6 +517,10 @@ export default {
             };
         },
         loadMain() {
+            if (this.scoreId == "") {
+                return;
+            }
+
             this.modelAction = "serve";
             this.scoreBk = [];
             var saveData = JSON.parse(localStorage.getItem("score"));
@@ -545,7 +528,7 @@ export default {
             if (saveData == null) {
                 saveData = [];
             }
-            
+
             var tmpScoreId = this.scoreId;
             var filterData = saveData.filter(function (data, index) {
                 if (data.id == tmpScoreId) return true;
@@ -571,7 +554,7 @@ export default {
                 return;
             }
 
-            this.$router.push({ path: '/page2' });
+            this.$router.push({ path: '/scorelist' });
         },
         checkSaved() {
             if (this.isDirty) {
@@ -906,6 +889,11 @@ export default {
 
             // this.$emit('send-message');
         },
+
+
+
+
+
         // ドラッグドロップ
         // https://www.kabanoki.net/1712/#i-4
 

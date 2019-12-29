@@ -1,24 +1,22 @@
 import scoreinput from "./scoreinput.js";
-import page2 from "./page2.js";
+import analyzelist from "./analyzelist.js";
+import scorelist from "./scorelist.js";
 
 export default new VueRouter({
-    // var router = new VueRouter({
     mode: 'history',
     // base:'/app/public/',
     routes: [
         {
             path: '/scoreinput',
-            // component: {
-            //     template: page1.template
-            // }
             component: scoreinput,
         },
         {
-            path: '/page2',
-            // component: {
-            //     template: page2
-            // }
-            component: page2,
+            path: '/analyzelist',
+            component: analyzelist,
+        },
+        {
+            path: '/scorelist',
+            component: scorelist,
         }
     ]
 });

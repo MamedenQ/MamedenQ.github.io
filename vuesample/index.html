@@ -21,11 +21,15 @@
     <!-- <input_score v-on:sendMessage="popup"></input_score> -->
     <div class="grid-main">
         <div class="header grid_style">
-            <router-link to="/scoreinput">スコア入力</router-link>
+            <a href="#" v-on:click="routeScoreInputNew">スコア入力</a>
+            <!-- <router-link to="/scoreinput">スコア入力</router-link> -->
+            <router-link to="/scorelist">スコアリスト</router-link>
             <router-link to="/page2">ユーザー一覧ページ</router-link>
         </div>
         <div class="contents">
-            <router-view v-on:send-message="popup" v-bind:score-id="scoreId">(ここにコンテンツが表示される)</router-view>
+            <router-view v-on:route-score-input="routeScoreInput" v-on:route-analyze-list="routeAnalyzeList"
+                v-bind:score-id="scoreId" v-bind:analyze-data="analyzeData">
+                (ここにコンテンツが表示される)</router-view>
         </div>
         <!-- <div class="footer grid_style"></div> -->
     </div>
@@ -71,6 +75,7 @@
     // スコア入力画面
     // jsonを出力してコード反映できるようにする
     // 詳細コードが不要な時にもD1とか入ってる
+    // 試合のセットごとの得点設定（直接入力）　ダイアログとかで入力する
 
 
     // score: [
@@ -97,10 +102,6 @@
 
     // メニュー構成
 
-    // 試合のセットごとの得点設定（直接入力）
-
-    // スコア画面のデータ形式から一覧画面へのデータ形式へ変換
-
     // 分析方法は試合複数選択や日付で絞り込み
 
     // 閲覧・分析画面
@@ -112,6 +113,36 @@
     // データ消去　消去したらゴミ箱に入って、さらに消すと本当に消える
 
     var color = d3.scale.category20();
+    var members = [
+        { no: -1, name: "（なし）", },
+        { no: 1, name: "しんや", },
+        { no: 2, name: "ふじわら", },
+        { no: 3, name: "いけだ", },
+        { no: 4, name: "ながおか", },
+        { no: 5, name: "なごや", },
+        { no: 6, name: "のせ", },
+        { no: 7, name: "みさ", },
+        { no: 8, name: "よしはら", },
+        { no: 9, name: "はづき", },
+        { no: 10, name: "ほし", },
+        { no: 11, name: "わだ", },
+        { no: 100, name: "あまちゃん", },
+        { no: 101, name: "ふゆこ", },
+        { no: 102, name: "こまつ", },
+        { no: 103, name: "ひーちゃん", },
+        { no: 104, name: "まんべ", },
+        { no: 105, name: "まりこ", },
+        { no: 106, name: "かわ", },
+        { no: 107, name: "ぶん", },
+        { no: 108, name: "あっきーな", },
+        { no: 109, name: "みずか", },
+        { no: 110, name: "てら", },
+        { no: 111, name: "きく", },
+        { no: 112, name: "たける", },
+        { no: 113, name: "やまぴ", },
+        { no: 114, name: "のん", },
+        { no: 115, name: "せき", },
+    ];
 </script>
 <style>
     /* https://grid.layoutit.com/?id=cFy6gyh */
@@ -176,6 +207,10 @@
     /* .footer {
         grid-area: footer;
     } */
+
+    .empty {
+        grid-area: empty;
+    }
 
     .grid-scoreinput {
         height: 100%;
@@ -350,6 +385,8 @@
     }
 
     .change-area {
+        width: 100%;
+        height: 100%;
         grid-area: change-area;
     }
 
@@ -709,6 +746,58 @@
     .btn-flat-bottom-border:hover {
         background: #91b5fb;
     } */
+
+    .analyze {
+        border-collapse: collapse;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .analyze_body tr td,
+    .analyze_head tr th {
+        padding: 10px;
+        border: 1px solid #ccc;
+    }
+
+    .analyze_head tr th {
+        color: #fff;
+        background: #005ab3;
+    }
+
+    .analyze_body tr td:nth-child(odd) {
+        background: #e6f2ff;
+    }
+
+    .filter_action input {
+        display: none;
+    }
+
+    .filter_action input[type="radio"]:checked+label {
+        color: #000;
+        border: 2px solid #000;
+        background-color: #eaeaea;
+    }
+
+    .filter_action label {
+        color: #ddd;
+        border: 2px solid #ddd;
+        text-align: center;
+        display: inline-block;
+        /* padding: 5px 0px; */
+        /* width: 150px;
+        height: 80px; */
+        width: 150px;
+        height: 80px;
+        /* margin: 10px; */
+        /* position: absolute; */
+        border-radius: 5px;
+    }
+
+    .filter_action label:hover {
+        color: #aaa;
+        border: 2px solid #aaa;
+        cursor: pointer;
+    }
 </style>
 
 </html>

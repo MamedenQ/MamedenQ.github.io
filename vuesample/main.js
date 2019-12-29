@@ -83,6 +83,45 @@ var app = new Vue({
     methods: {
         popup() {
             console.log('popup!');
+        },
+        routeAnalyzeList(items) {
+            this.analyzeData = items;
+            this.$router.push({ path: '/analyzelist' });
+        },
+        routeScoreInput(scoreId) {
+            this.scoreId = scoreId;
+            this.$router.push({ path: '/scoreinput' });
+        },
+        routeScoreInputNew() {
+            this.createDigest(this.digestCallback);
+        },
+        digestCallback(hex) {
+            this.scoreId = hex;
+            this.$router.push({ path: '/scoreinput' });
+        },
+        createDigest(callback) {
+            if (!crypto || !crypto.subtle) {
+                throw Error("crypto.subtle is not supported."); // ブラウザ未対応
+            }
+            var d = new Date();
+            console.log(d.toLocaleString());
+            var str = d.toLocaleString();
+
+            crypto.subtle.digest("SHA-256", new TextEncoder().encode(str)).then(x => {
+                // console.log(`"${str}" => ${"SHA-256"} (ArrayBuffer):`, x); // ArrayBuffer
+                const hex = this.hexString(x); // convert to hex string.
+                callback(hex);
+                // console.log(`"${str}" => ${"SHA-256"} (Hex):`, hex);
+            });
+        },
+        hexString(buffer) {
+            const byteArray = new Uint8Array(buffer);
+            const hexCodes = [...byteArray].map(value => {
+                const hexCode = value.toString(16);
+                const paddedHexCode = hexCode.padStart(2, '0');
+                return paddedHexCode;
+            });
+            return hexCodes.join('');
         }
     },
     mounted() {
@@ -90,7 +129,9 @@ var app = new Vue({
     },
     data: function () {
         return {
-            scoreId: "20191225_001",
+            // scoreId: "20191225_001",
+            scoreId: "",
+            analyzeData: [],
         }
     }
 }).$mount('#app');

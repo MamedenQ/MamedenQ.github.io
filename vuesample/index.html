@@ -24,6 +24,7 @@
             <a href="#" v-on:click="routeScoreInputNew">スコア入力</a>
             <!-- <router-link to="/scoreinput">スコア入力</router-link> -->
             <router-link to="/scorelist">スコアリスト</router-link>
+            <router-link to="/trashlist">ゴミ箱</router-link>
             <!-- <router-link to="/page2">ユーザー一覧ページ</router-link> -->
         </div>
         <div class="contents">
@@ -40,7 +41,7 @@
 <script src="https://cdn.jsdelivr.net/npm/vue-router@3.1.3/dist/vue-router.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.8.4/Sortable.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/2.20.0/vuedraggable.umd.min.js"></script>
-<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="https://d3js.org/d3.v3.min.js"></script>
 <script src="main.js" type="module"></script>
 
 <script type="text/javascript">
@@ -68,6 +69,9 @@
     // https://jp.vuejs.org/v2/examples/modal.html
     // scriptタグでx-template？的な書き方ができるが、ファイルが別れるため微妙
 
+    // カラーピッカー
+    // <input type="color" value="#4251f5" />
+
     // ＝＝＝＝＝レイアウト
     // バレーボールっぽいsvgを作成する
 
@@ -75,8 +79,6 @@
     // スコア入力画面
     // jsonを出力してコード反映できるようにする
     // 詳細コードが不要な時にもD1とか入ってる
-    // 試合のセットごとの得点設定（直接入力）　ダイアログとかで入力する
-    // １つのデータが１セットなのでセットカウントはちょっと変
     // レシーブのミスにアウトとジャッジミス
     // お見合いをどうやってカウントするか？
 
@@ -85,22 +87,19 @@
     //         id: 20191211_001,
     //         title: "",
     //         date: "",
-    //         score: {},
-    //         setcount: [
-    //             {
-    //                 a: 20, b: 25,
-    //             },
-    //             {
-    //                 a: 20, b: 25,
-    //             },
-    //         ],
-    //          ここにメンバーも入れる
+    //         score: [],
+    //         teamA: [],
+    //         teamB: [],
+    //         teamAPoint: 20,
+    //         teamBPoint: 20,
     //     },
+    // trash: []
     // settings 設定データ
     // master マスタデータ
     // 分析データは都度変換するようにする
 
-
+    // 分析一覧は部分的に非表示にすると、列の数が変わって、色分けが１列ごとでなくなる
+    // 共通情報も含めてサーブ、スパイクのv-showに含めてしまう方がいい
 
     // メニュー構成
 
@@ -113,6 +112,8 @@
     // マスタメンテ画面
 
     // データ消去　消去したらゴミ箱に入って、さらに消すと本当に消える
+
+    // スコア一覧をソートできるように試合順とかセット番号をつける
 
     var color = d3.scale.category20();
     var members = [

@@ -154,7 +154,9 @@ const template = `
                             <div class="modal-body">
                                 <slot name="body">
                                     試合名<input type="text" v-model="modelTitle"/><br>
-                                    日付<input type="date" v-model="modelDate" />
+                                    日付<input type="date" v-model="modelDate" /><br>
+                                    得点<input type="number" v-model="modelAPoint" />－
+                                    <input type="number" v-model="modelBPoint" />
                                 </slot>
                             </div>
 
@@ -242,6 +244,8 @@ export default {
             modelMember: "",
             selectedMember: null,
             modelDate: "",
+            modelAPoint: 0,
+            modelBPoint: 0,
             showModalSave: false,
             showModalWarn: false,
             showModalConfirm: false,
@@ -470,9 +474,10 @@ export default {
                 title: this.modelTitle,
                 date: this.modelDate,
                 score: this.score,
-                teama: this.itemTeamA,
-                teamb: this.itemTeamB,
-                // setcount: [{ a: 0, b: 0 }, { a: 0, b: 0 }, { a: 0, b: 0 }, { a: 0, b: 0 }, { a: 0, b: 0 },],
+                teamA: this.itemTeamA,
+                teamB: this.itemTeamB,
+                teamAPoint: this.modelAPoint,
+                teamBPoint: this.modelBPoint,
             };
 
             var saveDatas = JSON.parse(localStorage.getItem("score"));
@@ -540,8 +545,10 @@ export default {
             this.score = filterData[0].score;
             this.modelTitle = filterData[0].title;
             this.modelDate = filterData[0].date;
-            this.itemTeamA = filterData[0].teama;
-            this.itemTeamB = filterData[0].teamb;
+            this.itemTeamA = filterData[0].teamA;
+            this.itemTeamB = filterData[0].teamB;
+            this.modelAPoint = filterData[0].teamAPoint;
+            this.modelBPoint = filterData[0].teamBPoint;
             this.updateUndoRedoButton();
             this.toggleKind();
             this.outputlog();

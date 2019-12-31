@@ -1,6 +1,6 @@
 const template = `
-<svg v-on:click="onClickScore(item)">
-  <circle v-bind:stroke="scoreColor(item.team)" stroke-width="2" fill="none" r="40" v-bind:cx="50 + 90 * idx" cy="50"></circle>
+<svg v-on:click="onClickScore(item)" v-bind:y="originY">
+  <circle v-bind:stroke="scoreColor(item.team)" stroke-width="2" fill="white" r="40" v-bind:cx="50 + 90 * idx" cy="50"></circle>
 
   <serve v-if="item.action == 'serve'" v-bind:x="90 * idx + 20" v-bind:y="10"></serve>
   <spike v-else-if="item.action == 'spike'" v-bind:x="90 * idx + 20" v-bind:y="10"></spike>
@@ -9,7 +9,7 @@ const template = `
   <faul v-if="item.action == 'faul'" v-bind:x="90 * idx + 20" v-bind:y="10"></faul>
   <other_miss v-else-if="item.action == 'other_miss'" v-bind:x="90 * idx + 20" v-bind:y="10"></other_miss>
 
-  <text text-anchor="middle" v-bind:x="10 + 90 * idx + 40" v-bind:y="110">{{item.no + ":" + "名前"}}</text>
+  <text text-anchor="middle" v-bind:x="10 + 90 * idx + 40" v-bind:y="110">{{item.no + ":" + item.name}}</text>
   <text text-anchor="middle" v-bind:x="10 + 90 * idx + 40" v-bind:y="130">{{item.kind}}</text>
   <text text-anchor="middle" v-bind:x="10 + 90 * idx + 40" v-bind:y="75">{{item.action}}</text>
 </svg>
@@ -39,10 +39,16 @@ export default {
   data() {
     return {
       scoreColor: color,
+      originY: 0,
     }
   },
   mounted() {
     // console.log("score_obj[" + JSON.stringify(this.item, null, "    ") + "]");
+    if (this.item.team == 0) {
+      this.originY = 0;
+    } else {
+      this.originY = 70;
+    }
   },
   methods: {
     onClickScore(item) {

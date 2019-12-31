@@ -15,26 +15,21 @@
 </head>
 
 <div id="app" v-cloak>
-    <!-- <emt_recv></emt_recv> -->
-    <!-- <div v-on:commit1="handler"></div> -->
-    <!-- <div class="grid-frame"> -->
-    <!-- <input_score v-on:sendMessage="popup"></input_score> -->
     <div class="grid-main">
+        <!--
         <div class="header grid_style">
             <a href="#" v-on:click="routeScoreInputNew">スコア入力</a>
-            <!-- <router-link to="/scoreinput">スコア入力</router-link> -->
             <router-link to="/scorelist">スコアリスト</router-link>
             <router-link to="/trashlist">ゴミ箱</router-link>
-            <!-- <router-link to="/page2">ユーザー一覧ページ</router-link> -->
         </div>
+    -->
         <div class="contents">
-            <router-view v-on:route-score-input="routeScoreInput" v-on:route-analyze-list="routeAnalyzeList"
+            <router-view v-on:route-score-input-new="routeScoreInputNew" v-on:route-score-input="routeScoreInput"
+                v-on:route-analyze-list="routeAnalyzeList" v-on:route-score-list="routeScoreList"
                 v-bind:score-id="scoreId" v-bind:analyze-data="analyzeData">
-                (ここにコンテンツが表示される)</router-view>
+            </router-view>
         </div>
-        <!-- <div class="footer grid_style"></div> -->
     </div>
-    <!-- </div> -->
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
@@ -84,7 +79,6 @@
 
     // ＝＝＝＝＝未実装
     // スコア入力画面
-    // jsonを出力してコード反映できるようにする
     // 詳細コードが不要な時にもD1とか入ってる
     // レシーブのミスにアウトとジャッジミス
     // お見合いをどうやってカウントするか？
@@ -102,58 +96,61 @@
     //     },
     // settings 設定データ
     // master マスタデータ
-    // 分析データは都度変換するようにする
 
     // メニュー構成
 
     // 分析方法は試合複数選択や日付で絞り込み
 
     // 閲覧・分析画面
-    // 閲覧分析画面にはYoutubeのURLも載せるようにする
-    // あと、メモを入れれるようにしたい
-    // この辺はスコア入力画面かな
     // マスタメンテ画面
 
-    // データ消去　消去したらゴミ箱に入って、さらに消すと本当に消える
+    // カラーセットを用意する
 
     // スコア一覧をソートできるように試合順とかセット番号をつける
 
     // オープンソースやアイコンなどのサイトを載せる
 
+    // バックアップ用のJSON出力機能
+
     var color = d3.scale.category20();
     var members = [
-        { no: -1, name: "（なし）", },
-        { no: 1, name: "しんや", },
-        { no: 2, name: "ふじわら", },
-        { no: 3, name: "いけだ", },
-        { no: 4, name: "ながおか", },
-        { no: 5, name: "なごや", },
-        { no: 6, name: "のせ", },
-        { no: 7, name: "みさ", },
-        { no: 8, name: "よしはら", },
-        { no: 9, name: "はづき", },
-        { no: 10, name: "ほし", },
-        { no: 11, name: "わだ", },
-        { no: 100, name: "あまちゃん", },
-        { no: 101, name: "ふゆこ", },
-        { no: 102, name: "こまつ", },
-        { no: 103, name: "ひーちゃん", },
-        { no: 104, name: "まんべ", },
-        { no: 105, name: "まりこ", },
-        { no: 106, name: "かわ", },
-        { no: 107, name: "ぶん", },
-        { no: 108, name: "あっきーな", },
-        { no: 109, name: "みずか", },
-        { no: 110, name: "てら", },
-        { no: 111, name: "きく", },
-        { no: 112, name: "たける", },
-        { no: 113, name: "やまぴ", },
-        { no: 114, name: "のん", },
-        { no: 115, name: "せき", },
+        { no: -1, name: "（なし）", sex: 0, },
+        { no: 1, name: "しんや", sex: 0, },
+        { no: 2, name: "ふじわら", sex: 0, },
+        { no: 3, name: "いけだ", sex: 0, },
+        { no: 4, name: "ながおか", sex: 0, },
+        { no: 5, name: "なごや", sex: 0, },
+        { no: 6, name: "のせ", sex: 0, },
+        { no: 7, name: "みさ", sex: 1, },
+        { no: 8, name: "よしはら", sex: 0, },
+        { no: 9, name: "はづき", sex: 1, },
+        { no: 10, name: "ほし", sex: 0, },
+        { no: 11, name: "わだ", sex: 0, },
+        { no: 100, name: "あまちゃん", sex: 1, },
+        { no: 101, name: "ふゆこ", sex: 1, },
+        { no: 102, name: "こまつ", sex: 0, },
+        { no: 103, name: "ひーちゃん", sex: 1, },
+        { no: 104, name: "まんべ", sex: 0, },
+        { no: 105, name: "まりこ", sex: 1, },
+        { no: 106, name: "かわ", sex: 1, },
+        { no: 107, name: "ぶん", sex: 0, },
+        { no: 108, name: "あっきーな", sex: 1, },
+        { no: 109, name: "みずか", sex: 1, },
+        { no: 110, name: "てら", sex: 1, },
+        { no: 111, name: "きく", sex: 0, },
+        { no: 112, name: "たける", sex: 0, },
+        { no: 113, name: "やまぴ", sex: 0, },
+        { no: 114, name: "のん", sex: 1, },
+        { no: 115, name: "せき", sex: 0, },
     ];
 </script>
 <style>
     /* https://grid.layoutit.com/?id=cFy6gyh */
+    svg {
+        max-height: 100%;
+        max-width: 100%;
+    }
+
     html {
         height: 100%;
     }
@@ -199,8 +196,10 @@
         grid-template-rows: 50px 1fr;
         grid-template-areas: "header header""navi_a contents"; */
         grid-template-columns: 1fr;
-        grid-template-rows: 70px 1fr;
-        grid-template-areas: "header""contents";
+        /* grid-template-rows: 70px 1fr;
+        grid-template-areas: "header""contents"; */
+        grid-template-rows: 1fr;
+        grid-template-areas: "contents";
         /* grid-area: grid-main; */
     }
 
@@ -210,6 +209,8 @@
 
     .contents {
         grid-area: contents;
+        max-height: 100%;
+        max-width: 100%;
     }
 
     /* .footer {
@@ -220,15 +221,56 @@
         grid-area: empty;
     }
 
+    .grid-top {
+        height: 100%;
+        display: grid;
+        grid-column-gap: 10px;
+        grid-row-gap: 10px;
+        /* grid-template-columns: 1fr 300px 150px 1fr;
+        grid-template-rows: 1fr 150px 150px 1fr;
+        grid-template-areas: "empty_area empty_area empty_area empty_area""empty_area btninput btnlist empty_area""empty_area btninput btnsettings empty_area""empty_area empty_area empty_area empty_area"; */
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        grid-template-areas: "btninput btnlist""empty_area btnsettings";
+    }
+
+    .empty_area {
+        grid-area: empty_area;
+    }
+
+    .btninput {
+        border: 2px solid #ddd;
+        /* width: 100%; */
+        /* height: 100%; */
+        border-radius: 5px;
+        grid-area: btninput;
+    }
+
+    .btnlist {
+        border: 2px solid #ddd;
+        /* width: 100%; */
+        /* height: 100%; */
+        border-radius: 5px;
+        grid-area: btnlist;
+    }
+
+    .btnsettings {
+        grid-area: btnsettings;
+        border: 2px solid #ddd;
+        /* width: 100%; */
+        /* height: 100%; */
+        border-radius: 5px;
+    }
+
     .grid-scoreinput {
         height: 100%;
         display: grid;
         grid-column-gap: 10px;
         grid-row-gap: 10px;
-        grid-template-columns: 70px 1fr 1fr 1fr 1fr 1fr 0px 70px;
-        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 150px;
+        grid-template-columns: 70px 1fr 1fr 1fr 1fr 1fr 70px;
+        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 220px;
         /* grid-template-areas: "navi_a grid-action grid-kind grid-detail coat coat navi_b""navi_a grid-action grid-kind grid-detail coat coat navi_b""navi_a grid-action grid-kind grid-detail coat coat navi_b""navi_a grid-action grid-kind grid-detail coat coat navi_b""navi_a grid-action grid-kind grid-detail coat coat navi_b""navi_a grid-action grid-kind grid-detail coat coat navi_b""navi_a score score score score score navi_b"; */
-        grid-template-areas: "navi_a grid-action grid-kind grid-detail coat coat change-area navi_b""navi_a grid-action grid-kind grid-detail coat coat change-area navi_b""navi_a grid-action grid-kind grid-detail coat coat change-area navi_b""navi_a grid-action grid-kind grid-detail coat coat change-area navi_b""navi_a grid-action grid-kind grid-detail coat coat change-area navi_b""navi_a grid-action grid-kind grid-detail coat coat change-area navi_b""navi_a score score score score score change-area navi_b";
+        grid-template-areas: "navi_a grid-action grid-kind grid-detail coat coat navi_b""navi_a grid-action grid-kind grid-detail coat coat navi_b""navi_a grid-action grid-kind grid-detail coat coat navi_b""navi_a grid-action grid-kind grid-detail coat coat navi_b""navi_a grid-action grid-kind grid-detail coat coat navi_b""navi_a grid-action grid-kind grid-detail coat coat navi_b""navi_a score score score score score navi_b";
     }
 
     .grid-scorelist {
@@ -439,9 +481,10 @@
     }
 
     .change-area {
-        width: 100%;
+        /* width: 100%;
         height: 100%;
-        grid-area: change-area;
+        grid-area: change-area; */
+        float: left;
     }
 
     /* .a1 {
@@ -600,7 +643,8 @@
         color: #ddd;
         border: 2px solid #ddd;
         text-align: center;
-        display: inline-block;
+        /* display: inline-block; */
+        display: inline-grid;
         /* padding: 5px 0px; */
         /* width: 150px;
         height: 80px; */
@@ -686,7 +730,7 @@
 
     .member {
         width: 50%;
-        height: 13%;
+        /* height: 13%; */
         float: left;
     }
 
@@ -751,7 +795,7 @@
         border-radius: 2px;
         box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
         transition: all .3s ease;
-        font-family: Helvetica, Arial, sans-serif;
+        /* font-family: Helvetica, Arial, sans-serif; */
     }
 
     .modal-header h3 {
@@ -780,6 +824,10 @@
         -webkit-transform: scale(1.1);
         transform: scale(1.1);
     }
+
+
+
+
 
     /* .btn-flat-bottom-border {
         float: right;
@@ -852,6 +900,12 @@
         border: 2px solid #aaa;
         cursor: pointer;
     }
+
+    /* .member label player,
+    player_f {
+        width: 100%;
+        height: 100%;
+    } */
 </style>
 
 </html>

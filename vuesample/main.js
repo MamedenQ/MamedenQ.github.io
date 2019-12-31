@@ -84,6 +84,9 @@ var app = new Vue({
         popup() {
             console.log('popup!');
         },
+        routeScoreList() {
+            this.$router.push({ path: '/scorelist' });
+        },
         routeAnalyzeList(items) {
             this.analyzeData = items;
             this.$router.push({ path: '/analyzelist' });
@@ -125,7 +128,7 @@ var app = new Vue({
         }
     },
     mounted() {
-        // router.push({ path: '/scoreinput' });
+        router.push({ path: '/home' });
     },
     data: function () {
         return {

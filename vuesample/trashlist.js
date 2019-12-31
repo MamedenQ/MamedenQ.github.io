@@ -15,36 +15,28 @@ const template = `
         </div>
     </div>
     <div class="scorelist">
-        <button v-on:click="linkAnalyzeList">分析</button>
         <table class="analyze">
             <thead class="analyze_head">
                 <tr>
-                    <th>chk</th>
                     <th>#</th>
                     <th>タイトル</th>
                     <th>日付</th>
                     <th>得点</th>
-                    <!--
-                    <th>スコアリンク</th>
-                    -->
-                    <th>ゴミ箱</th>
+                    <th>復元</th>
+                    <th>完全削除</th>
                 </tr>
             </thead>
             <tbody class="analyze_body">
-                <tr v-for="item, idx of scoreList">
-                    <td><input type="checkbox" v-model="modelTarget" :value="item" v-on:change="onCheckChange()" /></td>
+                <tr v-for="item, idx of trashList">
                     <td>{{ idx + 1 }}</td>
-                    <td><a href="#" v-on:click="linkScoreInput(item.id)">{{ item.title }}</a></td>
+                    <td>{{ item.title }}</td>
                     <td>{{ item.date }}</td>
                     <td>{{ item.teamAPoint + " － " + item.teamBPoint }}</td>
-                    <!--
-                    <td><a href="#" v-on:click="linkScoreInput(item.id)">リンク</a></td>
-                    -->
-                    <td><button v-on:click="onClickTrash(item)">ゴミ箱</button></td>
+                    <td><button v-on:click="onClickRestore(item)">復元</button></td>
+                    <td><button v-on:click="onClickDelete(item)">完全削除</button></td>
                 </tr>
             </tbody>
         </table>
-        <button v-on:click="linkAnalyzeList">分析</button>
     </div>
     <confirm v-if="showModalConfirm" v-on:dialogResult="result" :title="title" :msg="msg" :positive="positive" :negative="negative"></confirm>
 </div>
@@ -62,10 +54,10 @@ export default {
     },
     data() {
         return {
-            scoreList: [],
-            modelTarget: [],
+            trashList: [],
             showModalConfirm: false,
             callbackConfirm: null,
+            restoreItem: {},
             deleteItem: {},
         };
     },
@@ -84,10 +76,10 @@ export default {
                 return;
             }
             var filterData = scoreList.filter(function (data, index) {
-                if (!data.isTrash) return true;
+                if (data.isTrash) return true;
             });
 
-            this.scoreList = filterData;
+            this.trashList = filterData;
         },
         onCheckChange() {
             console.log(this.modelTarget);
@@ -95,16 +87,16 @@ export default {
         linkAnalyzeList() {
             this.$emit("route-analyze-list", this.modelTarget);
         },
-        linkScoreInput(scoreId) {
-            this.$emit("route-score-input", scoreId);
-        },
-        onClickTrash(item) {
-            this.deleteItem = item;
-            this.title = "削除確認";
-            this.msg = "削除しますか？";
+        // linkScoreInput(scoreId) {
+        //     this.$emit("route-score-input", scoreId);
+        // },
+        onClickRestore(item) {
+            this.restoreItem = item;
+            this.title = "復元確認";
+            this.msg = "復元しますか？";
             this.positive = "OK";
             this.negative = "Cancel";
-            this.callbackConfirm = this.callback;
+            this.callbackConfirm = this.callbackRestore;
 
             this.showModalConfirm = true;
         },
@@ -112,19 +104,42 @@ export default {
             this.callbackConfirm(flg);
             this.showModalConfirm = false;
         },
-        callback(result) {
+        callbackRestore(result) {
+            if (!result) {
+                return;
+            }
+
+            var item = this.restoreItem;
+            var scoreData = JSON.parse(localStorage.getItem("score"));
+            var filterData = scoreData.filter(function (data, index) {
+                if (data.id == item.id) return true;
+            });
+            filterData[0].isTrash = false;
+            localStorage.setItem("score", JSON.stringify(scoreData));
+
+            this.refresh();
+        },
+        onClickDelete(item) {
+            this.deleteItem = item;
+            this.title = "削除確認";
+            this.msg = "削除しますか？このスコアは完全に削除されます。";
+            this.positive = "OK";
+            this.negative = "Cancel";
+            this.callbackConfirm = this.callbackDelete;
+
+            this.showModalConfirm = true;
+        },
+        callbackDelete(result) {
             if (!result) {
                 return;
             }
 
             var item = this.deleteItem;
-            var scoreList = JSON.parse(localStorage.getItem("score"));
-            var filterData = scoreList.filter(function (data, index) {
-                if (data.id == item.id) return true;
+            var scoreData = JSON.parse(localStorage.getItem("score"));
+            var filterData = scoreData.filter(function (data, index) {
+                if (data.id != item.id) return true;
             });
-            filterData[0].isTrash = true;
-
-            localStorage.setItem("score", JSON.stringify(scoreList));
+            localStorage.setItem("score", JSON.stringify(filterData));
 
             this.refresh();
         },

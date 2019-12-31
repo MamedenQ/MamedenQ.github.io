@@ -1,10 +1,18 @@
 const template = `
-    <div class="grid-scoreinput" v-bind:style="styleChangeArea">
+    <div class="grid-scoreinput">
         <div class="grid-action">
             <div v-bind:class="item.classGrid" v-for="item of itemAction">
                 <input type="radio" v-bind:id="item.id" name="action" v-bind:value="item.name" v-on:change="onChangeAction" v-model="modelAction">
                 <label v-bind:for="item.id">
-                    {{item.label}}
+                    <!--
+                    {{item.label}}<br>
+                    -->
+                    <serve width="100%" height="100%" v-if="item.id == 'action_serve'"></serve>
+                    <spike width="100%" height="100%" v-else-if="item.id == 'action_spike'"></spike>
+                    <block width="100%" height="100%" v-else-if="item.id == 'action_block'"></block>
+                    <receive width="100%" height="100%" v-else-if="item.id == 'action_receive'"></receive>
+                    <faul width="100%" height="100%" v-else-if="item.id == 'action_faul'"></faul>
+                    <other_miss width="100%" height="100%" v-else-if="item.id == 'action_other_miss'"></other_miss>
                 </label>
             </div>
         </div>
@@ -27,118 +35,85 @@ const template = `
             </div>
         </div>
         
-        <div class="navi_b grid_style">
-            <div class="function1">
+        <ul class="coat"> 
+            <li style="text-align: center;" v-bind:class="item.classGrid" v-on:click="addScore(item)" v-for="item of itemTeamA" :key="item.key" class="grid_style_team">
+                <span v-show="!item.isEmpty">{{item.no + ":" + item.name}}</span><br>
+                <player v-if="item.sex == 0" v-show="!item.isEmpty"></player>
+                <player_f v-else v-show="!item.isEmpty"></player_f>
+            </li>
+            <li style="text-align: center;" v-bind:class="item.classGrid" v-on:click="addScore(item)" v-for="item of itemTeamB" :key="item.key" class="grid_style_team">
+                <span v-show="!item.isEmpty">{{item.no + ":" + item.name}}</span><br>
+                <player v-if="item.sex == 0" v-show="!item.isEmpty"></player>
+                <player_f v-else v-show="!item.isEmpty"></player_f>
+            </li>
+        </ul>
+<!--
+        <ul class="change-area" v-show="showChangeArea" style="overflow-x:hidden; overflow-y:scroll;">
+            <li class="member" v-for="member of members" :key="member.no">
+                <input type="radio" v-bind:id="'mem_' + member.no" name="member" v-on:change="onChangeMember(member)" v-bind:value="member.no" v-model="modelMember">
+                <label v-bind:for="'mem_' + member.no">
+                    {{member.no}}<br>{{member.name}}<br>
+                    <player v-if="member.sex == 0"></player>
+                    <player_f v-else></player_f>
+                </label>
+            </li>
+        </ul>
+-->
+        <div class="score grid_style" style="overflow-x:scroll; overflow-y:hidden;">
+            <svg v-bind:width="score.length * 90 + 10" style="height: 100%;max-width:none;max-height:none;">
+                <scoreObj v-on:click-score="onClickScore(item)" v-for="(item, idx) of score" :key="item.index" :item="item" :idx="idx"></scoreObj>
+            </svg>
+        </div>
+
+        <div class="navi_a">
+            <span>
+                <span>戻る</span>
+                <svg v-on:click="closeScore(true)" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H6M12 5l-7 7 7 7"/></svg>
+                <br>
+                <br>
+                <span>ホーム</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 9v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9"/>
+                    <path d="M9 22V12h6v10M2 10.6L12 2l10 8.6"/>
+                </svg>
+                <br>
+                <br>
+                <span>設定</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+            </span>
+        </div>
+
+        <div class="navi_b">
+            <span>
                 <svg v-on:click="showModalSave = true" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
                     <polyline points="17 21 17 13 7 13 7 21"></polyline>
                     <polyline points="7 3 7 8 15 8"></polyline>
                 </svg>
-            </div>
-
-            <div class="function2">
                 <svg v-on:click="load" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
-            </div>
-
-            <div class="function3">
-                <svg v-on:click="rotateA" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38"/></svg>
-            </div>
-            <div class="function4">
-                <svg v-on:click="rotateB" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38"/></svg>
-            </div>
-
-            <div class="function5">
-                <svg v-on:click="changeMember" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-            </div>
-
-            <div class="function6">
+                <span>ローテーション</span>
+                <rotation v-on:rotate-member="rotateA"></rotation>
+                <span>ローテーション</span>
+                <rotation v-on:rotate-member="rotateB"></rotation>
+                <span>交代</span>
+                <member v-on:change-member="changeMember"></member>
                 <svg v-if="undoEnabled" v-bind:disabled="!undoEnabled" v-on:click="undo" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-                    <!--
-                    <path d="M2.5 2v6h6M2.66 15.57a10 10 0 1 0 .57-8.38"/>
-                    -->
                     <path d="M10 16l-6-6 6-6"/>
                     <path d="M20 21v-7a4 4 0 0 0-4-4H5"/>
                 </svg>
                 <svg v-else v-bind:disabled="!undoEnabled" v-on:click="undo" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#cacaca" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-                    <!--
-                    <path d="M2.5 2v6h6M2.66 15.57a10 10 0 1 0 .57-8.38"/>
-                    -->
                     <path d="M10 16l-6-6 6-6"/>
                     <path d="M20 21v-7a4 4 0 0 0-4-4H5"/>
                 </svg>
-            </div>
-
-            <div class="function7">
                 <svg v-if="redoEnabled" v-bind:disabled="!redoEnabled" v-on:click="redo" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-                    <!--
-                    <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38"/>
-                    -->
                     <path d="M14 16l6-6-6-6"/>
                     <path d="M4 21v-7a4 4 0 0 1 4-4h11"/>
                 </svg>
                 <svg v-else v-bind:disabled="!redoEnabled" v-on:click="redo" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#cacaca" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-                    <!--
-                    <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38"/>
-                    -->
                     <path d="M14 16l6-6-6-6"/>
                     <path d="M4 21v-7a4 4 0 0 1 4-4h11"/>
                 </svg>
-            </div>
-        </div>
-
-        <ul class="coat"> 
-            <li v-bind:class="item.classGrid" v-on:click="addScore(item)" v-for="item of itemTeamA" :key="item.key" class="grid_style_team">{{item.no}}<br>{{item.name}}</li>
-            <li v-bind:class="item.classGrid" v-on:click="addScore(item)" v-for="item of itemTeamB" :key="item.key" class="grid_style_team">{{item.no}}<br>{{item.name}}</li>
-            <!--
-            <li v-bind:class="[ { styleHiddenCoatMember: (!showChangeArea && item.isEmpty)}, item.classGrid ]" v-on:click="addScore(item)" v-for="item of itemTeamA" :key="item.key" class="grid_style_team">{{item.no + " : " + item.name}}</li>
-            <li v-bind:class="[ { styleHiddenCoatMember: (!showChangeArea && item.isEmpty)}, item.classGrid ]" v-on:click="addScore(item)" v-for="item of itemTeamB" :key="item.key" class="grid_style_team">{{item.no + " : " + item.name}}</li>
-            -->
-            <!--
-            <svg v-bind:class="item.classGrid" v-on:click="addScore(item)" v-for="item of itemTeamA" :key="item.team + item.no" xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M5.52 19c.64-2.2 1.84-3 3.22-3h6.52c1.38 0 2.58.8 3.22 3"/>
-                <circle cx="12" cy="10" r="3"/>
-                <circle cx="12" cy="12" r="10"/>
-                <text text-anchor="middle" v-bind:x="0" v-bind:y="0" >{{item.no}}</text>
-            </svg>
-            <svg v-bind:class="item.classGrid" v-on:click="addScore(item)" v-for="item of itemTeamB" :key="item.team + item.no" xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M5.52 19c.64-2.2 1.84-3 3.22-3h6.52c1.38 0 2.58.8 3.22 3"/>
-                <circle cx="12" cy="10" r="3"/>
-                <circle cx="12" cy="12" r="10"/>
-            </svg>
-            -->
-        </ul>
-
-        <ul class="change-area" v-show="showChangeArea" style="overflow-x:hidden; overflow-y:scroll;">
-            <li class="member" v-for="member of members" :key="member.no">
-                <input type="radio" v-bind:id="'mem_' + member.no" name="member" v-on:change="onChangeMember(member)" v-bind:value="member.no" v-model="modelMember">
-                <label v-bind:for="'mem_' + member.no">
-                    {{member.no}}<br>{{member.name}}
-                </label>
-            </li>
-        </ul>
-
-        <div class="score grid_style" style="overflow-x:auto; overflow-y:hidden;">
-            <svg v-bind:width="score.length * 90" style="height: 100%; overflow: scroll;">
-                <circle v-bind:fill="scoreColor[item.team]" r="40" v-bind:cx="50 + 90 * idx" cy="50" v-on:click="onClickScore(item)" v-for="(item, idx) of score"></circle>
-                <text text-anchor="middle" v-bind:x="10 + 90 * idx + 40" v-bind:y="35" v-on:click="onClickScore(item)" v-for="(item, idx) of score">{{item.no}}</text>
-                <text text-anchor="middle" v-bind:x="10 + 90 * idx + 40" v-bind:y="55" v-on:click="onClickScore(item)" v-for="(item, idx) of score">{{item.action}}</text>
-                <text text-anchor="middle" v-bind:x="10 + 90 * idx + 40" v-bind:y="75" v-on:click="onClickScore(item)" v-for="(item, idx) of score">{{item.kind}}</text>
-            </svg>
-        </div>
-
-        <div class="navi_a grid_style">
-            <div class="menu1">
-                <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M20 9v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9"/>
-                    <path d="M9 22V12h6v10M2 10.6L12 2l10 8.6"/>
-                </svg>
-            </div>
-            <div class="menu2">
-                <svg v-on:click="closeScore(true)" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H6M12 5l-7 7 7 7"/></svg>
-            </div>
-            <div class="menu7">
-            <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-            </div>
+            </span>
         </div>
 
         <div name="modalSave" v-if="showModalSave">
@@ -154,7 +129,9 @@ const template = `
                             <div class="modal-body">
                                 <slot name="body">
                                     試合名<input type="text" v-model="modelTitle"/><br>
-                                    日付<input type="date" v-model="modelDate" />
+                                    日付<input type="date" v-model="modelDate" /><br>
+                                    得点<input type="number" v-model="modelAPoint" />－
+                                    <input type="number" v-model="modelBPoint" />
                                 </slot>
                             </div>
 
@@ -206,15 +183,40 @@ const template = `
             </transition>
         </div>
         <confirm v-if="showModalConfirm" v-on:dialogResult="result" :title="title" :msg="msg" :positive="positive" :negative="negative"></confirm>
+        <memberChangeComp v-if="showModalMemberChange" v-on:member-change-result="memberChangeResult" :title="title" :msg="msg" :positive="positive" :negative="negative" :itemTeamA="itemTeamA" :itemTeamB="itemTeamB" :members="members"></memberChangeComp>
     </div>
 `;
 
 import confirm from './confirm.js'
+import faul from './faul.js'
+import other_miss from './other_miss.js'
+import block from './block.js'
+import receive from './receive.js'
+import spike from './spike.js'
+import serve from './serve.js'
+import scoreObj from './score_obj.js'
+import member from './member.js'
+import player from './player.js'
+import player_f from './player_f.js'
+import rotation from './rotate.js'
+import memberChangeComp from './MemberChangeComp.js'
 
 export default {
     template,
     components: {
         confirm,
+        faul,
+        other_miss,
+        block,
+        receive,
+        spike,
+        serve,
+        scoreObj,
+        member,
+        player,
+        player_f,
+        rotation,
+        memberChangeComp,
     },
     props: {
         scoreId: String,
@@ -242,21 +244,26 @@ export default {
             modelKind: "",
             modelDetail: "",
             modelTitle: "",
-            modelMember: "",
-            selectedMember: null,
+            // modelMember: "",
+            // selectedMember: null,
             modelDate: "",
+            modelAPoint: 0,
+            modelBPoint: 0,
             showModalSave: false,
             showModalWarn: false,
             showModalConfirm: false,
+            showModalMemberChange: false,
             title: "",
             msg: "",
+            positive: "",
+            negative: "",
             callbackConfirm: "",
             isCancel: false,
             isDirty: false,
             showChangeArea: false,
-            styleChangeArea: {
-                "grid-template-columns": "70px 1fr 1fr 1fr 1fr 1fr 0fr 70px",
-            },
+            // styleChangeArea: {
+            //     "grid-template-columns": "70px 1fr 1fr 1fr 1fr 1fr 0fr 70px",
+            // },
             // styleHiddenCoatMember: {
             //     visibility: "hidden",
             // },
@@ -295,7 +302,8 @@ export default {
                     label: "Faul",
                     name: "faul",
                     id: "action_faul",
-                    classGrid: "action faul"
+                    classGrid: "action faul",
+                    imgsrc: "./pic/faul.png",
                 },
             ],
             itemKind: [
@@ -387,26 +395,26 @@ export default {
                 },
             ],
             itemTeamA: [
-                { key: "a7", team: "a", no: "", name: "", classGrid: "a7", isEmpty: true, },
-                { key: "a8", team: "a", no: "", name: "", classGrid: "a8", isEmpty: true, },
-                { key: "a9", team: "a", no: "", name: "", classGrid: "a9", isEmpty: true, },
-                { key: "a4", team: "a", no: "", name: "", classGrid: "a4", isEmpty: true, },
-                { key: "a5", team: "a", no: "", name: "", classGrid: "a5", isEmpty: true, },
-                { key: "a6", team: "a", no: "", name: "", classGrid: "a6", isEmpty: true, },
-                { key: "a3", team: "a", no: "", name: "", classGrid: "a3", isEmpty: true, },
-                { key: "a2", team: "a", no: "", name: "", classGrid: "a2", isEmpty: true, },
-                { key: "a1", team: "a", no: "", name: "", classGrid: "a1", isEmpty: true, },
+                { key: "a7", team: "a", no: "", name: "", sex: 0, classGrid: "a7", isEmpty: true, },
+                { key: "a8", team: "a", no: "", name: "", sex: 0, classGrid: "a8", isEmpty: true, },
+                { key: "a9", team: "a", no: "", name: "", sex: 0, classGrid: "a9", isEmpty: true, },
+                { key: "a4", team: "a", no: "", name: "", sex: 0, classGrid: "a4", isEmpty: true, },
+                { key: "a5", team: "a", no: "", name: "", sex: 0, classGrid: "a5", isEmpty: true, },
+                { key: "a6", team: "a", no: "", name: "", sex: 0, classGrid: "a6", isEmpty: true, },
+                { key: "a3", team: "a", no: "", name: "", sex: 0, classGrid: "a3", isEmpty: true, },
+                { key: "a2", team: "a", no: "", name: "", sex: 0, classGrid: "a2", isEmpty: true, },
+                { key: "a1", team: "a", no: "", name: "", sex: 0, classGrid: "a1", isEmpty: true, },
             ],
             itemTeamB: [
-                { key: "b1", team: "b", no: "", name: "", classGrid: "b1", isEmpty: true, },
-                { key: "b2", team: "b", no: "", name: "", classGrid: "b2", isEmpty: true, },
-                { key: "b3", team: "b", no: "", name: "", classGrid: "b3", isEmpty: true, },
-                { key: "b6", team: "b", no: "", name: "", classGrid: "b6", isEmpty: true, },
-                { key: "b5", team: "b", no: "", name: "", classGrid: "b5", isEmpty: true, },
-                { key: "b4", team: "b", no: "", name: "", classGrid: "b4", isEmpty: true, },
-                { key: "b9", team: "b", no: "", name: "", classGrid: "b9", isEmpty: true, },
-                { key: "b8", team: "b", no: "", name: "", classGrid: "b8", isEmpty: true, },
-                { key: "b7", team: "b", no: "", name: "", classGrid: "b7", isEmpty: true, },
+                { key: "b1", team: "b", no: "", name: "", sex: 0, classGrid: "b1", isEmpty: true, },
+                { key: "b2", team: "b", no: "", name: "", sex: 0, classGrid: "b2", isEmpty: true, },
+                { key: "b3", team: "b", no: "", name: "", sex: 0, classGrid: "b3", isEmpty: true, },
+                { key: "b6", team: "b", no: "", name: "", sex: 0, classGrid: "b6", isEmpty: true, },
+                { key: "b5", team: "b", no: "", name: "", sex: 0, classGrid: "b5", isEmpty: true, },
+                { key: "b4", team: "b", no: "", name: "", sex: 0, classGrid: "b4", isEmpty: true, },
+                { key: "b9", team: "b", no: "", name: "", sex: 0, classGrid: "b9", isEmpty: true, },
+                { key: "b8", team: "b", no: "", name: "", sex: 0, classGrid: "b8", isEmpty: true, },
+                { key: "b7", team: "b", no: "", name: "", sex: 0, classGrid: "b7", isEmpty: true, },
             ],
             members: [
                 { no: -1, name: "（なし）", },
@@ -441,6 +449,8 @@ export default {
         }
     },
     mounted() {
+        // #1f77b4
+        // console.log("color:" + this.scoreColor(0));
         // this.createDigest("abc");
         var d = new Date();
         var format_str = 'YYYY-MM-DD';
@@ -502,9 +512,11 @@ export default {
                 title: this.modelTitle,
                 date: this.modelDate,
                 score: this.score,
-                teama: this.itemTeamA,
-                teamb: this.itemTeamB,
-                // setcount: [{ a: 0, b: 0 }, { a: 0, b: 0 }, { a: 0, b: 0 }, { a: 0, b: 0 }, { a: 0, b: 0 },],
+                teamA: this.itemTeamA,
+                teamB: this.itemTeamB,
+                teamAPoint: this.modelAPoint,
+                teamBPoint: this.modelBPoint,
+                isTrash: false,
             };
 
             var saveDatas = JSON.parse(localStorage.getItem("score"));
@@ -572,8 +584,10 @@ export default {
             this.score = filterData[0].score;
             this.modelTitle = filterData[0].title;
             this.modelDate = filterData[0].date;
-            this.itemTeamA = filterData[0].teama;
-            this.itemTeamB = filterData[0].teamb;
+            this.itemTeamA = filterData[0].teamA;
+            this.itemTeamB = filterData[0].teamB;
+            this.modelAPoint = filterData[0].teamAPoint;
+            this.modelBPoint = filterData[0].teamBPoint;
             this.updateUndoRedoButton();
             this.toggleKind();
             this.outputlog();
@@ -594,28 +608,31 @@ export default {
             }
         },
         onClickScore(item) {
+            console.log("onClickScore");
             this.deleteScore(item.index);
         },
         addScore(item) {
-            if (this.showChangeArea && this.selectedMember != null) {
-                if (this.selectedMember.no == -1) {
-                    item.no = "";
-                    item.name = "";
-                    item.isEmpty = true;
-                } else {
-                    item.no = this.selectedMember.no;
-                    item.name = this.selectedMember.name;
-                    item.isEmpty = false;
-                }
-            } else {
-                if (item.isEmpty) {
-                    return;
-                }
-                this.pushScore(item.team, item.no, this.modelAction, this.getKind(), this.modelDetail);
-                this.scoreBk = [];
-                this.updateUndoRedoButton();
-                this.outputlog();
+            // if (this.showChangeArea && this.selectedMember != null) {
+            //     if (this.selectedMember.no == -1) {
+            //         item.no = "";
+            //         item.name = "";
+            //         item.sex = 0;
+            //         item.isEmpty = true;
+            //     } else {
+            //         item.no = this.selectedMember.no;
+            //         item.name = this.selectedMember.name;
+            //         item.sex = this.selectedMember.sex;
+            //         item.isEmpty = false;
+            //     }
+            // } else {
+            if (item.isEmpty) {
+                return;
             }
+            this.pushScore(item.team, item.no, item.name, this.modelAction, this.getKind(), this.modelDetail);
+            this.scoreBk = [];
+            this.updateUndoRedoButton();
+            this.outputlog();
+            // }
         },
         deleteScore(deleteIndex) {
             this.title = "削除確認";
@@ -718,9 +735,9 @@ export default {
         onChangeKind() {
             this.changeDetailLabel();
         },
-        onChangeMember(member) {
-            this.selectedMember = member;
-        },
+        // onChangeMember(member) {
+        //     this.selectedMember = member;
+        // },
         changeDetailLabel() {
             this.itemDetail[0].label = "";
             this.itemDetail[1].label = "";
@@ -816,7 +833,7 @@ export default {
             }
             return this.modelKind;
         },
-        pushScore(team, no, action, kind, detail) {
+        pushScore(team, no, name, action, kind, detail) {
             var teamcode;
             if (team == "a") {
                 teamcode = 0;
@@ -828,6 +845,7 @@ export default {
                 index: this.getMaxIndex() + 1,
                 team: teamcode,
                 no: no,
+                name: name,
                 action: action,
                 kind: kind,
                 detail: detail,
@@ -906,21 +924,33 @@ export default {
             this.showModalConfirm = false;
         },
         changeMember() {
-            this.showChangeArea = !this.showChangeArea;
-            if (this.showChangeArea) {
-                this.styleChangeArea = {
-                    "grid-template-columns": "70px 1fr 1fr 0fr 1fr 1fr 1fr 70px",
-                };
-                // this.styleCoatMember.visibility = "visible";
-            } else {
-                this.styleChangeArea = {
-                    "grid-template-columns": "70px 1fr 1fr 1fr 1fr 1fr 0fr 70px",
-                };
-                // this.styleCoatMember.visibility = "hidden";
-            }
+            // this.showChangeArea = !this.showChangeArea;
+            // if (this.showChangeArea) {
+            //     this.styleChangeArea = {
+            //         "grid-template-columns": "70px 1fr 0fr 0fr 1fr 1fr 1fr 70px",
+            //     };
+            //     // this.styleCoatMember.visibility = "visible";
+            // } else {
+            //     this.styleChangeArea = {
+            //         "grid-template-columns": "70px 1fr 1fr 1fr 1fr 1fr 0fr 70px",
+            //     };
+            //     // this.styleCoatMember.visibility = "hidden";
+            // }
 
-            // this.$emit('send-message');
+            // // this.$emit('send-message');
+            this.title = "メンバーチェンジ";
+            // this.msg = "入力内容を破棄してデータを読み込みますか？";
+            this.positive = "OK";
+            this.negative = "Cancel";
+            this.showModalMemberChange = true;
         },
+        memberChangeResult(flg, itemTeamA, itemTeamB) {
+            this.showModalMemberChange = false;
+            if (flg) {
+                this.itemTeamA = itemTeamA;
+                this.itemTeamB = itemTeamB;
+            }
+        }
 
 
 

@@ -64,6 +64,11 @@
     // https://jp.vuejs.org/v2/examples/modal.html
 
     // svg作成方法
+    // gimpでファイルからインポート
+    // Shift+Oで色域を選択にする
+    // パス出力したい箇所を選択（Shiftで複数選択可能）
+    // 右クリックか選択メニューから選択範囲をパスにを選択
+    // 右下のレイヤ選ぶところの３つ目のタブがパス一覧なので、選択して右クリックからエクスポート
 
     // templateに文字列でDOMを入れているが、分けれる方法があるかも
     // https://jp.vuejs.org/v2/examples/modal.html
@@ -74,6 +79,8 @@
 
     // ＝＝＝＝＝レイアウト
     // バレーボールっぽいsvgを作成する
+    // ピクトさんで
+    // http://pictogram2.com/?tag=volleyball
 
     // ＝＝＝＝＝未実装
     // スコア入力画面
@@ -93,13 +100,9 @@
     //         teamAPoint: 20,
     //         teamBPoint: 20,
     //     },
-    // trash: []
     // settings 設定データ
     // master マスタデータ
     // 分析データは都度変換するようにする
-
-    // 分析一覧は部分的に非表示にすると、列の数が変わって、色分けが１列ごとでなくなる
-    // 共通情報も含めてサーブ、スパイクのv-showに含めてしまう方がいい
 
     // メニュー構成
 
@@ -114,6 +117,8 @@
     // データ消去　消去したらゴミ箱に入って、さらに消すと本当に消える
 
     // スコア一覧をソートできるように試合順とかセット番号をつける
+
+    // オープンソースやアイコンなどのサイトを載せる
 
     var color = d3.scale.category20();
     var members = [
@@ -221,7 +226,7 @@
         grid-column-gap: 10px;
         grid-row-gap: 10px;
         grid-template-columns: 70px 1fr 1fr 1fr 1fr 1fr 0px 70px;
-        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 100px;
+        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 150px;
         /* grid-template-areas: "navi_a grid-action grid-kind grid-detail coat coat navi_b""navi_a grid-action grid-kind grid-detail coat coat navi_b""navi_a grid-action grid-kind grid-detail coat coat navi_b""navi_a grid-action grid-kind grid-detail coat coat navi_b""navi_a grid-action grid-kind grid-detail coat coat navi_b""navi_a grid-action grid-kind grid-detail coat coat navi_b""navi_a score score score score score navi_b"; */
         grid-template-areas: "navi_a grid-action grid-kind grid-detail coat coat change-area navi_b""navi_a grid-action grid-kind grid-detail coat coat change-area navi_b""navi_a grid-action grid-kind grid-detail coat coat change-area navi_b""navi_a grid-action grid-kind grid-detail coat coat change-area navi_b""navi_a grid-action grid-kind grid-detail coat coat change-area navi_b""navi_a grid-action grid-kind grid-detail coat coat change-area navi_b""navi_a score score score score score change-area navi_b";
     }
@@ -294,23 +299,39 @@
     }
 
     .navi_a {
-        display: grid;
+        /* display: grid;
         grid-column-gap: 10px;
         grid-row-gap: 10px;
         grid-template-columns: 1fr;
         grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 100px;
-        grid-template-areas: "menu1""menu2""menu3""menu4""menu5""menu6""menu7";
+        grid-template-areas: "menu1""menu2""menu3""menu4""menu5""menu6""menu7"; */
         grid-area: navi_a;
+        text-align: center;
+        line-height: 700px;
     }
 
     .navi_b {
-        display: grid;
+        /* display: grid;
         grid-column-gap: 10px;
         grid-row-gap: 10px;
         grid-template-columns: 1fr;
         grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 100px;
-        grid-template-areas: "function1""function2""function3""function4""function5""function6""function7";
+        grid-template-areas: "function1""function2""function3""function4""function5""function6""function7"; */
         grid-area: navi_b;
+        text-align: center;
+        line-height: 700px;
+    }
+
+    .navi_a span {
+        display: inline-block;
+        vertical-align: middle;
+        line-height: normal;
+    }
+
+    .navi_b span {
+        display: inline-block;
+        vertical-align: middle;
+        line-height: normal;
     }
 
     .spike {
@@ -797,7 +818,7 @@
         background: #005ab3;
     }
 
-    .analyze_body tr td:nth-child(odd) {
+    .analyze_body tr:nth-child(odd) {
         background: #e6f2ff;
     }
 

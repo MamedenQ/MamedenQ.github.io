@@ -65,8 +65,6 @@ export default {
             scoreList: [],
             modelTarget: [],
             showModalConfirm: false,
-            // title: "",
-            // msg: "",
             callbackConfirm: null,
             deleteItem: {},
         };
@@ -82,12 +80,14 @@ export default {
     methods: {
         refresh() {
             var scoreList = JSON.parse(localStorage.getItem("score"));
-            // this.scoreList.sort(function (a, b) {
-            //     if (a.date < b.date) return 1;
-            //     if (a.date > b.date) return -1;
-            //     return 0;
-            // });
-            this.scoreList = scoreList;
+            if (scoreList == null) {
+                return;
+            }
+            var filterData = scoreList.filter(function (data, index) {
+                if (!data.isTrash) return true;
+            });
+
+            this.scoreList = filterData;
         },
         onCheckChange() {
             console.log(this.modelTarget);
@@ -117,20 +117,14 @@ export default {
                 return;
             }
 
-            var trashData = JSON.parse(localStorage.getItem("trash"));
-            if (trashData == null) {
-                trashData = [];
-            }
-
             var item = this.deleteItem;
-            trashData.push(item);
-            localStorage.setItem("trash", JSON.stringify(trashData));
-
-            var filterData = this.scoreList.filter(function (data, index) {
-                if (data.id != item.id) return true;
+            var scoreList = JSON.parse(localStorage.getItem("score"));
+            var filterData = scoreList.filter(function (data, index) {
+                if (data.id == item.id) return true;
             });
+            filterData[0].isTrash = true;
 
-            localStorage.setItem("score", JSON.stringify(filterData));
+            localStorage.setItem("score", JSON.stringify(scoreList));
 
             this.refresh();
         },

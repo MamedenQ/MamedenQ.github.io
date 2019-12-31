@@ -71,8 +71,15 @@ export default {
     },
     methods: {
         refresh() {
-            // this.scoreList = JSON.parse(localStorage.getItem("score"));
-            this.trashList = JSON.parse(localStorage.getItem("trash"));
+            var scoreList = JSON.parse(localStorage.getItem("score"));
+            if (scoreList == null) {
+                return;
+            }
+            var filterData = scoreList.filter(function (data, index) {
+                if (data.isTrash) return true;
+            });
+
+            this.trashList = filterData;
         },
         onCheckChange() {
             console.log(this.modelTarget);
@@ -103,14 +110,11 @@ export default {
             }
 
             var item = this.restoreItem;
-            var trashData = JSON.parse(localStorage.getItem("trash"));
-            var filterData = trashData.filter(function (data, index) {
-                if (data.id != item.id) return true;
-            });
-            localStorage.setItem("trash", JSON.stringify(filterData));
-
             var scoreData = JSON.parse(localStorage.getItem("score"));
-            scoreData.push(this.restoreItem);
+            var filterData = scoreData.filter(function (data, index) {
+                if (data.id == item.id) return true;
+            });
+            filterData[0].isTrash = false;
             localStorage.setItem("score", JSON.stringify(scoreData));
 
             this.refresh();
@@ -131,11 +135,11 @@ export default {
             }
 
             var item = this.deleteItem;
-            var trashData = JSON.parse(localStorage.getItem("trash"));
-            var filterData = trashData.filter(function (data, index) {
+            var scoreData = JSON.parse(localStorage.getItem("score"));
+            var filterData = scoreData.filter(function (data, index) {
                 if (data.id != item.id) return true;
             });
-            localStorage.setItem("trash", JSON.stringify(filterData));
+            localStorage.setItem("score", JSON.stringify(filterData));
 
             this.refresh();
         },

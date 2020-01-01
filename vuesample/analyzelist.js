@@ -334,6 +334,7 @@ export default {
                 if (data.kind == "point") {
                     analyzeData.total.point++;
                 } else if (data.kind == "miss") {
+                    analyzeData.block.miss_detail[data.detail]++;
                     analyzeData.total.miss++;
                 } else {
                     analyzeData.total.rally++;
@@ -343,7 +344,7 @@ export default {
                 analyzeData.block.total++;
             } else if (data.action == "receive") {
                 if (data.kind == "miss") {
-                    analyzeData.serve.miss_detail[data.detail]++;
+                    analyzeData.receive.miss_detail[data.detail]++;
                     analyzeData.total.miss++;
                 } else {
                     analyzeData.total.rally++;
@@ -418,6 +419,10 @@ export default {
                 block: {
                     point: 0,
                     miss: 0,
+                    miss_detail: {
+                        out: 0,
+                        suikomi: 0,
+                    },
                     rally: 0,
                     total: 0,
                     effect: 0,

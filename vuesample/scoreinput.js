@@ -527,26 +527,6 @@ export default {
             this.onChangeKind();
         },
         toggleKind() {
-            // this.itemKind[0].label = "Rally";
-            // this.itemKind[1].label = "Point";
-            // this.itemKind[2].label = "Miss";
-            // this.itemKind[3].label = "A";
-            // this.itemKind[4].label = "B";
-            // this.itemKind[5].label = "C";
-
-            // this.itemKind[0].name = "rally";
-            // this.itemKind[1].name = "point";
-            // this.itemKind[2].name = "miss";
-            // this.itemKind[3].name = "a";
-            // this.itemKind[4].name = "b";
-            // this.itemKind[5].name = "c";
-
-            // this.itemKind[0].isEnabled = false;
-            // this.itemKind[1].isEnabled = false;
-            // this.itemKind[2].isEnabled = false;
-            // this.itemKind[3].isEnabled = false;
-            // this.itemKind[4].isEnabled = false;
-            // this.itemKind[5].isEnabled = false;
             this.itemKind[0].label = "Point";
             this.itemKind[1].label = "Miss";
             this.itemKind[2].label = "A";
@@ -716,6 +696,21 @@ export default {
 
                     this.itemDetail[idx].label = "Tsunagi";
                     this.itemDetail[idx].name = "tsunagi";
+                    this.itemDetail[idx].isEnabled = true;
+                    idx++;
+
+                    this.modelDetail = this.itemDetail[0].name;
+                }
+            } else if (this.modelAction == "block") {
+                if (this.modelKind == "miss") {
+                    var idx = 0;
+                    this.itemDetail[idx].label = "Out";
+                    this.itemDetail[idx].name = "out";
+                    this.itemDetail[idx].isEnabled = true;
+                    idx++;
+
+                    this.itemDetail[idx].label = "Suikomi";
+                    this.itemDetail[idx].name = "suikomi";
                     this.itemDetail[idx].isEnabled = true;
                     idx++;
 

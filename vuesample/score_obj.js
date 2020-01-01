@@ -9,9 +9,10 @@ const template = `
   <faul v-if="item.action == 'faul'" v-bind:x="90 * idx + 20" v-bind:y="10"></faul>
   <other_miss v-else-if="item.action == 'other_miss'" v-bind:x="90 * idx + 20" v-bind:y="10"></other_miss>
 
+  <text text-anchor="middle" v-bind:x="10 + 90 * idx + 40" v-bind:y="75">{{item.action}}</text>
   <text text-anchor="middle" v-bind:x="10 + 90 * idx + 40" v-bind:y="110">{{item.no + ":" + item.name}}</text>
   <text text-anchor="middle" v-bind:x="10 + 90 * idx + 40" v-bind:y="130">{{item.kind}}</text>
-  <text text-anchor="middle" v-bind:x="10 + 90 * idx + 40" v-bind:y="75">{{item.action}}</text>
+  <text text-anchor="middle" v-bind:x="10 + 90 * idx + 40" v-bind:y="150">{{item.detail}}</text>
 </svg>
 `;
 
@@ -47,7 +48,7 @@ export default {
     if (this.item.team == 0) {
       this.originY = 0;
     } else {
-      this.originY = 70;
+      this.originY = 50;
     }
   },
   methods: {

@@ -1,6 +1,12 @@
 const template = `
     <div class="grid-scoreinput">
         <div class="grid-action">
+        
+        <input type="radio" id="action_serve" name="action" value="serve" v-on:change="onChangeAction" v-model="modelAction">
+        <label class="action serve" for="action_serve">
+            <serve width="100%" height="100%" ></serve>
+        </label>
+        <span v-if="false">
             <div v-bind:class="item.classGrid" v-for="item of itemAction">
                 <input type="radio" v-bind:id="item.id" name="action" v-bind:value="item.name" v-on:change="onChangeAction" v-model="modelAction">
                 <label v-bind:for="item.id">
@@ -21,13 +27,14 @@ const template = `
                     -->
                 </label>
             </div>
+        </span>
         </div>
 
         <div class="grid-kind">
             <div v-bind:class="item.classGrid" v-for="item of itemKind">
                 <input type="radio" v-bind:id="item.id" name="kind" v-bind:value="item.name" v-on:change="onChangeKind" v-model="modelKind" v-bind:disabled="!item.isEnabled">
                 <label v-bind:for="item.id">
-                    {{item.label}}
+                    {{item.label}}<br>
                 </label>
             </div>
         </div>

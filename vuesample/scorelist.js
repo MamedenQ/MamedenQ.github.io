@@ -22,7 +22,7 @@ const template = `
         <table class="analyze">
             <thead class="analyze_head">
                 <tr>
-                    <th>chk</th>
+                    <th>chk<input type="checkbox" v-bind:checked="isCheckAll" v-on:click="onClickCheckAll"></th>
                     <th>#</th>
                     <th>タイトル</th>
                     <th>日付</th>
@@ -35,7 +35,10 @@ const template = `
             </thead>
             <tbody class="analyze_body">
                 <tr v-for="item, idx of scoreList">
+                    <!--
                     <td><input type="checkbox" v-model="modelTarget" :value="item" v-on:change="onCheckChange()" /></td>
+                    -->
+                    <td><input type="checkbox" v-model="modelTarget" :value="item.id" v-on:change="onCheckChange()" /></td>
                     <td>{{ idx + 1 }}</td>
                     <td><a href="#" v-on:click="linkScoreInput(item.id)">{{ item.title }}</a></td>
                     <td>{{ item.date }}</td>
@@ -70,6 +73,7 @@ export default {
             showModalConfirm: false,
             callbackConfirm: null,
             deleteItem: {},
+            isCheckAll: false,
         };
     },
     computed: {
@@ -93,10 +97,32 @@ export default {
             this.scoreList = filterData;
         },
         onCheckChange() {
-            console.log(this.modelTarget);
+            // console.log(this.modelTarget);
+            if (this.modelTarget.length == this.scoreList.length) {
+                // console.log("all checked");
+                this.isCheckAll = true;
+            } else {
+                // console.log("piece checked");
+                this.isCheckAll = false;
+            }
         },
         linkAnalyzeList() {
-            this.$emit("route-analyze-list", this.modelTarget);
+            if (this.modelTarget.length == 0) {
+                return;
+            }
+
+            this.$emit("route-analyze-list", this.extractTarget());
+        },
+        extractTarget() {
+            var target = this.scoreList.filter(this.isTarget);
+            if (target.length == 0) {
+                target = [];
+            }
+
+            return target;
+        },
+        isTarget(data, index) {
+            return this.modelTarget.includes(data.id);
         },
         linkScoreInput(scoreId) {
             this.$emit("route-score-input", scoreId);
@@ -134,6 +160,18 @@ export default {
         onHome() {
             this.$emit("route-home");
         },
+        onClickCheckAll() {
+            // console.log("onClickCheckAll: " + this.isCheckAll);
+            if (this.isCheckAll) {
+                this.modelTarget = [];
+            } else {
+                this.scoreList.forEach(data => {
+                    this.modelTarget.push(data.id);
+                });
+            }
+            this.isCheckAll = !this.isCheckAll;
+            // console.log(this.modelTarget);
+        }
     }
 };
 

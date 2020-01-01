@@ -15,6 +15,7 @@ const template = `
     </div>
 
     <div class="analyzelist">
+    <!--
         <span class="filter_action">
             <input type="radio" id="simple" name="disp" value="simple" v-model="modelDisp">
             <label for="simple">simple</label>
@@ -24,6 +25,7 @@ const template = `
             <label for="detail">detail</label>
         </span>
         <br>
+        -->
         <span class="filter_action">
             <input type="radio" id="serve" name="action" value="serve" v-model="modelFilter">
             <label for="serve">serve</label>
@@ -101,7 +103,7 @@ const template = `
                     <th v-show="showReceive" class='reception_cell'>失<br>点<br>率</th>
                 </tr>
             </thead>
-            <draggable element="tbody" class="analyze_body">
+            <tbody class="analyze_body">
                 <tr v-for="item, idx of scoreAnalyze">
                     <td>{{item.no}}</td>
                     <td><a href='#'>{{item.name}}</a></td>
@@ -143,7 +145,7 @@ const template = `
                     <td v-show="showEtc">{{item.other_miss}}</td>
                     <td v-show="showEtc">{{item.faul}}</td>
                 </tr>
-            </draggable>
+            </tbody>
         </table>
     </div>
 </div>

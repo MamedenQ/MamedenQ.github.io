@@ -10,7 +10,7 @@ const template = `
                 <th style="width:25%">削除</th>
             </tr>
         </thead>
-        <draggable element="tbody" class="analyze_body">
+        <tbody class="analyze_body">
             <tr v-for="item, idx of members" :keys="idx">
                 <td><input style="width:100%" type="text" v-model="members[idx].no" /></td>
                 <td><input style="width:100%" type="text" v-model="members[idx].name" /></td>
@@ -22,7 +22,7 @@ const template = `
                 </td>
                 <td><button v-on:click="onClickDelete(item)">削除</button></td>
             </tr>
-        </draggable>
+        </tbody>
     </table>
     <button v-on:click="onClickAdd">追加</button>
     <button v-on:click="onClickSave">保存</button>

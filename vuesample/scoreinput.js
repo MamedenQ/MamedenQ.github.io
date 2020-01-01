@@ -4,15 +4,21 @@ const template = `
             <div v-bind:class="item.classGrid" v-for="item of itemAction">
                 <input type="radio" v-bind:id="item.id" name="action" v-bind:value="item.name" v-on:change="onChangeAction" v-model="modelAction">
                 <label v-bind:for="item.id">
-                    <!--
                     {{item.label}}<br>
-                    -->
+                    <serve v-if="item.id == 'action_serve'"></serve>
+                    <spike v-else-if="item.id == 'action_spike'"></spike>
+                    <block v-else-if="item.id == 'action_block'"></block>
+                    <receive v-else-if="item.id == 'action_receive'"></receive>
+                    <faul v-else-if="item.id == 'action_faul'"></faul>
+                    <other_miss v-else-if="item.id == 'action_other_miss'"></other_miss>
+                    <!--
                     <serve width="100%" height="100%" v-if="item.id == 'action_serve'"></serve>
                     <spike width="100%" height="100%" v-else-if="item.id == 'action_spike'"></spike>
                     <block width="100%" height="100%" v-else-if="item.id == 'action_block'"></block>
                     <receive width="100%" height="100%" v-else-if="item.id == 'action_receive'"></receive>
                     <faul width="100%" height="100%" v-else-if="item.id == 'action_faul'"></faul>
                     <other_miss width="100%" height="100%" v-else-if="item.id == 'action_other_miss'"></other_miss>
+                    -->
                 </label>
             </div>
         </div>
@@ -47,18 +53,7 @@ const template = `
                 <player_f v-else v-show="!item.isEmpty"></player_f>
             </li>
         </ul>
-<!--
-        <ul class="change-area" v-show="showChangeArea" style="overflow-x:hidden; overflow-y:scroll;">
-            <li class="member" v-for="member of members" :key="member.no">
-                <input type="radio" v-bind:id="'mem_' + member.no" name="member" v-on:change="onChangeMember(member)" v-bind:value="member.no" v-model="modelMember">
-                <label v-bind:for="'mem_' + member.no">
-                    {{member.no}}<br>{{member.name}}<br>
-                    <player v-if="member.sex == 0"></player>
-                    <player_f v-else></player_f>
-                </label>
-            </li>
-        </ul>
--->
+
         <div class="score grid_style" style="overflow-x:scroll; overflow-y:hidden;">
             <svg v-bind:width="score.length * 90 + 10" style="height: 100%;max-width:none;max-height:none;">
                 <scoreObj v-on:click-score="onClickScore(item)" v-for="(item, idx) of score" :key="item.index" :item="item" :idx="idx"></scoreObj>
@@ -67,19 +62,23 @@ const template = `
 
         <div class="navi_a">
             <span>
+                <div v-if="!isNewScore">
                 <span>戻る</span>
                 <svg v-on:click="closeScore(true)" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H6M12 5l-7 7 7 7"/></svg>
                 <br>
                 <br>
+                </div>
                 <span>ホーム</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                <svg v-on:click="onHome" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M20 9v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9"/>
                     <path d="M9 22V12h6v10M2 10.6L12 2l10 8.6"/>
                 </svg>
+                <!--
                 <br>
                 <br>
                 <span>設定</span>
                 <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                -->
             </span>
         </div>
 
@@ -220,6 +219,7 @@ export default {
     },
     props: {
         scoreId: String,
+        isNewScore: Boolean,
     },
     filters: {
         memberDisp(str) {
@@ -244,8 +244,6 @@ export default {
             modelKind: "",
             modelDetail: "",
             modelTitle: "",
-            // modelMember: "",
-            // selectedMember: null,
             modelDate: "",
             modelAPoint: 0,
             modelBPoint: 0,
@@ -261,138 +259,29 @@ export default {
             isCancel: false,
             isDirty: false,
             showChangeArea: false,
-            // styleChangeArea: {
-            //     "grid-template-columns": "70px 1fr 1fr 1fr 1fr 1fr 0fr 70px",
-            // },
-            // styleHiddenCoatMember: {
-            //     visibility: "hidden",
-            // },
             itemAction: [
-                {
-                    label: "Serve",
-                    name: "serve",
-                    id: "action_serve",
-                    classGrid: "action serve"
-                },
-                {
-                    label: "Spike",
-                    name: "spike",
-                    id: "action_spike",
-                    classGrid: "action spike"
-                },
-                {
-                    label: "Block",
-                    name: "block",
-                    id: "action_block",
-                    classGrid: "action block"
-                },
-                {
-                    label: "Receive",
-                    name: "receive",
-                    id: "action_receive",
-                    classGrid: "action receive"
-                },
-                {
-                    label: "Other Miss",
-                    name: "other_miss",
-                    id: "action_other_miss",
-                    classGrid: "action other_miss"
-                },
-                {
-                    label: "Faul",
-                    name: "faul",
-                    id: "action_faul",
-                    classGrid: "action faul",
-                    imgsrc: "./pic/faul.png",
-                },
+                { label: "Serve", name: "serve", id: "action_serve", classGrid: "action serve" },
+                { label: "Spike", name: "spike", id: "action_spike", classGrid: "action spike" },
+                { label: "Block", name: "block", id: "action_block", classGrid: "action block" },
+                { label: "Receive", name: "receive", id: "action_receive", classGrid: "action receive" },
+                { label: "Other Miss", name: "other_miss", id: "action_other_miss", classGrid: "action other_miss" },
+                { label: "Faul", name: "faul", id: "action_faul", classGrid: "action faul" },
             ],
             itemKind: [
-                {
-                    label: "Rally",
-                    name: "rally",
-                    id: "kind_rally",
-                    classGrid: "kind rally kind_rally_label",
-                    isEnabled: true,
-                },
-                {
-                    label: "Point",
-                    name: "point",
-                    id: "kind_point",
-                    classGrid: "kind point kind_point_label",
-                    isEnabled: true,
-                },
-                {
-                    label: "Miss",
-                    name: "miss",
-                    id: "kind_miss",
-                    classGrid: "kind miss kind_miss_label",
-                    isEnabled: true,
-                },
-                {
-                    label: "A",
-                    name: "a",
-                    id: "kind_a",
-                    classGrid: "kind a kind_a_label",
-                    isEnabled: true,
-                },
-                {
-                    label: "B",
-                    name: "b",
-                    id: "kind_b",
-                    classGrid: "kind b kind_b_label",
-                    isEnabled: true,
-                },
-                {
-                    label: "C",
-                    name: "c",
-                    id: "kind_c",
-                    classGrid: "kind c kind_c_label",
-                    isEnabled: true,
-                },
+                { label: "Rally", name: "rally", id: "kind_rally", classGrid: "kind rally kind_rally_label", isEnabled: true, },
+                { label: "Point", name: "point", id: "kind_point", classGrid: "kind point kind_point_label", isEnabled: true, },
+                { label: "Miss", name: "miss", id: "kind_miss", classGrid: "kind miss kind_miss_label", isEnabled: true, },
+                { label: "A", name: "a", id: "kind_a", classGrid: "kind a kind_a_label", isEnabled: true, },
+                { label: "B", name: "b", id: "kind_b", classGrid: "kind b kind_b_label", isEnabled: true, },
+                { label: "C", name: "c", id: "kind_c", classGrid: "kind c kind_c_label", isEnabled: true, },
             ],
             itemDetail: [
-                {
-                    label: "D1",
-                    name: "D1",
-                    id: "detail_1",
-                    classGrid: "detail detail1 detail_1_label",
-                    isEnabled: true,
-                },
-                {
-                    label: "D2",
-                    name: "D2",
-                    id: "detail_2",
-                    classGrid: "detail detail2 detail_2_label",
-                    isEnabled: true,
-                },
-                {
-                    label: "D3",
-                    name: "D3",
-                    id: "detail_3",
-                    classGrid: "detail detail3 detail_3_label",
-                    isEnabled: true,
-                },
-                {
-                    label: "D4",
-                    name: "D4",
-                    id: "detail_4",
-                    classGrid: "detail detail4 detail_4_label",
-                    isEnabled: true,
-                },
-                {
-                    label: "D5",
-                    name: "D5",
-                    id: "detail_5",
-                    classGrid: "detail detail5 detail_5_label",
-                    isEnabled: true,
-                },
-                {
-                    label: "D6",
-                    name: "D6",
-                    id: "detail_6",
-                    classGrid: "detail detail6 detail_6_label",
-                    isEnabled: true,
-                },
+                { label: "D1", name: "D1", id: "detail_1", classGrid: "detail detail1 detail_1_label", isEnabled: true, },
+                { label: "D2", name: "D2", id: "detail_2", classGrid: "detail detail2 detail_2_label", isEnabled: true, },
+                { label: "D3", name: "D3", id: "detail_3", classGrid: "detail detail3 detail_3_label", isEnabled: true, },
+                { label: "D4", name: "D4", id: "detail_4", classGrid: "detail detail4 detail_4_label", isEnabled: true, },
+                { label: "D5", name: "D5", id: "detail_5", classGrid: "detail detail5 detail_5_label", isEnabled: true, },
+                { label: "D6", name: "D6", id: "detail_6", classGrid: "detail detail6 detail_6_label", isEnabled: true, },
             ],
             itemTeamA: [
                 { key: "a7", team: "a", no: "", name: "", sex: 0, classGrid: "a7", isEmpty: true, },
@@ -416,13 +305,10 @@ export default {
                 { key: "b8", team: "b", no: "", name: "", sex: 0, classGrid: "b8", isEmpty: true, },
                 { key: "b7", team: "b", no: "", name: "", sex: 0, classGrid: "b7", isEmpty: true, },
             ],
-            members: members,
+            members: [],
         }
     },
     mounted() {
-        // #1f77b4
-        // console.log("color:" + this.scoreColor(0));
-        // this.createDigest("abc");
         var d = new Date();
         var format_str = 'YYYY-MM-DD';
         format_str = format_str.replace(/YYYY/g, d.getFullYear());
@@ -430,12 +316,16 @@ export default {
         format_str = format_str.replace(/DD/g, d.getDate());
         this.modelDate = format_str;
 
+        this.members = JSON.parse(localStorage.getItem("members"));
+        if (this.members == null) {
+            this.members = [];
+        }
+
         this.modelAction = "serve";
         this.updateUndoRedoButton();
         this.toggleKind();
         this.onChangeKind();
         this.loadMain();
-        // localStorage.removeItem("score");
     },
     // computed: {
     //     modelAction: {
@@ -458,7 +348,7 @@ export default {
             this.scoreBk.push(this.score.pop());
             this.updateUndoRedoButton();
             this.outputlog();
-            // this.$emit('commit1', 'aaa');
+
             this.isDirty = true;
         },
         redo() {
@@ -571,7 +461,7 @@ export default {
                 return;
             }
 
-            this.$router.push({ path: '/scorelist' });
+            this.$emit("route-score-list");
         },
         checkSaved() {
             if (this.isDirty) {
@@ -583,19 +473,6 @@ export default {
             this.deleteScore(item.index);
         },
         addScore(item) {
-            // if (this.showChangeArea && this.selectedMember != null) {
-            //     if (this.selectedMember.no == -1) {
-            //         item.no = "";
-            //         item.name = "";
-            //         item.sex = 0;
-            //         item.isEmpty = true;
-            //     } else {
-            //         item.no = this.selectedMember.no;
-            //         item.name = this.selectedMember.name;
-            //         item.sex = this.selectedMember.sex;
-            //         item.isEmpty = false;
-            //     }
-            // } else {
             if (item.isEmpty) {
                 return;
             }
@@ -603,7 +480,6 @@ export default {
             this.scoreBk = [];
             this.updateUndoRedoButton();
             this.outputlog();
-            // }
         },
         deleteScore(deleteIndex) {
             this.title = "削除確認";
@@ -640,9 +516,6 @@ export default {
             this.onChangeKind();
         },
         toggleKind() {
-            var kindCommonEnabled;
-            var kindReceiveEnabled;
-
             this.itemKind[0].label = "Rally";
             this.itemKind[1].label = "Point";
             this.itemKind[2].label = "Miss";
@@ -657,9 +530,21 @@ export default {
             this.itemKind[4].name = "b";
             this.itemKind[5].name = "c";
 
+            this.itemKind[0].isEnabled = false;
+            this.itemKind[1].isEnabled = false;
+            this.itemKind[2].isEnabled = false;
+            this.itemKind[3].isEnabled = false;
+            this.itemKind[4].isEnabled = false;
+            this.itemKind[5].isEnabled = false;
+
             if (this.modelAction == 'receive') {
-                kindCommonEnabled = true;
-                kindReceiveEnabled = true;
+                this.itemKind[1].label = "";
+                this.itemKind[1].name = "";
+                this.itemKind[0].isEnabled = true;
+                this.itemKind[2].isEnabled = true;
+                this.itemKind[3].isEnabled = true;
+                this.itemKind[4].isEnabled = true;
+                this.itemKind[5].isEnabled = true;
                 this.modelKind = "rally";
                 this.modelDetail = "D1";
             } else if (this.modelAction == 'other_miss' || this.modelAction == 'faul') {
@@ -677,8 +562,6 @@ export default {
                 this.itemKind[4].name = "-";
                 this.itemKind[5].name = "-";
 
-                kindCommonEnabled = false;
-                kindReceiveEnabled = false;
                 this.modelKind = "";
                 this.modelDetail = "";
             } else {
@@ -690,25 +573,17 @@ export default {
                 this.itemKind[4].name = "-";
                 this.itemKind[5].name = "-";
 
-                kindCommonEnabled = true;
-                kindReceiveEnabled = false;
+                this.itemKind[0].isEnabled = true;
+                this.itemKind[1].isEnabled = true;
+                this.itemKind[2].isEnabled = true;
+
                 this.modelKind = "rally";
                 this.modelDetail = "D1";
             }
-
-            this.itemKind[0].isEnabled = kindCommonEnabled;
-            this.itemKind[1].isEnabled = kindCommonEnabled;
-            this.itemKind[2].isEnabled = kindCommonEnabled;
-            this.itemKind[3].isEnabled = kindReceiveEnabled;
-            this.itemKind[4].isEnabled = kindReceiveEnabled;
-            this.itemKind[5].isEnabled = kindReceiveEnabled;
         },
         onChangeKind() {
             this.changeDetailLabel();
         },
-        // onChangeMember(member) {
-        //     this.selectedMember = member;
-        // },
         changeDetailLabel() {
             this.itemDetail[0].label = "";
             this.itemDetail[1].label = "";
@@ -757,10 +632,6 @@ export default {
             } else if (this.modelAction == "spike") {
                 if (this.modelKind == "point") {
                     var idx = 0;
-                    // this.itemDetail[idx].label = "Ace";
-                    // this.itemDetail[idx].name = "ace";
-                    // this.itemDetail[idx].isEnabled = true;
-                    // idx++;
 
                     this.itemDetail[idx].label = "In";
                     this.itemDetail[idx].name = "in";
@@ -791,6 +662,21 @@ export default {
 
                     this.itemDetail[idx].label = "Block";
                     this.itemDetail[idx].name = "block";
+                    this.itemDetail[idx].isEnabled = true;
+                    idx++;
+
+                    this.modelDetail = this.itemDetail[0].name;
+                }
+            } else if (this.modelAction == "spike") {
+                if (this.modelKind == "miss") {
+                    var idx = 0;
+                    this.itemDetail[idx].label = "Out";
+                    this.itemDetail[idx].name = "out";
+                    this.itemDetail[idx].isEnabled = true;
+                    idx++;
+
+                    this.itemDetail[idx].label = "Judge";
+                    this.itemDetail[idx].name = "judge";
                     this.itemDetail[idx].isEnabled = true;
                     idx++;
 
@@ -890,27 +776,11 @@ export default {
             team[0].name = tempName;
         },
         result(flg) {
-            // console.log("dlg:" + flg);
             this.callbackConfirm(flg);
             this.showModalConfirm = false;
         },
         changeMember() {
-            // this.showChangeArea = !this.showChangeArea;
-            // if (this.showChangeArea) {
-            //     this.styleChangeArea = {
-            //         "grid-template-columns": "70px 1fr 0fr 0fr 1fr 1fr 1fr 70px",
-            //     };
-            //     // this.styleCoatMember.visibility = "visible";
-            // } else {
-            //     this.styleChangeArea = {
-            //         "grid-template-columns": "70px 1fr 1fr 1fr 1fr 1fr 0fr 70px",
-            //     };
-            //     // this.styleCoatMember.visibility = "hidden";
-            // }
-
-            // // this.$emit('send-message');
             this.title = "メンバーチェンジ";
-            // this.msg = "入力内容を破棄してデータを読み込みますか？";
             this.positive = "OK";
             this.negative = "Cancel";
             this.showModalMemberChange = true;
@@ -921,20 +791,9 @@ export default {
                 this.itemTeamA = itemTeamA;
                 this.itemTeamB = itemTeamB;
             }
-        }
-
-
-
-
-
-        // ドラッグドロップ
-        // https://www.kabanoki.net/1712/#i-4
-
-        // svg関連まとめサイト
-        // https://www.webcreatorbox.com/webinfo/svg-icons-patterns-illustration
-
-        // https://iconsvg.xyz/
-
-        // https://ikonate.com/#content
+        },
+        onHome() {
+            this.$emit("route-home");
+        },
     },
 }

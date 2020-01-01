@@ -2,7 +2,7 @@ import home from "./home.js";
 import scoreinput from "./scoreinput.js";
 import analyzelist from "./analyzelist.js";
 import scorelist from "./scorelist.js";
-import trashlist from "./trashlist.js";
+import settings from "./settings.js";
 
 export default new VueRouter({
     mode: 'history',
@@ -17,8 +17,8 @@ export default new VueRouter({
             component: scoreinput,
         },
         {
-            path: '/trashlist',
-            component: trashlist,
+            path: '/settings',
+            component: settings,
         },
         {
             path: '/analyzelist',

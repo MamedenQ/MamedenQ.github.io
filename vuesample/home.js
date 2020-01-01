@@ -9,8 +9,11 @@ const template = `
     <div class="btnlist" v-on:click="onClickScoreList">
         <analyzeicon class="grid_style"></analyzeicon>
     </div>
-    <div class="btnsettings" v-on:click="">
+    <div class="btnsettings" v-on:click="onClickSettings">
         <settingsIcon class="grid_style"></settingsIcon>
+    </div>
+    <div class="empty_area">
+        ここにアプリ名入れる
     </div>
 </div>
 `;
@@ -32,6 +35,9 @@ export default {
         },
         onClickScoreList() {
             this.$emit("route-score-list");
+        },
+        onClickSettings() {
+            this.$emit("route-settings");
         },
     },
 };

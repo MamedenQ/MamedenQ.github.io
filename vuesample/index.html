@@ -7,11 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css">
     <title>Vue Sample</title>
-    <!-- <style type="text/css">
+    <style type="text/css">
         [v-cloak] {
             display: none;
         }
-    </style> -->
+    </style>
 </head>
 
 <div id="app" v-cloak>
@@ -24,9 +24,10 @@
         </div>
     -->
         <div class="contents">
-            <router-view v-on:route-score-input-new="routeScoreInputNew" v-on:route-score-input="routeScoreInput"
-                v-on:route-analyze-list="routeAnalyzeList" v-on:route-score-list="routeScoreList"
-                v-bind:score-id="scoreId" v-bind:analyze-data="analyzeData">
+            <router-view v-on:route-home="routeHome" v-on:route-score-input-new="routeScoreInputNew"
+                v-on:route-score-input="routeScoreInput" v-on:route-analyze-list="routeAnalyzeList"
+                v-on:route-score-list="routeScoreList" v-on:route-settings="routeSettings"
+                v-bind:is-new-score="isNewScore" v-bind:score-id="scoreId" v-bind:analyze-data="analyzeData">
             </router-view>
         </div>
     </div>
@@ -40,14 +41,6 @@
 <script src="main.js" type="module"></script>
 
 <script type="text/javascript">
-    // ホームのボタン
-    // スコア
-    // マスタメンテ
-
-    // 設定内容
-    // 詳細選択有無設定
-    // 色設定
-
     // ＝＝＝＝＝調査項目
     // 画面間データ連携調査
     // https://commis.hatenablog.com/entry/2017/11/21/180556
@@ -78,71 +71,20 @@
     // http://pictogram2.com/?tag=volleyball
 
     // ＝＝＝＝＝未実装
-    // スコア入力画面
     // 詳細コードが不要な時にもD1とか入ってる
-    // レシーブのミスにアウトとジャッジミス
     // お見合いをどうやってカウントするか？
 
-    // score: [
-    //     {
-    //         id: 20191211_001,
-    //         title: "",
-    //         date: "",
-    //         score: [],
-    //         teamA: [],
-    //         teamB: [],
-    //         teamAPoint: 20,
-    //         teamBPoint: 20,
-    //     },
-    // settings 設定データ
-    // master マスタデータ
+    // 各画面のメニューは下にする？
 
     // メニュー構成
 
     // 分析方法は試合複数選択や日付で絞り込み
 
-    // 閲覧・分析画面
-    // マスタメンテ画面
-
-    // カラーセットを用意する
-
     // スコア一覧をソートできるように試合順とかセット番号をつける
 
     // オープンソースやアイコンなどのサイトを載せる
 
-    // バックアップ用のJSON出力機能
-
     var color = d3.scale.category20();
-    var members = [
-        { no: -1, name: "（なし）", sex: 0, },
-        { no: 1, name: "しんや", sex: 0, },
-        { no: 2, name: "ふじわら", sex: 0, },
-        { no: 3, name: "いけだ", sex: 0, },
-        { no: 4, name: "ながおか", sex: 0, },
-        { no: 5, name: "なごや", sex: 0, },
-        { no: 6, name: "のせ", sex: 0, },
-        { no: 7, name: "みさ", sex: 1, },
-        { no: 8, name: "よしはら", sex: 0, },
-        { no: 9, name: "はづき", sex: 1, },
-        { no: 10, name: "ほし", sex: 0, },
-        { no: 11, name: "わだ", sex: 0, },
-        { no: 100, name: "あまちゃん", sex: 1, },
-        { no: 101, name: "ふゆこ", sex: 1, },
-        { no: 102, name: "こまつ", sex: 0, },
-        { no: 103, name: "ひーちゃん", sex: 1, },
-        { no: 104, name: "まんべ", sex: 0, },
-        { no: 105, name: "まりこ", sex: 1, },
-        { no: 106, name: "かわ", sex: 1, },
-        { no: 107, name: "ぶん", sex: 0, },
-        { no: 108, name: "あっきーな", sex: 1, },
-        { no: 109, name: "みずか", sex: 1, },
-        { no: 110, name: "てら", sex: 1, },
-        { no: 111, name: "きく", sex: 0, },
-        { no: 112, name: "たける", sex: 0, },
-        { no: 113, name: "やまぴ", sex: 0, },
-        { no: 114, name: "のん", sex: 1, },
-        { no: 115, name: "せき", sex: 0, },
-    ];
 </script>
 <style>
     /* https://grid.layoutit.com/?id=cFy6gyh */
@@ -159,6 +101,7 @@
         height: 100%;
         margin: 0;
         font-family: 'Rounded Mplus 1c';
+        background-color: #f8f5f2;
     }
 
     ul {
@@ -209,8 +152,8 @@
 
     .contents {
         grid-area: contents;
-        max-height: 100%;
-        max-width: 100%;
+        /* max-height: 100%;
+        max-width: 100%; */
     }
 
     /* .footer {
@@ -280,7 +223,6 @@
         grid-row-gap: 10px;
         grid-template-columns: 70px 1fr;
         grid-template-rows: 1fr;
-        /* grid-template-areas: "navi_a grid-action grid-kind grid-detail coat coat navi_b""navi_a grid-action grid-kind grid-detail coat coat navi_b""navi_a grid-action grid-kind grid-detail coat coat navi_b""navi_a grid-action grid-kind grid-detail coat coat navi_b""navi_a grid-action grid-kind grid-detail coat coat navi_b""navi_a grid-action grid-kind grid-detail coat coat navi_b""navi_a score score score score score navi_b"; */
         grid-template-areas: "navi_a scorelist";
     }
 
@@ -486,78 +428,6 @@
         grid-area: change-area; */
         float: left;
     }
-
-    /* .a1 {
-        grid-area: a1;
-    }
-
-    .a2 {
-        grid-area: a2;
-    }
-
-    .a3 {
-        grid-area: a3;
-    }
-
-    .a4 {
-        grid-area: a4;
-    }
-
-    .a5 {
-        grid-area: a5;
-    }
-
-    .a6 {
-        grid-area: a6;
-    }
-
-    .a7 {
-        grid-area: a7;
-    }
-
-    .a8 {
-        grid-area: a8;
-    }
-
-    .a9 {
-        grid-area: a9;
-    }
-
-    .b1 {
-        grid-area: b1;
-    }
-
-    .b2 {
-        grid-area: b2;
-    }
-
-    .b3 {
-        grid-area: b3;
-    }
-
-    .b4 {
-        grid-area: b4;
-    }
-
-    .b5 {
-        grid-area: b5;
-    }
-
-    .b6 {
-        grid-area: b6;
-    }
-
-    .b7 {
-        grid-area: b7;
-    }
-
-    .b8 {
-        grid-area: b8;
-    }
-
-    .b9 {
-        grid-area: b9;
-    } */
 
     .score {
         grid-area: score;
@@ -825,30 +695,6 @@
         transform: scale(1.1);
     }
 
-
-
-
-
-    /* .btn-flat-bottom-border {
-        float: right;
-        position: relative;
-        display: inline-block;
-        font-weight: bold;
-        padding: 7px 10px 10px 10px;
-        text-decoration: none;
-        color: #FFF;
-        background: #a180dc;
-        transition: .4s;
-    }
-
-    .btn-flat-bottom-border>span {
-        border-bottom: solid 2px #FFF;
-    }
-
-    .btn-flat-bottom-border:hover {
-        background: #91b5fb;
-    } */
-
     .analyze {
         border-collapse: collapse;
         margin: 0 auto;
@@ -900,12 +746,6 @@
         border: 2px solid #aaa;
         cursor: pointer;
     }
-
-    /* .member label player,
-    player_f {
-        width: 100%;
-        height: 100%;
-    } */
 </style>
 
 </html>

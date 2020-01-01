@@ -1,7 +1,4 @@
-// import page1 from "./page1.js";
-// import page2 from "./page2.js";
 import router from './router.js'
-// import scoreinput from "./scoreinput.js";
 
 const NaviA = {
     template: `
@@ -43,43 +40,9 @@ const NaviA = {
 // routerをマウント
 var app = new Vue({
     el: '#app',
-    // components: {
-    //     page1,
-    // },
     components: {
-        // 'navi_a': NaviA,
-        // 'emt_recv': EmmitReceiver,
-        // 'input_score': scoreinput,
     },
-    // template: `
-    // <div class="grid-main">
-    //     <div v-on:commit="handler"></div>
-    //     <!-- <button v-on:click="handler">abc</button> -->
-    //     <div class="header grid_style">
-    //         <router-link to="/page1">スコア入力</router-link>
-    //         <router-link to="/page2">ユーザー一覧ページ</router-link>
-    //     </div>
-    //     <div class="navi_a grid_style">
-    //         <div class="menu1 grid_style">メイン</div>
-    //     </div>
-    //     <div class="contents">
-    //         <router-view>(ここにコンテンツが表示される)</router-view>
-    //     </div>
-    //     <div class="footer grid_style"></div>
-    // </div>
-    // `,
     router: router,
-    // methods: {
-    //     handler() {
-    //         alert('abc');
-    //     },
-    // }
-    // methods: {
-    //     handler: function (msg) {
-    //         console.log(msg);
-    //         alert(msg);
-    //     },
-    // },
     methods: {
         popup() {
             console.log('popup!');
@@ -93,10 +56,18 @@ var app = new Vue({
         },
         routeScoreInput(scoreId) {
             this.scoreId = scoreId;
+            this.isNewScore = false;
             this.$router.push({ path: '/scoreinput' });
         },
         routeScoreInputNew() {
+            this.isNewScore = true;
             this.createDigest(this.digestCallback);
+        },
+        routeHome() {
+            this.$router.push({ path: '/home' });
+        },
+        routeSettings() {
+            this.$router.push({ path: '/settings' });
         },
         digestCallback(hex) {
             this.scoreId = hex;
@@ -111,10 +82,8 @@ var app = new Vue({
             var str = d.toLocaleString();
 
             crypto.subtle.digest("SHA-256", new TextEncoder().encode(str)).then(x => {
-                // console.log(`"${str}" => ${"SHA-256"} (ArrayBuffer):`, x); // ArrayBuffer
                 const hex = this.hexString(x); // convert to hex string.
                 callback(hex);
-                // console.log(`"${str}" => ${"SHA-256"} (Hex):`, hex);
             });
         },
         hexString(buffer) {
@@ -132,17 +101,10 @@ var app = new Vue({
     },
     data: function () {
         return {
-            // scoreId: "20191225_001",
+            isNewScore: true,
             scoreId: "",
             analyzeData: [],
         }
     }
 }).$mount('#app');
 
-// app.component('score_input_event', {
-//     template: `
-//     <button v-on:click="$emit('welcome')">
-//       Click me to be welcomed
-//     </button>
-//   `
-// })

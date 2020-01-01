@@ -26,7 +26,7 @@ const template = `
                                     <li class="member" v-for="member of members" :key="member.no">
                                         <input type="radio" v-bind:id="'mem_' + member.no" name="member" v-on:change="onChangeMember(member)" v-bind:value="member.no">
                                         <label v-bind:for="'mem_' + member.no">
-                                            {{member.no}}<br>{{member.name}}<br>
+                                            <span v-if="member.no != -1">{{member.no}}</span><br>{{member.name}}<br>
                                             <player v-if="member.sex == 0"></player>
                                             <player_f v-else></player_f>
                                         </label>

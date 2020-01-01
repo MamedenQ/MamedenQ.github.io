@@ -1,19 +1,19 @@
 const template = `
 <div class="grid-analyzelist">
-    <div class="navi_a grid_style">
-        <div class="menu1">
-            <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+    <div class="navi_a">
+        <span>
+            <span>戻る</span>
+            <svg v-on:click="backScoreList" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H6M12 5l-7 7 7 7"/></svg>
+            <br>
+            <br>
+            <span>ホーム</span>
+            <svg v-on:click="onHome" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M20 9v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9"/>
                 <path d="M9 22V12h6v10M2 10.6L12 2l10 8.6"/>
             </svg>
-        </div>
-        <div class="menu2">
-            <svg v-on:click="backScoreList()" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H6M12 5l-7 7 7 7"/></svg>
-        </div>
-        <div class="menu7">
-        <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-        </div>
+        </span>
     </div>
+
     <div class="analyzelist">
         <span class="filter_action">
             <input type="radio" id="simple" name="disp" value="simple" v-model="modelDisp">
@@ -55,6 +55,7 @@ const template = `
                     <th colspan="5" class='block_cell' v-show="showBlock">ブロック</th>
                     <th colspan="9" class='reception_cell' v-show="showReceive">レセプション</th>
                     <th rowspan="2" v-show="showEtc">そ<br>の<br>他<br>ミ<br>ス</th>
+                    <th rowspan="2" v-show="showEtc">フ<br>ァ<br>ウ<br>ル</th>
                 </tr>
                 <tr>
                     <th>#</th>
@@ -140,6 +141,7 @@ const template = `
                     <td v-show="showReceive">{{item.receive.c_rate | filterPercent}}</td>
                     <td v-show="showReceive">{{item.receive.miss_rate | filterPercent}}</td>
                     <td v-show="showEtc">{{item.other_miss}}</td>
+                    <td v-show="showEtc">{{item.faul}}</td>
                 </tr>
             </draggable>
         </table>
@@ -154,41 +156,10 @@ export default {
     },
     data() {
         return {
-            // scoreColor: color,
             scoreAnalyze: [],
             modelFilter: "serve",
             modelDisp: "simple",
-
-            members: [
-                { no: -1, name: "（なし）", },
-                { no: 1, name: "しんや", },
-                { no: 2, name: "ふじわら", },
-                { no: 3, name: "いけだ", },
-                { no: 4, name: "ながおか", },
-                { no: 5, name: "なごや", },
-                { no: 6, name: "のせ", },
-                { no: 7, name: "みさ", },
-                { no: 8, name: "よしはら", },
-                { no: 9, name: "はづき", },
-                { no: 10, name: "ほし", },
-                { no: 11, name: "わだ", },
-                { no: 100, name: "あまちゃん", },
-                { no: 101, name: "ふゆこ", },
-                { no: 102, name: "こまつ", },
-                { no: 103, name: "ひーちゃん", },
-                { no: 104, name: "まんべ", },
-                { no: 105, name: "まりこ", },
-                { no: 106, name: "かわ", },
-                { no: 107, name: "ぶん", },
-                { no: 108, name: "あっきーな", },
-                { no: 109, name: "みずか", },
-                { no: 110, name: "てら", },
-                { no: 111, name: "きく", },
-                { no: 112, name: "たける", },
-                { no: 113, name: "やまぴ", },
-                { no: 114, name: "のん", },
-                { no: 115, name: "せき", },
-            ],
+            members: [],
         }
     },
     filters: {
@@ -197,6 +168,11 @@ export default {
         }
     },
     mounted() {
+        this.members = JSON.parse(localStorage.getItem("members"));
+        if (this.members == null) {
+            this.members = [];
+        }
+
         // console.log("analyzeData[" + this.analyzeData + "]");
         this.formatScoreData();
     },
@@ -219,7 +195,10 @@ export default {
     },
     methods: {
         backScoreList() {
-            this.$router.push({ path: '/scorelist' });
+            this.$emit("route-score-list");
+        },
+        onHome() {
+            this.$emit("route-home");
         },
         formatScoreData() {
             // 性能次第で改善必要
@@ -308,9 +287,7 @@ export default {
                 analyzeData.block[data.kind]++;
                 analyzeData.block.total++;
             } else if (data.action == "receive") {
-                if (data.kind == "point") {
-                    analyzeData.total.point++;
-                } else if (data.kind == "miss") {
+                if (data.kind == "miss") {
                     analyzeData.total.miss++;
                 } else {
                     analyzeData.total.rally++;

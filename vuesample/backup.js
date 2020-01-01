@@ -57,7 +57,7 @@ export default {
                 score: score,
                 members: members,
             };
-            this.output = JSON.stringify(outputJson, null, "    ");
+            this.output = JSON.stringify(outputJson);
         },
         onClickInputDB() {
             this.title = "入力確認";

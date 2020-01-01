@@ -12,7 +12,7 @@ const template = `
     <div class="btnsettings" v-on:click="onClickSettings">
         <settingsIcon class="grid_style"></settingsIcon>
     </div>
-    <div class="empty_area">
+    <div class="empty">
         ここにアプリ名入れる
     </div>
 </div>

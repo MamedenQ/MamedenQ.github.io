@@ -69,6 +69,10 @@ var app = new Vue({
         routeSettings() {
             this.$router.push({ path: '/settings' });
         },
+        routeAnalyzeDetail(analyzePlayerData) {
+            this.analyzePlayerData = analyzePlayerData;
+            this.$router.push({ path: '/AnalyzeDetail' });
+        },
         digestCallback(hex) {
             this.scoreId = hex;
             this.$router.push({ path: '/scoreinput' });
@@ -104,6 +108,7 @@ var app = new Vue({
             isNewScore: true,
             scoreId: "",
             analyzeData: [],
+            analyzePlayerData: {},
         }
     }
 }).$mount('#app');

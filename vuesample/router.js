@@ -3,6 +3,7 @@ import scoreinput from "./scoreinput.js";
 import analyzelist from "./analyzelist.js";
 import scorelist from "./scorelist.js";
 import settings from "./settings.js";
+// import analyzedetail from "./AnalyzeDetail.js";
 
 export default new VueRouter({
     mode: 'history',
@@ -27,6 +28,10 @@ export default new VueRouter({
         {
             path: '/scorelist',
             component: scorelist,
-        }
+        },
+        // {
+        //     path: '/AnalyzeDetail',
+        //     component: analyzedetail,
+        // },
     ]
 });

@@ -27,7 +27,9 @@
             <router-view v-on:route-home="routeHome" v-on:route-score-input-new="routeScoreInputNew"
                 v-on:route-score-input="routeScoreInput" v-on:route-analyze-list="routeAnalyzeList"
                 v-on:route-score-list="routeScoreList" v-on:route-settings="routeSettings"
-                v-bind:is-new-score="isNewScore" v-bind:score-id="scoreId" v-bind:analyze-data="analyzeData">
+                v-on:route-analyze-detail="routeAnalyzeDetail" v-bind:is-new-score="isNewScore"
+                v-bind:score-id="scoreId" v-bind:analyze-data="analyzeData"
+                v-bind:analyze-player-score="analyzePlayerData">
             </router-view>
         </div>
     </div>
@@ -38,6 +40,8 @@
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.8.4/Sortable.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/2.20.0/vuedraggable.umd.min.js"></script>
 <script src="https://d3js.org/d3.v3.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+<script src="https://unpkg.com/vue-chartjs/dist/vue-chartjs.min.js"></script> -->
 <script src="main.js" type="module"></script>
 
 <script type="text/javascript">
@@ -73,8 +77,6 @@
     // http://pictogram2.com/?tag=volleyball
 
     // ＝＝＝＝＝未実装
-    // 簡易モードを追加して、効果率と決定率なしにする　得点と失点で分析
-    // お見合いをどうやってカウントするか？
     // 分析方法は試合複数選択や日付で絞り込み
 
     // 個人の詳細グラフ画面の作成
@@ -98,11 +100,46 @@
 
     // メニュー構成
 
+    // ポジションのデフォルト設定
+
+    // 入力済みのデータの修正や、挿入ができない
+
     // スコア一覧をソートできるように試合順とかセット番号をつける
+
+    // OtherMissが要らなくなる
+    // トスミスで必要？
+    // 相手への返しでの失敗でもOtherMissにしてしまう
+
+    // Faulの詳細が必要なら追加する？
+
+    // 自チーム側のみの分析も可能にする　分析一覧で絞り込む
+    // 簡易版だと敵チームもスコア入れれるから
+    // チームも登録しておく
+    // チームマスタ必要だね
+
+    // 9人制ルールに適用する
+    // 設定で切り替える
+    // サーブセカンド、ローテなし
+
+    // トス品質、２段トス、コース分析、ブロック枚数
+
+    // スコアアイコンに詳細も出す？
 
     // オープンソースやアイコンなどのサイトを載せる
 
+    // 公開用機能
+    // データをJSONで置いておいて、外部からも閲覧可能にする
+    // それか、PDF出力？
+
     // リファクタリング
+    // アイコンの共通化
+    // メニューの共通化
+    // 変数名やファイル名の規則を整える
+    // スタイル名を整える
+
+    // 分析一覧のソート
+
+    // 設定でシンプル＜＞詳細モードの切替
 
     // vuejsの省略記法
     // v-on  @
@@ -193,16 +230,9 @@
         display: grid;
         grid-column-gap: 10px;
         grid-row-gap: 10px;
-        /* grid-template-columns: 1fr 300px 150px 1fr;
-        grid-template-rows: 1fr 150px 150px 1fr;
-        grid-template-areas: "empty_area empty_area empty_area empty_area""empty_area btninput btnlist empty_area""empty_area btninput btnsettings empty_area""empty_area empty_area empty_area empty_area"; */
         grid-template-columns: 1fr 1fr;
         grid-template-rows: 1fr 1fr;
-        grid-template-areas: "btninput btnlist""empty_area btnsettings";
-    }
-
-    .empty_area {
-        grid-area: empty_area;
+        grid-template-areas: "btninput btnlist""empty btnsettings";
     }
 
     .btninput {
@@ -283,7 +313,7 @@
         grid-row-gap: 10px;
         grid-template-columns: 1fr;
         grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
-        grid-template-areas: "rally""point""miss""a""b""c";
+        grid-template-areas: "point""miss""a""b""c""empty";
         grid-area: grid-kind;
     }
 

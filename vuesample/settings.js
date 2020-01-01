@@ -9,7 +9,7 @@ const template = `
             </svg>
         </span>
     </div>
-    <div class="scorelist" style="overflow-x:hidden; overflow-y:scroll;">
+    <div class="scorelist" style="height:100%;overflow-x:hidden; overflow-y:scroll;">
         <trashList></trashList><br><br>
         <masterMaintenance></masterMaintenance><br><br>
         <!--

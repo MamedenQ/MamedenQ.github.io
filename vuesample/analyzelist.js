@@ -14,8 +14,9 @@ const template = `
         </span>
     </div>
 
-    <div class="analyzelist">
-    <!--
+    <div class="analyzelist" style="overflow-x:hidden; overflow-y:scroll;">
+        <!--
+        <input type="checkbox" v-model="isSimple" />
         <span class="filter_action">
             <input type="radio" id="simple" name="disp" value="simple" v-model="modelDisp">
             <label for="simple">simple</label>
@@ -24,8 +25,9 @@ const template = `
             <input type="radio" id="detail" name="disp" value="detail" v-model="modelDisp">
             <label for="detail">detail</label>
         </span>
-        <br>
         -->
+        <!--
+        <br>
         <span class="filter_action">
             <input type="radio" id="serve" name="action" value="serve" v-model="modelFilter">
             <label for="serve">serve</label>
@@ -47,7 +49,68 @@ const template = `
             <label for="etc">etc</label>
         </span>
         <br>
+        -->
         <table class="analyze">
+            <thead class="analyze_head">
+                <tr>
+                    <th colspan="2">基本情報</th>
+                    <th colspan="2">総合</th>
+                    <th colspan="2" class='serve_cell'>サーブ</th>
+                    <th colspan="2" class='spike_cell'>スパイク</th>
+                    <th colspan="2" class='block_cell'>ブロック</th>
+                    <th colspan="4" class='reception_cell'>レセプション</th>
+                    <th rowspan="2">そ<br>の<br>他<br>ミ<br>ス</th>
+                    <th rowspan="2">フ<br>ァ<br>ウ<br>ル</th>
+                </tr>
+                <tr>
+                    <th>#</th>
+                    <th>名前</th>
+                    <th>得<br>点</th>
+                    <th>失<br>点</th>
+
+                    <th class='serve_cell'>得<br>点</th>
+                    <th class='serve_cell'>失<br>点</th>
+
+                    <th class='spike_cell'>得<br>点</th>
+                    <th class='spike_cell'>失<br>点</th>
+
+                    <th class='block_cell'>得<br>点</th>
+                    <th class='block_cell'>失<br>点</th>
+
+                    <th class='reception_cell'>A</th>
+                    <th class='reception_cell'>B</th>
+                    <th class='reception_cell'>C</th>
+                    <th class='reception_cell'>失<br>点</th>
+                </tr>
+            </thead>
+            <tbody class="analyze_body">
+                <tr v-for="item, idx of scoreAnalyze">
+                    <td>{{item.no}}</td>
+                    <td><a href='#' v-on:click="onPlayerDetail(item)">{{item.name}}</a></td>
+                    <td>{{item.total.point}}</td>
+                    <td>{{item.total.miss}}</td>
+
+                    <td>{{item.serve.point}}</td>
+                    <td>{{item.serve.miss}}</td>
+
+                    <td>{{item.spike.point}}</td>
+                    <td>{{item.spike.miss}}</td>
+
+                    <td>{{item.block.point}}</td>
+                    <td>{{item.block.miss}}</td>
+
+                    <td>{{item.receive.a}}</td>
+                    <td>{{item.receive.b}}</td>
+                    <td>{{item.receive.c}}</td>
+                    <td>{{item.receive.miss}}</td>
+
+                    <td>{{item.other_miss}}</td>
+                    <td>{{item.faul}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <!--
+        <table class="analyze" v-else>
             <thead class="analyze_head">
                 <tr>
                     <th colspan="2">基本情報</th>
@@ -68,11 +131,6 @@ const template = `
                     <th>効<br>果<br>率<br>(②－③)／①</th>
                     <th>決<br>定<br>率<br>②／①</th>
                     <th>開<br>き</th>
-                    <!--
-                    <th>勝<br>率</th>
-                    <th>勝<br>セ<br>ッ<br>ト</th>
-                    <th>総<br>セ<br>ッ<br>ト</th>
-                    -->
 
                     <th v-show="showServe" class='serve_cell'>総<br>数<br>①</th>
                     <th v-show="showServe" class='serve_cell'>得<br>点<br>②</th>
@@ -93,9 +151,9 @@ const template = `
                     <th v-show="showBlock" class='block_cell sort' data-sort="block_det">決<br>定<br>率<br>②／①</th>
 
                     <th v-show="showReceive" class='reception_cell'>総<br>数</th>
-                    <th v-show="showReceive" class='reception_cell'>A<br>カ<br>ッ<br>ト</th>
-                    <th v-show="showReceive" class='reception_cell'>B<br>カ<br>ッ<br>ト</th>
-                    <th v-show="showReceive" class='reception_cell'>C<br>カ<br>ッ<br>ト</th>
+                    <th v-show="showReceive" class='reception_cell'>A</th>
+                    <th v-show="showReceive" class='reception_cell'>B</th>
+                    <th v-show="showReceive" class='reception_cell'>C</th>
                     <th v-show="showReceive" class='reception_cell'>失<br>点</th>
                     <th v-show="showReceive" class='reception_cell'>A<br>率</th>
                     <th v-show="showReceive" class='reception_cell'>B<br>率</th>
@@ -106,18 +164,13 @@ const template = `
             <tbody class="analyze_body">
                 <tr v-for="item, idx of scoreAnalyze">
                     <td>{{item.no}}</td>
-                    <td><a href='#'>{{item.name}}</a></td>
+                    <td><a href='#' v-on:click="onPlayerDetail(item)">{{item.name}}</a></td>
                     <td>{{item.total.total}}</td>
                     <td>{{item.total.point}}</td>
                     <td>{{item.total.miss}}</td>
                     <td>{{item.total.effect | filterPercent}}</td>
                     <td>{{item.total.determined | filterPercent}}</td>
                     <td>{{(-1 * (item.total.effect - item.total.determined)) | filterPercent}}</td>
-                    <!--
-                    <td>winper</td>
-                    <td>win</td>
-                    <td>set</td>
-                    -->
                     <td v-show="showServe">{{item.serve.total}}</td>
                     <td v-show="showServe">{{item.serve.point}}</td>
                     <td v-show="showServe">{{item.serve.miss}}</td>
@@ -147,6 +200,7 @@ const template = `
                 </tr>
             </tbody>
         </table>
+        -->
     </div>
 </div>
 `;
@@ -159,8 +213,9 @@ export default {
     data() {
         return {
             scoreAnalyze: [],
-            modelFilter: "serve",
-            modelDisp: "simple",
+            // modelFilter: "serve",
+            // modelDisp: "simple",
+            // isSimple: true,
             members: [],
         }
     },
@@ -175,7 +230,6 @@ export default {
             this.members = [];
         }
 
-        // console.log("analyzeData[" + this.analyzeData + "]");
         this.formatScoreData();
     },
     computed: {
@@ -202,9 +256,10 @@ export default {
         onHome() {
             this.$emit("route-home");
         },
+        onPlayerDetail(item) {
+            this.$emit("route-analyze-detail", item);
+        },
         formatScoreData() {
-            // 性能次第で改善必要
-            // this.scoreAnalyze = [];
             this.analyzeData.forEach(this.totalScore);
             this.scoreAnalyze.forEach(this.calcScore);
         },
@@ -232,8 +287,6 @@ export default {
             receive.miss_rate = receive.miss / receive.total;
         },
         totalScore(score) {
-            // user.hasOwnProperty('name')
-            // scoreAnalyze
             score.score.forEach(this.forEachScore);
         },
         forEachScore(data) {
@@ -290,6 +343,7 @@ export default {
                 analyzeData.block.total++;
             } else if (data.action == "receive") {
                 if (data.kind == "miss") {
+                    analyzeData.serve.miss_detail[data.detail]++;
                     analyzeData.total.miss++;
                 } else {
                     analyzeData.total.rally++;
@@ -373,8 +427,13 @@ export default {
                     a: 0,
                     b: 0,
                     c: 0,
-                    // point: 0,
                     miss: 0,
+                    miss_detail: {
+                        out: 0,
+                        judge: 0,
+                        omiai: 0,
+                        tsunagi: 0,
+                    },
                     total: 0,
                     a_rate: 0,
                     b_rate: 0,
@@ -382,7 +441,6 @@ export default {
                     miss_rate: 0,
                 },
                 other_miss: 0,
-                // miss_judge: 0,
                 faul: 0,
             };
         }

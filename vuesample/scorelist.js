@@ -18,6 +18,8 @@ const template = `
         </span>
     </div>
     <div class="scorelist">
+        <input type="date" v-model="modelDateStart" />〜<input type="date" v-model="modelDateEnd" /><br>
+        <button v-on:click="searchScore">絞り込み</button>
         <button v-on:click="linkAnalyzeList">分析</button>
         <table class="analyze">
             <thead class="analyze_head">
@@ -74,6 +76,10 @@ export default {
             callbackConfirm: null,
             deleteItem: {},
             isCheckAll: false,
+            modelDateStart: "",
+            modelDateEnd: "",
+            dStart: null,
+            dEnd: null,
         };
     },
     computed: {
@@ -83,18 +89,61 @@ export default {
     },
     mounted() {
         this.refresh();
+        this.onClickCheckAll();
     },
     methods: {
+        // getDateStr(d) {
+        //     var twoDigit = function (value) {
+        //         return ('0' + value).slice(-2);
+        //     };
+        //     return [
+        //         d.getFullYear(),
+        //         twoDigit(d.getMonth() + 1),
+        //         twoDigit(d.getDate())
+        //     ].join('-');
+        // },
+        searchScore() {
+            // console.log(this.modelDateStart + "〜" + this.modelDateEnd);
+            this.refresh();
+        },
         refresh() {
             var scoreList = JSON.parse(localStorage.getItem("score"));
             if (scoreList == null) {
                 return;
             }
-            var filterData = scoreList.filter(function (data, index) {
-                if (!data.isTrash) return true;
-            });
+
+            this.setDateStartEnd();
+
+            var filterData = scoreList.filter(this.filterDispData);
 
             this.scoreList = filterData;
+        },
+        setDateStartEnd() {
+            if (this.modelDateStart != "") {
+                this.dStart = new Date(this.modelDateStart);
+            } else {
+                this.dStart = new Date("1990-01-01");
+            }
+            if (this.modelDateEnd != "") {
+                this.dEnd = new Date(this.modelDateEnd);
+            } else {
+                this.dEnd = new Date("2030-01-01");
+            }
+        },
+        filterDispData(data, index) {
+            if (data.isTrash) {
+                // console.log("trash");
+                return false;
+            }
+
+            var d = new Date(data.date);
+            if (d < this.dStart || d > this.dEnd) {
+                // console.log("date out");
+                return false;
+            }
+
+            // console.log("disp data");
+            return true;
         },
         onCheckChange() {
             // console.log(this.modelTarget);

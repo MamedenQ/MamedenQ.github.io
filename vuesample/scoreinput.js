@@ -320,12 +320,14 @@ export default {
         }
     },
     mounted() {
-        var d = new Date();
-        var format_str = 'YYYY-MM-DD';
-        format_str = format_str.replace(/YYYY/g, d.getFullYear());
-        format_str = format_str.replace(/MM/g, d.getMonth() + 1);
-        format_str = format_str.replace(/DD/g, d.getDate());
-        this.modelDate = format_str;
+        var d1 = new Date("2019-01-02");
+        var d2 = new Date("2019-01-01");
+        if (d1 < d2) {
+            console.log("d1 < d2");
+        } else {
+            console.log("d1 >= d2");
+        }
+        this.modelDate = this.getNowDateStr();
 
         this.members = JSON.parse(localStorage.getItem("members"));
         if (this.members == null) {
@@ -349,6 +351,17 @@ export default {
     //     }
     // },
     methods: {
+        getNowDateStr() {
+            var twoDigit = function (value) {
+                return ('0' + value).slice(-2);
+            };
+            var d = new Date();
+            return [
+                d.getFullYear(),
+                twoDigit(d.getMonth() + 1),
+                twoDigit(d.getDate())
+            ].join('-');
+        },
         outputlog() {
             console.log(JSON.stringify(this.score, null, "    "));
         },

@@ -94,9 +94,11 @@ export default {
 
             var score = JSON.parse(localStorage.getItem("score"));
             var members = JSON.parse(localStorage.getItem("members"));
+            var teams = JSON.parse(localStorage.getItem("teams"));
             localStorage.setItem("bk_date", bkDate);
             localStorage.setItem("score_bk", JSON.stringify(score));
             localStorage.setItem("members_bk", JSON.stringify(members));
+            localStorage.setItem("teams_bk", JSON.stringify(teams));
         },
         onClickRestoreDB() {
             this.title = "DBリストア確認";
@@ -112,8 +114,10 @@ export default {
 
             var score = JSON.parse(localStorage.getItem("score_bk"));
             var members = JSON.parse(localStorage.getItem("members_bk"));
+            var teams = JSON.parse(localStorage.getItem("teams_bk"));
             localStorage.setItem("score", JSON.stringify(score));
             localStorage.setItem("members", JSON.stringify(members));
+            localStorage.setItem("teams", JSON.stringify(teams));
         },
         result(flg) {
             this.callbackConfirm(flg);

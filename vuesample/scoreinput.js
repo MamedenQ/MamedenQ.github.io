@@ -11,7 +11,7 @@ const template = `
                 <input type="radio" v-bind:id="item.id" name="action" v-bind:value="item.name" v-on:change="onChangeAction" v-model="modelAction">
                 <label v-bind:for="item.id">
                     <!--
-                    {{item.label}}<br>
+                    {{item.label}}
                     -->
                     <!--
                     <serve v-if="item.id == 'action_serve'"></serve>
@@ -21,12 +21,13 @@ const template = `
                     <faul v-else-if="item.id == 'action_faul'"></faul>
                     <other_miss v-else-if="item.id == 'action_other_miss'"></other_miss>
                     -->
-                    <serve width="100%" height="100%" v-if="item.id == 'action_serve'"></serve>
-                    <spike width="100%" height="100%" v-else-if="item.id == 'action_spike'"></spike>
-                    <block width="100%" height="100%" v-else-if="item.id == 'action_block'"></block>
-                    <receive width="100%" height="100%" v-else-if="item.id == 'action_receive'"></receive>
-                    <faul width="100%" height="100%" v-else-if="item.id == 'action_faul'"></faul>
-                    <other_miss width="100%" height="100%" v-else-if="item.id == 'action_other_miss'"></other_miss>
+                    <serve v-if="item.id == 'action_serve'"></serve>
+                    <spike v-else-if="item.id == 'action_spike'"></spike>
+                    <block v-else-if="item.id == 'action_block'"></block>
+                    <receive v-else-if="item.id == 'action_receive'"></receive>
+                    <faul v-else-if="item.id == 'action_faul'"></faul>
+                    <other_miss v-else-if="item.id == 'action_other_miss'"></other_miss>
+                    <span>{{item.label}}</span>
                 </label>
             </div>
         </div>

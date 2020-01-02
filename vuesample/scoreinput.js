@@ -349,6 +349,7 @@ export default {
         this.styleGrid = {
             "grid-template-rows": itemHeight + "px " + itemHeight + "px " + itemHeight + "px " + itemHeight + "px " + itemHeight + "px " + itemHeight + "px 220px",
         };
+        console.log("score input mounted");
         // grid - template - rows: 1fr 1fr 1fr 1fr 1fr 1fr 220px;
 
     },

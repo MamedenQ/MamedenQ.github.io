@@ -56,7 +56,7 @@ const template = `
                     <th colspan="2">基本情報</th>
                     <th colspan="2">総合</th>
                     <th colspan="2" class='serve_cell'>サーブ</th>
-                    <th colspan="2" class='spike_cell'>スパイク</th>
+                    <th colspan="5" class='spike_cell'>スパイク</th>
                     <th colspan="2" class='block_cell'>ブロック</th>
                     <th colspan="4" class='reception_cell'>レセプション</th>
                     <th rowspan="2">そ<br>の<br>他<br>ミ<br>ス</th>
@@ -71,8 +71,11 @@ const template = `
                     <th class='serve_cell'>得<br>点</th>
                     <th class='serve_cell'>失<br>点</th>
 
-                    <th class='spike_cell'>得<br>点</th>
-                    <th class='spike_cell'>失<br>点</th>
+                    <th class='spike_cell'>総<br>数<br>①</th>
+                    <th class='spike_cell'>得<br>点<br>②</th>
+                    <th class='spike_cell'>失<br>点<br>③</th>
+                    <th class='spike_cell sort' data-sort="spike_effect">効<br>果<br>率<br>(②－③)／①</th>
+                    <th class='spike_cell sort' data-sort="spike_det">決<br>定<br>率<br>②／①</th>
 
                     <th class='block_cell'>得<br>点</th>
                     <th class='block_cell'>失<br>点</th>
@@ -93,8 +96,11 @@ const template = `
                     <td>{{item.serve.point}}</td>
                     <td>{{item.serve.miss}}</td>
 
+                    <td>{{item.spike.total}}</td>
                     <td>{{item.spike.point}}</td>
                     <td>{{item.spike.miss}}</td>
+                    <td>{{item.spike.effect | filterPercent}}</td>
+                    <td>{{item.spike.determined | filterPercent}}</td>
 
                     <td>{{item.block.point}}</td>
                     <td>{{item.block.miss}}</td>
@@ -344,7 +350,7 @@ export default {
                 analyzeData.block.total++;
             } else if (data.action == "receive") {
                 if (data.kind == "miss") {
-                    analyzeData.receive.miss_detail[data.detail]++;
+                    // analyzeData.receive.miss_detail[data.detail]++;
                     analyzeData.total.miss++;
                 } else {
                     analyzeData.total.rally++;
@@ -353,6 +359,7 @@ export default {
                 analyzeData.receive[data.kind]++;
                 analyzeData.receive.total++;
             } else if (data.action == "other_miss") {
+                analyzeData.other_miss_detail[data.detail]++;
                 analyzeData.other_miss++;
                 analyzeData.total.miss++;
                 analyzeData.total.total++;
@@ -433,12 +440,12 @@ export default {
                     b: 0,
                     c: 0,
                     miss: 0,
-                    miss_detail: {
-                        out: 0,
-                        judge: 0,
-                        omiai: 0,
-                        tsunagi: 0,
-                    },
+                    // miss_detail: {
+                    //     out: 0,
+                    //     judge: 0,
+                    //     omiai: 0,
+                    //     tsunagi: 0,
+                    // },
                     total: 0,
                     a_rate: 0,
                     b_rate: 0,
@@ -446,6 +453,10 @@ export default {
                     miss_rate: 0,
                 },
                 other_miss: 0,
+                other_miss_detail: {
+                    judge: 0,
+                    omiai: 0,
+                },
                 faul: 0,
             };
         }

@@ -278,13 +278,13 @@ export default {
                 { label: "Faul", name: "faul", id: "action_faul", classGrid: "action faul" },
             ],
             itemKind: [
-                // { label: "Rally", name: "rally", id: "kind_rally", classGrid: "kind rally kind_rally_label", isEnabled: true, },
+                { label: "Rally", name: "rally", id: "kind_rally", classGrid: "kind rally kind_rally_label", isEnabled: true, },
                 { label: "Point", name: "point", id: "kind_point", classGrid: "kind point", isEnabled: true, },
                 { label: "Miss", name: "miss", id: "kind_miss", classGrid: "kind miss", isEnabled: true, },
                 { label: "A", name: "a", id: "kind_a", classGrid: "kind a", isEnabled: true, },
                 { label: "B", name: "b", id: "kind_b", classGrid: "kind b", isEnabled: true, },
                 { label: "C", name: "c", id: "kind_c", classGrid: "kind c", isEnabled: true, },
-                { label: "", name: "empty", id: "kind_empty", classGrid: "kind empty", isEnabled: false, },
+                // { label: "", name: "empty", id: "kind_empty", classGrid: "kind empty", isEnabled: false, },
             ],
             itemDetail: [
                 { label: "D1", name: "D1", id: "detail_1", classGrid: "detail detail1 detail_1_label", isEnabled: true, },
@@ -540,19 +540,19 @@ export default {
             this.onChangeKind();
         },
         toggleKind() {
-            this.itemKind[0].label = "Point";
-            this.itemKind[1].label = "Miss";
-            this.itemKind[2].label = "A";
-            this.itemKind[3].label = "B";
-            this.itemKind[4].label = "C";
-            this.itemKind[5].label = "";
+            this.itemKind[0].label = "Rally";
+            this.itemKind[1].label = "Point";
+            this.itemKind[2].label = "Miss";
+            this.itemKind[3].label = "A";
+            this.itemKind[4].label = "B";
+            this.itemKind[5].label = "C";
 
-            this.itemKind[0].name = "point";
-            this.itemKind[1].name = "miss";
-            this.itemKind[2].name = "a";
-            this.itemKind[3].name = "b";
-            this.itemKind[4].name = "c";
-            this.itemKind[5].name = "";
+            this.itemKind[0].name = "rally";
+            this.itemKind[1].name = "point";
+            this.itemKind[2].name = "miss";
+            this.itemKind[3].name = "a";
+            this.itemKind[4].name = "b";
+            this.itemKind[5].name = "c";
 
             this.itemKind[0].isEnabled = false;
             this.itemKind[1].isEnabled = false;
@@ -561,16 +561,48 @@ export default {
             this.itemKind[4].isEnabled = false;
             this.itemKind[5].isEnabled = false;
 
-            if (this.modelAction == 'receive') {
-                this.itemKind[0].label = "";
-                this.itemKind[0].name = "";
+            if (this.modelAction == 'spike') {
+                this.itemKind[3].label = "";
+                this.itemKind[4].label = "";
+                this.itemKind[5].label = "";
+
+                this.itemKind[3].name = "-";
+                this.itemKind[4].name = "-";
+                this.itemKind[5].name = "-";
+
+                this.itemKind[0].isEnabled = true;
                 this.itemKind[1].isEnabled = true;
+                this.itemKind[2].isEnabled = true;
+
+                this.modelKind = "rally";
+                this.modelDetail = "D1";
+            } else if (this.modelAction == 'receive') {
+                this.itemKind[0].label = "";
+                this.itemKind[0].name = "-";
+                this.itemKind[1].label = "";
+                this.itemKind[1].name = "-";
                 this.itemKind[2].isEnabled = true;
                 this.itemKind[3].isEnabled = true;
                 this.itemKind[4].isEnabled = true;
+                this.itemKind[5].isEnabled = true;
                 this.modelKind = "miss";
                 this.modelDetail = "D1";
-            } else if (this.modelAction == 'other_miss' || this.modelAction == 'faul') {
+            } else if (this.modelAction == 'other_miss') {
+                this.itemKind[0].label = "";
+                this.itemKind[1].label = "";
+                this.itemKind[3].label = "";
+                this.itemKind[4].label = "";
+                this.itemKind[5].label = "";
+
+                this.itemKind[0].name = "-";
+                this.itemKind[1].name = "-";
+                this.itemKind[3].name = "-";
+                this.itemKind[4].name = "-";
+                this.itemKind[5].name = "-";
+
+                this.modelKind = "miss";
+                this.modelDetail = "D1";
+            } else if (this.modelAction == 'faul') {
                 this.itemKind[0].label = "";
                 this.itemKind[1].label = "";
                 this.itemKind[2].label = "";
@@ -588,16 +620,18 @@ export default {
                 this.modelKind = "";
                 this.modelDetail = "";
             } else {
-                this.itemKind[2].label = "";
+                this.itemKind[0].label = "";
                 this.itemKind[3].label = "";
                 this.itemKind[4].label = "";
+                this.itemKind[5].label = "";
 
-                this.itemKind[2].name = "-";
+                this.itemKind[0].name = "-";
                 this.itemKind[3].name = "-";
                 this.itemKind[4].name = "-";
+                this.itemKind[5].name = "-";
 
-                this.itemKind[0].isEnabled = true;
                 this.itemKind[1].isEnabled = true;
+                this.itemKind[2].isEnabled = true;
 
                 this.modelKind = "point";
                 this.modelDetail = "D1";
@@ -690,30 +724,30 @@ export default {
                     this.modelDetail = this.itemDetail[0].name;
                 }
             } else if (this.modelAction == "receive") {
-                if (this.modelKind == "miss") {
-                    var idx = 0;
-                    this.itemDetail[idx].label = "Out";
-                    this.itemDetail[idx].name = "out";
-                    this.itemDetail[idx].isEnabled = true;
-                    idx++;
+                // if (this.modelKind == "miss") {
+                //     var idx = 0;
+                //     this.itemDetail[idx].label = "Out";
+                //     this.itemDetail[idx].name = "out";
+                //     this.itemDetail[idx].isEnabled = true;
+                //     idx++;
 
-                    this.itemDetail[idx].label = "Judge";
-                    this.itemDetail[idx].name = "judge";
-                    this.itemDetail[idx].isEnabled = true;
-                    idx++;
+                //     this.itemDetail[idx].label = "Judge";
+                //     this.itemDetail[idx].name = "judge";
+                //     this.itemDetail[idx].isEnabled = true;
+                //     idx++;
 
-                    this.itemDetail[idx].label = "Omiai";
-                    this.itemDetail[idx].name = "omiai";
-                    this.itemDetail[idx].isEnabled = true;
-                    idx++;
+                //     this.itemDetail[idx].label = "Omiai";
+                //     this.itemDetail[idx].name = "omiai";
+                //     this.itemDetail[idx].isEnabled = true;
+                //     idx++;
 
-                    this.itemDetail[idx].label = "Tsunagi";
-                    this.itemDetail[idx].name = "tsunagi";
-                    this.itemDetail[idx].isEnabled = true;
-                    idx++;
+                //     this.itemDetail[idx].label = "Tsunagi";
+                //     this.itemDetail[idx].name = "tsunagi";
+                //     this.itemDetail[idx].isEnabled = true;
+                //     idx++;
 
-                    this.modelDetail = this.itemDetail[0].name;
-                }
+                //     this.modelDetail = this.itemDetail[0].name;
+                // }
             } else if (this.modelAction == "block") {
                 if (this.modelKind == "miss") {
                     var idx = 0;
@@ -724,6 +758,21 @@ export default {
 
                     this.itemDetail[idx].label = "Suikomi";
                     this.itemDetail[idx].name = "suikomi";
+                    this.itemDetail[idx].isEnabled = true;
+                    idx++;
+
+                    this.modelDetail = this.itemDetail[0].name;
+                }
+            } else if (this.modelAction == "other_miss") {
+                if (this.modelKind == "miss") {
+                    var idx = 0;
+                    this.itemDetail[idx].label = "Judge";
+                    this.itemDetail[idx].name = "judge";
+                    this.itemDetail[idx].isEnabled = true;
+                    idx++;
+
+                    this.itemDetail[idx].label = "Omiai";
+                    this.itemDetail[idx].name = "omiai";
                     this.itemDetail[idx].isEnabled = true;
                     idx++;
 

@@ -1,5 +1,5 @@
 const template = `
-    <div class="grid-scoreinput">
+    <div class="grid-scoreinput" v-bind:style="styleGrid">
         <div class="grid-action">
         <!--
         <input type="radio" id="action_serve" name="action" value="serve" v-on:change="onChangeAction" v-model="modelAction">
@@ -271,6 +271,9 @@ export default {
             isCancel: false,
             isDirty: false,
             showChangeArea: false,
+            styleGrid: {
+                "grid-template-rows": "1fr 1fr 1fr 1fr 1fr 1fr 220px;",
+            },
             itemAction: [
                 { label: "Serve", name: "serve", id: "action_serve", classGrid: "select-item serve" },
                 { label: "Spike", name: "spike", id: "action_spike", classGrid: "select-item spike" },
@@ -341,6 +344,13 @@ export default {
         this.toggleKind();
         this.onChangeKind();
         this.loadMain();
+
+        var itemHeight = (window.innerHeight - 220) / 6;
+        this.styleGrid = {
+            "grid-template-rows": itemHeight + "px " + itemHeight + "px " + itemHeight + "px " + itemHeight + "px " + itemHeight + "px " + itemHeight + "px 220px",
+        };
+        // grid - template - rows: 1fr 1fr 1fr 1fr 1fr 1fr 220px;
+
     },
     // computed: {
     //     modelAction: {

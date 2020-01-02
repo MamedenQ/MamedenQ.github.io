@@ -205,7 +205,7 @@ import memberChangeComp from './MemberChangeComp.js'
 import point from './point.js'
 import net from './net.js'
 import out from './out.js'
-import inIcon from './inIcon.js'
+import inIcon from './inicon.js'
 import fake from './fake.js'
 import judge from './judge.js'
 

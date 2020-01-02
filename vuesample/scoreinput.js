@@ -1,46 +1,10 @@
 const template = `
     <div class="grid-scoreinput" v-bind:style="styleGrid">
         <div class="grid-action">
-        <!--
-        <input type="radio" id="action_serve" name="action" value="serve" v-on:change="onChangeAction" v-model="modelAction">
-        <label class="action serve" for="action_serve">
-            <serve width="100%" height="100%" ></serve>
-        </label>
-        -->
-<!-- これだとうまくいく元のソース
-            <label class="select-item serve" for="action_serve">
-                <input type="radio" id="action_serve" name="action" value="serve" v-on:change="onChangeAction" v-model="modelAction">
-                <div>serve</div>
-                <serve></serve>
-            </label>
--->
-<!-- これだとうまくいく
-            <label v-bind:class="item.classGrid" v-bind:for="item.id" v-for="item of itemAction">
-                <input type="radio" v-bind:id="item.id" name="action" v-bind:value="item.name" v-on:change="onChangeAction" v-model="modelAction">
-                <div>{{item.label}}</div>
-                    <serve v-if="item.id == 'action_serve'"></serve>
-                    <spike v-else-if="item.id == 'action_spike'"></spike>
-                    <block v-else-if="item.id == 'action_block'"></block>
-                    <receive v-else-if="item.id == 'action_receive'"></receive>
-                    <faul v-else-if="item.id == 'action_faul'"></faul>
-                    <other_miss v-else-if="item.id == 'action_other_miss'"></other_miss>
-            </label>
--->
             <div v-bind:class="item.classGrid" v-for="item of itemAction">
                 <input type="radio" v-bind:id="item.id" name="action" v-bind:value="item.name" v-on:change="onChangeAction" v-model="modelAction">
                 <label v-bind:for="item.id">
                     <span v-bind:style="styleLabel">{{item.label}}</span>
-                    <!--
-                    {{item.label}}
-                    -->
-                    <!--
-                    <serve v-if="item.id == 'action_serve'"></serve>
-                    <spike v-else-if="item.id == 'action_spike'"></spike>
-                    <block v-else-if="item.id == 'action_block'"></block>
-                    <receive v-else-if="item.id == 'action_receive'"></receive>
-                    <faul v-else-if="item.id == 'action_faul'"></faul>
-                    <other_miss v-else-if="item.id == 'action_other_miss'"></other_miss>
-                    -->
                     <serve v-if="item.id == 'action_serve'"></serve>
                     <spike v-else-if="item.id == 'action_spike'"></spike>
                     <block v-else-if="item.id == 'action_block'"></block>
@@ -55,7 +19,9 @@ const template = `
             <div v-bind:class="item.classGrid" v-for="item of itemKind">
                 <input type="radio" v-bind:id="item.id" name="kind" v-bind:value="item.name" v-on:change="onChangeKind" v-model="modelKind" v-bind:disabled="!item.isEnabled">
                 <label v-bind:for="item.id">
-                    <div>{{item.label}}</div>
+                    <span v-bind:style="styleLabel">{{item.label}}</span>
+                    <point v-if="item.name == 'point'"></point>
+                    <other_miss v-else-if="item.name == 'miss'"></other_miss>
                 </label>
             </div>
         </div>
@@ -64,7 +30,13 @@ const template = `
             <div v-bind:class="item.classGrid" v-for="item of itemDetail">
                 <input type="radio" v-bind:id="item.id" name="detail" v-bind:value="item.name" v-model="modelDetail" v-bind:disabled="!item.isEnabled">
                 <label v-bind:for="item.id">
-                    {{item.label}}
+                    <span v-bind:style="styleLabel">{{item.label}}</span>
+                    <net v-if="item.name == 'net'"></net>
+                    <inIcon v-else-if="item.name == 'in' || item.name == 'ace'"></inIcon>
+                    <fake v-else-if="item.name == 'fake'"></fake>
+                    <judge v-else-if="item.name == 'judge'"></judge>
+                    <out v-else-if="item.name == 'out'"></out>
+                    <block v-else-if="item.name == 'block' || item.name == 'blockout'"></block>
                 </label>
             </div>
         </div>
@@ -230,6 +202,12 @@ import player from './player.js'
 import player_f from './player_f.js'
 import rotation from './rotate.js'
 import memberChangeComp from './MemberChangeComp.js'
+import point from './point.js'
+import net from './net.js'
+import out from './out.js'
+import inIcon from './inIcon.js'
+import fake from './fake.js'
+import judge from './judge.js'
 
 export default {
     template,
@@ -247,6 +225,12 @@ export default {
         player_f,
         rotation,
         memberChangeComp,
+        point,
+        net,
+        out,
+        inIcon,
+        fake,
+        judge,
     },
     props: {
         scoreId: String,
@@ -309,12 +293,18 @@ export default {
                 { label: "Faul", name: "faul", id: "action_faul", classGrid: "select-item faul" },
             ],
             itemKind: [
-                { label: "Rally", name: "rally", id: "kind_rally", classGrid: "select-item rally", isEnabled: true, },
-                { label: "Point", name: "point", id: "kind_point", classGrid: "select-item point", isEnabled: true, },
-                { label: "Miss", name: "miss", id: "kind_miss", classGrid: "select-item miss", isEnabled: true, },
-                { label: "A", name: "a", id: "kind_a", classGrid: "select-item a", isEnabled: true, },
-                { label: "B", name: "b", id: "kind_b", classGrid: "select-item b", isEnabled: true, },
-                { label: "C", name: "c", id: "kind_c", classGrid: "select-item c", isEnabled: true, },
+                // { label: "Rally", name: "rally", id: "kind_rally", classGrid: "select-item rally", isEnabled: true, },
+                // { label: "Point", name: "point", id: "kind_point", classGrid: "select-item point", isEnabled: true, },
+                // { label: "Miss", name: "miss", id: "kind_miss", classGrid: "select-item miss", isEnabled: true, },
+                // { label: "A", name: "a", id: "kind_a", classGrid: "select-item a", isEnabled: true, },
+                // { label: "B", name: "b", id: "kind_b", classGrid: "select-item b", isEnabled: true, },
+                // { label: "C", name: "c", id: "kind_c", classGrid: "select-item c", isEnabled: true, },
+                { label: "Rally", name: "rally", id: "kind_1", classGrid: "select-item rally", isEnabled: true, },
+                { label: "Point", name: "point", id: "kind_2", classGrid: "select-item point", isEnabled: true, },
+                { label: "Miss", name: "miss", id: "kind_3", classGrid: "select-item miss", isEnabled: true, },
+                { label: "A", name: "a", id: "kind_4", classGrid: "select-item a", isEnabled: true, },
+                { label: "B", name: "b", id: "kind_5", classGrid: "select-item b", isEnabled: true, },
+                { label: "C", name: "c", id: "kind_6", classGrid: "select-item c", isEnabled: true, },
                 // { label: "", name: "empty", id: "kind_empty", classGrid: "kind empty", isEnabled: false, },
             ],
             itemDetail: [
@@ -578,19 +568,19 @@ export default {
             this.onChangeKind();
         },
         toggleKind() {
-            this.itemKind[0].label = "Rally";
-            this.itemKind[1].label = "Point";
-            this.itemKind[2].label = "Miss";
-            this.itemKind[3].label = "A";
-            this.itemKind[4].label = "B";
-            this.itemKind[5].label = "C";
+            this.itemKind[0].label = "";
+            this.itemKind[1].label = "";
+            this.itemKind[2].label = "";
+            this.itemKind[3].label = "";
+            this.itemKind[4].label = "";
+            this.itemKind[5].label = "";
 
-            this.itemKind[0].name = "rally";
-            this.itemKind[1].name = "point";
-            this.itemKind[2].name = "miss";
-            this.itemKind[3].name = "a";
-            this.itemKind[4].name = "b";
-            this.itemKind[5].name = "c";
+            this.itemKind[0].name = "-";
+            this.itemKind[1].name = "-";
+            this.itemKind[2].name = "-";
+            this.itemKind[3].name = "-";
+            this.itemKind[4].name = "-";
+            this.itemKind[5].name = "-";
 
             this.itemKind[0].isEnabled = false;
             this.itemKind[1].isEnabled = false;
@@ -599,14 +589,26 @@ export default {
             this.itemKind[4].isEnabled = false;
             this.itemKind[5].isEnabled = false;
 
-            if (this.modelAction == 'spike') {
-                this.itemKind[3].label = "";
-                this.itemKind[4].label = "";
-                this.itemKind[5].label = "";
+            if (this.modelAction == 'serve' || this.modelAction == 'block') {
+                this.itemKind[0].label = "Point";
+                this.itemKind[1].label = "Miss";
 
-                this.itemKind[3].name = "-";
-                this.itemKind[4].name = "-";
-                this.itemKind[5].name = "-";
+                this.itemKind[0].name = "point";
+                this.itemKind[1].name = "miss";
+
+                this.itemKind[0].isEnabled = true;
+                this.itemKind[1].isEnabled = true;
+
+                this.modelKind = "point";
+                this.modelDetail = "D1";
+            } else if (this.modelAction == 'spike') {
+                this.itemKind[0].label = "Rally";
+                this.itemKind[1].label = "Point";
+                this.itemKind[2].label = "Miss";
+
+                this.itemKind[0].name = "rally";
+                this.itemKind[1].name = "point";
+                this.itemKind[2].name = "miss";
 
                 this.itemKind[0].isEnabled = true;
                 this.itemKind[1].isEnabled = true;
@@ -615,63 +617,31 @@ export default {
                 this.modelKind = "rally";
                 this.modelDetail = "D1";
             } else if (this.modelAction == 'receive') {
-                this.itemKind[0].label = "";
-                this.itemKind[0].name = "-";
-                this.itemKind[1].label = "";
-                this.itemKind[1].name = "-";
-                this.itemKind[2].isEnabled = true;
-                this.itemKind[3].isEnabled = true;
-                this.itemKind[4].isEnabled = true;
-                this.itemKind[5].isEnabled = true;
-                this.modelKind = "miss";
-                this.modelDetail = "D1";
-            } else if (this.modelAction == 'other_miss') {
-                this.itemKind[0].label = "";
-                this.itemKind[1].label = "";
-                this.itemKind[3].label = "";
-                this.itemKind[4].label = "";
-                this.itemKind[5].label = "";
+                this.itemKind[0].label = "A";
+                this.itemKind[1].label = "B";
+                this.itemKind[2].label = "C";
+                this.itemKind[3].label = "Miss";
 
-                this.itemKind[0].name = "-";
-                this.itemKind[1].name = "-";
-                this.itemKind[3].name = "-";
-                this.itemKind[4].name = "-";
-                this.itemKind[5].name = "-";
+                this.itemKind[0].name = "a";
+                this.itemKind[1].name = "b";
+                this.itemKind[2].name = "c";
+                this.itemKind[3].name = "miss";
 
-                this.modelKind = "miss";
-                this.modelDetail = "D1";
-            } else if (this.modelAction == 'faul') {
-                this.itemKind[0].label = "";
-                this.itemKind[1].label = "";
-                this.itemKind[2].label = "";
-                this.itemKind[3].label = "";
-                this.itemKind[4].label = "";
-                this.itemKind[5].label = "";
-
-                this.itemKind[0].name = "-";
-                this.itemKind[1].name = "-";
-                this.itemKind[2].name = "-";
-                this.itemKind[3].name = "-";
-                this.itemKind[4].name = "-";
-                this.itemKind[5].name = "-";
-
-                this.modelKind = "";
-                this.modelDetail = "";
-            } else {
-                this.itemKind[0].label = "";
-                this.itemKind[3].label = "";
-                this.itemKind[4].label = "";
-                this.itemKind[5].label = "";
-
-                this.itemKind[0].name = "-";
-                this.itemKind[3].name = "-";
-                this.itemKind[4].name = "-";
-                this.itemKind[5].name = "-";
-
+                this.itemKind[0].isEnabled = true;
                 this.itemKind[1].isEnabled = true;
                 this.itemKind[2].isEnabled = true;
+                this.itemKind[3].isEnabled = true;
 
-                this.modelKind = "point";
+                this.modelKind = "a";
+                this.modelDetail = "D1";
+            } else if (this.modelAction == 'other_miss') {
+                this.itemKind[0].label = "Miss";
+
+                this.itemKind[0].name = "miss";
+
+                this.itemKind[0].isEnabled = true;
+
+                this.modelKind = "miss";
                 this.modelDetail = "D1";
             }
         },

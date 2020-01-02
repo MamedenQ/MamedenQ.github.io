@@ -29,7 +29,7 @@ const template = `
             <div v-bind:class="item.classGrid" v-for="item of itemAction">
                 <input type="radio" v-bind:id="item.id" name="action" v-bind:value="item.name" v-on:change="onChangeAction" v-model="modelAction">
                 <label v-bind:for="item.id">
-                    <div>{{item.label}}</div>
+                    <span v-bind:style="styleLabel">{{item.label}}</span>
                     <!--
                     {{item.label}}
                     -->
@@ -297,6 +297,9 @@ export default {
             styleNavi: {
                 "line-height": "700px",
             },
+            styleLabel: {
+                "line-height": "50px",
+            },
             itemAction: [
                 { label: "Serve", name: "serve", id: "action_serve", classGrid: "select-item serve" },
                 { label: "Spike", name: "spike", id: "action_spike", classGrid: "select-item spike" },
@@ -367,6 +370,9 @@ export default {
         };
         this.styleNavi = {
             "line-height": window.innerHeight + "px",
+        };
+        this.styleLabel = {
+            "line-height": (itemHeight - 10) + "px",
         };
         // console.log("score input mounted 02");
         // grid - template - rows: 1fr 1fr 1fr 1fr 1fr 1fr 220px;

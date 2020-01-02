@@ -10,7 +10,9 @@ const template = `
             <div v-bind:class="item.classGrid" v-for="item of itemAction">
                 <input type="radio" v-bind:id="item.id" name="action" v-bind:value="item.name" v-on:change="onChangeAction" v-model="modelAction">
                 <label v-bind:for="item.id">
+                    <!--
                     {{item.label}}<br>
+                    -->
                     <!--
                     <serve v-if="item.id == 'action_serve'"></serve>
                     <spike v-else-if="item.id == 'action_spike'"></spike>
@@ -19,14 +21,12 @@ const template = `
                     <faul v-else-if="item.id == 'action_faul'"></faul>
                     <other_miss v-else-if="item.id == 'action_other_miss'"></other_miss>
                     -->
-                    <!--
                     <serve width="100%" height="100%" v-if="item.id == 'action_serve'"></serve>
                     <spike width="100%" height="100%" v-else-if="item.id == 'action_spike'"></spike>
                     <block width="100%" height="100%" v-else-if="item.id == 'action_block'"></block>
                     <receive width="100%" height="100%" v-else-if="item.id == 'action_receive'"></receive>
                     <faul width="100%" height="100%" v-else-if="item.id == 'action_faul'"></faul>
                     <other_miss width="100%" height="100%" v-else-if="item.id == 'action_other_miss'"></other_miss>
-                    -->
                 </label>
             </div>
         </div>
@@ -68,7 +68,7 @@ const template = `
             </svg>
         </div>
 
-        <div class="navi_a">
+        <div class="navi_a" v-bind:style="styleNavi">
             <span>
                 <div v-if="!isNewScore">
                 <span>戻る</span>
@@ -90,7 +90,7 @@ const template = `
             </span>
         </div>
 
-        <div class="navi_b">
+        <div class="navi_b" v-bind:style="styleNavi">
             <span>
                 <span>保存</span>
                 <svg v-on:click="showModalSave = true" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
@@ -272,7 +272,10 @@ export default {
             isDirty: false,
             showChangeArea: false,
             styleGrid: {
-                "grid-template-rows": "1fr 1fr 1fr 1fr 1fr 1fr 220px;",
+                "grid-template-rows": "1fr 1fr 1fr 1fr 1fr 1fr 220px",
+            },
+            styleNavi: {
+                "line-height": "700px",
             },
             itemAction: [
                 { label: "Serve", name: "serve", id: "action_serve", classGrid: "select-item serve" },
@@ -325,13 +328,6 @@ export default {
         }
     },
     mounted() {
-        var d1 = new Date("2019-01-02");
-        var d2 = new Date("2019-01-01");
-        if (d1 < d2) {
-            console.log("d1 < d2");
-        } else {
-            console.log("d1 >= d2");
-        }
         this.modelDate = this.getNowDateStr();
 
         this.members = JSON.parse(localStorage.getItem("members"));
@@ -349,7 +345,10 @@ export default {
         this.styleGrid = {
             "grid-template-rows": itemHeight + "px " + itemHeight + "px " + itemHeight + "px " + itemHeight + "px " + itemHeight + "px " + itemHeight + "px 220px",
         };
-        console.log("score input mounted");
+        this.styleNavi = {
+            "line-height": window.innerHeight + "px",
+        };
+        console.log("score input mounted 02");
         // grid - template - rows: 1fr 1fr 1fr 1fr 1fr 1fr 220px;
 
     },

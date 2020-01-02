@@ -11,12 +11,14 @@ const template = `
                 <input type="radio" v-bind:id="item.id" name="action" v-bind:value="item.name" v-on:change="onChangeAction" v-model="modelAction">
                 <label v-bind:for="item.id">
                     {{item.label}}<br>
+                    <!--
                     <serve v-if="item.id == 'action_serve'"></serve>
                     <spike v-else-if="item.id == 'action_spike'"></spike>
                     <block v-else-if="item.id == 'action_block'"></block>
                     <receive v-else-if="item.id == 'action_receive'"></receive>
                     <faul v-else-if="item.id == 'action_faul'"></faul>
                     <other_miss v-else-if="item.id == 'action_other_miss'"></other_miss>
+                    -->
                     <!--
                     <serve width="100%" height="100%" v-if="item.id == 'action_serve'"></serve>
                     <spike width="100%" height="100%" v-else-if="item.id == 'action_spike'"></spike>
@@ -270,29 +272,29 @@ export default {
             isDirty: false,
             showChangeArea: false,
             itemAction: [
-                { label: "Serve", name: "serve", id: "action_serve", classGrid: "action serve" },
-                { label: "Spike", name: "spike", id: "action_spike", classGrid: "action spike" },
-                { label: "Block", name: "block", id: "action_block", classGrid: "action block" },
-                { label: "Receive", name: "receive", id: "action_receive", classGrid: "action receive" },
-                { label: "Other Miss", name: "other_miss", id: "action_other_miss", classGrid: "action other_miss" },
-                { label: "Faul", name: "faul", id: "action_faul", classGrid: "action faul" },
+                { label: "Serve", name: "serve", id: "action_serve", classGrid: "select-item serve" },
+                { label: "Spike", name: "spike", id: "action_spike", classGrid: "select-item spike" },
+                { label: "Block", name: "block", id: "action_block", classGrid: "select-item block" },
+                { label: "Receive", name: "receive", id: "action_receive", classGrid: "select-item receive" },
+                { label: "Other Miss", name: "other_miss", id: "action_other_miss", classGrid: "select-item other_miss" },
+                { label: "Faul", name: "faul", id: "action_faul", classGrid: "select-item faul" },
             ],
             itemKind: [
-                { label: "Rally", name: "rally", id: "kind_rally", classGrid: "kind rally kind_rally_label", isEnabled: true, },
-                { label: "Point", name: "point", id: "kind_point", classGrid: "kind point", isEnabled: true, },
-                { label: "Miss", name: "miss", id: "kind_miss", classGrid: "kind miss", isEnabled: true, },
-                { label: "A", name: "a", id: "kind_a", classGrid: "kind a", isEnabled: true, },
-                { label: "B", name: "b", id: "kind_b", classGrid: "kind b", isEnabled: true, },
-                { label: "C", name: "c", id: "kind_c", classGrid: "kind c", isEnabled: true, },
+                { label: "Rally", name: "rally", id: "kind_rally", classGrid: "select-item rally kind_rally_label", isEnabled: true, },
+                { label: "Point", name: "point", id: "kind_point", classGrid: "select-item point", isEnabled: true, },
+                { label: "Miss", name: "miss", id: "kind_miss", classGrid: "select-item miss", isEnabled: true, },
+                { label: "A", name: "a", id: "kind_a", classGrid: "select-item a", isEnabled: true, },
+                { label: "B", name: "b", id: "kind_b", classGrid: "select-item b", isEnabled: true, },
+                { label: "C", name: "c", id: "kind_c", classGrid: "select-item c", isEnabled: true, },
                 // { label: "", name: "empty", id: "kind_empty", classGrid: "kind empty", isEnabled: false, },
             ],
             itemDetail: [
-                { label: "D1", name: "D1", id: "detail_1", classGrid: "detail detail1 detail_1_label", isEnabled: true, },
-                { label: "D2", name: "D2", id: "detail_2", classGrid: "detail detail2 detail_2_label", isEnabled: true, },
-                { label: "D3", name: "D3", id: "detail_3", classGrid: "detail detail3 detail_3_label", isEnabled: true, },
-                { label: "D4", name: "D4", id: "detail_4", classGrid: "detail detail4 detail_4_label", isEnabled: true, },
-                { label: "D5", name: "D5", id: "detail_5", classGrid: "detail detail5 detail_5_label", isEnabled: true, },
-                { label: "D6", name: "D6", id: "detail_6", classGrid: "detail detail6 detail_6_label", isEnabled: true, },
+                { label: "D1", name: "D1", id: "detail_1", classGrid: "select-item detail1 detail_1_label", isEnabled: true, },
+                { label: "D2", name: "D2", id: "detail_2", classGrid: "select-item detail2 detail_2_label", isEnabled: true, },
+                { label: "D3", name: "D3", id: "detail_3", classGrid: "select-item detail3 detail_3_label", isEnabled: true, },
+                { label: "D4", name: "D4", id: "detail_4", classGrid: "select-item detail4 detail_4_label", isEnabled: true, },
+                { label: "D5", name: "D5", id: "detail_5", classGrid: "select-item detail5 detail_5_label", isEnabled: true, },
+                { label: "D6", name: "D6", id: "detail_6", classGrid: "select-item detail6 detail_6_label", isEnabled: true, },
             ],
             itemTeamA: [
                 { key: "a7", team: "a", no: "", name: "", sex: 0, classGrid: "a7", isEmpty: true, },

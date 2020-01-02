@@ -7,9 +7,29 @@ const template = `
             <serve width="100%" height="100%" ></serve>
         </label>
         -->
+<!-- これだとうまくいく元のソース
+            <label class="select-item serve" for="action_serve">
+                <input type="radio" id="action_serve" name="action" value="serve" v-on:change="onChangeAction" v-model="modelAction">
+                <div>serve</div>
+                <serve></serve>
+            </label>
+-->
+<!-- これだとうまくいく
+            <label v-bind:class="item.classGrid" v-bind:for="item.id" v-for="item of itemAction">
+                <input type="radio" v-bind:id="item.id" name="action" v-bind:value="item.name" v-on:change="onChangeAction" v-model="modelAction">
+                <div>{{item.label}}</div>
+                    <serve v-if="item.id == 'action_serve'"></serve>
+                    <spike v-else-if="item.id == 'action_spike'"></spike>
+                    <block v-else-if="item.id == 'action_block'"></block>
+                    <receive v-else-if="item.id == 'action_receive'"></receive>
+                    <faul v-else-if="item.id == 'action_faul'"></faul>
+                    <other_miss v-else-if="item.id == 'action_other_miss'"></other_miss>
+            </label>
+-->
             <div v-bind:class="item.classGrid" v-for="item of itemAction">
                 <input type="radio" v-bind:id="item.id" name="action" v-bind:value="item.name" v-on:change="onChangeAction" v-model="modelAction">
                 <label v-bind:for="item.id">
+                    <div>{{item.label}}</div>
                     <!--
                     {{item.label}}
                     -->
@@ -27,7 +47,6 @@ const template = `
                     <receive v-else-if="item.id == 'action_receive'"></receive>
                     <faul v-else-if="item.id == 'action_faul'"></faul>
                     <other_miss v-else-if="item.id == 'action_other_miss'"></other_miss>
-                    <span>{{item.label}}</span>
                 </label>
             </div>
         </div>
@@ -36,7 +55,7 @@ const template = `
             <div v-bind:class="item.classGrid" v-for="item of itemKind">
                 <input type="radio" v-bind:id="item.id" name="kind" v-bind:value="item.name" v-on:change="onChangeKind" v-model="modelKind" v-bind:disabled="!item.isEnabled">
                 <label v-bind:for="item.id">
-                    {{item.label}}<br>
+                    <div>{{item.label}}</div>
                 </label>
             </div>
         </div>
@@ -102,9 +121,9 @@ const template = `
                 <!--
                 <svg v-on:click="load" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
                 -->
-                <span>ローテーション</span>
+                <span>上ローテ</span>
                 <rotation v-on:rotate-member="rotateA"></rotation>
-                <span>ローテーション</span>
+                <span>下ローテ</span>
                 <rotation v-on:rotate-member="rotateB"></rotation>
                 <span>交代</span>
                 <member v-on:change-member="changeMember"></member>
@@ -287,7 +306,7 @@ export default {
                 { label: "Faul", name: "faul", id: "action_faul", classGrid: "select-item faul" },
             ],
             itemKind: [
-                { label: "Rally", name: "rally", id: "kind_rally", classGrid: "select-item rally kind_rally_label", isEnabled: true, },
+                { label: "Rally", name: "rally", id: "kind_rally", classGrid: "select-item rally", isEnabled: true, },
                 { label: "Point", name: "point", id: "kind_point", classGrid: "select-item point", isEnabled: true, },
                 { label: "Miss", name: "miss", id: "kind_miss", classGrid: "select-item miss", isEnabled: true, },
                 { label: "A", name: "a", id: "kind_a", classGrid: "select-item a", isEnabled: true, },
@@ -349,7 +368,7 @@ export default {
         this.styleNavi = {
             "line-height": window.innerHeight + "px",
         };
-        console.log("score input mounted 02");
+        // console.log("score input mounted 02");
         // grid - template - rows: 1fr 1fr 1fr 1fr 1fr 1fr 220px;
 
     },

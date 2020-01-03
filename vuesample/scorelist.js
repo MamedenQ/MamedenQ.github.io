@@ -1,30 +1,23 @@
 const template = `
 <div class="grid-scorelist">
-    <div class="navi_a">
+    <div class="navi_a"  v-bind:style="styleNavi" style="position:fixed;top:0;left:5px;">
         <span>
-            <span>ホーム</span>
+            <div>ホーム</div>
             <svg v-on:click="onHome" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M20 9v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9"/>
                 <path d="M9 22V12h6v10M2 10.6L12 2l10 8.6"/>
             </svg>
-        <!--
-        <div class="menu2">
-            <svg v-on:click="backScoreList()" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H6M12 5l-7 7 7 7"/></svg>
-        </div>
-        <div class="menu7">
-        <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-        </div>
-        -->
         </span>
     </div>
     <div class="scorelist">
-        <input type="date" v-model="modelDateStart" />〜<input type="date" v-model="modelDateEnd" /><br>
-        <button v-on:click="searchScore">絞り込み</button><br><br>
-        <button v-on:click="linkAnalyzeList">分析</button>
+        <span id="page-top"></span>
+        <input type="date" v-model="modelDateStart" />〜<input type="date" v-model="modelDateEnd" />
+        <button v-on:click="searchScore" class="btn btn-primary">絞り込み</button><br><br>
+        <button v-on:click="linkAnalyzeList" class="btn btn-primary">分析</button>
         <table class="analyze">
             <thead class="analyze_head">
                 <tr>
-                    <th>chk<input type="checkbox" v-bind:checked="isCheckAll" v-on:click="onClickCheckAll"></th>
+                    <th><input type="checkbox" v-bind:checked="isCheckAll" v-on:click="onClickCheckAll">　選択</th>
                     <th>#</th>
                     <th>タイトル</th>
                     <th>日付</th>
@@ -32,7 +25,7 @@ const template = `
                     <!--
                     <th>スコアリンク</th>
                     -->
-                    <th>ゴミ箱</th>
+                    <th>削除</th>
                 </tr>
             </thead>
             <tbody class="analyze_body">
@@ -48,17 +41,19 @@ const template = `
                     <!--
                     <td><a href="#" v-on:click="linkScoreInput(item.id)">リンク</a></td>
                     -->
-                    <td><button v-on:click="onClickTrash(item)">ゴミ箱</button></td>
+                    <td style="text-align:center;"><button v-on:click="onClickTrash(item)" class="btn btn-warning">削除</button></td>
                 </tr>
             </tbody>
         </table>
-        <button v-on:click="linkAnalyzeList">分析</button>
+        <button v-on:click="linkAnalyzeList" class="btn btn-primary">分析</button>
+        <a data-scroll href="#page-top" style="position:fixed;bottom:10px;right:10px;"><movetop></movetop></a>
     </div>
     <confirm v-if="showModalConfirm" v-on:dialogResult="result" :title="title" :msg="msg" :positive="positive" :negative="negative"></confirm>
 </div>
 `;
 
 import confirm from './confirm.js'
+import movetop from './movetop.js'
 
 export default {
     template,
@@ -67,6 +62,7 @@ export default {
     },
     components: {
         confirm,
+        movetop,
     },
     data() {
         return {
@@ -80,6 +76,9 @@ export default {
             modelDateEnd: "",
             dStart: null,
             dEnd: null,
+            styleNavi: {
+                "line-height": "700px",
+            },
         };
     },
     computed: {
@@ -88,6 +87,11 @@ export default {
         // }
     },
     mounted() {
+        var gridHeight = (window.innerHeight - 10);
+        this.styleNavi = {
+            "line-height": gridHeight + "px",
+        };
+
         this.refresh();
         this.onClickCheckAll();
     },
@@ -181,7 +185,7 @@ export default {
             this.title = "削除確認";
             this.msg = "削除しますか？";
             this.positive = "OK";
-            this.negative = "Cancel";
+            this.negative = "キャンセル";
             this.callbackConfirm = this.callback;
 
             this.showModalConfirm = true;

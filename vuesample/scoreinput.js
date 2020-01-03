@@ -76,7 +76,7 @@ const template = `
             <span>
                 <div v-if="!isNewScore">
                 <span>戻る</span>
-                <svg v-on:click="closeScore(true)" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H6M12 5l-7 7 7 7"/></svg>
+                <svg v-on:click="onBack" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H6M12 5l-7 7 7 7"/></svg>
                 </div>
                 <span>ホーム</span>
                 <svg v-on:click="onHome" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
@@ -145,29 +145,39 @@ const template = `
             <transition>
                 <div class="modal-mask">
                     <div class="modal-wrapper">
-                        <div class="modal-container">
+                        <div class="modal-container" style="width:300px;">
 
                             <div class="modal-header">
                                 <h3 slot="header">スコアの保存</h3>
                             </div>
 
-                            <div class="modal-body">
+                            <div class="modal-body" style="height:200px">
                                 <slot name="body">
-                                    試合名<input type="text" v-model="modelTitle"/><br>
-                                    日付<input type="date" v-model="modelDate" /><br>
-                                    得点<input type="number" v-model="modelAPoint" />－
-                                    <input type="number" v-model="modelBPoint" />
+                                    試合名<br>
+                                    <input style="width:100%" type="text" v-model="modelTitle"/><br>
+                                    日付<br>
+                                    <input style="width:100%" type="date" v-model="modelDate" /><br>
+                                    得点<br>
+                                    <div style="position:relative">
+                                    <span style="position:absolute;width:100%;left:0;top:0;right:0;text-align:center;">－</span>
+                                    <input style="position:absolute;width:80px;left:0;top:0;" type="number" v-model="modelAPoint" />
+                                    <input style="position:absolute;width:80px;right:0;top:0;" type="number" v-model="modelBPoint" />
+                                    </div>
                                 </slot>
                             </div>
 
                             <div class="modal-footer">
                                 <slot name="footer">
+                                    <!--
                                     <button class="modal-default-button" @click="showModalSave = false">
                                         キャンセル
                                     </button>
                                     <button class="modal-default-button" @click="save">
                                         保存
                                     </button>
+                                    -->
+                                    <button type="button" class="modal-default-button btn btn-secondary" @click="showModalSave = false">キャンセル</button>
+                                    <button type="button" class="modal-default-button btn btn-primary" @click="save">保存</button>
                                 </slot>
                             </div>
                         </div>
@@ -194,12 +204,16 @@ const template = `
 
                             <div class="modal-footer">
                                 <slot name="footer">
+                                    <!--
                                     <button class="modal-default-button" @click="showModalWarn = false">
                                         キャンセル
                                     </button>
                                     <button class="modal-default-button" @click="closeScore(false)">
                                         続行
                                     </button>
+                                    -->
+                                    <button type="button" class="modal-default-button btn btn-secondary" @click="showModalWarn = false">キャンセル</button>
+                                    <button type="button" class="modal-default-button btn btn-primary" @click="callbackClose">続行</button>
                                 </slot>
                             </div>
                         </div>
@@ -301,6 +315,7 @@ export default {
             positive: "",
             negative: "",
             callbackConfirm: "",
+            callbackClose: null,
             isCancel: false,
             isDirty: false,
             showChangeArea: false,
@@ -522,7 +537,7 @@ export default {
             this.title = "確認";
             this.msg = "入力内容を破棄してデータを読み込みますか？";
             this.positive = "OK";
-            this.negative = "Cancel";
+            this.negative = "キャンセル";
             this.showModalConfirm = true;
 
             this.callbackConfirm = function (result) {
@@ -564,14 +579,15 @@ export default {
             this.outputlog();
             this.isDirty = false;
         },
-        closeScore(isCheck) {
+        closeScore(isCheck, callback) {
             this.showModalWarn = false;
             if (isCheck && this.isDirty) {
                 this.showModalWarn = true;
+                this.callbackClose = callback;
                 return;
             }
 
-            this.$emit("route-score-list");
+            callback();
         },
         checkSaved() {
             if (this.isDirty) {
@@ -590,17 +606,12 @@ export default {
             this.scoreBk = [];
             this.updateUndoRedoButton();
             this.outputlog();
-            // location.href = "#scoreEnd";
-            var target = document.getElementById("score_area");
-            // target.scrollLeft = -1 * (this.score.length * 90 + 10);
-            target.scrollLeft = target.scrollWidth;
-            // target.scrollLeft = 500;
         },
         deleteScore(deleteIndex) {
             this.title = "削除確認";
             this.msg = "削除しますか？";
             this.positive = "OK";
-            this.negative = "Cancel";
+            this.negative = "キャンセル";
             this.showModalConfirm = true;
 
             this.callbackConfirm = function (result) {
@@ -969,7 +980,7 @@ export default {
         changeMember() {
             this.title = "メンバーチェンジ";
             this.positive = "OK";
-            this.negative = "Cancel";
+            this.negative = "キャンセル";
             this.showModalMemberChange = true;
         },
         memberChangeResult(flg, itemTeamA, itemTeamB) {
@@ -980,7 +991,16 @@ export default {
             }
         },
         onHome() {
+            this.closeScore(true, this.callbackHome);
+        },
+        callbackHome() {
             this.$emit("route-home");
+        },
+        onBack() {
+            this.closeScore(true, this.callbackBack);
+        },
+        callbackBack() {
+            this.$emit("route-score-list");
         },
     },
 }

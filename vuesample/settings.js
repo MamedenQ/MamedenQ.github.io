@@ -1,5 +1,5 @@
 const template = `
-<div class="grid-scorelist" v-bind:style="styleGrid">
+<div class="grid-scorelist">
     <div class="navi_a" v-bind:style="styleNavi" style="position:fixed;top:0;left:5px;">
         <span>
             <div>ホーム</div>
@@ -9,7 +9,7 @@ const template = `
             </svg>
         </span>
     </div>
-    <div class="scorelist" style="overflow-x:hidden; overflow-y:scroll;">
+    <div class="scorelist">
         <span id="page-top"></span>
         <trashList></trashList><br><br>
         <masterMaintenance></masterMaintenance><br><br>
@@ -50,11 +50,11 @@ export default {
             title: "",
             msg: "",
             positive: "OK",
-            negative: "Cancel",
+            negative: "キャンセル",
             callbackConfirm: null,
-            styleGrid: {
-                "grid-template-rows": "1fr",
-            },
+            // styleGrid: {
+            //     "grid-template-rows": "1fr",
+            // },
             styleNavi: {
                 "line-height": "700px",
             },

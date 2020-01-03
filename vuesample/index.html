@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <title>Vue Sample</title>
     <style type="text/css">
         [v-cloak] {
@@ -45,6 +47,15 @@
 <script src="main.js" type="module"></script>
 <!-- <script src="https://cdn.jsdelivr.net/npm/vue-smooth-scroll@1.0.13/dist/vue-smooth-scroll.min.js"></script> -->
 <script src="./smooth-scroll.polyfills.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
 <script type="text/javascript">
     // ＝＝＝＝＝調査項目
     // 画面間データ連携調査
@@ -74,6 +85,7 @@
 
     // vue-datepickerというものがあるらしい
     // https://www.kabanoki.net/2560/
+    // https://github.com/hilongjw/vue-datepicker
 
     // ＝＝＝＝＝レイアウト
     // バレーボールっぽいsvgを作成する
@@ -96,23 +108,26 @@
     // レシーブ割合　ドーナツ
     // レーダーチャート　絞り込みなしで全体での力レベルをチャートにする
 
+    // リベロをどうする？
+    // メンバーチェンジでリベロ枠設定
+    // リベロ枠設定された箇所はローテーションから除外
+    // リベロ設定はデフォルトにするかを設定で選択できる
+
+
+
+
     // スコア一覧をソートできるように試合順とかセット番号をつける
 
     // スコア一覧の絞り込みはボタンではなく、onChangeとかのイベントで行う
 
     // スコアアイコンを長押しで削除とかして区別できるようにする？
     // それかタップでメニュー出す？
+    // 入力済みのデータの修正や、挿入ができない
 
     // スコア追加時に右端にスクロールする
 
     // メニュー構成
-
-    // リベロをどうする？
-    // メンバーチェンジでリベロ枠設定
-    // リベロ枠設定された箇所はローテーションから除外
-    // リベロ設定はデフォルトにするかを設定で選択できる
-
-    // 入力済みのデータの修正や、挿入ができない
+    // メニューアイコンはまるで囲う
 
     // 自チーム側のみの分析も可能にする　分析一覧で絞り込む
     // レーダーチャートに必要と思ったが、どうやって活用する？
@@ -142,6 +157,9 @@
     // メニューの共通化
     // 変数名やファイル名の規則を整える
     // スタイル名を整える
+
+    // vue cliへの移行
+    // 追加機能を考えるとこの方がいいかも
 
     // vuejsの省略記法
     // v-on  @
@@ -760,7 +778,7 @@
     }
 
     .modal-container {
-        width: 300px;
+        width: 450px;
         margin: 0px auto;
         padding: 20px 30px;
         background-color: #fff;

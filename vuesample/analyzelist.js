@@ -1,12 +1,10 @@
 const template = `
 <div class="grid-analyzelist">
-    <div class="navi_a">
+    <div class="navi_a" v-bind:style="styleNavi" style="position:fixed;top:0;left:5px;">
         <span>
-            <span>戻る</span>
+            <div>戻る</div>
             <svg v-on:click="backScoreList" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H6M12 5l-7 7 7 7"/></svg>
-            <br>
-            <br>
-            <span>ホーム</span>
+            <div>ホーム</div>
             <svg v-on:click="onHome" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M20 9v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9"/>
                 <path d="M9 22V12h6v10M2 10.6L12 2l10 8.6"/>
@@ -14,7 +12,8 @@ const template = `
         </span>
     </div>
 
-    <div class="analyzelist" style="overflow-x:hidden; overflow-y:scroll;">
+    <div class="analyzelist">
+        <span id="page-top"></span>
         <!--
         <input type="checkbox" v-model="isSimple" />
         <span class="filter_action">
@@ -51,7 +50,7 @@ const template = `
         <br>
         -->
         <table class="analyze">
-            <thead class="analyze_head">
+            <thead class="analyze_head" style="text-align:center;">
                 <tr>
                     <th colspan="2">基本情報</th>
                     <th colspan="2">総合</th>
@@ -201,14 +200,20 @@ const template = `
             </tbody>
         </table>
         -->
+        <a data-scroll href="#page-top" style="position:fixed;bottom:10px;right:10px;"><movetop></movetop></a>
     </div>
 </div>
 `;
+
+import movetop from './movetop.js'
 
 export default {
     template,
     props: {
         analyzeData: Array,
+    },
+    components: {
+        movetop,
     },
     data() {
         return {
@@ -217,6 +222,9 @@ export default {
             // modelDisp: "simple",
             // isSimple: true,
             members: [],
+            styleNavi: {
+                "line-height": "700px",
+            },
         }
     },
     filters: {
@@ -225,6 +233,11 @@ export default {
         }
     },
     mounted() {
+        var gridHeight = (window.innerHeight - 10);
+        this.styleNavi = {
+            "line-height": gridHeight + "px",
+        };
+
         this.members = JSON.parse(localStorage.getItem("members"));
         if (this.members == null) {
             this.members = [];

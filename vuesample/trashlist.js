@@ -18,8 +18,8 @@ const template = `
                 <td>{{ item.title }}</td>
                 <td>{{ item.date }}</td>
                 <td>{{ item.teamAPoint + " － " + item.teamBPoint }}</td>
-                <td><button v-on:click="onClickRestore(item)">復元</button></td>
-                <td><button v-on:click="onClickDelete(item)">完全削除</button></td>
+                <td style="text-align:center;"><button v-on:click="onClickRestore(item)" class="btn btn-warning">復元</button></td>
+                <td style="text-align:center;"><button v-on:click="onClickDelete(item)" class="btn btn-warning">完全削除</button></td>
             </tr>
         </tbody>
     </table>
@@ -80,7 +80,7 @@ export default {
             this.title = "復元確認";
             this.msg = "復元しますか？";
             this.positive = "OK";
-            this.negative = "Cancel";
+            this.negative = "キャンセル";
             this.callbackConfirm = this.callbackRestore;
 
             this.showModalConfirm = true;
@@ -107,9 +107,9 @@ export default {
         onClickDelete(item) {
             this.deleteItem = item;
             this.title = "削除確認";
-            this.msg = "削除しますか？このスコアは完全に削除されます。";
+            this.msg = "完全に削除しますか？";
             this.positive = "OK";
-            this.negative = "Cancel";
+            this.negative = "キャンセル";
             this.callbackConfirm = this.callbackDelete;
 
             this.showModalConfirm = true;

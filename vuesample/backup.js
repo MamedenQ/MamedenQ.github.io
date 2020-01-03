@@ -1,16 +1,16 @@
 const template = `
 <div>
     <span>DBバックアップ</span><br>
-    <button v-on:click="onClickBackupDB">DBバックアップ</button><br>
+    <button v-on:click="onClickBackupDB" class="btn btn-warning">DBバックアップ</button><br>
     <span>前回バックアップ日時 : {{ bkDate }}</span><br><br>
     <span>DBリストア</span><br>
-    <button v-on:click="onClickRestoreDB">DBリストア</button><br><br>
+    <button v-on:click="onClickRestoreDB" class="btn btn-warning">DBリストア</button><br><br>
     
     <span>DB内容JSON出力</span><br>
-    <button v-on:click="outputDB">出力</button><br>
+    <button v-on:click="outputDB" class="btn btn-primary">出力</button><br>
     <textarea style="width:100%;height:300px;">{{output}}</textarea><br><br>
     <span>JSON入力</span><br>
-    <button v-on:click="onClickInputDB">入力</button><br>
+    <button v-on:click="onClickInputDB" class="btn btn-warning">入力</button><br>
     <textarea style="width:100%;height:300px;" v-model="modelInput"></textarea>
 
     <confirm v-if="showModalConfirm" v-on:dialogResult="result" :title="title" :msg="msg" :positive="positive" :negative="negative"></confirm>
@@ -32,7 +32,7 @@ export default {
             title: "",
             msg: "",
             positive: "OK",
-            negative: "Cancel",
+            negative: "キャンセル",
             callbackConfirm: null,
             bkDate: "",
         };

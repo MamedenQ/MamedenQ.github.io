@@ -22,19 +22,19 @@ const template = `
                     <label for="female">女</label>
                 </td>
                 <td>
-                    <select v-model="members[idx].team">
+                    <select v-model="members[idx].team" style="width:100%">
                         <option v-for="team in teams" v-bind:value="team.no">
                             {{ team.name }}
                         </option>
                     </select>
                 </td>
-                <td><button v-on:click="onClickDelete(item)">削除</button></td>
+                <td style="text-align:center;"><button v-on:click="onClickDelete(item)" class="btn btn-warning">削除</button></td>
             </tr>
         </tbody>
     </table>
-    <button v-on:click="onClickAddMember">追加</button>
-    <button v-on:click="onClickSaveMember">保存</button>
-    <br><br>
+    <button v-on:click="onClickAddMember" class="btn btn-primary">追加</button>
+    <button v-on:click="onClickSaveMember" class="btn btn-primary">保存</button>
+    <br><br><br>
     <table class="analyze">
         <thead class="analyze_head">
             <tr>
@@ -49,7 +49,7 @@ const template = `
             </tr>
         </tbody>
     </table>
-    <button v-on:click="onClickSaveTeam">保存</button>
+    <button v-on:click="onClickSaveTeam" class="btn btn-primary">保存</button>
     <confirm v-if="showModalConfirm" v-on:dialogResult="result" :title="title" :msg="msg" :positive="positive" :negative="negative"></confirm>
 </div>
 `;
@@ -73,7 +73,7 @@ export default {
             title: "",
             msg: "",
             positive: "OK",
-            negative: "Cancel",
+            negative: "キャンセル",
             callbackConfirm: null,
             teams: [
                 { no: 1, name: "" },

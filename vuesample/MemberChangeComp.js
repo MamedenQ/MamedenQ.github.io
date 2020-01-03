@@ -43,10 +43,10 @@ const template = `
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button class="modal-default-button" @click="sendResult(false)">
+                            <button class="modal-default-button btn btn-secondary" @click="sendResult(false)">
                                 {{ negative }}
                             </button>
-                            <button class="modal-default-button" @click="sendResult(true)">
+                            <button class="modal-default-button btn btn-primary" @click="sendResult(true)">
                                 {{ positive }}
                             </button>
                         </div>

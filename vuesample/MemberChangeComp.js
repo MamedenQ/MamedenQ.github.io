@@ -7,7 +7,7 @@ const template = `
                         <div class="modal-header">
                             <h3 slot="header">{{title}}</h3>
                         </div>
-                        <div class="modal-body" style="height:500px">
+                        <div class="modal-body" style="height:450px">
                             <div style="overflow-x:hidden; overflow-y:scroll; float:left;height:100%;width:calc(50% - 10px);margin-right:10px;">
                                 <ul>
                                     <li class="member">

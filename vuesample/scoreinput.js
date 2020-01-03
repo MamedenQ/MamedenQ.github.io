@@ -46,31 +46,25 @@ const template = `
         
         <div class="coat" v-bind:style="styleGridCoat">
             <div v-bind:class="item.classGrid" v-on:click="addScore(item)" v-for="item of itemTeamA">
-                <span style="text-align:center;" v-show="!item.isEmpty">{{item.no + ":" + item.name}}</span><br>
+                <span v-show="!item.isEmpty">{{item.no + ":" + item.name}}</span><br>
                 <player v-show="item.sex == 0 && !item.isEmpty"></player>
                 <player_f v-show="item.sex == 1 && !item.isEmpty"></player_f>
             </div>
+            <div class="rotate-a" v-on:click="rotateA">
+                <span>ローテ</span>
+                <rotation></rotation>
+            </div>
+
             <div v-bind:class="item.classGrid" v-on:click="addScore(item)" v-for="item of itemTeamB">
-                <span style="text-align:center;" v-show="!item.isEmpty">{{item.no + ":" + item.name}}</span><br>
+                <span v-show="!item.isEmpty">{{item.no + ":" + item.name}}</span><br>
                 <player v-show="item.sex == 0 && !item.isEmpty"></player>
                 <player_f v-show="item.sex == 1 && !item.isEmpty"></player_f>
+            </div>
+            <div class="rotate-b" v-on:click="rotateB">
+                <span>ローテ</span>
+                <rotation></rotation>
             </div>
         </div>
-
-        <!--
-        <ul class="coat" v-bind:style="styleGridCoat"> 
-            <li v-bind:class="item.classGrid" v-on:click="addScore(item)" v-for="item of itemTeamA" :key="item.key" class="grid_style_team">
-                <span v-show="!item.isEmpty">{{item.no + ":" + item.name}}</span><br>
-                <player v-if="item.sex == 0" v-show="!item.isEmpty"></player>
-                <player_f v-else v-show="!item.isEmpty"></player_f>
-            </li>
-            <li v-bind:class="item.classGrid" v-on:click="addScore(item)" v-for="item of itemTeamB" :key="item.key" class="grid_style_team">
-                <span v-show="!item.isEmpty">{{item.no + ":" + item.name}}</span><br>
-                <player v-if="item.sex == 0" v-show="!item.isEmpty"></player>
-                <player_f v-else v-show="!item.isEmpty"></player_f>
-            </li>
-        </ul>
-        -->
 
         <div class="score grid_style" style="overflow-x:scroll; overflow-y:hidden;">
             <svg v-bind:width="score.length * 90 + 10" style="height: 100%;max-width:none;max-height:none;">
@@ -111,10 +105,12 @@ const template = `
                 <!--
                 <svg v-on:click="load" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
                 -->
+                <!--
                 <span>上ローテ</span>
                 <rotation v-on:rotate-member="rotateA"></rotation>
                 <span>下ローテ</span>
                 <rotation v-on:rotate-member="rotateB"></rotation>
+                -->
                 <span>交代</span>
                 <member v-on:change-member="changeMember"></member>
                 <svg v-if="undoEnabled" v-bind:disabled="!undoEnabled" v-on:click="undo" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
@@ -346,26 +342,42 @@ export default {
                 { label: "D6", name: "D6", id: "detail_6", classGrid: "select-item detail6 detail_6_label", isEnabled: true, },
             ],
             itemTeamA: [
-                { key: "a7", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a7", isEmpty: true, },
-                { key: "a8", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a8", isEmpty: true, },
-                { key: "a9", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a9", isEmpty: true, },
+                // { key: "a7", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a7", isEmpty: true, },
+                // { key: "a8", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a8", isEmpty: true, },
+                // { key: "a9", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a9", isEmpty: true, },
+                // { key: "a4", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a4", isEmpty: true, },
+                // { key: "a5", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a5", isEmpty: true, },
+                // { key: "a6", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a6", isEmpty: true, },
+                // { key: "a3", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a3", isEmpty: true, },
+                // { key: "a2", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a2", isEmpty: true, },
+                // { key: "a1", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a1", isEmpty: true, },
+                { key: "a1", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a1", isEmpty: true, },
+                { key: "a2", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a2", isEmpty: true, },
+                { key: "a3", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a3", isEmpty: true, },
                 { key: "a4", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a4", isEmpty: true, },
                 { key: "a5", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a5", isEmpty: true, },
                 { key: "a6", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a6", isEmpty: true, },
-                { key: "a3", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a3", isEmpty: true, },
-                { key: "a2", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a2", isEmpty: true, },
-                { key: "a1", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a1", isEmpty: true, },
+                { key: "a7", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a7", isEmpty: true, },
+                { key: "a8", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a8", isEmpty: true, },
             ],
             itemTeamB: [
+                // { key: "b1", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b1", isEmpty: true, },
+                // { key: "b2", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b2", isEmpty: true, },
+                // { key: "b3", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b3", isEmpty: true, },
+                // { key: "b6", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b6", isEmpty: true, },
+                // { key: "b5", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b5", isEmpty: true, },
+                // { key: "b4", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b4", isEmpty: true, },
+                // { key: "b9", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b9", isEmpty: true, },
+                // { key: "b8", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b8", isEmpty: true, },
+                // { key: "b7", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b7", isEmpty: true, },
                 { key: "b1", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b1", isEmpty: true, },
                 { key: "b2", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b2", isEmpty: true, },
                 { key: "b3", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b3", isEmpty: true, },
-                { key: "b6", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b6", isEmpty: true, },
-                { key: "b5", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b5", isEmpty: true, },
                 { key: "b4", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b4", isEmpty: true, },
-                { key: "b9", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b9", isEmpty: true, },
-                { key: "b8", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b8", isEmpty: true, },
+                { key: "b5", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b5", isEmpty: true, },
+                { key: "b6", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b6", isEmpty: true, },
                 { key: "b7", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b7", isEmpty: true, },
+                { key: "b8", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b8", isEmpty: true, },
             ],
             members: [],
         }
@@ -877,32 +889,34 @@ export default {
             }
         },
         rotateA() {
-            var team = [
-                this.itemTeamA[8],
-                this.itemTeamA[7],
-                this.itemTeamA[6],
-                this.itemTeamA[3],
-                this.itemTeamA[4],
-                this.itemTeamA[5],
-                this.itemTeamA[0],
-                this.itemTeamA[1],
-                this.itemTeamA[2],
-            ]
-            this.rotate(team);
+            // var team = [
+            //     // this.itemTeamA[8],
+            //     this.itemTeamA[7],
+            //     this.itemTeamA[6],
+            //     this.itemTeamA[3],
+            //     this.itemTeamA[4],
+            //     this.itemTeamA[5],
+            //     this.itemTeamA[0],
+            //     this.itemTeamA[1],
+            //     this.itemTeamA[2],
+            // ]
+            // this.rotate(team);
+            this.rotate(this.itemTeamA);
         },
         rotateB() {
-            var team = [
-                this.itemTeamB[0],
-                this.itemTeamB[1],
-                this.itemTeamB[2],
-                this.itemTeamB[5],
-                this.itemTeamB[4],
-                this.itemTeamB[3],
-                this.itemTeamB[8],
-                this.itemTeamB[7],
-                this.itemTeamB[6],
-            ]
-            this.rotate(team);
+            // var team = [
+            //     this.itemTeamB[0],
+            //     this.itemTeamB[1],
+            //     this.itemTeamB[2],
+            //     this.itemTeamB[5],
+            //     this.itemTeamB[4],
+            //     this.itemTeamB[3],
+            //     // this.itemTeamB[8],
+            //     this.itemTeamB[7],
+            //     this.itemTeamB[6],
+            // ]
+            // this.rotate(team);
+            this.rotate(this.itemTeamB);
         },
         rotate(team) {
             // jsonの順番を変えるようにしないとだめ
@@ -910,7 +924,7 @@ export default {
             var tempName = "";
             var tempSex = 0;
             var first = true;
-            for (var i = 8; i > 0; i--) {
+            for (var i = 7; i > 0; i--) {
                 if (team[i].isEmpty) {
                     continue;
                 }

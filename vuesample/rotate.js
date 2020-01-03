@@ -1,8 +1,10 @@
 const template = `
 <svg xmlns="http://www.w3.org/2000/svg"
     width="60" height="60"
-    viewBox="0 0 500 500"
+    viewBox="0 0 500 500">
+    <!--
     v-on:click="onClickRotate()">
+    -->
   <path
         fill="black" stroke="black" stroke-width="1"
         d="M 339.00,32.00
@@ -243,8 +245,8 @@ const template = `
 export default {
   template,
   methods: {
-    onClickRotate() {
-      this.$emit("rotate-member");
-    }
+    // onClickRotate() {
+    //   this.$emit("rotate-member");
+    // }
   },
 };

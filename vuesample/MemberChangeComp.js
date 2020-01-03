@@ -8,52 +8,12 @@ const template = `
                             <h3 slot="header">{{title}}</h3>
                         </div>
                         <div class="modal-body" style="height:500px">
-                        <!--
-                            <ul style="float:left;height:100%;width:50%;"> 
-                                <li style="text-align: center;" v-bind:class="item.classGrid" v-on:click="changeMember(item)" v-for="item of itemTeamAWork" :key="item.key" class="grid_style_team">
-                                    <span v-show="!item.isEmpty">{{item.no + ":" + item.name}}</span><br>
-                                    <player v-if="item.sex == 0" v-show="!item.isEmpty"></player>
-                                    <player_f v-else v-show="!item.isEmpty"></player_f>
-                                </li>
-                                <li style="text-align: center;" v-bind:class="item.classGrid" v-on:click="changeMember(item)" v-for="item of itemTeamBWork" :key="item.key" class="grid_style_team">
-                                    <span v-show="!item.isEmpty">{{item.no + ":" + item.name}}</span><br>
-                                    <player v-if="item.sex == 0" v-show="!item.isEmpty"></player>
-                                    <player_f v-else v-show="!item.isEmpty"></player_f>
-                                </li>
-                            </ul>
--->
-                            <div class="coat" style="float:left;height:100%;width:50%;">
-                                <div v-bind:class="item.classGrid" v-on:click="changeMember(item)" v-for="item of itemTeamAWork">
-                                    <span v-show="!item.isEmpty">{{item.no + ":" + item.name}}</span><br>
-                                    <player width="40" height="40" v-if="item.sex == 0" v-show="!item.isEmpty"></player>
-                                    <player_f width="40" height="40" v-else v-show="!item.isEmpty"></player_f>
-                                </div>
-                                <div v-bind:class="item.classGrid" v-on:click="changeMember(item)" v-for="item of itemTeamBWork">
-                                    <span v-show="!item.isEmpty">{{item.no + ":" + item.name}}</span><br>
-                                    <player width="40" height="40" v-if="item.sex == 0" v-show="!item.isEmpty"></player>
-                                    <player_f width="40" height="40" v-else v-show="!item.isEmpty"></player_f>
-                                </div>
-                            </div>
-                            <!--
-                            <div style="overflow-x:hidden; overflow-y:scroll; float:left;height:100%;width:50%;">
-                                <ul>
-                                    <li class="member" v-for="member of members" :key="member.no">
-                                        <input type="radio" v-bind:id="'mem_' + member.no" name="member" v-on:change="onChangeMember(member)" v-bind:value="member.no">
-                                        <label v-bind:for="'mem_' + member.no">
-                                            <span v-if="member.no != -1">{{member.no}}</span><br>{{member.name}}<br>
-                                            <player v-if="member.sex == 0"></player>
-                                            <player_f v-else></player_f>
-                                        </label>
-                                    </li>
-                                </ul>
-                            </div>
-                            -->
-                            <div style="overflow-x:hidden; overflow-y:scroll; float:left;height:100%;width:calc(50% - 10px);margin-left:10px;">
+                            <div style="overflow-x:hidden; overflow-y:scroll; float:left;height:100%;width:calc(50% - 10px);margin-right:10px;">
                                 <ul>
                                     <li class="member">
                                         <input type="radio" id="mem_x" name="member" v-on:change="onChangeMember(null)" value="-1">
                                         <label for="mem_x">
-                                            <span>空に変更</span>
+                                            <span style="left:0;text-align:center;">空に変更</span>
                                         </label>
                                     </li>
                                     <li class="member" v-for="member of members" :key="member.no">
@@ -68,6 +28,18 @@ const template = `
                                         </label>
                                     </li>
                                 </ul>
+                            </div>
+                            <div class="coat" style="float:left;height:100%;width:50%;">
+                                <div v-bind:class="item.classGrid" v-on:click="changeMember(item)" v-for="item of itemTeamAWork">
+                                    <span v-show="!item.isEmpty">{{item.no + ":" + item.name}}</span><br>
+                                    <player width="40" height="40" v-if="item.sex == 0" v-show="!item.isEmpty"></player>
+                                    <player_f width="40" height="40" v-else v-show="!item.isEmpty"></player_f>
+                                </div>
+                                <div v-bind:class="item.classGrid" v-on:click="changeMember(item)" v-for="item of itemTeamBWork">
+                                    <span v-show="!item.isEmpty">{{item.no + ":" + item.name}}</span><br>
+                                    <player width="40" height="40" v-if="item.sex == 0" v-show="!item.isEmpty"></player>
+                                    <player_f width="40" height="40" v-else v-show="!item.isEmpty"></player_f>
+                                </div>
                             </div>
                         </div>
                         <div class="modal-footer">

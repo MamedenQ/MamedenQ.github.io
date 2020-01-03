@@ -1,15 +1,16 @@
 const template = `
-<div class="grid-scorelist">
-    <div class="navi_a">
+<div class="grid-scorelist" v-bind:style="styleGrid">
+    <div class="navi_a" v-bind:style="styleNavi" style="position:fixed;top:0;left:5px;">
         <span>
-            <span>ホーム</span>
+            <div>ホーム</div>
             <svg v-on:click="onHome" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M20 9v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9"/>
                 <path d="M9 22V12h6v10M2 10.6L12 2l10 8.6"/>
             </svg>
         </span>
     </div>
-    <div class="scorelist" style="height:100%;overflow-x:hidden; overflow-y:scroll;">
+    <div class="scorelist" style="overflow-x:hidden; overflow-y:scroll;">
+        <span id="page-top"></span>
         <trashList></trashList><br><br>
         <masterMaintenance></masterMaintenance><br><br>
         <!--
@@ -22,7 +23,7 @@ const template = `
         -->
 
         <backup></backup>
-
+        <a data-scroll href="#page-top" style="position:fixed;bottom:10px;right:10px;"><movetop></movetop></a>
     </div>
     <confirm v-if="showModalConfirm" v-on:dialogResult="result" :title="title" :msg="msg" :positive="positive" :negative="negative"></confirm>
 </div>
@@ -32,6 +33,7 @@ import confirm from './confirm.js'
 import trashList from './trashlist.js'
 import masterMaintenance from './mastermaintenance.js'
 import backup from './backup.js'
+import movetop from './movetop.js'
 
 export default {
     template,
@@ -40,6 +42,7 @@ export default {
         masterMaintenance,
         confirm,
         backup,
+        movetop,
     },
     data() {
         return {
@@ -49,6 +52,12 @@ export default {
             positive: "OK",
             negative: "Cancel",
             callbackConfirm: null,
+            styleGrid: {
+                "grid-template-rows": "1fr",
+            },
+            styleNavi: {
+                "line-height": "700px",
+            },
         };
     },
     computed: {
@@ -57,7 +66,13 @@ export default {
         // }
     },
     mounted() {
-
+        var gridHeight = (window.innerHeight - 10);
+        // this.styleGrid = {
+        //     "grid-template-rows": gridHeight + "px",
+        // };
+        this.styleNavi = {
+            "line-height": gridHeight + "px",
+        };
     },
     methods: {
         onHome() {

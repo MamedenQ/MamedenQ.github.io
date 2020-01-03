@@ -43,7 +43,8 @@
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
 <script src="https://unpkg.com/vue-chartjs/dist/vue-chartjs.min.js"></script> -->
 <script src="main.js" type="module"></script>
-
+<!-- <script src="https://cdn.jsdelivr.net/npm/vue-smooth-scroll@1.0.13/dist/vue-smooth-scroll.min.js"></script> -->
+<script src="./smooth-scroll.polyfills.min.js"></script>
 <script type="text/javascript">
     // ＝＝＝＝＝調査項目
     // 画面間データ連携調査
@@ -97,24 +98,19 @@
 
     // スコア一覧をソートできるように試合順とかセット番号をつける
 
-    // 自チーム側のみの分析も可能にする　分析一覧で絞り込む
-
     // スコア一覧の絞り込みはボタンではなく、onChangeとかのイベントで行う
-
-    // 各画面のメニューは下にする？
 
     // スコアアイコンを長押しで削除とかして区別できるようにする？
     // それかタップでメニュー出す？
 
     // スコア追加時に右端にスクロールする
 
-    // ローテーションボタンの位置
-
     // メニュー構成
 
     // リベロをどうする？
     // メンバーチェンジでリベロ枠設定
     // リベロ枠設定された箇所はローテーションから除外
+    // リベロ設定はデフォルトにするかを設定で選択できる
 
     // 入力済みのデータの修正や、挿入ができない
 
@@ -124,6 +120,7 @@
     // 9人制ルールに適用する
     // 設定で切り替える
     // サーブセカンド、ローテなし
+    // ８人しか登録できないが、相手チーム側も使えば９人登録できる
 
     // トス品質、２段トス、コース分析、ブロック枚数
 
@@ -151,6 +148,21 @@
     // v-bind  :
 
     var color = d3.scale.category20();
+    // smoothScroll.init();
+    // smoothScroll.init({
+    //     selector: '[data-scroll]',				// スムーススクロールが有効なリンクに付ける属性
+    //     selectorHeader: '[data-scroll-header]',		// 固定ナビに付ける属性
+    //     speed: 250,						// 到達するまでの総時間(ミリ秒)
+    //     easing: 'easeInOutCubic',			// スピードの種類
+    //     offset: 0,							// 到達場所からズラすピクセル数
+    //     updateURL: false,					// URLを[#〜]に変更するか？
+    //     callback: function () { }				// コールバック関数 (到達時に実行される関数)
+    // });
+    var scroll = new SmoothScroll('a[href*="#"]', {
+        speed: 1000,
+        easing: 'easeInOutCubic',
+        speedAsDuration: true,
+    });
 </script>
 <style>
     /* https://grid.layoutit.com/?id=cFy6gyh */

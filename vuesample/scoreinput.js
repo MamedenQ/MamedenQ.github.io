@@ -66,8 +66,8 @@ const template = `
             </div>
         </div>
 
-        <div class="score grid_style" style="overflow-x:scroll; overflow-y:hidden;">
-            <svg v-bind:width="score.length * 90 + 10" style="height: 100%;max-width:none;max-height:none;">
+        <div class="score grid_style" style="overflow-x:auto; overflow-y:hidden;">
+            <svg id="score_area" v-bind:width="score.length * 90 + 10" style="height: 100%;max-width:none;max-height:none;">
                 <scoreObj v-on:click-score="onClickScore(item)" v-for="(item, idx) of score" :key="item.index" :item="item" :idx="idx"></scoreObj>
             </svg>
         </div>
@@ -91,6 +91,7 @@ const template = `
                 </svg>
                 <span>交代</span>
                 <member v-on:change-member="changeMember"></member>
+                <span>元に戻す</span>
                 <svg v-if="undoEnabled" v-bind:disabled="!undoEnabled" v-on:click="undo" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M10 16l-6-6 6-6"/>
                     <path d="M20 21v-7a4 4 0 0 0-4-4H5"/>
@@ -99,6 +100,7 @@ const template = `
                     <path d="M10 16l-6-6 6-6"/>
                     <path d="M20 21v-7a4 4 0 0 0-4-4H5"/>
                 </svg>
+                <span>やり直す</span>
                 <svg v-if="redoEnabled" v-bind:disabled="!redoEnabled" v-on:click="redo" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M14 16l6-6-6-6"/>
                     <path d="M4 21v-7a4 4 0 0 1 4-4h11"/>
@@ -403,11 +405,11 @@ export default {
         this.toggleKind();
         this.onChangeKind();
 
-        var itemHeight = (window.innerHeight - 205) / 6;
+        var itemHeight = (window.innerHeight - 210) / 6;
         this.styleGrid = {
             "grid-template-rows": itemHeight + "px " + itemHeight + "px " + itemHeight + "px " + itemHeight + "px " + itemHeight + "px " + itemHeight + "px 200px",
         };
-        var itemHeightCoat = (window.innerHeight - 255) / 6;
+        var itemHeightCoat = (window.innerHeight - 260) / 6;
         this.styleGridCoat = {
             "grid-template-rows": itemHeightCoat + "px " + itemHeightCoat + "px " + itemHeightCoat + "px " + itemHeightCoat + "px " + itemHeightCoat + "px " + itemHeightCoat + "px",
         };
@@ -588,6 +590,11 @@ export default {
             this.scoreBk = [];
             this.updateUndoRedoButton();
             this.outputlog();
+            // location.href = "#scoreEnd";
+            var target = document.getElementById("score_area");
+            // target.scrollLeft = -1 * (this.score.length * 90 + 10);
+            target.scrollLeft = target.scrollWidth;
+            // target.scrollLeft = 500;
         },
         deleteScore(deleteIndex) {
             this.title = "削除確認";

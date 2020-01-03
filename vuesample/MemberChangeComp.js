@@ -3,11 +3,11 @@ const template = `
         <transition>
             <div class="modal-mask">
                 <div class="modal-wrapper">
-                    <div class="modal-container" style="width:1000px">
+                    <div class="modal-container" style="width:900px">
                         <div class="modal-header">
                             <h3 slot="header">{{title}}</h3>
                         </div>
-                        <div class="modal-body" style="height:450px">
+                        <div class="modal-body" style="height:420px">
                             <div style="overflow-x:hidden; overflow-y:scroll; float:left;height:100%;width:calc(50% - 10px);margin-right:10px;">
                                 <ul>
                                     <li class="member">

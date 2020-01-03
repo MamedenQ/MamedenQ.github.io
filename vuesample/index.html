@@ -99,9 +99,6 @@
 
     // 自チーム側のみの分析も可能にする　分析一覧で絞り込む
 
-    // アイコン残り
-    // ラリー
-
     // スコア一覧の絞り込みはボタンではなく、onChangeとかのイベントで行う
 
     // 各画面のメニューは下にする？
@@ -314,13 +311,124 @@
     }
 
     .coat {
-        /* display: grid;
-        grid-column-gap: 10px;
+        display: grid;
         grid-row-gap: 10px;
+        grid-column-gap: 10px;
         grid-template-columns: 1fr 1fr 1fr;
         grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
-        grid-template-areas: "b7 b8 b9""b4 b5 b6""b3 b2 b1""a1 a2 a3""a6 a5 a4""a9 a8 a7"; */
+        grid-template-areas: "a7 a8 a9""a4 a5 a6""a3 a2 a1""b1 b2 b3""b6 b5 b4""b9 b8 b7";
         grid-area: coat;
+    }
+
+    .a1 {
+        background-color: #d6edbe;
+        grid-area: a1;
+    }
+
+    .a2 {
+        background-color: #d6edbe;
+        grid-area: a2;
+    }
+
+    .a3 {
+        background-color: #d6edbe;
+        grid-area: a3;
+    }
+
+    .a4 {
+        background-color: #edd5be;
+        grid-area: a4;
+    }
+
+    .a5 {
+        background-color: #edd5be;
+        grid-area: a5;
+    }
+
+    .a6 {
+        background-color: #edd5be;
+        grid-area: a6;
+    }
+
+    .a7 {
+        background-color: #edd5be;
+        grid-area: a7;
+    }
+
+    .a8 {
+        background-color: #edd5be;
+        grid-area: a8;
+    }
+
+    .a9 {
+        background-color: #edd5be;
+        grid-area: a9;
+    }
+
+    .b1 {
+        background-color: #d6edbe;
+        grid-area: b1;
+    }
+
+    .b2 {
+        background-color: #d6edbe;
+        grid-area: b2;
+    }
+
+    .b3 {
+        background-color: #d6edbe;
+        grid-area: b3;
+    }
+
+    .b4 {
+        background-color: #edd5be;
+        grid-area: b4;
+    }
+
+    .b5 {
+        background-color: #edd5be;
+        grid-area: b5;
+    }
+
+    .b6 {
+        background-color: #edd5be;
+        grid-area: b6;
+    }
+
+    .b7 {
+        background-color: #edd5be;
+        grid-area: b7;
+    }
+
+    .b8 {
+        background-color: #edd5be;
+        grid-area: b8;
+    }
+
+    .b9 {
+        background-color: #edd5be;
+        grid-area: b9;
+    }
+
+    .coat div {
+        position: relative;
+        /* margin-right: 6px;
+        margin-bottom: 6px; */
+    }
+
+    .coat div span {
+        position: absolute;
+        top: 5px;
+        left: 0;
+        right: 0;
+    }
+
+    .coat div svg {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 5px;
+        width: 100%;
     }
 
     .navi_a {
@@ -407,13 +515,6 @@
         grid-area: c;
     }
 
-    .change-area {
-        /* width: 100%;
-        height: 100%;
-        grid-area: change-area; */
-        float: left;
-    }
-
     .score {
         grid-area: score;
     }
@@ -442,44 +543,14 @@
         grid-area: detail6;
     }
 
+    .change-area {
+        float: left;
+    }
+
     .grid_style {
         /*border: 2px solid #ddd;*/
         width: 100%;
         height: 100%;
-        border-radius: 5px;
-        /* margin: -1px; */
-    }
-
-    .grid_style_team {
-        border: 2px solid #ddd;
-        width: 30%;
-        height: 16%;
-        float: left;
-        list-style: none;
-        border-radius: 5px;
-        /* margin: -1px; */
-    }
-
-    .grid_style_team_a {
-        border: 2px solid #ddd;
-        /* width: 100%;
-        height: 100%; */
-        width: 30%;
-        height: 16%;
-        float: left;
-        list-style: none;
-        border-radius: 5px;
-        /* margin: -1px; */
-    }
-
-    .grid_style_team_b {
-        border: 2px solid #ddd;
-        /* width: 100%;
-        height: 100%; */
-        width: 30%;
-        height: 16%;
-        float: left;
-        list-style: none;
         border-radius: 5px;
         /* margin: -1px; */
     }
@@ -489,27 +560,29 @@
     }
 
     .select-item input[type="radio"]:checked+label {
-        color: #005ab3;
-        border: 2px solid #005ab3;
-        background-color: #e6f2ff;
+        /* color: #005ab3;
+        background-color: #e6f2ff; */
+        color: #fff;
+        background-color: #005ab3;
     }
 
     .select-item label {
-        color: #ddd;
-        border: 2px solid #ddd;
+        color: #333;
+        /* border: 2px solid #ddd; */
+        background: #eee;
         text-align: center;
         display: inline-block;
         width: 100%;
         height: 100%;
-        border-radius: 5px;
+        /* border-radius: 5px; */
         position: relative;
     }
 
-    .select-item label:hover {
+    /* .select-item label:hover {
         color: #aaa;
         border: 2px solid #aaa;
         cursor: pointer;
-    }
+    } */
 
     .select-item label svg {
         position: absolute;
@@ -531,9 +604,7 @@
     }
 
     .member {
-        width: 50%;
-        /* height: 13%; */
-        float: left;
+        list-style: none;
     }
 
     .member input {
@@ -541,32 +612,51 @@
     }
 
     .member input[type="radio"]:checked+label {
-        color: #000;
-        border: 2px solid #000;
-        background-color: #eaeaea;
+        /* color: #005ab3;
+        background-color: #e6f2ff; */
+        color: #fff;
+        background-color: #005ab3;
     }
 
     .member label {
-        color: #ddd;
-        border: 2px solid #ddd;
+        color: #333;
+        /* border: 2px solid #ddd; */
+        background: #eee;
         text-align: center;
         display: inline-block;
         /* padding: 5px 0px; */
         /* width: 150px;
         height: 80px; */
         width: 100%;
-        height: 100%;
+        height: 40px;
         /* margin: 10px; */
         /* position: absolute; */
-        border-radius: 5px;
-        list-style: none;
+        /* border-radius: 5px; */
+        position: relative;
     }
 
-    .member label:hover {
+    .member label svg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        height: 100%;
+    }
+
+    .member label span {
+        position: absolute;
+        left: 60px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        text-align: left;
+    }
+
+    /* .member label:hover {
         color: #aaa;
         border: 2px solid #aaa;
         cursor: pointer;
-    }
+    } */
 
     .item_invisible {
         display: none;

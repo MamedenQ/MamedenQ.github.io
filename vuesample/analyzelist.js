@@ -58,7 +58,7 @@ const template = `
                     <th colspan="2" class='serve_cell'>サーブ</th>
                     <th colspan="5" class='spike_cell'>スパイク</th>
                     <th colspan="2" class='block_cell'>ブロック</th>
-                    <th colspan="4" class='reception_cell'>レセプション</th>
+                    <th class='reception_cell'>レセプション</th>
                     <th rowspan="2">そ<br>の<br>他<br>ミ<br>ス</th>
                     <th rowspan="2">フ<br>ァ<br>ウ<br>ル</th>
                 </tr>
@@ -80,9 +80,6 @@ const template = `
                     <th class='block_cell'>得<br>点</th>
                     <th class='block_cell'>失<br>点</th>
 
-                    <th class='reception_cell'>A</th>
-                    <th class='reception_cell'>B</th>
-                    <th class='reception_cell'>C</th>
                     <th class='reception_cell'>失<br>点</th>
                 </tr>
             </thead>
@@ -105,9 +102,6 @@ const template = `
                     <td>{{item.block.point}}</td>
                     <td>{{item.block.miss}}</td>
 
-                    <td>{{item.receive.a}}</td>
-                    <td>{{item.receive.b}}</td>
-                    <td>{{item.receive.c}}</td>
                     <td>{{item.receive.miss}}</td>
 
                     <td>{{item.other_miss}}</td>
@@ -436,9 +430,9 @@ export default {
                     determined: 0,
                 },
                 receive: {
-                    a: 0,
-                    b: 0,
-                    c: 0,
+                    // a: 0,
+                    // b: 0,
+                    // c: 0,
                     miss: 0,
                     // miss_detail: {
                     //     out: 0,
@@ -447,9 +441,9 @@ export default {
                     //     tsunagi: 0,
                     // },
                     total: 0,
-                    a_rate: 0,
-                    b_rate: 0,
-                    c_rate: 0,
+                    // a_rate: 0,
+                    // b_rate: 0,
+                    // c_rate: 0,
                     miss_rate: 0,
                 },
                 other_miss: 0,

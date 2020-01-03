@@ -27,7 +27,7 @@ const template = `
             </div>
         </div>
         
-        <div class="grid-detail" v-show="!showChangeArea">
+        <div class="grid-detail">
             <div v-bind:class="item.classGrid" v-for="item of itemDetail">
                 <input type="radio" v-bind:id="item.id" name="detail" v-bind:value="item.name" v-model="modelDetail" v-bind:disabled="!item.isEnabled">
                 <label v-bind:for="item.id">
@@ -44,18 +44,33 @@ const template = `
             </div>
         </div>
         
-        <ul class="coat"> 
-            <li style="text-align: center;" v-bind:class="item.classGrid" v-on:click="addScore(item)" v-for="item of itemTeamA" :key="item.key" class="grid_style_team">
+        <div class="coat" v-bind:style="styleGridCoat">
+            <div v-bind:class="item.classGrid" v-on:click="addScore(item)" v-for="item of itemTeamA">
+                <span v-show="!item.isEmpty">{{item.no + ":" + item.name}}</span><br>
+                <player v-if="item.sex == 0" v-show="!item.isEmpty"></player>
+                <player_f v-else v-show="!item.isEmpty"></player_f>
+            </div>
+            <div v-bind:class="item.classGrid" v-on:click="addScore(item)" v-for="item of itemTeamB">
+                <span v-show="!item.isEmpty">{{item.no + ":" + item.name}}</span><br>
+                <player v-if="item.sex == 0" v-show="!item.isEmpty"></player>
+                <player_f v-else v-show="!item.isEmpty"></player_f>
+            </div>
+        </div>
+
+        <!--
+        <ul class="coat" v-bind:style="styleGridCoat"> 
+            <li v-bind:class="item.classGrid" v-on:click="addScore(item)" v-for="item of itemTeamA" :key="item.key" class="grid_style_team">
                 <span v-show="!item.isEmpty">{{item.no + ":" + item.name}}</span><br>
                 <player v-if="item.sex == 0" v-show="!item.isEmpty"></player>
                 <player_f v-else v-show="!item.isEmpty"></player_f>
             </li>
-            <li style="text-align: center;" v-bind:class="item.classGrid" v-on:click="addScore(item)" v-for="item of itemTeamB" :key="item.key" class="grid_style_team">
+            <li v-bind:class="item.classGrid" v-on:click="addScore(item)" v-for="item of itemTeamB" :key="item.key" class="grid_style_team">
                 <span v-show="!item.isEmpty">{{item.no + ":" + item.name}}</span><br>
                 <player v-if="item.sex == 0" v-show="!item.isEmpty"></player>
                 <player_f v-else v-show="!item.isEmpty"></player_f>
             </li>
         </ul>
+        -->
 
         <div class="score grid_style" style="overflow-x:scroll; overflow-y:hidden;">
             <svg v-bind:width="score.length * 90 + 10" style="height: 100%;max-width:none;max-height:none;">
@@ -287,12 +302,18 @@ export default {
             styleGrid: {
                 "grid-template-rows": "1fr 1fr 1fr 1fr 1fr 1fr 220px",
             },
+            styleGridCoat: {
+                "grid-template-rows": "1fr 1fr 1fr 1fr 1fr 1fr",
+            },
             styleNavi: {
                 "line-height": "700px",
             },
             styleLabel: {
                 "line-height": "50px",
             },
+            // stylePlayer: {
+            //     "height": "89px",
+            // },
             itemAction: [
                 { label: "サーブ", name: "serve", id: "action_serve", classGrid: "select-item serve" },
                 { label: "スパイク", name: "spike", id: "action_spike", classGrid: "select-item spike" },
@@ -325,26 +346,26 @@ export default {
                 { label: "D6", name: "D6", id: "detail_6", classGrid: "select-item detail6 detail_6_label", isEnabled: true, },
             ],
             itemTeamA: [
-                { key: "a7", team: "a", no: "", name: "", sex: 0, classGrid: "a7", isEmpty: true, },
-                { key: "a8", team: "a", no: "", name: "", sex: 0, classGrid: "a8", isEmpty: true, },
-                { key: "a9", team: "a", no: "", name: "", sex: 0, classGrid: "a9", isEmpty: true, },
-                { key: "a4", team: "a", no: "", name: "", sex: 0, classGrid: "a4", isEmpty: true, },
-                { key: "a5", team: "a", no: "", name: "", sex: 0, classGrid: "a5", isEmpty: true, },
-                { key: "a6", team: "a", no: "", name: "", sex: 0, classGrid: "a6", isEmpty: true, },
-                { key: "a3", team: "a", no: "", name: "", sex: 0, classGrid: "a3", isEmpty: true, },
-                { key: "a2", team: "a", no: "", name: "", sex: 0, classGrid: "a2", isEmpty: true, },
-                { key: "a1", team: "a", no: "", name: "", sex: 0, classGrid: "a1", isEmpty: true, },
+                { key: "a7", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a7", isEmpty: true, },
+                { key: "a8", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a8", isEmpty: true, },
+                { key: "a9", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a9", isEmpty: true, },
+                { key: "a4", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a4", isEmpty: true, },
+                { key: "a5", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a5", isEmpty: true, },
+                { key: "a6", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a6", isEmpty: true, },
+                { key: "a3", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a3", isEmpty: true, },
+                { key: "a2", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a2", isEmpty: true, },
+                { key: "a1", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a1", isEmpty: true, },
             ],
             itemTeamB: [
-                { key: "b1", team: "b", no: "", name: "", sex: 0, classGrid: "b1", isEmpty: true, },
-                { key: "b2", team: "b", no: "", name: "", sex: 0, classGrid: "b2", isEmpty: true, },
-                { key: "b3", team: "b", no: "", name: "", sex: 0, classGrid: "b3", isEmpty: true, },
-                { key: "b6", team: "b", no: "", name: "", sex: 0, classGrid: "b6", isEmpty: true, },
-                { key: "b5", team: "b", no: "", name: "", sex: 0, classGrid: "b5", isEmpty: true, },
-                { key: "b4", team: "b", no: "", name: "", sex: 0, classGrid: "b4", isEmpty: true, },
-                { key: "b9", team: "b", no: "", name: "", sex: 0, classGrid: "b9", isEmpty: true, },
-                { key: "b8", team: "b", no: "", name: "", sex: 0, classGrid: "b8", isEmpty: true, },
-                { key: "b7", team: "b", no: "", name: "", sex: 0, classGrid: "b7", isEmpty: true, },
+                { key: "b1", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b1", isEmpty: true, },
+                { key: "b2", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b2", isEmpty: true, },
+                { key: "b3", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b3", isEmpty: true, },
+                { key: "b6", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b6", isEmpty: true, },
+                { key: "b5", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b5", isEmpty: true, },
+                { key: "b4", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b4", isEmpty: true, },
+                { key: "b9", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b9", isEmpty: true, },
+                { key: "b8", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b8", isEmpty: true, },
+                { key: "b7", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b7", isEmpty: true, },
             ],
             members: [],
         }
@@ -367,12 +388,19 @@ export default {
         this.styleGrid = {
             "grid-template-rows": itemHeight + "px " + itemHeight + "px " + itemHeight + "px " + itemHeight + "px " + itemHeight + "px " + itemHeight + "px 200px",
         };
+        var itemHeightCoat = (window.innerHeight - 250) / 6;
+        this.styleGridCoat = {
+            "grid-template-rows": itemHeightCoat + "px " + itemHeightCoat + "px " + itemHeightCoat + "px " + itemHeightCoat + "px " + itemHeightCoat + "px " + itemHeightCoat + "px",
+        };
         this.styleNavi = {
             "line-height": window.innerHeight + "px",
         };
         this.styleLabel = {
             "line-height": (itemHeight - 10) + "px",
         };
+        // this.stylePlayer = {
+        //     "height": (itemHeight - 10) + "px",
+        // }; // grid間隔分だけ減らす
         // console.log("score input mounted 02");
         // grid - template - rows: 1fr 1fr 1fr 1fr 1fr 1fr 220px;
 

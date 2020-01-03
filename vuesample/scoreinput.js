@@ -22,6 +22,7 @@ const template = `
                     <span v-bind:style="styleLabel">{{item.label}}</span>
                     <point v-if="item.name == 'point'"></point>
                     <other_miss v-else-if="item.name == 'miss'"></other_miss>
+                    <rally v-else-if="item.name == 'rally'"></rally>
                 </label>
             </div>
         </div>
@@ -37,6 +38,8 @@ const template = `
                     <judge v-else-if="item.name == 'judge'"></judge>
                     <out v-else-if="item.name == 'out'"></out>
                     <block v-else-if="item.name == 'block' || item.name == 'blockout'"></block>
+                    <suikomi v-else-if="item.name == 'suikomi'"></suikomi>
+                    <omiai v-else-if="item.name == 'omiai'"></omiai>
                 </label>
             </div>
         </div>
@@ -208,6 +211,9 @@ import out from './out.js'
 import inIcon from './inicon.js'
 import fake from './fake.js'
 import judge from './judge.js'
+import suikomi from './suikomi.js'
+import omiai from './omiai.js'
+import rally from './rally.js'
 
 export default {
     template,
@@ -231,6 +237,9 @@ export default {
         inIcon,
         fake,
         judge,
+        suikomi,
+        omiai,
+        rally,
     },
     props: {
         scoreId: String,
@@ -354,9 +363,9 @@ export default {
         this.onChangeKind();
         this.loadMain();
 
-        var itemHeight = (window.innerHeight - 220) / 6;
+        var itemHeight = (window.innerHeight - 200) / 6;
         this.styleGrid = {
-            "grid-template-rows": itemHeight + "px " + itemHeight + "px " + itemHeight + "px " + itemHeight + "px " + itemHeight + "px " + itemHeight + "px 220px",
+            "grid-template-rows": itemHeight + "px " + itemHeight + "px " + itemHeight + "px " + itemHeight + "px " + itemHeight + "px " + itemHeight + "px 200px",
         };
         this.styleNavi = {
             "line-height": window.innerHeight + "px",
@@ -589,6 +598,8 @@ export default {
             this.itemKind[4].isEnabled = false;
             this.itemKind[5].isEnabled = false;
 
+            this.modelDetail = "";
+
             if (this.modelAction == 'serve' || this.modelAction == 'block') {
                 this.itemKind[0].label = "ポイント";
                 this.itemKind[1].label = "ミス";
@@ -615,25 +626,25 @@ export default {
                 this.itemKind[2].isEnabled = true;
 
                 this.modelKind = "rally";
-                this.modelDetail = "D1";
-            } else if (this.modelAction == 'receive') {
-                this.itemKind[0].label = "A";
-                this.itemKind[1].label = "B";
-                this.itemKind[2].label = "C";
-                this.itemKind[3].label = "ミス";
+                this.modelDetail = "";
+                // } else if (this.modelAction == 'receive') {
+                // this.itemKind[0].label = "A";
+                // this.itemKind[1].label = "B";
+                // this.itemKind[2].label = "C";
+                // this.itemKind[3].label = "ミス";
 
-                this.itemKind[0].name = "a";
-                this.itemKind[1].name = "b";
-                this.itemKind[2].name = "c";
-                this.itemKind[3].name = "miss";
+                // this.itemKind[0].name = "a";
+                // this.itemKind[1].name = "b";
+                // this.itemKind[2].name = "c";
+                // this.itemKind[3].name = "miss";
 
-                this.itemKind[0].isEnabled = true;
-                this.itemKind[1].isEnabled = true;
-                this.itemKind[2].isEnabled = true;
-                this.itemKind[3].isEnabled = true;
+                // this.itemKind[0].isEnabled = true;
+                // this.itemKind[1].isEnabled = true;
+                // this.itemKind[2].isEnabled = true;
+                // this.itemKind[3].isEnabled = true;
 
-                this.modelKind = "a";
-                this.modelDetail = "D1";
+                // this.modelKind = "a";
+                // this.modelDetail = "D1";
             } else if (this.modelAction == 'other_miss') {
                 this.itemKind[0].label = "ミス";
 
@@ -643,6 +654,16 @@ export default {
 
                 this.modelKind = "miss";
                 this.modelDetail = "D1";
+            } else if (this.modelAction == 'receive' ||
+                this.modelAction == 'faul') {
+                this.itemKind[0].label = "ミス";
+
+                this.itemKind[0].name = "miss";
+
+                this.itemKind[0].isEnabled = true;
+
+                this.modelKind = "miss";
+                this.modelDetail = "";
             }
         },
         onChangeKind() {
@@ -669,6 +690,8 @@ export default {
             this.itemDetail[3].isEnabled = false;
             this.itemDetail[4].isEnabled = false;
             this.itemDetail[5].isEnabled = false;
+
+            this.modelDetail = "";
 
             if (this.modelAction == "serve") {
                 if (this.modelKind == "point") {

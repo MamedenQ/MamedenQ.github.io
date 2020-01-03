@@ -72,8 +72,8 @@ export default {
             callbackConfirm: null,
             deleteItem: {},
             isCheckAll: false,
-            modelDateStart: "",
-            modelDateEnd: "",
+            modelDateStart: "2000-01-01",
+            modelDateEnd: "2030-12-31",
             dStart: null,
             dEnd: null,
             styleNavi: {

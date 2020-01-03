@@ -285,12 +285,12 @@ export default {
                 "line-height": "50px",
             },
             itemAction: [
-                { label: "Serve", name: "serve", id: "action_serve", classGrid: "select-item serve" },
-                { label: "Spike", name: "spike", id: "action_spike", classGrid: "select-item spike" },
-                { label: "Block", name: "block", id: "action_block", classGrid: "select-item block" },
-                { label: "Receive", name: "receive", id: "action_receive", classGrid: "select-item receive" },
-                { label: "Other Miss", name: "other_miss", id: "action_other_miss", classGrid: "select-item other_miss" },
-                { label: "Faul", name: "faul", id: "action_faul", classGrid: "select-item faul" },
+                { label: "サーブ", name: "serve", id: "action_serve", classGrid: "select-item serve" },
+                { label: "スパイク", name: "spike", id: "action_spike", classGrid: "select-item spike" },
+                { label: "ブロック", name: "block", id: "action_block", classGrid: "select-item block" },
+                { label: "レシーブ ", name: "receive", id: "action_receive", classGrid: "select-item receive" },
+                { label: "他ミス", name: "other_miss", id: "action_other_miss", classGrid: "select-item other_miss" },
+                { label: "ファウル", name: "faul", id: "action_faul", classGrid: "select-item faul" },
             ],
             itemKind: [
                 // { label: "Rally", name: "rally", id: "kind_rally", classGrid: "select-item rally", isEnabled: true, },
@@ -299,9 +299,9 @@ export default {
                 // { label: "A", name: "a", id: "kind_a", classGrid: "select-item a", isEnabled: true, },
                 // { label: "B", name: "b", id: "kind_b", classGrid: "select-item b", isEnabled: true, },
                 // { label: "C", name: "c", id: "kind_c", classGrid: "select-item c", isEnabled: true, },
-                { label: "Rally", name: "rally", id: "kind_1", classGrid: "select-item rally", isEnabled: true, },
-                { label: "Point", name: "point", id: "kind_2", classGrid: "select-item point", isEnabled: true, },
-                { label: "Miss", name: "miss", id: "kind_3", classGrid: "select-item miss", isEnabled: true, },
+                { label: "ラリー", name: "rally", id: "kind_1", classGrid: "select-item rally", isEnabled: true, },
+                { label: "ポイント", name: "point", id: "kind_2", classGrid: "select-item point", isEnabled: true, },
+                { label: "ミス", name: "miss", id: "kind_3", classGrid: "select-item miss", isEnabled: true, },
                 { label: "A", name: "a", id: "kind_4", classGrid: "select-item a", isEnabled: true, },
                 { label: "B", name: "b", id: "kind_5", classGrid: "select-item b", isEnabled: true, },
                 { label: "C", name: "c", id: "kind_6", classGrid: "select-item c", isEnabled: true, },
@@ -590,8 +590,8 @@ export default {
             this.itemKind[5].isEnabled = false;
 
             if (this.modelAction == 'serve' || this.modelAction == 'block') {
-                this.itemKind[0].label = "Point";
-                this.itemKind[1].label = "Miss";
+                this.itemKind[0].label = "ポイント";
+                this.itemKind[1].label = "ミス";
 
                 this.itemKind[0].name = "point";
                 this.itemKind[1].name = "miss";
@@ -602,9 +602,9 @@ export default {
                 this.modelKind = "point";
                 this.modelDetail = "D1";
             } else if (this.modelAction == 'spike') {
-                this.itemKind[0].label = "Rally";
-                this.itemKind[1].label = "Point";
-                this.itemKind[2].label = "Miss";
+                this.itemKind[0].label = "ラリー";
+                this.itemKind[1].label = "ポイント";
+                this.itemKind[2].label = "ミス";
 
                 this.itemKind[0].name = "rally";
                 this.itemKind[1].name = "point";
@@ -620,7 +620,7 @@ export default {
                 this.itemKind[0].label = "A";
                 this.itemKind[1].label = "B";
                 this.itemKind[2].label = "C";
-                this.itemKind[3].label = "Miss";
+                this.itemKind[3].label = "ミス";
 
                 this.itemKind[0].name = "a";
                 this.itemKind[1].name = "b";
@@ -635,7 +635,7 @@ export default {
                 this.modelKind = "a";
                 this.modelDetail = "D1";
             } else if (this.modelAction == 'other_miss') {
-                this.itemKind[0].label = "Miss";
+                this.itemKind[0].label = "ミス";
 
                 this.itemKind[0].name = "miss";
 
@@ -673,7 +673,7 @@ export default {
             if (this.modelAction == "serve") {
                 if (this.modelKind == "point") {
                     var idx = 0;
-                    this.itemDetail[idx].label = "Ace";
+                    this.itemDetail[idx].label = "エース";
                     this.itemDetail[idx].name = "ace";
                     this.itemDetail[idx].isEnabled = true;
                     idx++;
@@ -681,12 +681,12 @@ export default {
                     this.modelDetail = this.itemDetail[0].name;
                 } else if (this.modelKind == "miss") {
                     var idx = 0;
-                    this.itemDetail[idx].label = "Out";
+                    this.itemDetail[idx].label = "アウト";
                     this.itemDetail[idx].name = "out";
                     this.itemDetail[idx].isEnabled = true;
                     idx++;
 
-                    this.itemDetail[idx].label = "Net";
+                    this.itemDetail[idx].label = "ネット";
                     this.itemDetail[idx].name = "net";
                     this.itemDetail[idx].isEnabled = true;
                     idx++;
@@ -697,34 +697,34 @@ export default {
                 if (this.modelKind == "point") {
                     var idx = 0;
 
-                    this.itemDetail[idx].label = "In";
+                    this.itemDetail[idx].label = "イン";
                     this.itemDetail[idx].name = "in";
                     this.itemDetail[idx].isEnabled = true;
                     idx++;
 
-                    this.itemDetail[idx].label = "Fake";
+                    this.itemDetail[idx].label = "フェイント";
                     this.itemDetail[idx].name = "fake";
                     this.itemDetail[idx].isEnabled = true;
                     idx++;
 
-                    this.itemDetail[idx].label = "Blockout";
+                    this.itemDetail[idx].label = "ブロックアウト";
                     this.itemDetail[idx].name = "blockout";
                     this.itemDetail[idx].isEnabled = true;
                     idx++;
                     this.modelDetail = this.itemDetail[0].name;
                 } else if (this.modelKind == "miss") {
                     var idx = 0;
-                    this.itemDetail[idx].label = "Out";
+                    this.itemDetail[idx].label = "アウト";
                     this.itemDetail[idx].name = "out";
                     this.itemDetail[idx].isEnabled = true;
                     idx++;
 
-                    this.itemDetail[idx].label = "Net";
+                    this.itemDetail[idx].label = "ネット";
                     this.itemDetail[idx].name = "net";
                     this.itemDetail[idx].isEnabled = true;
                     idx++;
 
-                    this.itemDetail[idx].label = "Block";
+                    this.itemDetail[idx].label = "ブロック";
                     this.itemDetail[idx].name = "block";
                     this.itemDetail[idx].isEnabled = true;
                     idx++;
@@ -759,12 +759,12 @@ export default {
             } else if (this.modelAction == "block") {
                 if (this.modelKind == "miss") {
                     var idx = 0;
-                    this.itemDetail[idx].label = "Out";
+                    this.itemDetail[idx].label = "アウト";
                     this.itemDetail[idx].name = "out";
                     this.itemDetail[idx].isEnabled = true;
                     idx++;
 
-                    this.itemDetail[idx].label = "Suikomi";
+                    this.itemDetail[idx].label = "吸い込み";
                     this.itemDetail[idx].name = "suikomi";
                     this.itemDetail[idx].isEnabled = true;
                     idx++;
@@ -774,12 +774,12 @@ export default {
             } else if (this.modelAction == "other_miss") {
                 if (this.modelKind == "miss") {
                     var idx = 0;
-                    this.itemDetail[idx].label = "Judge";
+                    this.itemDetail[idx].label = "ジャッジ";
                     this.itemDetail[idx].name = "judge";
                     this.itemDetail[idx].isEnabled = true;
                     idx++;
 
-                    this.itemDetail[idx].label = "Omiai";
+                    this.itemDetail[idx].label = "お見合い";
                     this.itemDetail[idx].name = "omiai";
                     this.itemDetail[idx].isEnabled = true;
                     idx++;

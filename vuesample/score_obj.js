@@ -11,8 +11,11 @@ const template = `
 
   <text text-anchor="middle" v-bind:x="10 + 90 * idx + 40" v-bind:y="75">{{item.action}}</text>
   <text text-anchor="middle" v-bind:x="10 + 90 * idx + 40" v-bind:y="110">{{item.no + ":" + item.name}}</text>
+  <!--
   <text text-anchor="middle" v-bind:x="10 + 90 * idx + 40" v-bind:y="130">{{item.kind}}</text>
   <text text-anchor="middle" v-bind:x="10 + 90 * idx + 40" v-bind:y="150">{{item.detail}}</text>
+  -->
+  <text text-anchor="middle" v-bind:x="10 + 90 * idx + 40" v-bind:y="130">{{item.kind + ":" + item.detail}}</text>
 </svg>
 `;
 

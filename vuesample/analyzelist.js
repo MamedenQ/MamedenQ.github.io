@@ -58,7 +58,7 @@ const template = `
                     <th colspan="2" class='serve_cell'>サーブ</th>
                     <th colspan="5" class='spike_cell'>スパイク</th>
                     <th colspan="2" class='block_cell'>ブロック</th>
-                    <th class='reception_cell'>レセプション</th>
+                    <th class='reception_cell'>レシーブ</th>
                     <th rowspan="2">そ<br>の<br>他<br>ミ<br>ス</th>
                     <th rowspan="2">フ<br>ァ<br>ウ<br>ル</th>
                 </tr>
@@ -83,10 +83,10 @@ const template = `
                     <th class='reception_cell'>失<br>点</th>
                 </tr>
             </thead>
-            <tbody class="analyze_body">
+            <tbody class="analyze_body" style="text-align:right;">
                 <tr v-for="item, idx of scoreAnalyze">
-                    <td>{{item.no}}</td>
-                    <td><a href='#' v-on:click="onPlayerDetail(item)">{{item.name}}</a></td>
+                    <td style="text-align:center;">{{item.no}}</td>
+                    <td style="text-align:left;"><a href='#' v-on:click="onPlayerDetail(item)">{{item.name}}</a></td>
                     <td>{{item.total.point}}</td>
                     <td>{{item.total.miss}}</td>
 

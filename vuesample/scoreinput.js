@@ -46,14 +46,14 @@ const template = `
         
         <div class="coat" v-bind:style="styleGridCoat">
             <div v-bind:class="item.classGrid" v-on:click="addScore(item)" v-for="item of itemTeamA">
-                <span v-show="!item.isEmpty">{{item.no + ":" + item.name}}</span><br>
-                <player v-if="item.sex == 0" v-show="!item.isEmpty"></player>
-                <player_f v-else v-show="!item.isEmpty"></player_f>
+                <span style="text-align:center;" v-show="!item.isEmpty">{{item.no + ":" + item.name}}</span><br>
+                <player v-show="item.sex == 0 && !item.isEmpty"></player>
+                <player_f v-show="item.sex == 1 && !item.isEmpty"></player_f>
             </div>
             <div v-bind:class="item.classGrid" v-on:click="addScore(item)" v-for="item of itemTeamB">
-                <span v-show="!item.isEmpty">{{item.no + ":" + item.name}}</span><br>
-                <player v-if="item.sex == 0" v-show="!item.isEmpty"></player>
-                <player_f v-else v-show="!item.isEmpty"></player_f>
+                <span style="text-align:center;" v-show="!item.isEmpty">{{item.no + ":" + item.name}}</span><br>
+                <player v-show="item.sex == 0 && !item.isEmpty"></player>
+                <player_f v-show="item.sex == 1 && !item.isEmpty"></player_f>
             </div>
         </div>
 
@@ -908,6 +908,7 @@ export default {
             // jsonの順番を変えるようにしないとだめ
             var tempNo = -1;
             var tempName = "";
+            var tempSex = 0;
             var first = true;
             for (var i = 8; i > 0; i--) {
                 if (team[i].isEmpty) {
@@ -916,12 +917,14 @@ export default {
                 if (first) {
                     tempNo = team[i].no;
                     tempName = team[i].name;
+                    tempSex = team[i].sex;
                     first = !first;
                 }
                 for (var j = i - 1; j >= 0; j--) {
                     if (!team[j].isEmpty) {
                         team[i].no = team[j].no;
                         team[i].name = team[j].name;
+                        team[i].sex = team[j].sex;
                         break;
                     }
                 }
@@ -929,6 +932,7 @@ export default {
 
             team[0].no = tempNo;
             team[0].name = tempName;
+            team[0].sex = tempSex;
         },
         result(flg) {
             this.callbackConfirm(flg);

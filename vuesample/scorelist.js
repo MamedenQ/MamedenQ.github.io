@@ -19,7 +19,7 @@ const template = `
     </div>
     <div class="scorelist">
         <input type="date" v-model="modelDateStart" />〜<input type="date" v-model="modelDateEnd" /><br>
-        <button v-on:click="searchScore">絞り込み</button>
+        <button v-on:click="searchScore">絞り込み</button><br><br>
         <button v-on:click="linkAnalyzeList">分析</button>
         <table class="analyze">
             <thead class="analyze_head">

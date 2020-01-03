@@ -112,6 +112,10 @@
 
     // メニュー構成
 
+    // リベロをどうする？
+    // メンバーチェンジでリベロ枠設定
+    // リベロ枠設定された箇所はローテーションから除外
+
     // 入力済みのデータの修正や、挿入ができない
 
     // 自チーム側のみの分析も可能にする　分析一覧で絞り込む
@@ -132,6 +136,9 @@
 
     // iPhoneでも表示できるようにする？
     // スコア表示のところを固定pxではなく可変にするとできるが、小さい？
+
+    // 自分のiPhoneの壁紙のように影をつけて、立体的にする
+    // マテリアルデザイン的なやつ
 
     // リファクタリング
     // アイコンの共通化
@@ -200,6 +207,9 @@
     }
 
     .contents {
+        margin-left: 5px;
+        margin-top: 5px;
+        margin-right: 5px;
         grid-area: contents;
         /* max-height: 100%;
         max-width: 100%; */
@@ -278,9 +288,9 @@
         display: grid;
         grid-column-gap: 10px;
         /* grid-row-gap: 10px; */
-        grid-template-columns: 70px 1fr 1fr 1fr 1fr 1fr 70px;
+        grid-template-columns: 70px 1fr 1fr 1fr 1fr 1fr;
         grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 220px;
-        grid-template-areas: "navi_a grid-action grid-kind grid-detail coat coat navi_b""navi_a grid-action grid-kind grid-detail coat coat navi_b""navi_a grid-action grid-kind grid-detail coat coat navi_b""navi_a grid-action grid-kind grid-detail coat coat navi_b""navi_a grid-action grid-kind grid-detail coat coat navi_b""navi_a grid-action grid-kind grid-detail coat coat navi_b""navi_a score score score score score navi_b";
+        grid-template-areas: "navi_a grid-action grid-kind grid-detail coat coat""navi_a grid-action grid-kind grid-detail coat coat""navi_a grid-action grid-kind grid-detail coat coat""navi_a grid-action grid-kind grid-detail coat coat""navi_a grid-action grid-kind grid-detail coat coat""navi_a grid-action grid-kind grid-detail coat coat""navi_a score score score score score";
     }
 
     .grid-scorelist {
@@ -461,7 +471,7 @@
 
     .coat div span {
         position: absolute;
-        top: 5px;
+        top: 2px;
         left: 0;
         right: 0;
         text-align: center;
@@ -472,7 +482,7 @@
         position: absolute;
         left: 0;
         right: 0;
-        bottom: 5px;
+        bottom: 2px;
         width: 100%;
         height: 60%;
     }

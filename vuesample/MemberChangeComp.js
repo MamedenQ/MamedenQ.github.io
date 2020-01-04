@@ -3,7 +3,7 @@ const template = `
         <transition>
             <div class="modal-mask">
                 <div class="modal-wrapper">
-                    <div class="modal-container" style="width:900px">
+                    <div class="modal-container" style="width:700px">
                         <div class="modal-header">
                             <h3 slot="header">{{title}}</h3>
                         </div>

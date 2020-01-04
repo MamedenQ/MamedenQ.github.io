@@ -1,7 +1,7 @@
 const template = `
 <div>
     <span>DBバックアップ</span><br>
-    <button v-on:click="onClickBackupDB" class="btn btn-warning">DBバックアップ</button><br>
+    <button v-on:click="onClickBackupDB" class="btn btn-primary">DBバックアップ</button><br>
     <span>前回バックアップ日時 : {{ bkDate }}</span><br><br>
     <span>DBリストア</span><br>
     <button v-on:click="onClickRestoreDB" class="btn btn-warning">DBリストア</button><br><br>

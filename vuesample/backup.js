@@ -53,9 +53,11 @@ export default {
         outputDB() {
             var score = JSON.parse(localStorage.getItem("score"));
             var members = JSON.parse(localStorage.getItem("members"));
+            var teams = JSON.parse(localStorage.getItem("teams"));
             var outputJson = {
                 score: score,
                 members: members,
+                teams: teams,
             };
             this.output = JSON.stringify(outputJson);
         },
@@ -73,7 +75,8 @@ export default {
             var inputJson = JSON.parse(this.modelInput);
             localStorage.setItem("score", JSON.stringify(inputJson.score));
             localStorage.setItem("members", JSON.stringify(inputJson.members));
-            this.$emit("route-home");
+            localStorage.setItem("teams", JSON.stringify(inputJson.teams));
+            // this.$emit("route-home");
         },
         onClickBackupDB() {
             this.title = "DBバックアップ確認";

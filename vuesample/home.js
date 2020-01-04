@@ -37,7 +37,7 @@ export default {
         }
     },
     mounted() {
-        var itemHeight = (window.innerHeight - 20) / 2;
+        var itemHeight = (window.innerHeight - 30) / 2;
         this.styleGridHome = {
             "grid-template-rows": itemHeight + "px " + itemHeight + "px",
         };

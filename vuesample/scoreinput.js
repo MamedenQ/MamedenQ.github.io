@@ -491,6 +491,11 @@ export default {
                     saveData.title = data.title;
                     saveData.date = data.date;
                     saveData.score = data.score;
+
+                    saveData.teamA = data.teamA;
+                    saveData.teamB = data.teamB;
+                    saveData.teamAPoint = data.teamAPoint;
+                    saveData.teamBPoint = data.teamBPoint;
                     existsData = true;
                 }
             });
@@ -544,14 +549,30 @@ export default {
             this.score = filterData[0].score;
             this.modelTitle = filterData[0].title;
             this.modelDate = filterData[0].date;
-            this.itemTeamA = filterData[0].teamA;
-            this.itemTeamB = filterData[0].teamB;
+            // this.itemTeamA = filterData[0].teamA;
+            // this.itemTeamB = filterData[0].teamB;
+            this.updateTeam(filterData[0].teamA, filterData[0].teamB);
             this.modelAPoint = filterData[0].teamAPoint;
             this.modelBPoint = filterData[0].teamBPoint;
             this.updateUndoRedoButton();
             this.toggleKind();
             this.outputlog();
             this.isDirty = false;
+        },
+        updateTeam(teamA, teamB) {
+            for (var i = 0; i < 8; i++) {
+                this.itemTeamA[i].key = teamA[i].key;
+                this.itemTeamA[i].no = teamA[i].no;
+                this.itemTeamA[i].name = teamA[i].name;
+                this.itemTeamA[i].sex = teamA[i].sex;
+                this.itemTeamA[i].isEmpty = teamA[i].isEmpty;
+
+                this.itemTeamB[i].key = teamB[i].key;
+                this.itemTeamB[i].no = teamB[i].no;
+                this.itemTeamB[i].name = teamB[i].name;
+                this.itemTeamB[i].sex = teamB[i].sex;
+                this.itemTeamB[i].isEmpty = teamB[i].isEmpty;
+            }
         },
         closeScore(isCheck, callback) {
             this.showModalWarn = false;

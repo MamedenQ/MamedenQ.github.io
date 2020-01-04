@@ -64,7 +64,7 @@ const template = `
             </table>
             <a data-scroll href="#page-top" style="position:fixed;bottom:10px;right:10px;filter: drop-shadow(3px 3px 3px rgba(0, 0, 0, 0.6));"><movetop></movetop></a>
         </div>
-        <div class="fixed-header">
+        <div class="fixed-header" data-scroll-header>
             <!--
             <input type="date" v-model="modelDateStart" />〜<input type="date" v-model="modelDateEnd" />
             <button v-on:click="searchScore" class="btn btn-primary">絞り込み</button><br>

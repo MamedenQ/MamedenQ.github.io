@@ -186,8 +186,9 @@
     //     callback: function () { }				// コールバック関数 (到達時に実行される関数)
     // });
     var scroll = new SmoothScroll('a[href*="#"]', {
+        selector: '[data-scroll]',
         speed: 1000,
-        selectorHeader: '[fixed-header]',
+        selectorHeader: '[data-scroll-header]',
         easing: 'easeInOutCubic',
         speedAsDuration: true,
     });

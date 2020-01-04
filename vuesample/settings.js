@@ -23,7 +23,7 @@ const template = `
         -->
 
         <backup></backup>
-        <a data-scroll href="#page-top" style="position:fixed;bottom:10px;right:10px;"><movetop></movetop></a>
+        <a data-scroll href="#page-top" style="position:fixed;bottom:10px;right:10px;filter: drop-shadow(3px 3px 3px rgba(0, 0, 0, 0.6));"><movetop></movetop></a>
     </div>
     <confirm v-if="showModalConfirm" v-on:dialogResult="result" :title="title" :msg="msg" :positive="positive" :negative="negative"></confirm>
 </div>

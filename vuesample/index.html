@@ -20,10 +20,10 @@
     <div class="grid-main">
         <div class="contents">
             <router-view v-on:route-home="routeHome" v-on:route-score-input-new="routeScoreInputNew"
-                v-on:route-score-input="routeScoreInput" v-on:route-analyze-list="routeAnalyzeList"
-                v-on:route-score-list="routeScoreList" v-on:route-settings="routeSettings"
-                v-on:route-analyze-detail="routeAnalyzeDetail" v-bind:is-new-score="isNewScore"
-                v-bind:score-id="scoreId" v-bind:analyze-data="analyzeData"
+                v-on:route-score-input="routeScoreInput" v-on:route-analyze-list-player="routeAnalyzeListPlayer"
+                v-on:route-analyze-list-match="routeAnalyzeListMatch" v-on:route-score-list="routeScoreList"
+                v-on:route-settings="routeSettings" v-on:route-analyze-detail="routeAnalyzeDetail"
+                v-bind:is-new-score="isNewScore" v-bind:score-id="scoreId" v-bind:analyze-data="analyzeData"
                 v-bind:analyze-player-score="analyzePlayerData">
             </router-view>
         </div>

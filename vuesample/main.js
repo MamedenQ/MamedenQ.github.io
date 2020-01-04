@@ -13,9 +13,13 @@ var app = new Vue({
         routeScoreList() {
             this.$router.push({ path: '/scorelist' });
         },
-        routeAnalyzeList(items) {
+        routeAnalyzeListPlayer(items) {
             this.analyzeData = items;
-            this.$router.push({ path: '/analyzelist' });
+            this.$router.push({ path: '/analyzelistplayer' });
+        },
+        routeAnalyzeListMatch(items) {
+            this.analyzeData = items;
+            this.$router.push({ path: '/analyzelistmatch' });
         },
         routeScoreInput(scoreId) {
             this.scoreId = scoreId;

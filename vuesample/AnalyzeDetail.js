@@ -47,7 +47,7 @@ export default {
     },
     methods: {
         onBack() {
-            this.$emit("route-analyze-list");
+            this.$emit("route-analyze-list-player");
         },
         onHome() {
             this.$emit("route-home");

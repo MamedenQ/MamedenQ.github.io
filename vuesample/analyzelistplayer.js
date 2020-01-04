@@ -79,6 +79,9 @@ const template = `
                     <path d="M20 9v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9"/>
                     <path d="M9 22V12h6v10M2 10.6L12 2l10 8.6"/>
                 </svg>
+                <br><br><br><br>
+                <div>試合別</div>
+                <svg v-on:click="switchMatchList" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H6M12 5l-7 7 7 7"/></svg>
             </span>
         </div>
     </div>
@@ -357,6 +360,9 @@ export default {
         },
         onHome() {
             this.$emit("route-home");
+        },
+        switchMatchList() {
+            this.$emit("route-analyze-list-match", this.analyzeData);
         },
         onPlayerDetail(item) {
             this.$emit("route-analyze-detail", item);

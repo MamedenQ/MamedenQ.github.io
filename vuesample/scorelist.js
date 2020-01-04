@@ -177,7 +177,7 @@ export default {
                 return;
             }
 
-            this.$emit("route-analyze-list", this.extractTarget());
+            this.$emit("route-analyze-list-player", this.extractTarget());
         },
         extractTarget() {
             var target = this.scoreList.filter(this.isTarget);

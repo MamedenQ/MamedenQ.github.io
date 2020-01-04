@@ -2,15 +2,15 @@ const template = `
 <div class="grid-top" v-bind:style="styleGridHome">
     <div class="btninput" v-on:click="onClickScoreInput">
         <span>スコアを入力する</span>
-        <scoreinputicon class="grid_style"></scoreinputicon>
+        <scoreinputicon style="width:100%;height:100%;"></scoreinputicon>
     </div>
     <div class="btnlist" v-on:click="onClickScoreList">
         <span>スコアを分析する</span>
-        <analyzeicon class="grid_style"></analyzeicon>
+        <analyzeicon style="width:100%;height:100%;"></analyzeicon>
     </div>
     <div class="btnsettings" v-on:click="onClickSettings">
         <span>アプリをメンテナンスする</span>
-        <settingsIcon class="grid_style"></settingsIcon>
+        <settingsIcon style="width:100%;height:100%;"></settingsIcon>
     </div>
     <div class="empty">
         ここにアプリ名入れる

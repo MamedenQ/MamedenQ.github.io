@@ -1,53 +1,48 @@
 const template = `
-<div class="grid-scorelist">
-    <div class="navi_a"  v-bind:style="styleNavi" style="position:fixed;top:0;left:5px;">
-        <span>
-            <div>ホーム</div>
-            <svg v-on:click="onHome" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M20 9v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9"/>
-                <path d="M9 22V12h6v10M2 10.6L12 2l10 8.6"/>
-            </svg>
-        </span>
+<div class="main-area">
+    <div class="view-contents">
+        <div class="fixed-view-contents">
+            <span id="page-top"></span>
+            <table class="analyze">
+                <thead class="analyze_head">
+                    <tr>
+                        <th><input type="checkbox" v-bind:checked="isCheckAll" v-on:click="onClickCheckAll">　選択</th>
+                        <th>#</th>
+                        <th>タイトル</th>
+                        <th>日付</th>
+                        <th>得点</th>
+                        <th>削除</th>
+                    </tr>
+                </thead>
+                <tbody class="analyze_body">
+                    <tr v-for="item, idx of scoreList">
+                        <td><input type="checkbox" v-model="modelTarget" :value="item.id" v-on:change="onCheckChange()" /></td>
+                        <td>{{ idx + 1 }}</td>
+                        <td><a href="#" v-on:click="linkScoreInput(item.id)">{{ item.title }}</a></td>
+                        <td>{{ item.date }}</td>
+                        <td>{{ item.teamAPoint + " － " + item.teamBPoint }}</td>
+                        <td style="text-align:center;"><button v-on:click="onClickTrash(item)" class="btn btn-warning">削除</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <a data-scroll href="#page-top" style="position:fixed;bottom:10px;right:10px;filter: drop-shadow(3px 3px 3px rgba(0, 0, 0, 0.6));"><movetop></movetop></a>
+        </div>
+        <div class="fixed-header">
+            <input type="date" v-model="modelDateStart" />〜<input type="date" v-model="modelDateEnd" />
+            <button v-on:click="searchScore" class="btn btn-primary">絞り込み</button><br>
+            <button v-on:click="linkAnalyzeList" class="btn btn-primary">分析</button>
+        </div>
+        <div class="menu" v-bind:style="styleNavi">
+            <span>
+                <span>ホーム</span>
+                <svg v-on:click="onHome" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 9v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9"/>
+                    <path d="M9 22V12h6v10M2 10.6L12 2l10 8.6"/>
+                </svg>
+            </span>
+        </div>
     </div>
-    <div class="scorelist">
-        <span id="page-top"></span>
-        <input type="date" v-model="modelDateStart" />〜<input type="date" v-model="modelDateEnd" />
-        <button v-on:click="searchScore" class="btn btn-primary">絞り込み</button><br><br>
-        <button v-on:click="linkAnalyzeList" class="btn btn-primary">分析</button>
-        <table class="analyze">
-            <thead class="analyze_head">
-                <tr>
-                    <th><input type="checkbox" v-bind:checked="isCheckAll" v-on:click="onClickCheckAll">　選択</th>
-                    <th>#</th>
-                    <th>タイトル</th>
-                    <th>日付</th>
-                    <th>得点</th>
-                    <!--
-                    <th>スコアリンク</th>
-                    -->
-                    <th>削除</th>
-                </tr>
-            </thead>
-            <tbody class="analyze_body">
-                <tr v-for="item, idx of scoreList">
-                    <!--
-                    <td><input type="checkbox" v-model="modelTarget" :value="item" v-on:change="onCheckChange()" /></td>
-                    -->
-                    <td><input type="checkbox" v-model="modelTarget" :value="item.id" v-on:change="onCheckChange()" /></td>
-                    <td>{{ idx + 1 }}</td>
-                    <td><a href="#" v-on:click="linkScoreInput(item.id)">{{ item.title }}</a></td>
-                    <td>{{ item.date }}</td>
-                    <td>{{ item.teamAPoint + " － " + item.teamBPoint }}</td>
-                    <!--
-                    <td><a href="#" v-on:click="linkScoreInput(item.id)">リンク</a></td>
-                    -->
-                    <td style="text-align:center;"><button v-on:click="onClickTrash(item)" class="btn btn-warning">削除</button></td>
-                </tr>
-            </tbody>
-        </table>
-        <button v-on:click="linkAnalyzeList" class="btn btn-primary">分析</button>
-        <a data-scroll href="#page-top" style="position:fixed;bottom:10px;right:10px;filter: drop-shadow(3px 3px 3px rgba(0, 0, 0, 0.6));"><movetop></movetop></a>
-    </div>
+
     <confirm v-if="showModalConfirm" v-on:dialogResult="result" :title="title" :msg="msg" :positive="positive" :negative="negative"></confirm>
 </div>
 `;

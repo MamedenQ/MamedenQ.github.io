@@ -1,4 +1,92 @@
 const template = `
+<div class="main-area">
+    <div class="view-contents">
+        <div class="fixed-view-contents">
+            <span id="page-top"></span>
+            <table class="analyze">
+                <thead class="analyze_head" style="text-align:center;">
+                    <tr>
+                        <th colspan="2">基本情報</th>
+                        <th colspan="2">総合</th>
+                        <th colspan="2" class='serve_cell'>サーブ</th>
+                        <th colspan="5" class='spike_cell'>スパイク</th>
+                        <th colspan="2" class='block_cell'>ブロック</th>
+                        <th class='reception_cell'>レシーブ</th>
+                        <th rowspan="2">そ<br>の<br>他<br>ミ<br>ス</th>
+                        <th rowspan="2">フ<br>ァ<br>ウ<br>ル</th>
+                    </tr>
+                    <tr>
+                        <th>#</th>
+                        <th>名前</th>
+                        <th>得<br>点</th>
+                        <th>失<br>点</th>
+
+                        <th class='serve_cell'>得<br>点</th>
+                        <th class='serve_cell'>失<br>点</th>
+
+                        <th class='spike_cell'>総<br>数<br>①</th>
+                        <th class='spike_cell'>得<br>点<br>②</th>
+                        <th class='spike_cell'>失<br>点<br>③</th>
+                        <th class='spike_cell sort' data-sort="spike_effect">効<br>果<br>率<br>(②－③)／①</th>
+                        <th class='spike_cell sort' data-sort="spike_det">決<br>定<br>率<br>②／①</th>
+
+                        <th class='block_cell'>得<br>点</th>
+                        <th class='block_cell'>失<br>点</th>
+
+                        <th class='reception_cell'>失<br>点</th>
+                    </tr>
+                </thead>
+                <tbody class="analyze_body" style="text-align:right;">
+                    <tr v-for="item, idx of scoreAnalyze">
+                        <td style="text-align:center;">{{item.no}}</td>
+                        <td style="text-align:left;"><a href='#' v-on:click="onPlayerDetail(item)">{{item.name}}</a></td>
+                        <td>{{item.total.point}}</td>
+                        <td>{{item.total.miss}}</td>
+
+                        <td>{{item.serve.point}}</td>
+                        <td>{{item.serve.miss}}</td>
+
+                        <td>{{item.spike.total}}</td>
+                        <td>{{item.spike.point}}</td>
+                        <td>{{item.spike.miss}}</td>
+                        <td>{{item.spike.effect | filterPercent}}</td>
+                        <td>{{item.spike.determined | filterPercent}}</td>
+
+                        <td>{{item.block.point}}</td>
+                        <td>{{item.block.miss}}</td>
+
+                        <td>{{item.receive.miss}}</td>
+
+                        <td>{{item.other_miss}}</td>
+                        <td>{{item.faul}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <a data-scroll href="#page-top" style="position:fixed;bottom:10px;right:10px;filter: drop-shadow(3px 3px 3px rgba(0, 0, 0, 0.6));"><movetop></movetop></a>
+        </div>
+        <div class="fixed-header">
+            <!--
+            <input type="date" v-model="modelDateStart" />〜<input type="date" v-model="modelDateEnd" />
+            <button v-on:click="searchScore" class="btn btn-primary">絞り込み</button><br>
+            <button v-on:click="linkAnalyzeList" class="btn btn-primary">分析</button>
+            -->
+        </div>
+        <div class="menu" v-bind:style="styleNavi">
+            <span>
+                <div>戻る</div>
+                <svg v-on:click="backScoreList" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H6M12 5l-7 7 7 7"/></svg>
+                <span>ホーム</span>
+                <svg v-on:click="onHome" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 9v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9"/>
+                    <path d="M9 22V12h6v10M2 10.6L12 2l10 8.6"/>
+                </svg>
+            </span>
+        </div>
+    </div>
+
+
+
+<span v-if="false">
 <div class="grid-analyzelist">
     <div class="navi_a" v-bind:style="styleNavi" style="position:fixed;top:0;left:5px;">
         <span>
@@ -202,6 +290,8 @@ const template = `
         -->
         <a data-scroll href="#page-top" style="position:fixed;bottom:10px;right:10px;filter: drop-shadow(3px 3px 3px rgba(0, 0, 0, 0.6));"><movetop></movetop></a>
     </div>
+</div>
+</span>
 </div>
 `;
 

@@ -1,5 +1,47 @@
 const template = `
-    <div class="grid-scoreinput" v-bind:style="styleGrid">
+<div class="main-area">
+    <div class="menu" v-bind:style="styleNavi">
+        <span>
+            <div v-if="!isNewScore">
+                <span>戻る</span>
+                <svg v-on:click="onBack" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H6M12 5l-7 7 7 7"/></svg>
+            </div>
+            <span>ホーム</span>
+            <svg v-on:click="onHome" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 9v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9"/>
+                <path d="M9 22V12h6v10M2 10.6L12 2l10 8.6"/>
+            </svg>
+            <br><br><br><br>
+            <span>保存</span>
+            <svg v-on:click="showModalSave = true" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                <polyline points="7 3 7 8 15 8"></polyline>
+            </svg>
+            <span>交代</span>
+            <member v-on:change-member="changeMember"></member>
+            <br><br><br><br>
+            <span>元に戻す</span>
+            <svg v-if="undoEnabled" v-bind:disabled="!undoEnabled" v-on:click="undo" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10 16l-6-6 6-6"/>
+                <path d="M20 21v-7a4 4 0 0 0-4-4H5"/>
+            </svg>
+            <svg v-else v-bind:disabled="!undoEnabled" v-on:click="undo" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#cacaca" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10 16l-6-6 6-6"/>
+                <path d="M20 21v-7a4 4 0 0 0-4-4H5"/>
+            </svg>
+            <span>やり直す</span>
+            <svg v-if="redoEnabled" v-bind:disabled="!redoEnabled" v-on:click="redo" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 16l6-6-6-6"/>
+                <path d="M4 21v-7a4 4 0 0 1 4-4h11"/>
+            </svg>
+            <svg v-else v-bind:disabled="!redoEnabled" v-on:click="redo" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#cacaca" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 16l6-6-6-6"/>
+                <path d="M4 21v-7a4 4 0 0 1 4-4h11"/>
+            </svg>
+        </span>
+    </div>
+    <div class="grid-scoreinput view-contents" v-bind:style="styleGrid">
         <div class="grid-action">
             <div v-bind:class="item.classGrid" v-for="item of itemAction">
                 <input type="radio" v-bind:id="item.id" name="action" v-bind:value="item.name" v-on:change="onChangeAction" v-model="modelAction">
@@ -66,81 +108,12 @@ const template = `
             </div>
         </div>
 
-        <div class="score grid_style" style="overflow-x:auto; overflow-y:hidden;">
+        <div class="score" style="overflow-x:auto; overflow-y:hidden;">
             <svg id="score_area" v-bind:width="score.length * 90 + 10" style="height: 100%;max-width:none;max-height:none;">
                 <scoreObj v-on:click-score="onClickScore(item)" v-for="(item, idx) of score" :key="item.index" :item="item" :idx="idx"></scoreObj>
             </svg>
         </div>
 
-        <div class="navi_a" v-bind:style="styleNavi">
-            <span>
-                <div v-if="!isNewScore">
-                <span>戻る</span>
-                <svg v-on:click="onBack" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H6M12 5l-7 7 7 7"/></svg>
-                </div>
-                <span>ホーム</span>
-                <svg v-on:click="onHome" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M20 9v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9"/>
-                    <path d="M9 22V12h6v10M2 10.6L12 2l10 8.6"/>
-                </svg>
-                <span>保存</span>
-                <svg v-on:click="showModalSave = true" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
-                    <polyline points="17 21 17 13 7 13 7 21"></polyline>
-                    <polyline points="7 3 7 8 15 8"></polyline>
-                </svg>
-                <span>交代</span>
-                <member v-on:change-member="changeMember"></member>
-                <span>元に戻す</span>
-                <svg v-if="undoEnabled" v-bind:disabled="!undoEnabled" v-on:click="undo" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M10 16l-6-6 6-6"/>
-                    <path d="M20 21v-7a4 4 0 0 0-4-4H5"/>
-                </svg>
-                <svg v-else v-bind:disabled="!undoEnabled" v-on:click="undo" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#cacaca" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M10 16l-6-6 6-6"/>
-                    <path d="M20 21v-7a4 4 0 0 0-4-4H5"/>
-                </svg>
-                <span>やり直す</span>
-                <svg v-if="redoEnabled" v-bind:disabled="!redoEnabled" v-on:click="redo" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M14 16l6-6-6-6"/>
-                    <path d="M4 21v-7a4 4 0 0 1 4-4h11"/>
-                </svg>
-                <svg v-else v-bind:disabled="!redoEnabled" v-on:click="redo" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#cacaca" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M14 16l6-6-6-6"/>
-                    <path d="M4 21v-7a4 4 0 0 1 4-4h11"/>
-                </svg>
-            </span>
-        </div>
-<!--
-        <div class="navi_b" v-bind:style="styleNavi">
-            <span>
-                <span>保存</span>
-                <svg v-on:click="showModalSave = true" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
-                    <polyline points="17 21 17 13 7 13 7 21"></polyline>
-                    <polyline points="7 3 7 8 15 8"></polyline>
-                </svg>
-                <span>交代</span>
-                <member v-on:change-member="changeMember"></member>
-                <svg v-if="undoEnabled" v-bind:disabled="!undoEnabled" v-on:click="undo" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M10 16l-6-6 6-6"/>
-                    <path d="M20 21v-7a4 4 0 0 0-4-4H5"/>
-                </svg>
-                <svg v-else v-bind:disabled="!undoEnabled" v-on:click="undo" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#cacaca" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M10 16l-6-6 6-6"/>
-                    <path d="M20 21v-7a4 4 0 0 0-4-4H5"/>
-                </svg>
-                <svg v-if="redoEnabled" v-bind:disabled="!redoEnabled" v-on:click="redo" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M14 16l6-6-6-6"/>
-                    <path d="M4 21v-7a4 4 0 0 1 4-4h11"/>
-                </svg>
-                <svg v-else v-bind:disabled="!redoEnabled" v-on:click="redo" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#cacaca" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M14 16l6-6-6-6"/>
-                    <path d="M4 21v-7a4 4 0 0 1 4-4h11"/>
-                </svg>
-            </span>
-        </div>
--->
         <div name="modalSave" v-if="showModalSave">
             <transition>
                 <div class="modal-mask">
@@ -224,6 +197,7 @@ const template = `
         <confirm v-if="showModalConfirm" v-on:dialogResult="result" :title="title" :msg="msg" :positive="positive" :negative="negative"></confirm>
         <memberChangeComp v-if="showModalMemberChange" v-on:member-change-result="memberChangeResult" :title="title" :msg="msg" :positive="positive" :negative="negative" :itemTeamA="itemTeamA" :itemTeamB="itemTeamB" :members="members"></memberChangeComp>
     </div>
+</div>
 `;
 
 import confirm from './confirm.js'
@@ -375,14 +349,14 @@ export default {
                 // { key: "a3", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a3", isEmpty: true, },
                 // { key: "a2", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a2", isEmpty: true, },
                 // { key: "a1", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a1", isEmpty: true, },
-                { key: "a1", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a1", isEmpty: true, },
-                { key: "a2", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a2", isEmpty: true, },
-                { key: "a3", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a3", isEmpty: true, },
-                { key: "a4", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a4", isEmpty: true, },
-                { key: "a5", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a5", isEmpty: true, },
-                { key: "a6", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a6", isEmpty: true, },
-                { key: "a7", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a7", isEmpty: true, },
-                { key: "a8", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a8", isEmpty: true, },
+                { key: "a1", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a1 forward-position", isEmpty: true, },
+                { key: "a2", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a2 forward-position", isEmpty: true, },
+                { key: "a3", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a3 forward-position", isEmpty: true, },
+                { key: "a4", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a4 back-position", isEmpty: true, },
+                { key: "a5", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a5 back-position", isEmpty: true, },
+                { key: "a6", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a6 back-position", isEmpty: true, },
+                { key: "a7", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a7 back-position", isEmpty: true, },
+                { key: "a8", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a8 back-position", isEmpty: true, },
             ],
             itemTeamB: [
                 // { key: "b1", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b1", isEmpty: true, },
@@ -394,14 +368,14 @@ export default {
                 // { key: "b9", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b9", isEmpty: true, },
                 // { key: "b8", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b8", isEmpty: true, },
                 // { key: "b7", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b7", isEmpty: true, },
-                { key: "b1", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b1", isEmpty: true, },
-                { key: "b2", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b2", isEmpty: true, },
-                { key: "b3", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b3", isEmpty: true, },
-                { key: "b4", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b4", isEmpty: true, },
-                { key: "b5", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b5", isEmpty: true, },
-                { key: "b6", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b6", isEmpty: true, },
-                { key: "b7", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b7", isEmpty: true, },
-                { key: "b8", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b8", isEmpty: true, },
+                { key: "b1", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b1 forward-position", isEmpty: true, },
+                { key: "b2", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b2 forward-position", isEmpty: true, },
+                { key: "b3", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b3 forward-position", isEmpty: true, },
+                { key: "b4", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b4 back-position", isEmpty: true, },
+                { key: "b5", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b5 back-position", isEmpty: true, },
+                { key: "b6", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b6 back-position", isEmpty: true, },
+                { key: "b7", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b7 back-position", isEmpty: true, },
+                { key: "b8", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b8 back-position", isEmpty: true, },
             ],
             members: [],
         }
@@ -420,11 +394,11 @@ export default {
         this.toggleKind();
         this.onChangeKind();
 
-        var itemHeight = (window.innerHeight - 210) / 6;
+        var itemHeight = (window.innerHeight - 230) / 6;
         this.styleGrid = {
             "grid-template-rows": itemHeight + "px " + itemHeight + "px " + itemHeight + "px " + itemHeight + "px " + itemHeight + "px " + itemHeight + "px 200px",
         };
-        var itemHeightCoat = (window.innerHeight - 260) / 6;
+        var itemHeightCoat = (window.innerHeight - 280) / 6;
         this.styleGridCoat = {
             "grid-template-rows": itemHeightCoat + "px " + itemHeightCoat + "px " + itemHeightCoat + "px " + itemHeightCoat + "px " + itemHeightCoat + "px " + itemHeightCoat + "px",
         };

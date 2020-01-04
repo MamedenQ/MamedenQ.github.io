@@ -21,9 +21,6 @@ const template = `
                                         <label v-bind:for="'mem_' + member.no">
                                             <player v-if="member.sex == 0"></player>
                                             <player_f v-else></player_f>
-                                            <!--
-                                            <span><span v-if="member.no != -1">{{member.no}}:</span>{{member.name}}</span>
-                                            -->
                                             <span>{{member.no}}:{{member.name}}</span>
                                         </label>
                                     </li>

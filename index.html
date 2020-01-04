@@ -62,33 +62,36 @@
 <body>
 	<!-- <button onclick="startGeoLocation();">start gps</button>
 	<div id="show_result"></div> -->
+	<!--
 	<a href="./vuesample/index.html">analyze</a>
 	<p>画面サイズ：<span id="ScrSize"></span></p>
 	<p>ウィンドウサイズ：<span id="WinSize"></span></p>
+	-->
 </body>
 
 <script type="text/javascript">
-	//画面サイズの取得
-	getScreenSize();
-	//ウィンドウサイズの取得
-	getWindowSize();
+	location.href = "./vuesample/index.html";
+	// //画面サイズの取得
+	// getScreenSize();
+	// //ウィンドウサイズの取得
+	// getWindowSize();
 
-	//画面サイズを取得する
-	function getScreenSize() {
-		var s = "横幅 = " + window.parent.screen.width + " / 高さ = " + window.parent.screen.height;
-		document.getElementById("ScrSize").innerHTML = s;
-	}
+	// //画面サイズを取得する
+	// function getScreenSize() {
+	// 	var s = "横幅 = " + window.parent.screen.width + " / 高さ = " + window.parent.screen.height;
+	// 	document.getElementById("ScrSize").innerHTML = s;
+	// }
 
-	//ウィンドウサイズを取得する
-	function getWindowSize() {
-		var sW, sH, s;
-		sW = window.innerWidth;
-		sH = window.innerHeight;
+	// //ウィンドウサイズを取得する
+	// function getWindowSize() {
+	// 	var sW, sH, s;
+	// 	sW = window.innerWidth;
+	// 	sH = window.innerHeight;
 
-		s = "横幅 = " + sW + " / 高さ = " + sH;
+	// 	s = "横幅 = " + sW + " / 高さ = " + sH;
 
-		document.getElementById("WinSize").innerHTML = s;
-	}
+	// 	document.getElementById("WinSize").innerHTML = s;
+	// }
 </script>
 
 </html>

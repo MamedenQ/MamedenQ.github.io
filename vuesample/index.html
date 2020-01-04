@@ -107,8 +107,8 @@
     // リベロ設定はデフォルトにするかを設定で選択できる
 
 
-
-    // 試合データのロック機能
+    // api使ってマッシュアップ
+    // https://api.rakuten.net/qvoca/api/bestquotes
 
     // ipadのchromeでバックアップの確認画面で下スクロールすると余計な余白が出てくる
 
@@ -118,14 +118,15 @@
     // ダイアログの外タップでキャンセル
 
     // スコア一覧をソートできるように試合順とかセット番号をつける
-
-    // スコア一覧の絞り込みはボタンではなく、onChangeとかのイベントで行う
+    // 削除した時対応ができれば何でもいい
 
     // スコアアイコンを長押しで削除とかして区別できるようにする？
     // それかタップでメニュー出す？
     // 入力済みのデータの修正や、挿入ができない
 
     // スコア追加時に右端にスクロールする
+
+    // 個人分析だけではなく、試合分析を行う
 
     // メニュー構成
     // メニューアイコンはまるで囲う
@@ -188,7 +189,7 @@
     var scroll = new SmoothScroll('a[href*="#"]', {
         selector: '[data-scroll]',
         speed: 1000,
-        selectorHeader: '[data-scroll-header]',
+        // selectorHeader: '[data-scroll-header]',
         easing: 'easeInOutCubic',
         speedAsDuration: true,
     });
@@ -729,79 +730,9 @@
         transform: scale(1.1);
     }
 
-    /* ここまで整理 */
-
-
-
-
-
-    /* スコアリスト画面 */
-    /* .grid-scorelist {
-        height: 100%;
-        display: grid;
-        grid-column-gap: 10px;
-        grid-row-gap: 10px;
-        grid-template-columns: 70px 1fr;
-        grid-template-rows: 1fr;
-        grid-template-areas: "navi_a scorelist";
-    }
-
-    .scorelist {
-        grid-area: scorelist;
-    } */
-    /* . .grid-analyzelist {
-        height: 100%;
-        display: grid;
-        grid-column-gap: 10px;
-        grid-row-gap: 10px;
-        grid-template-columns: 70px 1fr;
-        grid-template-rows: 1fr;
-        grid-template-areas: "navi_a analyzelist";
-    }
-
-    .analyzelist {
-        grid-area: analyzelist;
-    } */
-
-    /* .member label:hover {
-        color: #aaa;
-        border: 2px solid #aaa;
-        cursor: pointer;
-    } */
-
+    /* その他 */
     .item_invisible {
         display: none;
-    }
-
-    .filter_action input {
-        display: none;
-    }
-
-    .filter_action input[type="radio"]:checked+label {
-        color: #000;
-        border: 2px solid #000;
-        background-color: #eaeaea;
-    }
-
-    .filter_action label {
-        color: #ddd;
-        border: 2px solid #ddd;
-        text-align: center;
-        display: inline-block;
-        /* padding: 5px 0px; */
-        /* width: 150px;
-        height: 80px; */
-        width: 150px;
-        height: 80px;
-        /* margin: 10px; */
-        /* position: absolute; */
-        border-radius: 5px;
-    }
-
-    .filter_action label:hover {
-        color: #aaa;
-        border: 2px solid #aaa;
-        cursor: pointer;
     }
 </style>
 

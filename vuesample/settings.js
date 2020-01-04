@@ -1,7 +1,7 @@
 const template = `
 <div class="main-area">
+    <span id="page-top"></span>
     <div class="view-contents">
-        <span id="page-top"></span>
         <trashList></trashList><br><br>
         <masterMaintenance></masterMaintenance><br><br>
         <!--

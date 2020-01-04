@@ -1,8 +1,10 @@
 const template = `
 <div class="main-area">
+    <span id="page-top"></span>
     <div class="view-contents">
+    <!--
         <div class="fixed-view-contents">
-            <span id="page-top"></span>
+        -->
             <table class="analyze">
                 <thead class="analyze_head" style="text-align:center;">
                     <tr>
@@ -63,14 +65,11 @@ const template = `
                 </tbody>
             </table>
             <a data-scroll href="#page-top" style="position:fixed;bottom:10px;right:10px;filter: drop-shadow(3px 3px 3px rgba(0, 0, 0, 0.6));"><movetop></movetop></a>
+        <!--
         </div>
         <div class="fixed-header" data-scroll-header>
-            <!--
-            <input type="date" v-model="modelDateStart" />〜<input type="date" v-model="modelDateEnd" />
-            <button v-on:click="searchScore" class="btn btn-primary">絞り込み</button><br>
-            <button v-on:click="linkAnalyzeList" class="btn btn-primary">分析</button>
-            -->
         </div>
+        -->
         <div class="menu" v-bind:style="styleNavi">
             <span>
                 <div>戻る</div>

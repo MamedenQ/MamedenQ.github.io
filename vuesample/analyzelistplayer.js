@@ -370,6 +370,17 @@ export default {
         formatScoreData() {
             this.analyzeData.forEach(this.totalScore);
             this.scoreAnalyze.forEach(this.calcScore);
+            this.scoreAnalyze.sort(this.compare);
+        },
+        compare(a, b) {
+            var r = 0;
+            if (a.no < b.no) {
+                r = -1;
+            } else if (a.no > b.no) {
+                r = 1;
+            }
+
+            return r;
         },
         calcScore(score) {
             this.calcEffectAndDetermined(score.total);

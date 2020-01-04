@@ -133,7 +133,33 @@ export default {
 
             var filterData = scoreList.filter(this.filterDispData);
 
+            filterData.sort(this.compare);
             this.scoreList = filterData;
+        },
+        compare(a, b) {
+            var r = 0;
+
+            var da = new Date(a.date);
+            var db = new Date(b.date);
+            if (da < db) {
+                r = -1;
+            } else if (da > db) {
+                r = 1;
+            } else {
+                r = this.compareTitle(a, b);
+            }
+
+            return r;
+        },
+        compareTitle(a, b) {
+            var r = 0;
+            if (a.title.toUpperCase() < b.title.toUpperCase()) {
+                r = -1;
+            } else if (a.title.toUpperCase() > b.title.toUpperCase()) {
+                r = 1;
+            }
+
+            return r;
         },
         setDateStartEnd() {
             if (this.modelDateStart != "") {

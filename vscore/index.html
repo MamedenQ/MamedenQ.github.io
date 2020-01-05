@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <!-- <script src="/src/smooth-scroll.polyfills.min.js"></script> -->
   <title>vscore</title>
   <style type="text/css">
     [v-cloak] {
@@ -18,28 +19,16 @@
 
 <body>
   <div id="app" v-cloak>
-    <div class="grid-main">
-      <div class="contents">
-        <router-view v-on:route-home="routeHome" v-on:route-score-input-new="routeScoreInputNew"
-          v-on:route-score-input="routeScoreInput" v-on:route-analyze-list-player="routeAnalyzeListPlayer"
-          v-on:route-analyze-list-match="routeAnalyzeListMatch" v-on:route-score-list="routeScoreList"
-          v-on:route-settings="routeSettings" v-on:route-analyze-detail="routeAnalyzeDetail"
-          v-bind:is-new-score="isNewScore" v-bind:score-id="scoreId" v-bind:analyze-data="analyzeData"
-          v-bind:analyze-player-score="analyzePlayerData">
-        </router-view>
-      </div>
-    </div>
-    <script src="/dist/build.js"></script>
+  </div>
 </body>
-<script src="https://d3js.org/d3.v3.min.js"></script>
-<script src="./smooth-scroll.polyfills.min.js"></script>
+<!-- <script src="https://d3js.org/d3.v3.min.js"></script> -->
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
   integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
   integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
   integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-<script src="./src/js/main.js" type="module"></script>
+<!-- <script src="./src/main.js" type="module"></script> -->
 <script type="text/javascript">
   // ＝＝＝＝＝調査項目
   // 画面間データ連携調査
@@ -164,7 +153,7 @@
   // 繋ぎ系はレシーブミスに集約する
   // ブロックの得点はスパイクのミスもつく
 
-  var color = d3.scale.category20();
+  // var color = d3.scale.category20();
   // smoothScroll.init();
   // smoothScroll.init({
   //     selector: '[data-scroll]',				// スムーススクロールが有効なリンクに付ける属性
@@ -175,13 +164,13 @@
   //     updateURL: false,					// URLを[#〜]に変更するか？
   //     callback: function () { }				// コールバック関数 (到達時に実行される関数)
   // });
-  var scroll = new SmoothScroll('a[href*="#"]', {
-    selector: '[data-scroll]',
-    speed: 1000,
-    // selectorHeader: '[data-scroll-header]',
-    easing: 'easeInOutCubic',
-    speedAsDuration: true,
-  });
+  // var scroll = new SmoothScroll('a[href*="#"]', {
+  //   selector: '[data-scroll]',
+  //   speed: 1000,
+  //   // selectorHeader: '[data-scroll-header]',
+  //   easing: 'easeInOutCubic',
+  //   speedAsDuration: true,
+  // });
 </script>
 <style>
   /* https://grid.layoutit.com/?id=cFy6gyh */

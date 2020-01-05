@@ -2,23 +2,18 @@
   <div class="main-area">
     <span id="page-top"></span>
     <div class="view-contents">
-      <!--
-        <div class="fixed-view-contents">
-      -->
       <button
         v-on:click="linkAnalyzeList"
         class="btn btn-primary"
         style="width:100%;margin-bottom:10px"
       >選択した試合を対象に分析する</button>
+      <!--
       <table class="analyze">
         <thead class="analyze_head">
           <tr>
             <th>
               <input type="checkbox" v-bind:checked="isCheckAll" v-on:click="onClickCheckAll" /> 選択
             </th>
-            <!--
-                        <th>#</th>
-            -->
             <th>タイトル</th>
             <th>日付</th>
             <th>得点</th>
@@ -35,9 +30,6 @@
                 v-on:change="onCheckChange()"
               />
             </td>
-            <!--
-                        <td>{{ idx + 1 }}</td>
-            -->
             <td>
               <a href="#" v-on:click="linkScoreInput(item.id)">{{ item.title }}</a>
             </td>
@@ -49,6 +41,31 @@
           </tr>
         </tbody>
       </table>
+      -->
+      <vue-good-table
+        :columns="columns"
+        :rows="scoreList"
+        :select-options="{ enabled: true }"
+        styleClass=" analyze_sort vgt-table"
+        @on-selected-rows-change="onChangeChecked"
+      >
+        <template slot="table-row" slot-scope="props">
+          <div v-if="props.column.field == 'delete'" style="text-align:center;">
+            <button v-on:click="onClickTrash(props.row)" class="btn btn-warning">削除</button>
+          </div>
+          <div v-else-if="props.column.field == 'title'">
+            <a
+              href="#"
+              v-on:click="linkScoreInput(props.row.id)"
+            >{{ props.formattedRow[props.column.field] }}</a>
+          </div>
+          <div v-else-if="props.column.field == 'date'">{{ props.row.date }}</div>
+          <div
+            v-if="props.column.field == 'point'"
+            style="text-align:center;"
+          >{{ props.row.teamAPoint + " － " + props.row.teamBPoint }}</div>
+        </template>
+      </vue-good-table>
       <button
         v-on:click="linkAnalyzeList"
         class="btn btn-primary"
@@ -58,6 +75,7 @@
         data-scroll
         href="#page-top"
         style="position:fixed;bottom:10px;right:10px;filter: drop-shadow(3px 3px 3px rgba(0, 0, 0, 0.6));"
+        v-smooth-scroll
       >
         <moveTop></moveTop>
       </a>
@@ -114,6 +132,8 @@
 import confirm from "./Material/Confirm";
 import moveTop from "./SVG/MoveTopSVG";
 
+import { VueGoodTable } from "vue-good-table";
+
 export default {
   name: "score_list",
   props: {
@@ -121,7 +141,8 @@ export default {
   },
   components: {
     confirm,
-    moveTop
+    moveTop,
+    VueGoodTable
   },
   data() {
     return {
@@ -137,7 +158,31 @@ export default {
       dEnd: null,
       styleNavi: {
         "line-height": "700px"
-      }
+      },
+      columns: [
+        {
+          label: "タイトル",
+          field: "title"
+        },
+        {
+          label: "日付",
+          field: "date"
+          // type: "date",
+          // dateInputFormat: "yyyy-MM-dd",
+          // dateOutputFormat: "yy-MM-dd"
+        },
+        {
+          label: "得点",
+          field: "point",
+          type: "number"
+        },
+        {
+          label: "削除",
+          field: "delete"
+        }
+      ],
+      rows: [],
+      targetScore: []
     };
   },
   computed: {
@@ -234,35 +279,39 @@ export default {
       // console.log("disp data");
       return true;
     },
-    onCheckChange() {
-      // console.log(this.modelTarget);
-      if (this.modelTarget.length == this.scoreList.length) {
-        // console.log("all checked");
-        this.isCheckAll = true;
-      } else {
-        // console.log("piece checked");
-        this.isCheckAll = false;
-      }
-    },
+    // onCheckChange() {
+    //   // console.log(this.modelTarget);
+    //   if (this.modelTarget.length == this.scoreList.length) {
+    //     // console.log("all checked");
+    //     this.isCheckAll = true;
+    //   } else {
+    //     // console.log("piece checked");
+    //     this.isCheckAll = false;
+    //   }
+    // },
     linkAnalyzeList() {
-      if (this.modelTarget.length == 0) {
+      // if (this.modelTarget.length == 0) {
+      //   return;
+      // }
+      if (this.targetScore.length == 0) {
         return;
       }
 
-      this.$emit("route-analyze-list-player", this.extractTarget());
+      this.$emit("route-analyze-list-player", this.targetScore);
     },
-    extractTarget() {
-      var target = this.scoreList.filter(this.isTarget);
-      if (target.length == 0) {
-        target = [];
-      }
+    // extractTarget() {
+    //   var target = this.scoreList.filter(this.isTarget);
+    //   if (target.length == 0) {
+    //     target = [];
+    //   }
 
-      return target;
-    },
-    isTarget(data, index) {
-      return this.modelTarget.includes(data.id);
-    },
+    //   return target;
+    // },
+    // isTarget(data, index) {
+    //   return this.modelTarget.includes(data.id);
+    // },
     linkScoreInput(scoreId) {
+      console.log("params:" + JSON.stringify(scoreId, null, "    "));
       this.$emit("route-score-input", scoreId);
     },
     onClickTrash(item) {
@@ -309,6 +358,10 @@ export default {
       }
       this.isCheckAll = !this.isCheckAll;
       // console.log(this.modelTarget);
+    },
+    onChangeChecked(params) {
+      // console.log("params:" + JSON.stringify(params, null, "    "));
+      this.targetScore = params.selectedRows;
     }
   }
 };

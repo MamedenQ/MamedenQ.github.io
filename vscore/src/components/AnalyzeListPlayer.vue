@@ -5,6 +5,78 @@
       <!--
         <div class="fixed-view-contents">
       -->
+      <!--
+      <vue-good-table
+        v-if="listType == 'serve'"
+        :columns="columns"
+        :rows="scoreAnalyze"
+        styleClass=" analyze_sort vgt-table"
+      >
+        <template slot="table-row" slot-scope="props">
+          <div v-if="props.column.field == 'no'">{{ props.row.no }}</div>
+          <div v-else-if="props.column.field == 'name'">{{ props.row.name }}</div>
+          <div v-else-if="props.column.field == 'total.point'">{{ props.row.total.point }}</div>
+          <div v-else-if="props.column.field == 'total.miss'">{{ props.row.total.miss }}</div>
+          <div v-else-if="props.column.field == 'serve.point'">{{ props.row.serve.point }}</div>
+          <div v-else-if="props.column.field == 'serve.miss'">{{ props.row.serve.miss }}</div>
+          <div v-else></div>
+        </template>
+      </vue-good-table>
+      <vue-good-table
+        v-else-if="listType == 'spike'"
+        :columns="columns"
+        :rows="scoreAnalyze"
+        styleClass=" analyze_sort vgt-table"
+      >
+        <template slot="table-row" slot-scope="props">
+          <div v-if="props.column.field == 'no'">{{ props.row.no }}</div>
+          <div v-if="props.column.field == 'name'">{{ props.row.name }}</div>
+          <div v-if="props.column.field == 'total.point'">{{ props.row.total.point }}</div>
+          <div v-if="props.column.field == 'total.miss'">{{ props.row.total.miss }}</div>
+          <div v-if="props.column.field == 'spike.total'">{{ props.row.spike.total }}</div>
+          <div v-if="props.column.field == 'spike.point'">{{ props.row.spike.point }}</div>
+          <div v-if="props.column.field == 'spike.miss'">{{ props.row.spike.miss }}</div>
+          <div
+            v-if="props.column.field == 'spike.effect'"
+          >{{ props.row.spike.effect | filterPercent }}</div>
+          <div
+            v-if="props.column.field == 'spike.determined'"
+          >{{ props.row.spike.determined | filterPercent }}</div>
+        </template>
+      </vue-good-table>
+      <vue-good-table
+        v-else-if="listType == 'block'"
+        :columns="columns"
+        :rows="scoreAnalyze"
+        styleClass=" analyze_sort vgt-table"
+      >
+        <template slot="table-row" slot-scope="props">
+          <div v-if="props.column.field == 'no'">{{ props.row.no }}</div>
+          <div v-if="props.column.field == 'name'">{{ props.row.name }}</div>
+          <div v-if="props.column.field == 'total.point'">{{ props.row.total.point }}</div>
+          <div v-if="props.column.field == 'total.miss'">{{ props.row.total.miss }}</div>
+          <div v-if="props.column.field == 'block.point'">{{ props.row.block.point }}</div>
+          <div v-if="props.column.field == 'block.miss'">{{ props.row.block.miss }}</div>
+        </template>
+      </vue-good-table>
+      <vue-good-table
+        v-else-if="listType == 'receive'"
+        :columns="columns"
+        :rows="scoreAnalyze"
+        styleClass=" analyze_sort vgt-table"
+      >
+        <template slot="table-row" slot-scope="props">
+          <div v-if="props.column.field == 'no'">{{ props.row.no }}</div>
+          <div v-if="props.column.field == 'name'">{{ props.row.name }}</div>
+          <div v-if="props.column.field == 'total.point'">{{ props.row.total.point }}</div>
+          <div v-if="props.column.field == 'total.miss'">{{ props.row.total.miss }}</div>
+          <div v-if="props.column.field == 'receive.miss'">{{ props.row.receive.miss }}</div>
+          <div v-if="props.column.field == 'other_miss'">{{ props.row.other_miss }}</div>
+          <div v-if="props.column.field == 'faul'">{{ props.row.faul }}</div>
+        </template>
+      </vue-good-table>
+      -->
+
       <table class="analyze">
         <thead class="analyze_head" style="text-align:center;">
           <tr>
@@ -124,6 +196,7 @@
         data-scroll
         href="#page-top"
         style="position:fixed;bottom:10px;right:10px;filter: drop-shadow(3px 3px 3px rgba(0, 0, 0, 0.6));"
+        v-smooth-scroll
       >
         <moveTop></moveTop>
       </a>
@@ -504,6 +577,87 @@ export default {
       styleNavi: {
         "line-height": "700px"
       }
+      // columns: [
+      //   {
+      //     label: "#",
+      //     field: "no"
+      //   },
+      //   {
+      //     label: "名前",
+      //     field: "name"
+      //   },
+      //   {
+      //     label: "総合得点",
+      //     field: "total.point",
+      //     type: "number"
+      //   },
+      //   {
+      //     label: "総合失点",
+      //     field: "total.miss",
+      //     type: "number"
+      //   },
+      //   {
+      //     label: "サーブ得点",
+      //     field: "serve.point",
+      //     type: "number"
+      //   },
+      //   {
+      //     label: "サーブ失点",
+      //     field: "serve.miss",
+      //     type: "number"
+      //   },
+      //   {
+      //     label: "スパイク総数①",
+      //     field: "spike.total",
+      //     type: "number"
+      //   },
+      //   {
+      //     label: "スパイク得点②",
+      //     field: "spike.point",
+      //     type: "number"
+      //   },
+      //   {
+      //     label: "スパイク失点③",
+      //     field: "spike.miss",
+      //     type: "number"
+      //   },
+      //   {
+      //     label: "スパイク効果率(②－③)／①",
+      //     field: "spike.effect",
+      //     type: "number"
+      //   },
+      //   {
+      //     label: "スパイク決定率②／①",
+      //     field: "spike.determined",
+      //     type: "number"
+      //   },
+      //   {
+      //     label: "ブロック得点",
+      //     field: "block.point",
+      //     type: "number"
+      //   },
+      //   {
+      //     label: "ブロック失点",
+      //     field: "block.miss",
+      //     type: "number"
+      //   },
+      //   {
+      //     label: "レシーブ失点",
+      //     field: "receive.miss",
+      //     type: "number"
+      //   }
+      //   {
+      //     label: "その他ミス",
+      //     field: "other_miss",
+      //     type: "number"
+      //   },
+      //   {
+      //     label: "ファウル",
+      //     field: "faul",
+      //     type: "number"
+      //   }
+      // ],
+      // listType: "serve",
     };
   },
   filters: {

@@ -109,6 +109,35 @@
     bottom: 0;
   }
 
+
+  /* 共通系　テーブル */
+  table.analyze_sort {
+    border-collapse: collapse;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  table.analyze_sort tbody tr td,
+  table.analyze_sort tbody tr th {
+    padding: 10px;
+    border: 1px solid #ccc;
+  }
+
+  table.analyze_sort thead tr th {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align:left;
+  }
+
+  table.analyze_sort thead tr th {
+    color: #fff;
+    background: #005ab3;
+  }
+
+  table.analyze_sort tbody tr:nth-child(odd) {
+    background: #e6f2ff;
+  }
+
   /* 共通系　テーブル */
   .analyze {
     border-collapse: collapse;

@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=X-UA-Compatible content="ie=edge"><link rel=stylesheet href=https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css><link rel=stylesheet href=https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css integrity=sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh crossorigin=anonymous><title>vscore</title><style type=text/css>[v-cloak] {
       display: none;
-    }</style><link href=static/css/app.cd4ff42fb87984eac307731666c8cd2b.css rel=stylesheet></head><body><div id=app v-cloak></div><script type=text/javascript src=static/js/manifest.37a2ecbb1d1b7e6c9ada.js></script><script type=text/javascript src=static/js/vendor.9b742f05e59ac1c028aa.js></script><script type=text/javascript src=static/js/app.e807c826e724b78463a5.js></script></body><script src=https://code.jquery.com/jquery-3.4.1.slim.min.js integrity=sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js integrity=sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo crossorigin=anonymous></script><script src=https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js integrity=sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6 crossorigin=anonymous></script><script type=text/javascript>// ＝＝＝＝＝調査項目
+    }</style><link href=static/css/app.8bcf37ec3aae80bc91d654c626e5b4ac.css rel=stylesheet></head><body><div id=app v-cloak></div><script type=text/javascript src=static/js/manifest.37a2ecbb1d1b7e6c9ada.js></script><script type=text/javascript src=static/js/vendor.2b0ac415a49fe6147ba4.js></script><script type=text/javascript src=static/js/app.1d7cfa82ee0f78ff1d87.js></script></body><script src=https://code.jquery.com/jquery-3.4.1.slim.min.js integrity=sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js integrity=sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo crossorigin=anonymous></script><script src=https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js integrity=sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6 crossorigin=anonymous></script><script type=text/javascript>// ＝＝＝＝＝調査項目
   // 画面間データ連携調査
   // https://commis.hatenablog.com/entry/2017/11/21/180556
 
@@ -29,6 +29,9 @@
   // vue-datepickerというものがあるらしい
   // https://www.kabanoki.net/2560/
   // https://github.com/hilongjw/vue-datepicker
+
+  // vuejsスムーズスクロール
+  // https://cleysense.com/blog/smooth-scroll-with-vuejs/
 
   // ＝＝＝＝＝レイアウト
   // バレーボールっぽいsvgを作成する
@@ -123,24 +126,7 @@
   // 繋ぎ系はレシーブミスに集約する
   // ブロックの得点はスパイクのミスもつく
 
-  // var color = d3.scale.category20();
-  // smoothScroll.init();
-  // smoothScroll.init({
-  //     selector: '[data-scroll]',				// スムーススクロールが有効なリンクに付ける属性
-  //     selectorHeader: '[data-scroll-header]',		// 固定ナビに付ける属性
-  //     speed: 250,						// 到達するまでの総時間(ミリ秒)
-  //     easing: 'easeInOutCubic',			// スピードの種類
-  //     offset: 0,							// 到達場所からズラすピクセル数
-  //     updateURL: false,					// URLを[#〜]に変更するか？
-  //     callback: function () { }				// コールバック関数 (到達時に実行される関数)
-  // });
-  // var scroll = new SmoothScroll('a[href*="#"]', {
-  //   selector: '[data-scroll]',
-  //   speed: 1000,
-  //   // selectorHeader: '[data-scroll-header]',
-  //   easing: 'easeInOutCubic',
-  //   speedAsDuration: true,
-  // });</script><style>/* https://grid.layoutit.com/?id=cFy6gyh */
+  // var color = d3.scale.category20();</script><style>/* https://grid.layoutit.com/?id=cFy6gyh */
   svg {
     max-height: 100%;
     max-width: 100%;

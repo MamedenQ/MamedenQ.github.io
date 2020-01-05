@@ -1,0 +1,194 @@
+  html {
+    height: 100%;
+  }
+
+  body {
+    height: 100%;
+    margin: 0;
+    font-family: 'Rounded Mplus 1c';
+  }
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+
+    /* 共通系 メニューとメインエリア */
+  .main-area {
+    position: relative;
+  }
+
+  .main-area .menu {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 70px;
+    text-align: center;
+    background-color: #eee;
+    filter: drop-shadow(3px 3px 3px rgba(0, 0, 0, 0.6));
+  }
+
+  .main-area .menu span {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
+  }
+
+  .main-area .view-contents {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 70px;
+    margin: 10px;
+  }
+
+  /* 共通系　固定ヘッダ */
+  .fixed-header {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.6));
+    height: 100px;
+    background-color: #eee;
+    padding-left: 80px;
+    padding-top: 10px;
+    /* margin-left: 10px; */
+    /* margin-top: 10px; */
+    /* margin-right: 10px; */
+  }
+
+  .fixed-view-contents {
+    position: absolute;
+    top: 100px;
+    left: 0;
+    right: 0;
+    /* margin-left: 10px;
+        margin-bottom: 10px;
+        margin-right: 10px; */
+    margin-bottom: 10px;
+  }
+
+  /* 共通系　選択 */
+  .select-item input {
+    display: none;
+  }
+
+  .select-item input[type="radio"]:checked+label {
+    color: #fff;
+    background-color: #005ab3;
+  }
+
+  .select-item label {
+    color: #333;
+    background: #eee;
+    text-align: center;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    border-radius: 2px;
+    filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.6));
+  }
+
+  .select-item label svg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    height: 100%;
+  }
+
+  .select-item label span {
+    position: absolute;
+    top: 0;
+    left: 5px;
+    bottom: 0;
+  }
+
+  /* 共通系　テーブル */
+  .analyze {
+    border-collapse: collapse;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .analyze_body tr td,
+  .analyze_head tr th {
+    padding: 10px;
+    border: 1px solid #ccc;
+  }
+
+  .analyze_head tr th {
+    color: #fff;
+    background: #005ab3;
+  }
+
+  .analyze_body tr:nth-child(odd) {
+    background: #e6f2ff;
+  }
+
+  /* モーダルダイアログ */
+.modal-mask {
+position: fixed;
+z-index: 9998;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-color: rgba(0, 0, 0, .5);
+display: table;
+transition: opacity .3s ease;
+}
+
+.modal-wrapper {
+display: table-cell;
+vertical-align: middle;
+}
+
+.modal-container {
+width: 450px;
+margin: 0px auto;
+padding: 20px 30px;
+background-color: #fff;
+border-radius: 2px;
+box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
+transition: all .3s ease;
+/* font-family: Helvetica, Arial, sans-serif; */
+}
+
+.modal-header h3 {
+margin-top: 0;
+color: #42b983;
+}
+
+.modal-body {
+margin: 20px 0;
+}
+
+.modal-default-button {
+float: right;
+}
+
+.modal-enter {
+opacity: 0;
+}
+
+.modal-leave-active {
+opacity: 0;
+}
+
+.modal-enter .modal-container,
+.modal-leave-active .modal-container {
+-webkit-transform: scale(1.1);
+transform: scale(1.1);
+}
+
+
+  /* その他 */
+  .item_invisible {
+    display: none;
+  }

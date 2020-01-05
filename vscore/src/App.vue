@@ -108,4 +108,13 @@ export default {
 [v-cloak] {
   display: none;
 }
+#app {
+  height: 100%;
+  margin: 0;
+}
+
+.contents {
+  display: grid;
+  grid-area: contents;
+}
 </style>

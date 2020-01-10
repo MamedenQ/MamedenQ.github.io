@@ -2,11 +2,74 @@
   <div class="main-area">
     <span id="page-top"></span>
     <div class="view-contents">
-      <button
+      <!-- <button
         v-on:click="linkAnalyzeList"
         class="btn btn-primary"
         style="width:100%;margin-bottom:10px"
-      >選択した試合を対象に分析する</button>
+      >選択した試合を対象に分析する</button>-->
+      <v-btn
+        style="width:100%;margin-bottom:10px"
+        v-on:click="linkAnalyzeList"
+        color="primary"
+        dark
+      >選択した試合を対象に分析する</v-btn>
+
+      <v-data-table
+        v-model="modelTarget"
+        :headers="headers"
+        :items="scoreList"
+        item-key="id"
+        show-select
+        multi-sort
+        class="elevation-1"
+      >
+        <!-- <template slot="headers" slot-scope="props">
+          <tr style="background:#005ab3">
+            <th
+              style="color: #fff;"
+              v-for="(header, idx) in props.headers"
+              :key="idx"
+            >{{header.text}}</th>
+          </tr>
+        </template>-->
+        <template style="background: #005ab3;color: #fff;" v-slot:header.title="{ header }">
+          <div>{{header.title}}a</div>
+          <!-- <th :colspan="headers.length">This is a header</th> -->
+        </template>
+        <!-- <template v-slot:top>
+          <v-switch v-model="singleSelect" label="Single select" class="pa-3"></v-switch>
+        </template>-->
+        <template v-slot:item.title="{ item }">
+          <!-- <a href="#" v-on:click="linkScoreInput(item.id)">{{ item.title }}</a> -->
+          {{ item.title }}
+        </template>
+        <template v-slot:item.point="{ item }">
+          <!-- <v-btn v-on:click="onClickTrash(item)" color="warning" dark>削除</v-btn> -->
+          <!-- <v-chip  dark>{{ item.calories }}</v-chip> -->
+          {{ item.teamAPoint + " － " + item.teamBPoint }}
+        </template>
+        <template v-slot:item.edit="{ item }">
+          <v-btn
+            v-on:click="linkScoreInput(item.id)"
+            color="primary"
+            style="margin-right:10px;"
+            dark
+          >編集</v-btn>
+          <v-btn v-on:click="onClickTrash(item)" color="warning" dark>削除</v-btn>
+          <!-- <v-icon small class="mr-2" @click="linkScoreInput(item.id)">edit</v-icon> -->
+          <!-- <v-icon
+        small
+        @click="deleteItem(item)"
+      >
+        delete
+          </v-icon>-->
+        </template>
+        <template v-slot:item.delete="{ item }">
+          <v-btn v-on:click="onClickTrash(item)" color="warning" dark>削除</v-btn>
+          <!-- <v-chip  dark>{{ item.calories }}</v-chip> -->
+        </template>
+      </v-data-table>
+
       <!--
       <table class="analyze">
         <thead class="analyze_head">
@@ -42,7 +105,7 @@
         </tbody>
       </table>
       -->
-      <vue-good-table
+      <!-- <vue-good-table
         :columns="columns"
         :rows="scoreList"
         :select-options="{ enabled: true }"
@@ -51,7 +114,7 @@
       >
         <template slot="table-row" slot-scope="props">
           <div v-if="props.column.field == 'delete'" style="text-align:center;">
-            <button v-on:click="onClickTrash(props.row)" class="btn btn-warning">削除</button>
+            <v-btn v-on:click="onClickTrash(props.row)" color="warning" dark>削除</v-btn>
           </div>
           <div v-else-if="props.column.field == 'title'">
             <a
@@ -65,12 +128,18 @@
             style="text-align:center;"
           >{{ props.row.teamAPoint + " － " + props.row.teamBPoint }}</div>
         </template>
-      </vue-good-table>
-      <button
+      </vue-good-table>-->
+      <!-- <button
         v-on:click="linkAnalyzeList"
         class="btn btn-primary"
         style="width:100%;margin-top:10px;margin-bottom:10px"
-      >選択した試合を対象に分析する</button>
+      >選択した試合を対象に分析する</button>-->
+      <v-btn
+        style="width:100%;margin-top:10px;margin-bottom:10px"
+        v-on:click="linkAnalyzeList"
+        color="primary"
+        dark
+      >選択した試合を対象に分析する</v-btn>
       <a
         data-scroll
         href="#page-top"
@@ -148,6 +217,36 @@ export default {
     return {
       scoreList: [],
       modelTarget: [],
+      headers: [
+        {
+          text: "タイトル",
+          align: "left",
+          value: "title"
+        },
+        {
+          text: "日付",
+          align: "left",
+          value: "date"
+        },
+        {
+          text: "得点",
+          align: "center",
+          sortable: false,
+          value: "point"
+        },
+        {
+          text: "編集",
+          align: "center",
+          sortable: false,
+          value: "edit"
+        }
+        // {
+        //   text: "削除",
+        //   align: "center",
+        //   sortable: false,
+        //   value: "delete"
+        // }
+      ],
       showModalConfirm: false,
       callbackConfirm: null,
       deleteItem: {},
@@ -158,31 +257,28 @@ export default {
       dEnd: null,
       styleNavi: {
         "line-height": "700px"
-      },
-      columns: [
-        {
-          label: "タイトル",
-          field: "title"
-        },
-        {
-          label: "日付",
-          field: "date"
-          // type: "date",
-          // dateInputFormat: "yyyy-MM-dd",
-          // dateOutputFormat: "yy-MM-dd"
-        },
-        {
-          label: "得点",
-          field: "point",
-          type: "number"
-        },
-        {
-          label: "削除",
-          field: "delete"
-        }
-      ],
-      rows: [],
-      targetScore: []
+      }
+      // columns: [
+      //   {
+      //     label: "タイトル",
+      //     field: "title"
+      //   },
+      //   {
+      //     label: "日付",
+      //     field: "date"
+      //   },
+      //   {
+      //     label: "得点",
+      //     field: "point",
+      //     type: "number"
+      //   },
+      //   {
+      //     label: "削除",
+      //     field: "delete"
+      //   }
+      // ],
+      // rows: [],
+      // targetScore: []
     };
   },
   computed: {
@@ -197,7 +293,7 @@ export default {
     };
 
     this.refresh();
-    this.onClickCheckAll();
+    // this.onClickCheckAll();
   },
   methods: {
     // getDateStr(d) {
@@ -290,14 +386,15 @@ export default {
     //   }
     // },
     linkAnalyzeList() {
-      // if (this.modelTarget.length == 0) {
-      //   return;
-      // }
-      if (this.targetScore.length == 0) {
+      if (this.modelTarget.length == 0) {
         return;
       }
+      console.log(this.modelTarget);
+      // if (this.targetScore.length == 0) {
+      //   return;
+      // }
 
-      this.$emit("route-analyze-list-player", this.targetScore);
+      this.$emit("route-analyze-list-player", this.modelTarget);
     },
     // extractTarget() {
     //   var target = this.scoreList.filter(this.isTarget);
@@ -346,23 +443,23 @@ export default {
     },
     onHome() {
       this.$emit("route-home");
-    },
-    onClickCheckAll() {
-      // console.log("onClickCheckAll: " + this.isCheckAll);
-      if (this.isCheckAll) {
-        this.modelTarget = [];
-      } else {
-        this.scoreList.forEach(data => {
-          this.modelTarget.push(data.id);
-        });
-      }
-      this.isCheckAll = !this.isCheckAll;
-      // console.log(this.modelTarget);
-    },
-    onChangeChecked(params) {
-      // console.log("params:" + JSON.stringify(params, null, "    "));
-      this.targetScore = params.selectedRows;
     }
+    // onClickCheckAll() {
+    //   // console.log("onClickCheckAll: " + this.isCheckAll);
+    //   if (this.isCheckAll) {
+    //     this.modelTarget = [];
+    //   } else {
+    //     this.scoreList.forEach(data => {
+    //       this.modelTarget.push(data.id);
+    //     });
+    //   }
+    //   this.isCheckAll = !this.isCheckAll;
+    //   // console.log(this.modelTarget);
+    // },
+    // onChangeChecked(params) {
+    //   // console.log("params:" + JSON.stringify(params, null, "    "));
+    //   this.targetScore = params.selectedRows;
+    // }
   }
 };
 </script>

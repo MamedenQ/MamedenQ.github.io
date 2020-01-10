@@ -20,10 +20,12 @@
           <td>{{ item.date }}</td>
           <td>{{ item.teamAPoint + " － " + item.teamBPoint }}</td>
           <td style="text-align:center;">
-            <button v-on:click="onClickRestore(item)" class="btn btn-warning">復元</button>
+            <!-- <button v-on:click="onClickRestore(item)" class="btn btn-warning">復元</button> -->
+            <v-btn v-on:click="onClickRestore(item)" color="primary" dark>復元</v-btn>
           </td>
           <td style="text-align:center;">
-            <button v-on:click="onClickDelete(item)" class="btn btn-warning">完全削除</button>
+            <!-- <button v-on:click="onClickDelete(item)" class="btn btn-warning">完全削除</button> -->
+            <v-btn v-on:click="onClickDelete(item)" color="warning" dark>完全削除</v-btn>
           </td>
         </tr>
       </tbody>
@@ -70,7 +72,7 @@ export default {
       if (scoreList == null) {
         return;
       }
-      var filterData = scoreList.filter(function(data, index) {
+      var filterData = scoreList.filter(function(data) {
         if (data.isTrash) return true;
       });
 

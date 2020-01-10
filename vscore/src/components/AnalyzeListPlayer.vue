@@ -750,7 +750,7 @@ export default {
       score.score.forEach(this.forEachScore);
     },
     forEachScore(data) {
-      var analyzeData = this.scoreAnalyze.filter(function(d, i) {
+      var analyzeData = this.scoreAnalyze.filter(function(d) {
         if (d.no == data.no) return true;
       });
 
@@ -824,7 +824,7 @@ export default {
       }
     },
     getPlayerTemplate(no) {
-      var member = this.members.filter(function(s, index) {
+      var member = this.members.filter(function(s) {
         if (s.no == no) return true;
       });
       var name;

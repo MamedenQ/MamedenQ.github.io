@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import home from "../components/home";
-import scoreinput from "../components/scoreinput";
-import scorelist from "../components/scorelist";
-import analyzelistplayer from "../components/analyzelistplayer";
-import analyzelistmatch from "../components/analyzelistmatch";
-import settings from "../components/settings";
+import home from "../components/Home";
+import scoreinput from "../components/ScoreInput";
+import scorelist from "../components/ScoreList";
+import analyzelistplayer from "../components/AnalyzeListPlayer";
+import analyzelistmatch from "../components/AnalyzeListMatch";
+import settings from "../components/Settings";
 
 Vue.use(VueRouter)
 

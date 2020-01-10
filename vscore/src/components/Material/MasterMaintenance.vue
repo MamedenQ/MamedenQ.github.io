@@ -1,8 +1,8 @@
 <template>
   <div>
-    <span>マスタメンテ</span>
+    <span>プレーヤマスタ</span>
     <br />
-    <table class="analyze">
+    <table class="analyze" style="margin-bottom:10px;">
       <thead class="analyze_head">
         <tr>
           <th style="width:20%">番号</th>
@@ -13,48 +13,40 @@
         </tr>
       </thead>
       <tbody class="analyze_body">
-        <tr v-for="(item, idx) of members" :key="idx">
+        <tr v-for="(item, idx) of members" :key="idx" class="include-text">
           <td>
-            <input style="width:100%" type="text" v-model="members[idx].no" />
+            <!-- <input style="width:100%" type="text" v-model="members[idx].no" /> -->
+            <v-text-field color="primary" v-model="members[idx].no"></v-text-field>
           </td>
           <td>
-            <input style="width:100%" type="text" v-model="members[idx].name" />
+            <!-- <input style="width:100%" type="text" v-model="members[idx].name" /> -->
+            <v-text-field color="primary" v-model="members[idx].name"></v-text-field>
           </td>
           <td style="text-align:center;">
-            <input
-              type="radio"
-              id="male"
-              v-bind:name="'sex' + idx"
-              v-model="members[idx].sex"
-              value="0"
-            />
-            <label for="male">男</label>
-            <input
-              type="radio"
-              id="female"
-              v-bind:name="'sex' + idx"
-              v-model="members[idx].sex"
-              value="1"
-            />
-            <label for="female">女</label>
+            <v-radio-group v-model="members[idx].sex" row>
+              <v-radio color="primary" label="男" value="0"></v-radio>
+              <v-radio color="red" label="女" value="1"></v-radio>
+            </v-radio-group>
           </td>
           <td>
-            <select v-model="members[idx].team" style="width:100%">
+            <!-- <select v-model="members[idx].team" style="width:100%">
               <option v-for="team in teams" v-bind:value="team.no" :key="team.key">{{ team.name }}</option>
-            </select>
+            </select>-->
+            <v-select v-model="members[idx].team" :items="teams" item-text="name" item-value="no"></v-select>
           </td>
           <td style="text-align:center;">
-            <button v-on:click="onClickDelete(item)" class="btn btn-warning">削除</button>
+            <!-- <button v-on:click="onClickDelete(item)" class="btn btn-warning">削除</button> -->
+            <v-btn v-on:click="onClickDelete(item)" color="warning" dark>削除</v-btn>
           </td>
         </tr>
       </tbody>
     </table>
-    <button v-on:click="onClickAddMember" class="btn btn-primary">追加</button>
-    <button v-on:click="onClickSaveMember" class="btn btn-primary">保存</button>
-    <br />
-    <br />
-    <br />
-    <table class="analyze">
+    <!-- <button v-on:click="onClickAddMember" class="btn btn-primary">追加</button>
+    <button v-on:click="onClickSaveMember" class="btn btn-primary">保存</button>-->
+    <v-btn v-on:click="onClickAddMember" color="primary" dark>追加</v-btn>
+    <v-btn style="margin-left:10px" v-on:click="onClickSaveMember" color="primary" dark>保存</v-btn>
+    <div style="margin-top:30px">チームマスタ</div>
+    <table class="analyze" style="margin-bottom:10px;">
       <thead class="analyze_head">
         <tr>
           <th style="width:50%">番号</th>
@@ -62,15 +54,17 @@
         </tr>
       </thead>
       <tbody class="analyze_body">
-        <tr v-for="(item, idx) of teams" :key="idx">
+        <tr v-for="(item, idx) of teams" :key="idx" class="include-text">
           <td>{{ item.no }}</td>
           <td>
-            <input style="width:100%" type="text" v-model="teams[idx].name" />
+            <!-- <input style="width:100%" type="text" v-model="teams[idx].name" /> -->
+            <v-text-field color="primary" v-model="teams[idx].name"></v-text-field>
           </td>
         </tr>
       </tbody>
     </table>
-    <button v-on:click="onClickSaveTeam" class="btn btn-primary">保存</button>
+    <!-- <button v-on:click="onClickSaveTeam" class="btn btn-primary">保存</button> -->
+    <v-btn v-on:click="onClickSaveTeam" color="primary" dark>保存</v-btn>
     <confirm
       v-if="showModalConfirm"
       v-on:dialogResult="result"
@@ -164,7 +158,7 @@ export default {
 
       var item = this.deleteItem;
       // var scoreList = JSON.parse(localStorage.getItem("score"));
-      var filterData = this.members.filter(function(data, index) {
+      var filterData = this.members.filter(function(data) {
         if (data.no != item.no) return true;
       });
       // filterData[0].isTrash = true;

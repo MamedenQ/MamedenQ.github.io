@@ -2,12 +2,8 @@
   <div class="main-area">
     <span id="page-top"></span>
     <div class="view-contents">
-      <trashList></trashList>
-      <br />
-      <br />
-      <masterMaintenance></masterMaintenance>
-      <br />
-      <br />
+      <trashList style="margin-bottom:30px;"></trashList>
+      <masterMaintenance style="margin-bottom:30px;"></masterMaintenance>
       <!--
         <span>詳細あり・なし</span><br>
         <input type="radio" id="detail_off" name="detail" v-model="settings.detail" value="0">

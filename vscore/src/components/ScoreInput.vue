@@ -126,15 +126,32 @@
 
                             <div class="modal-body" style="height:200px">
                                 <slot name="body">
-                                    試合名<br>
-                                    <input style="width:100%" type="text" v-model="modelTitle"/><br>
-                                    日付<br>
-                                    <input style="width:100%" type="date" v-model="modelDate" /><br>
-                                    得点<br>
-                                    <div style="position:relative">
-                                    <span style="position:absolute;width:100%;left:0;top:0;right:0;text-align:center;">－</span>
-                                    <input style="position:absolute;width:80px;left:0;top:0;" type="number" v-model="modelAPoint" />
-                                    <input style="position:absolute;width:80px;right:0;top:0;" type="number" v-model="modelBPoint" />
+                                    <!-- <input style="width:100%" type="text" v-model="modelTitle"/><br> -->
+                                    <v-text-field dense outlined label="試合名" color="primary" v-model="modelTitle"></v-text-field>
+                                    <!-- 日付<br> -->
+                                    <!-- <input style="width:100%" type="date" v-model="modelDate" /><br> -->
+                                    <v-menu
+                                        v-model="showDatePicker"
+                                        :close-on-content-click="false"
+                                        :nudge-right="40"
+                                        transition="scale-transition"
+                                        offset-y
+                                        min-width="290px"
+                                    >
+                                        <template v-slot:activator="{ on }">
+                                        <v-text-field
+                                            v-model="modelDate"
+                                            readonly
+                                            v-on="on"
+                                            dense outlined label="日付" 
+                                        ></v-text-field>
+                                        </template>
+                                        <v-date-picker v-model="modelDate" @input="showDatePicker = false"></v-date-picker>
+                                    </v-menu>
+                                          <!-- 得点<br> -->
+                                    <div style="position:relative;">
+                                    <v-text-field style="display:inline-block;width:45%;position:absolute;left:0;top:0;bottom:0;" dense outlined label="得点A" type="number" color="primary" v-model="modelAPoint"></v-text-field>
+                                    <v-text-field style="display:inline-block;width:45%;position:absolute;right:0;top:0;bottom:0;" dense outlined label="得点B" type="number" color="primary" v-model="modelBPoint"></v-text-field>
                                     </div>
                                 </slot>
                             </div>
@@ -149,8 +166,16 @@
                                         保存
                                     </button>
                                     -->
-                                    <button type="button" class="modal-default-button btn btn-secondary" @click="showModalSave = false">キャンセル</button>
-                                    <button type="button" class="modal-default-button btn btn-primary" @click="save">保存</button>
+                                    <!-- <button type="button" class="modal-default-button btn btn-secondary" @click="showModalSave = false">キャンセル</button>
+                                    <button type="button" class="modal-default-button btn btn-primary" @click="save">保存</button> -->
+                                    <v-btn class="modal-default-button" v-on:click="showModalSave = false">キャンセル</v-btn>
+                                    <v-btn
+                                    style="margin-right:20px;"
+                                    class="modal-default-button"
+                                    v-on:click="save"
+                                    color="primary"
+                                    dark
+                                    >保存</v-btn>
                                 </slot>
                             </div>
                         </div>
@@ -185,8 +210,16 @@
                                         続行
                                     </button>
                                     -->
-                                    <button type="button" class="modal-default-button btn btn-secondary" @click="showModalWarn = false">キャンセル</button>
-                                    <button type="button" class="modal-default-button btn btn-primary" @click="callbackClose">続行</button>
+                                    <!-- <button type="button" class="modal-default-button btn btn-secondary" @click="showModalWarn = false">キャンセル</button>
+                                    <button type="button" class="modal-default-button btn btn-primary" @click="callbackClose">続行</button> -->
+                                    <v-btn class="modal-default-button" v-on:click="showModalWarn = false">キャンセル</v-btn>
+                                    <v-btn
+                                    style="margin-right:20px;"
+                                    class="modal-default-button"
+                                    v-on:click="callbackClose"
+                                    color="primary"
+                                    dark
+                                    >続行</v-btn>
                                 </slot>
                             </div>
                         </div>
@@ -285,6 +318,7 @@ export default {
             showModalWarn: false,
             showModalConfirm: false,
             showModalMemberChange: false,
+            showDatePicker: false,
             title: "",
             msg: "",
             positive: "",

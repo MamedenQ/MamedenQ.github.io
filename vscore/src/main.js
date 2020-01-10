@@ -1,5 +1,6 @@
 import Vue from 'vue'
-import App from './App'
+import App from './App.vue'
+import vuetify from './plugins/vuetify';
 import router from './router/router'
 
 import vueSmoothScroll from 'vue-smooth-scroll'
@@ -17,6 +18,7 @@ Vue.directive('scroll', {
   }
 });
 
+
 import VueGoodTablePlugin from 'vue-good-table';
 
 // import the styles 
@@ -24,12 +26,10 @@ import 'vue-good-table/dist/vue-good-table.css'
 
 Vue.use(VueGoodTablePlugin);
 
+Vue.config.productionTip = false
+
 new Vue({
   router: router,
-  el: '#app',
-  render: h => h(App),
-  // components: { Home },
-  data: {
-  },
-});
-
+  vuetify: vuetify,
+  render: h => h(App)
+}).$mount('#app')

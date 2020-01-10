@@ -8,6 +8,10 @@
     font-family: 'Rounded Mplus 1c';
   }
 
+  .contents {
+    font-family: 'Rounded Mplus 1c';
+  }
+
   ul {
     list-style-type: none;
     padding: 0;
@@ -145,13 +149,18 @@
     width: 100%;
   }
 
-  .analyze_body tr td,
-  .analyze_head tr th {
+  .analyze_body tr td {
     padding: 10px;
+    border: 1px solid #ccc;
+  }
+  .analyze_body tr.include-text td {
+    padding: 0 10px;
     border: 1px solid #ccc;
   }
 
   .analyze_head tr th {
+    padding: 10px;
+    border: 1px solid #ccc;
     color: #fff;
     background: #005ab3;
   }
@@ -198,6 +207,9 @@ color: #42b983;
 margin: 20px 0;
 }
 
+.modal-footer {
+  height:36px;
+}
 .modal-default-button {
 float: right;
 }
@@ -215,7 +227,6 @@ opacity: 0;
 -webkit-transform: scale(1.1);
 transform: scale(1.1);
 }
-
 
   /* その他 */
   .item_invisible {

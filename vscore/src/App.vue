@@ -46,6 +46,7 @@
           v-bind:score-id="scoreId"
           v-bind:analyze-data="analyzeData"
           v-bind:analyze-player-score="analyzePlayerData"
+          v-bind:is-match-prop="isMatchProp"
         ></router-view>
       </div>
     </div>
@@ -66,11 +67,14 @@ export default {
     },
     routeAnalyzeListPlayer(items) {
       this.analyzeData = items;
-      this.$router.push({ path: "/analyzelistplayer" });
+      this.isMatchProp = false;
+      this.$router.push({ path: "/analyzelist" });
     },
     routeAnalyzeListMatch(items) {
       this.analyzeData = items;
-      this.$router.push({ path: "/analyzelistmatch" });
+      // this.$router.push({ path: "/analyzelistmatch" });
+      this.isMatchProp = true;
+      this.$router.push({ path: "/analyzelist" });
     },
     routeScoreInput(scoreId) {
       this.scoreId = scoreId;
@@ -123,6 +127,7 @@ export default {
   },
   data: function() {
     return {
+      isMatchProp: true,
       isNewScore: true,
       scoreId: "",
       analyzeData: [],

@@ -4,8 +4,8 @@ import VueRouter from 'vue-router'
 import home from "../components/Home";
 import scoreinput from "../components/ScoreInput";
 import scorelist from "../components/ScoreList";
-import analyzelistplayer from "../components/AnalyzeListPlayer";
-import analyzelistmatch from "../components/AnalyzeListMatch";
+import analyzelist from "../components/AnalyzeList";
+// import analyzelistmatch from "../components/AnalyzeListMatch";
 import settings from "../components/Settings";
 
 Vue.use(VueRouter)
@@ -27,13 +27,13 @@ export default new VueRouter({
             component: scorelist,
         },
         {
-            path: '/analyzelistplayer',
-            component: analyzelistplayer,
+            path: '/analyzelist',
+            component: analyzelist,
         },
-        {
-            path: '/analyzelistmatch',
-            component: analyzelistmatch,
-        },
+        // {
+        //     path: '/analyzelistmatch',
+        //     component: analyzelistmatch,
+        // },
         // {
         //     path: '/AnalyzeDetail',
         //     component: analyzedetail,

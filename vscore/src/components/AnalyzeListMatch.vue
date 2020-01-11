@@ -45,7 +45,7 @@
                 <thead>
                   <tr>
                     <th style="border-bottom:none;text-align:left;">基本情報</th>
-                    <th style="border-bottom:none;"></th>
+                    <!-- <th style="border-bottom:none;"></th> -->
                     <th style="border-bottom:none;text-align:left;">総合</th>
                     <th style="border-bottom:none;"></th>
                     <th style="border-bottom:none;text-align:left;">サーブ</th>
@@ -63,7 +63,7 @@
               <template v-slot:items="{ props }">
                 <tbody style="text-align:right;">
                   <tr v-for="(item, idx) in props" :key="idx">
-                    <td style="text-align:center;">{{idx}}</td>
+                    <!-- <td style="text-align:center;">{{idx}}</td> -->
                     <td style="text-align:left;">
                       <a href="#" v-on:click="onPlayerDetail(item)">{{item.name}}</a>
                     </td>
@@ -103,7 +103,7 @@
                 <thead>
                   <tr>
                     <th style="border-bottom:none;text-align:left;">基本情報</th>
-                    <th style="border-bottom:none;"></th>
+                    <!-- <th style="border-bottom:none;"></th> -->
                     <th style="border-bottom:none;text-align:left;">総合</th>
                     <th style="border-bottom:none;"></th>
                     <th style="border-bottom:none;text-align:left;">スパイク</th>
@@ -123,7 +123,7 @@
               <template v-slot:items="{ props }">
                 <tbody style="text-align:right;">
                   <tr v-for="(item, idx) in props" :key="idx">
-                    <td style="text-align:center;">{{idx}}</td>
+                    <!-- <td style="text-align:center;">{{idx}}</td> -->
                     <td style="text-align:left;">
                       <a href="#" v-on:click="onPlayerDetail(item)">{{item.name}}</a>
                     </td>
@@ -162,7 +162,7 @@
                 <thead>
                   <tr>
                     <th style="border-bottom:none;text-align:left;">基本情報</th>
-                    <th style="border-bottom:none;"></th>
+                    <!-- <th style="border-bottom:none;"></th> -->
                     <th style="border-bottom:none;text-align:left;">総合</th>
                     <th style="border-bottom:none;"></th>
                     <th style="border-bottom:none;text-align:left;">ブロック</th>
@@ -179,7 +179,7 @@
               <template v-slot:items="{ props }">
                 <tbody style="text-align:right;">
                   <tr v-for="(item, idx) in props" :key="idx">
-                    <td style="text-align:center;">{{idx}}</td>
+                    <!-- <td style="text-align:center;">{{idx}}</td> -->
                     <td style="text-align:left;">
                       <a href="#" v-on:click="onPlayerDetail(item)">{{item.name}}</a>
                     </td>
@@ -210,7 +210,7 @@
                 <thead>
                   <tr>
                     <th style="border-bottom:none;text-align:left;">基本情報</th>
-                    <th style="border-bottom:none;"></th>
+                    <!-- <th style="border-bottom:none;"></th> -->
                     <th style="border-bottom:none;text-align:left;">総合</th>
                     <th style="border-bottom:none;"></th>
                     <th style="border-bottom:none;text-align:left;">レシーブ</th>
@@ -224,7 +224,8 @@
               <template v-slot:items="{ props }">
                 <tbody style="text-align:right;">
                   <tr v-for="(item, idx) in props" :key="idx">
-                    <td style="text-align:center;">{{idx}}</td>
+                    <!-- <td style="text-align:center;">{{idx}}</!-->
+                    -->
                     <td style="text-align:left;">
                       <a href="#" v-on:click="onPlayerDetail(item)">{{item.name}}</a>
                     </td>
@@ -333,12 +334,12 @@ export default {
       tempScore: {},
 
       headersServe: [
-        {
-          text: "#",
-          align: "left",
-          value: "no",
-          sortable: true
-        },
+        // {
+        //   text: "#",
+        //   align: "left",
+        //   value: "no",
+        //   sortable: true
+        // },
         {
           text: "名前",
           align: "left",
@@ -366,12 +367,12 @@ export default {
         }
       ],
       headersSpike: [
-        {
-          text: "#",
-          align: "left",
-          value: "no",
-          sortable: true
-        },
+        // {
+        //   text: "#",
+        //   align: "left",
+        //   value: "no",
+        //   sortable: true
+        // },
         {
           text: "名前",
           align: "left",
@@ -415,27 +416,27 @@ export default {
 
         {
           text: "総数",
-          align: "center",
+          align: "left",
           value: "spike.total"
         },
         {
           text: "得点",
-          align: "center",
+          align: "left",
           value: "spike.point"
         },
         {
           text: "失点",
-          align: "center",
+          align: "left",
           value: "spike.miss"
         },
         {
           text: "決定率",
-          align: "center",
+          align: "left",
           value: "spike.determined"
         },
         {
           text: "効果率",
-          align: "center",
+          align: "left",
           value: "spike.effect"
         }
         // {
@@ -465,12 +466,12 @@ export default {
         // }
       ],
       headersBlock: [
-        {
-          text: "#",
-          align: "left",
-          value: "no",
-          sortable: true
-        },
+        // {
+        //   text: "#",
+        //   align: "left",
+        //   value: "no",
+        //   sortable: true
+        // },
         {
           text: "名前",
           align: "left",
@@ -513,12 +514,12 @@ export default {
         // }
       ],
       headersReceiveEtc: [
-        {
-          text: "#",
-          align: "left",
-          value: "no",
-          sortable: true
-        },
+        // {
+        //   text: "#",
+        //   align: "left",
+        //   value: "no",
+        //   sortable: true
+        // },
         {
           text: "名前",
           align: "left",

@@ -1,16 +1,17 @@
 <template>
-  <v-card style="width:100%;" class="d-inline-block mx-auto">
-    <v-container>
-      <div style="margin-bottom:10px;">プレーヤマスタ編集</div>
-      <v-data-table
-        :headers="headersPlayer"
-        :items="members"
-        item-key="id"
-        disable-sort
-        hide-default-footer
-        style="margin-bottom:10px;"
-      >
-        <!-- <template v-slot:header="{ props }">
+  <div>
+    <!-- <v-card style="width:100%;" class="d-inline-block mx-auto"> -->
+    <!-- <v-container> -->
+    <div style="margin-bottom:10px;">プレーヤマスタ編集</div>
+    <v-data-table
+      :headers="headersPlayer"
+      :items="members"
+      item-key="id"
+      disable-sort
+      hide-default-footer
+      style="margin-bottom:10px;"
+    >
+      <!-- <template v-slot:header="{ props }">
           <thead>
             <tr>
               <th
@@ -21,45 +22,46 @@
               >{{ h.text }}</th>
             </tr>
           </thead>
-        </template>-->
-        <template style="width:25%;" v-slot:item.no="{ item }">
-          <v-text-field color="primary" v-model="item.no"></v-text-field>
-        </template>
-        <template v-slot:item.name="{ item }">
-          <v-text-field color="primary" v-model="item.name"></v-text-field>
-        </template>
-        <template v-slot:item.sex="{ item }">
-          <v-radio-group v-model="item.sex" row>
-            <v-radio color="primary" label="男" value="0"></v-radio>
-            <v-radio color="red" label="女" value="1"></v-radio>
-          </v-radio-group>
-        </template>
-        <template v-slot:item.team="{ item }">
-          <v-select v-model="item.team" :items="teams" item-text="name" item-value="no"></v-select>
-        </template>
-        <template v-slot:item.delete="{ item }">
-          <v-btn v-on:click="onClickDelete(item)" color="warning" dark>削除</v-btn>
-        </template>
-      </v-data-table>
-      <div>
-        <v-btn
-          style="float:right;margin-left:10px;margin-bottom:10px;"
-          v-on:click="onClickSaveMember"
-          color="primary"
-          dark
-        >保存</v-btn>
-        <v-btn style="float:right;" v-on:click="onClickAddMember" color="primary" dark>追加</v-btn>
-      </div>
-      <confirm
-        v-if="showModalConfirm"
-        v-on:dialogResult="result"
-        :title="title"
-        :msg="msg"
-        :positive="positive"
-        :negative="negative"
-      ></confirm>
-    </v-container>
-  </v-card>
+      </template>-->
+      <template style="width:25%;" v-slot:item.no="{ item }">
+        <v-text-field color="primary" v-model="item.no"></v-text-field>
+      </template>
+      <template v-slot:item.name="{ item }">
+        <v-text-field color="primary" v-model="item.name"></v-text-field>
+      </template>
+      <template v-slot:item.sex="{ item }">
+        <v-radio-group v-model="item.sex" row>
+          <v-radio color="primary" label="男" value="0"></v-radio>
+          <v-radio color="red" label="女" value="1"></v-radio>
+        </v-radio-group>
+      </template>
+      <template v-slot:item.team="{ item }">
+        <v-select v-model="item.team" :items="teams" item-text="name" item-value="no"></v-select>
+      </template>
+      <template v-slot:item.delete="{ item }">
+        <v-btn v-on:click="onClickDelete(item)" color="warning" dark>削除</v-btn>
+      </template>
+    </v-data-table>
+    <div>
+      <v-btn
+        style="float:right;margin-left:10px;margin-bottom:10px;"
+        v-on:click="onClickSaveMember"
+        color="primary"
+        dark
+      >保存</v-btn>
+      <v-btn style="float:right;" v-on:click="onClickAddMember" color="primary" dark>追加</v-btn>
+    </div>
+    <confirm
+      v-if="showModalConfirm"
+      v-on:dialogResult="result"
+      :title="title"
+      :msg="msg"
+      :positive="positive"
+      :negative="negative"
+    ></confirm>
+    <!-- </v-container> -->
+    <!-- </v-card> -->
+  </div>
 </template>
 
 <script>

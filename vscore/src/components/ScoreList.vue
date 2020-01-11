@@ -329,6 +329,7 @@ export default {
       // }
 
       this.$emit("route-analyze-list-player", this.modelTarget);
+      // this.$emit("route-analyze-list-match", this.modelTarget);
     },
     // extractTarget() {
     //   var target = this.scoreList.filter(this.isTarget);

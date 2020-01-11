@@ -1,16 +1,17 @@
 <template>
-  <v-card style="width:100%;" class="d-inline-block mx-auto">
-    <v-container>
-      <div style="margin-bottom:10px;">チームマスタ編集</div>
-      <v-data-table
-        :headers="headersTeam"
-        :items="teams"
-        item-key="id"
-        disable-sort
-        hide-default-footer
-        style="margin-bottom:10px;"
-      >
-        <!-- <template v-slot:header="{ props }">
+  <div>
+    <!-- <v-card style="width:100%;" class="d-inline-block mx-auto"> -->
+    <!-- <v-container> -->
+    <div style="margin-bottom:10px;">チームマスタ編集</div>
+    <v-data-table
+      :headers="headersTeam"
+      :items="teams"
+      item-key="id"
+      disable-sort
+      hide-default-footer
+      style="margin-bottom:10px;"
+    >
+      <!-- <template v-slot:header="{ props }">
           <thead>
             <tr>
               <th
@@ -21,32 +22,33 @@
               >{{ h.text }}</th>
             </tr>
           </thead>
-        </template>-->
-        <template v-slot:item.no="{ item }">{{ item.no }}</template>
-        <template v-slot:item.name="{ item }">
-          <v-text-field color="primary" v-model="item.name"></v-text-field>
-        </template>
-      </v-data-table>
-      <div>
-        <!-- <button v-on:click="onClickSaveTeam" class="btn btn-primary">保存</button> -->
-        <v-btn
-          style="float:right;margin-bottom:10px;"
-          v-on:click="onClickSaveTeam"
-          color="primary"
-          dark
-        >保存</v-btn>
-      </div>
+      </template>-->
+      <template v-slot:item.no="{ item }">{{ item.no }}</template>
+      <template v-slot:item.name="{ item }">
+        <v-text-field color="primary" v-model="item.name"></v-text-field>
+      </template>
+    </v-data-table>
+    <div>
+      <!-- <button v-on:click="onClickSaveTeam" class="btn btn-primary">保存</button> -->
+      <v-btn
+        style="float:right;margin-bottom:10px;"
+        v-on:click="onClickSaveTeam"
+        color="primary"
+        dark
+      >保存</v-btn>
+    </div>
 
-      <confirm
-        v-if="showModalConfirm"
-        v-on:dialogResult="result"
-        :title="title"
-        :msg="msg"
-        :positive="positive"
-        :negative="negative"
-      ></confirm>
-    </v-container>
-  </v-card>
+    <confirm
+      v-if="showModalConfirm"
+      v-on:dialogResult="result"
+      :title="title"
+      :msg="msg"
+      :positive="positive"
+      :negative="negative"
+    ></confirm>
+    <!-- </v-container> -->
+    <!-- </v-card> -->
+  </div>
 </template>
 
 <script>

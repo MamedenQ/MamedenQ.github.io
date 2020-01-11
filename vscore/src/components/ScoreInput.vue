@@ -46,6 +46,8 @@
             <div v-bind:class="item.classGrid" v-for="item of itemAction" :key="item.id">
                 <input type="radio" v-bind:id="item.id" name="action" v-bind:value="item.name" v-on:change="onChangeAction" v-model="modelAction">
                 <label v-bind:for="item.id">
+                    <v-btn v-show="modelAction == item.name" style="width:100%;height:100%;" color="primary" dark></v-btn>
+                    <v-btn v-on:click="modelAction = item.name;onChangeAction();" v-show="modelAction != item.name" style="width:100%;height:100%;"></v-btn>
                     <span v-bind:style="styleLabel">{{item.label}}</span>
                     <serveSvg v-if="item.id == 'action_serve'"></serveSvg>
                     <spikeSvg v-else-if="item.id == 'action_spike'"></spikeSvg>
@@ -61,6 +63,8 @@
             <div v-bind:class="item.classGrid" v-for="item of itemKind" :key="item.id">
                 <input type="radio" v-bind:id="item.id" name="kind" v-bind:value="item.name" v-on:change="onChangeKind" v-model="modelKind" v-bind:disabled="!item.isEnabled">
                 <label v-bind:for="item.id">
+                    <v-btn v-show="modelKind == item.name" style="width:100%;height:100%;" color="primary" dark></v-btn>
+                    <v-btn v-bind:disabled="!item.isEnabled" v-on:click="modelKind = item.name;onChangeKind();" v-show="modelKind != item.name" style="width:100%;height:100%;"></v-btn>
                     <span v-bind:style="styleLabel">{{item.label}}</span>
                     <pointSvg v-if="item.name == 'point'"></pointSvg>
                     <otherMissSvg v-else-if="item.name == 'miss'"></otherMissSvg>
@@ -73,6 +77,8 @@
             <div v-bind:class="item.classGrid" v-for="item of itemDetail" :key="item.id">
                 <input type="radio" v-bind:id="item.id" name="detail" v-bind:value="item.name" v-model="modelDetail" v-bind:disabled="!item.isEnabled">
                 <label v-bind:for="item.id">
+                    <v-btn v-show="modelDetail == item.name" style="width:100%;height:100%;" color="primary" dark></v-btn>
+                    <v-btn v-bind:disabled="!item.isEnabled" v-on:click="modelDetail = item.name;" v-show="modelDetail != item.name" style="width:100%;height:100%;"></v-btn>
                     <span v-bind:style="styleLabel">{{item.label}}</span>
                     <netSvg v-if="item.name == 'net'"></netSvg>
                     <inSvg v-else-if="item.name == 'in' || item.name == 'ace'"></inSvg>
@@ -87,25 +93,11 @@
         </div>
         
         <div class="coat" v-bind:style="styleGridCoat">
-            <div v-bind:class="item.classGrid" v-on:click="addScore(item)" v-for="item of itemTeamA" :key="item.key">
-                <span v-show="!item.isEmpty">{{item.no + ":" + item.name}}</span><br>
-                <playerSvg v-show="item.sex == 0 && !item.isEmpty"></playerSvg>
-                <playerFSvg v-show="item.sex == 1 && !item.isEmpty"></playerFSvg>
-            </div>
-            <div class="rotate-a" v-on:click="rotateA">
-                <span>ローテ</span>
-                <rotateSvg></rotateSvg>
-            </div>
+            <player v-on:on-click-player="addScore(item)" v-bind:item="item" v-bind:class="item.classGrid" v-for="item of itemTeamA" :key="item.key"></player>
+            <rotate class="rotate-a" v-on:on-click-rotate="rotateA"></rotate>
 
-            <div v-bind:class="item.classGrid" v-on:click="addScore(item)" v-for="item of itemTeamB" :key="item.key">
-                <span v-show="!item.isEmpty">{{item.no + ":" + item.name}}</span><br>
-                <playerSvg v-show="item.sex == 0 && !item.isEmpty"></playerSvg>
-                <playerFSvg v-show="item.sex == 1 && !item.isEmpty"></playerFSvg>
-            </div>
-            <div class="rotate-b" v-on:click="rotateB">
-                <span>ローテ</span>
-                <rotateSvg></rotateSvg>
-            </div>
+            <player v-on:on-click-player="addScore(item)" v-bind:item="item" v-bind:class="item.classGrid" v-for="item of itemTeamB" :key="item.key"></player>
+            <rotate class="rotate-b" v-on:on-click-rotate="rotateB"></rotate>
         </div>
 
         <div class="score" style="overflow-x:auto; overflow-y:hidden;">
@@ -243,9 +235,11 @@ import spikeSvg from './SVG/SpikeSVG'
 import serveSvg from './SVG/ServeSVG'
 import scoreObjSvg from './SVG/ScoreObjSVG'
 import memberSvg from './SVG/MemberSVG'
-import playerSvg from './SVG/PlayerSVG'
-import playerFSvg from './SVG/PlayerFSVG'
-import rotateSvg from './SVG/RotateSVG'
+// import playerSvg from './SVG/PlayerSVG'
+// import playerFSvg from './SVG/PlayerFSVG'
+import player from './Material/Player'
+// import rotateSvg from './SVG/RotateSVG'
+import rotate from './Material/Rotate'
 import memberChange from './Material/MemberChange'
 import pointSvg from './SVG/PointSVG'
 import netSvg from './SVG/NetSVG'
@@ -269,9 +263,11 @@ export default {
         serveSvg,
         scoreObjSvg,
         memberSvg,
-        playerSvg,
-        playerFSvg,
-        rotateSvg,
+        // playerSvg,
+        // playerFSvg,
+        player,
+        // rotateSvg,
+        rotate,
         memberChange,
         pointSvg,
         netSvg,
@@ -384,14 +380,14 @@ export default {
                 // { key: "a3", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a3", isEmpty: true, },
                 // { key: "a2", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a2", isEmpty: true, },
                 // { key: "a1", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a1", isEmpty: true, },
-                { key: "a1", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a1 forward-position", isEmpty: true, },
-                { key: "a2", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a2 forward-position", isEmpty: true, },
-                { key: "a3", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a3 forward-position", isEmpty: true, },
-                { key: "a4", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a4 back-position", isEmpty: true, },
-                { key: "a5", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a5 back-position", isEmpty: true, },
-                { key: "a6", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a6 back-position", isEmpty: true, },
-                { key: "a7", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a7 back-position", isEmpty: true, },
-                { key: "a8", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a8 back-position", isEmpty: true, },
+                { key: "a1", team: "a", no: "", name: "", sex: 0, classGrid: "a1", isEmpty: true, isFront: true},
+                { key: "a2", team: "a", no: "", name: "", sex: 0, classGrid: "a2", isEmpty: true, isFront: true},
+                { key: "a3", team: "a", no: "", name: "", sex: 0, classGrid: "a3", isEmpty: true, isFront: true},
+                { key: "a4", team: "a", no: "", name: "", sex: 0, classGrid: "a4", isEmpty: true, isFront: false},
+                { key: "a5", team: "a", no: "", name: "", sex: 0, classGrid: "a5", isEmpty: true, isFront: false},
+                { key: "a6", team: "a", no: "", name: "", sex: 0, classGrid: "a6", isEmpty: true, isFront: false},
+                { key: "a7", team: "a", no: "", name: "", sex: 0, classGrid: "a7", isEmpty: true, isFront: false},
+                { key: "a8", team: "a", no: "", name: "", sex: 0, classGrid: "a8", isEmpty: true, isFront: false},
             ],
             itemTeamB: [
                 // { key: "b1", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b1", isEmpty: true, },
@@ -403,14 +399,14 @@ export default {
                 // { key: "b9", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b9", isEmpty: true, },
                 // { key: "b8", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b8", isEmpty: true, },
                 // { key: "b7", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b7", isEmpty: true, },
-                { key: "b1", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b1 forward-position", isEmpty: true, },
-                { key: "b2", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b2 forward-position", isEmpty: true, },
-                { key: "b3", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b3 forward-position", isEmpty: true, },
-                { key: "b4", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b4 back-position", isEmpty: true, },
-                { key: "b5", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b5 back-position", isEmpty: true, },
-                { key: "b6", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b6 back-position", isEmpty: true, },
-                { key: "b7", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b7 back-position", isEmpty: true, },
-                { key: "b8", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b8 back-position", isEmpty: true, },
+                { key: "b1", team: "b", no: "", name: "", sex: 0, classGrid: "b1", isEmpty: true, isFront: true},
+                { key: "b2", team: "b", no: "", name: "", sex: 0, classGrid: "b2", isEmpty: true, isFront: true},
+                { key: "b3", team: "b", no: "", name: "", sex: 0, classGrid: "b3", isEmpty: true, isFront: true},
+                { key: "b4", team: "b", no: "", name: "", sex: 0, classGrid: "b4", isEmpty: true, isFront: false},
+                { key: "b5", team: "b", no: "", name: "", sex: 0, classGrid: "b5", isEmpty: true, isFront: false},
+                { key: "b6", team: "b", no: "", name: "", sex: 0, classGrid: "b6", isEmpty: true, isFront: false},
+                { key: "b7", team: "b", no: "", name: "", sex: 0, classGrid: "b7", isEmpty: true, isFront: false},
+                { key: "b8", team: "b", no: "", name: "", sex: 0, classGrid: "b8", isEmpty: true, isFront: false},
             ],
             members: [],
         }
@@ -668,6 +664,7 @@ export default {
             return Math.max.apply(null, this.score.map(function (s) { return s.index; }));
         },
         onChangeAction() {
+            console.log("onChangeAction");
             this.toggleKind();
             this.onChangeKind();
         },
@@ -1189,8 +1186,8 @@ export default {
   }
 
   .rotate-a {
-    color: #333;
-    background: #eee;
+    /* color: #333;
+    background: #eee; */
     grid-area: rotate-a;
   }
 
@@ -1226,46 +1223,22 @@ export default {
     grid-area: b8;
   }
 
-  .forward-position {
+  /* .forward-position {
     background-color: #d6edbe;
   }
 
   .back-position {
     background-color: #edd5be;
-  }
+  } */
 
   .rotate-b {
-    color: #333;
-    background: #eee;
+    /* color: #333;
+    background: #eee; */
     grid-area: rotate-b;
   }
 
-  .coat div:active {
+  /* .coat div:active {
     color: #fff;
     background-color: #005ab3;
-  }
-
-  .coat div {
-    position: relative;
-    filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.6));
-    border-radius: 2px;
-  }
-
-  .coat div span {
-    position: absolute;
-    top: 2px;
-    left: 0;
-    right: 0;
-    text-align: center;
-    height: 50%;
-  }
-
-  .coat div svg {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 2px;
-    width: 100%;
-    height: 60%;
-  }
+  } */
 </style>

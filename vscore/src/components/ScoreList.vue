@@ -14,126 +14,72 @@
         dark
       >選択した試合を対象に分析する</v-btn>
 
-      <v-data-table
-        v-model="modelTarget"
-        :headers="headers"
-        :items="scoreList"
-        item-key="id"
-        show-select
-        multi-sort
-        class="elevation-1"
-      >
-        <!-- <template slot="headers" slot-scope="props">
-          <tr style="background:#005ab3">
-            <th
-              style="color: #fff;"
-              v-for="(header, idx) in props.headers"
-              :key="idx"
-            >{{header.text}}</th>
-          </tr>
-        </template>-->
-        <template style="background: #005ab3;color: #fff;" v-slot:header.title="{ header }">
-          <div>{{header.title}}a</div>
-          <!-- <th :colspan="headers.length">This is a header</th> -->
-        </template>
-        <!-- <template v-slot:top>
-          <v-switch v-model="singleSelect" label="Single select" class="pa-3"></v-switch>
-        </template>-->
-        <template v-slot:item.title="{ item }">
-          <!-- <a href="#" v-on:click="linkScoreInput(item.id)">{{ item.title }}</a> -->
-          {{ item.title }}
-        </template>
-        <template v-slot:item.point="{ item }">
-          <!-- <v-btn v-on:click="onClickTrash(item)" color="warning" dark>削除</v-btn> -->
-          <!-- <v-chip  dark>{{ item.calories }}</v-chip> -->
-          {{ item.teamAPoint + " － " + item.teamBPoint }}
-        </template>
-        <template v-slot:item.edit="{ item }">
-          <v-btn
-            v-on:click="linkScoreInput(item.id)"
-            color="primary"
-            style="margin-right:10px;"
-            dark
-          >編集</v-btn>
-          <v-btn v-on:click="onClickTrash(item)" color="warning" dark>削除</v-btn>
-          <!-- <v-icon small class="mr-2" @click="linkScoreInput(item.id)">edit</v-icon> -->
-          <!-- <v-icon
-        small
-        @click="deleteItem(item)"
-      >
-        delete
-          </v-icon>-->
-        </template>
-        <template v-slot:item.delete="{ item }">
-          <v-btn v-on:click="onClickTrash(item)" color="warning" dark>削除</v-btn>
-          <!-- <v-chip  dark>{{ item.calories }}</v-chip> -->
-        </template>
-      </v-data-table>
-
-      <!--
-      <table class="analyze">
-        <thead class="analyze_head">
-          <tr>
-            <th>
-              <input type="checkbox" v-bind:checked="isCheckAll" v-on:click="onClickCheckAll" /> 選択
-            </th>
-            <th>タイトル</th>
-            <th>日付</th>
-            <th>得点</th>
-            <th>削除</th>
-          </tr>
-        </thead>
-        <tbody class="analyze_body">
-          <tr v-for="(item, idx) of scoreList" :key="idx">
-            <td>
-              <input
-                type="checkbox"
-                v-model="modelTarget"
-                :value="item.id"
-                v-on:change="onCheckChange()"
-              />
-            </td>
-            <td>
-              <a href="#" v-on:click="linkScoreInput(item.id)">{{ item.title }}</a>
-            </td>
-            <td>{{ item.date }}</td>
-            <td>{{ item.teamAPoint + " － " + item.teamBPoint }}</td>
-            <td style="text-align:center;">
-              <button v-on:click="onClickTrash(item)" class="btn btn-warning">削除</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      -->
-      <!-- <vue-good-table
-        :columns="columns"
-        :rows="scoreList"
-        :select-options="{ enabled: true }"
-        styleClass=" analyze_sort vgt-table"
-        @on-selected-rows-change="onChangeChecked"
-      >
-        <template slot="table-row" slot-scope="props">
-          <div v-if="props.column.field == 'delete'" style="text-align:center;">
-            <v-btn v-on:click="onClickTrash(props.row)" color="warning" dark>削除</v-btn>
-          </div>
-          <div v-else-if="props.column.field == 'title'">
-            <a
-              href="#"
-              v-on:click="linkScoreInput(props.row.id)"
-            >{{ props.formattedRow[props.column.field] }}</a>
-          </div>
-          <div v-else-if="props.column.field == 'date'">{{ props.row.date }}</div>
-          <div
-            v-if="props.column.field == 'point'"
-            style="text-align:center;"
-          >{{ props.row.teamAPoint + " － " + props.row.teamBPoint }}</div>
-        </template>
-      </vue-good-table>-->
-      <!-- <button
-        v-on:click="linkAnalyzeList"
-        class="btn btn-primary"
-        style="width:100%;margin-top:10px;margin-bottom:10px"
-      >選択した試合を対象に分析する</button>-->
+      <v-card style="width:100%;" class="d-inline-block mx-auto">
+        <v-container>
+          <v-data-table
+            v-model="modelTarget"
+            :headers="headers"
+            :items="scoreList"
+            item-key="id"
+            show-select
+            hide-default-footer
+            multi-sort
+          >
+            <!-- <template slot="headers" slot-scope="props">
+              <tr>
+                <th style="width:5%">
+                  <v-checkbox
+                    :input-value="props.all"
+                    :indeterminate="props.indeterminate"
+                    primary
+                    hide-details
+                    @click="toggleAll"
+                  ></v-checkbox>
+                </th>
+                <th
+                  v-for="header in props.headers"
+                  :key="header.text"
+                  @click="changeSort(header.value)"
+                >{{ header.text }}</th>
+              </tr>
+            </template>-->
+            <!-- <template v-slot:header="{ props }">
+              <thead>
+                <tr>
+                  <th
+                    style="width:20%;background-color: #005ab3;color: #fff;"
+                    v-for="h in props.headers"
+                    class="text-center"
+                    :key="h.text"
+                  >{{ h.text }}</th>
+                </tr>
+              </thead>
+            </template>-->
+            <template v-slot:item.title="{ item }">
+              <!-- <a href="#" v-on:click="linkScoreInput(item.id)">{{ item.title }}</a> -->
+              <div style="text-align:left;">{{ item.title }}</div>
+            </template>
+            <template v-slot:item.point="{ item }">
+              <!-- <v-btn v-on:click="onClickTrash(item)" color="warning" dark>削除</v-btn> -->
+              <!-- <v-chip  dark>{{ item.calories }}</v-chip> -->
+              {{ item.teamAPoint + " － " + item.teamBPoint }}
+            </template>
+            <template v-slot:item.edit="{ item }">
+              <v-btn
+                v-on:click="linkScoreInput(item.id)"
+                color="primary"
+                style="margin-right:10px;"
+                dark
+              >編集</v-btn>
+              <v-btn v-on:click="onClickTrash(item)" color="warning" dark>削除</v-btn>
+            </template>
+            <template v-slot:item.delete="{ item }">
+              <v-btn v-on:click="onClickTrash(item)" color="warning" dark>削除</v-btn>
+              <!-- <v-chip  dark>{{ item.calories }}</v-chip> -->
+            </template>
+          </v-data-table>
+        </v-container>
+      </v-card>
       <v-btn
         style="width:100%;margin-top:10px;margin-bottom:10px"
         v-on:click="linkAnalyzeList"
@@ -148,14 +94,6 @@
       >
         <moveTop></moveTop>
       </a>
-      <!--
-        </div>
-        <div class="fixed-header" data-scroll-header>
-            <input type="date" v-model="modelDateStart" />〜<input type="date" v-model="modelDateEnd" />
-            <button v-on:click="searchScore" class="btn btn-primary">絞り込み</button><br>
-            <button v-on:click="linkAnalyzeList" class="btn btn-primary">分析</button>
-        </div>
-      -->
       <div class="menu" v-bind:style="styleNavi">
         <span>
           <span>ホーム</span>
@@ -174,14 +112,6 @@
             <path d="M20 9v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9" />
             <path d="M9 22V12h6v10M2 10.6L12 2l10 8.6" />
           </svg>
-          <!--
-                <br><br><br><br>
-                <span>分析へ</span>
-                <svg v-on:click="linkAnalyzeList" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M20 9v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9"/>
-                    <path d="M9 22V12h6v10M2 10.6L12 2l10 8.6"/>
-                </svg>
-          -->
         </span>
       </div>
     </div>
@@ -220,25 +150,29 @@ export default {
       headers: [
         {
           text: "タイトル",
-          align: "left",
+          align: "center",
           value: "title"
+          // width: "20%"
         },
         {
           text: "日付",
-          align: "left",
+          align: "center",
           value: "date"
+          // width: "20%"
         },
         {
           text: "得点",
           align: "center",
           sortable: false,
           value: "point"
+          // width: "20%"
         },
         {
           text: "編集",
           align: "center",
           sortable: false,
           value: "edit"
+          // width: "20%"
         }
         // {
         //   text: "削除",

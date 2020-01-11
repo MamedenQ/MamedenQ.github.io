@@ -19,9 +19,21 @@
                       name="member"
                       v-on:change="onChangeMember(null)"
                       value="-1"
+                      v-model="modelSelection"
                     />
                     <label for="mem_x">
-                      <span style="left:0;text-align:center;">空に変更</span>
+                      <v-btn
+                        v-show="modelSelection == -1"
+                        v-bind:style="styleMemberButton"
+                        color="primary"
+                        dark
+                      >空に変更</v-btn>
+                      <v-btn
+                        v-on:click="modelSelection = -1;onChangeMember(null);"
+                        v-show="modelSelection != -1"
+                        v-bind:style="styleMemberButton"
+                      >空に変更</v-btn>
+                      <!-- <span style="left:0;text-align:center;pointer-events:none">空に変更</span> -->
                     </label>
                   </li>
                   <li class="member" v-for="member of members" :key="member.no">
@@ -31,16 +43,48 @@
                       name="member"
                       v-on:change="onChangeMember(member)"
                       v-bind:value="member.no"
+                      v-model="modelSelection"
                     />
                     <label v-bind:for="'mem_' + member.no">
+                      <v-btn
+                        v-show="modelSelection == member.no"
+                        v-bind:style="styleMemberButton"
+                        color="primary"
+                        dark
+                      >{{member.no}}:{{member.name}}</v-btn>
+                      <v-btn
+                        v-on:click="modelSelection = member.no;onChangeMember(member);"
+                        v-show="modelSelection != member.no"
+                        v-bind:style="styleMemberButton"
+                      >{{member.no}}:{{member.name}}</v-btn>
                       <playerSvg v-if="member.sex == 0"></playerSvg>
                       <playerFSvg v-else></playerFSvg>
-                      <span>{{member.no}}:{{member.name}}</span>
+                      <!-- <span>{{member.no}}:{{member.name}}</span> -->
                     </label>
                   </li>
                 </ul>
               </div>
               <div class="coat" style="float:left;height:100%;width:50%;">
+                <player
+                  v-on:on-click-player="changeMember(item)"
+                  v-bind:item="item"
+                  v-bind:class="item.classGrid"
+                  v-for="item of itemTeamAWork"
+                  :key="item.key"
+                ></player>
+                <!-- <rotate class="rotate-a" v-on:on-click-rotate="rotateA"></rotate> -->
+
+                <player
+                  v-on:on-click-player="changeMember(item)"
+                  v-bind:item="item"
+                  v-bind:class="item.classGrid"
+                  v-for="item of itemTeamBWork"
+                  :key="item.key"
+                ></player>
+                <!-- <rotate class="rotate-b" v-on:on-click-rotate="rotateB"></rotate> -->
+              </div>
+
+              <!-- <div class="coat" style="float:left;height:100%;width:50%;">
                 <div
                   v-bind:class="item.classGrid"
                   v-on:click="changeMember(item)"
@@ -63,7 +107,7 @@
                   <playerSvg width="40" height="40" v-if="item.sex == 0" v-show="!item.isEmpty"></playerSvg>
                   <playerFSvg width="40" height="40" v-else v-show="!item.isEmpty"></playerFSvg>
                 </div>
-              </div>
+              </div>-->
             </div>
             <div class="modal-footer">
               <!-- <button
@@ -93,6 +137,7 @@
 <script>
 import playerSvg from "../SVG/PlayerSVG";
 import playerFSvg from "../SVG/PlayerFSVG";
+import player from "../Material/Player";
 
 export default {
   name: "member_change",
@@ -107,13 +152,25 @@ export default {
   },
   components: {
     playerSvg,
-    playerFSvg
+    playerFSvg,
+    player
   },
   data() {
     return {
+      modelSelection: -1,
       selectedMember: null,
       itemTeamAWork: Array,
-      itemTeamBWork: Array
+      itemTeamBWork: Array,
+      styleMemberButton: {
+        position: "absolute",
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        "text-align": "center"
+      }
     };
   },
   mounted() {
@@ -159,21 +216,21 @@ export default {
   display: none;
 }
 
-.member input[type="radio"]:checked + label {
+/* .member input[type="radio"]:checked + label {
   color: #fff;
   background-color: #005ab3;
-}
+} */
 
 .member label {
   color: #333;
-  background: #eee;
-  text-align: center;
+  /* background: #eee;
+  text-align: center; */
   display: inline-block;
   width: 100%;
   height: 40px;
   position: relative;
-  filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.6));
-  border-radius: 2px;
+  /* filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.6));
+  border-radius: 2px; */
 }
 
 .member label svg {
@@ -184,13 +241,14 @@ export default {
   height: 100%;
 }
 
-.member label span {
+/* .member label span {
   position: absolute;
-  left: 60px;
+  left: 0;
   top: 0;
   right: 0;
   bottom: 0;
   text-align: left;
   line-height: 40px;
-}
+  pointer-events: none;
+} */
 </style>

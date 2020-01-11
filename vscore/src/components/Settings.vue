@@ -2,8 +2,9 @@
   <div class="main-area">
     <span id="page-top"></span>
     <div class="view-contents">
-      <trashList style="margin-bottom:30px;"></trashList>
-      <masterMaintenance style="margin-bottom:30px;"></masterMaintenance>
+      <trashList style="margin-bottom:10px;"></trashList>
+      <masterMaintenancePlayer style="margin-bottom:10px;"></masterMaintenancePlayer>
+      <masterMaintenanceTeam style="margin-bottom:10px;"></masterMaintenanceTeam>
       <!--
         <span>詳細あり・なし</span><br>
         <input type="radio" id="detail_off" name="detail" v-model="settings.detail" value="0">
@@ -13,7 +14,7 @@
         <span>色設定</span><br>
       -->
 
-      <backup></backup>
+      <backup style="margin-bottom:10px;"></backup>
       <a
         href="#page-top"
         style="position:fixed;bottom:10px;right:10px;filter: drop-shadow(3px 3px 3px rgba(0, 0, 0, 0.6));"
@@ -56,7 +57,8 @@
 <script>
 import confirm from "./Material/Confirm";
 import trashList from "./Material/TrashList";
-import masterMaintenance from "./Material/MasterMaintenance";
+import masterMaintenancePlayer from "./Material/MasterMaintenancePlayer";
+import masterMaintenanceTeam from "./Material/MasterMaintenanceTeam";
 import backup from "./Material/Backup";
 import moveTop from "./SVG/MoveTopSVG";
 
@@ -65,7 +67,8 @@ export default {
   components: {
     confirm,
     trashList,
-    masterMaintenance,
+    masterMaintenancePlayer,
+    masterMaintenanceTeam,
     backup,
     moveTop
   },

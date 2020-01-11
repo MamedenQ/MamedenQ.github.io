@@ -14,6 +14,18 @@ import colors from 'vuetify/lib/util/colors'
 Vue.use(Vuetify);
 
 export default new Vuetify({
+    // icons: {
+    //     iconfont: 'mdi', // default
+    //     values: {
+    //         serve: '',
+    //         support: 'mdi-lifebuoy',
+    //         steam: 'mdi-steam-box',
+    //         pc: 'mdi-desktop-classic',
+    //         xbox: 'mdi-xbox',
+    //         playstation: 'mdi-playstation',
+    //         switch: 'mdi-nintendo-switch',
+    //     },
+    // },
     theme: {
         themes: {
             light: {

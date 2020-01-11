@@ -1,44 +1,86 @@
 <template>
-  <div>
-    <span>削除済みリスト</span>
-    <br />
-    <table class="analyze">
-      <thead class="analyze_head">
-        <tr>
-          <th>#</th>
-          <th>タイトル</th>
-          <th>日付</th>
-          <th>得点</th>
-          <th>復元</th>
-          <th>完全削除</th>
-        </tr>
-      </thead>
-      <tbody class="analyze_body">
-        <tr v-for="(item, idx) of trashList" :key="item.id">
-          <td>{{ idx + 1 }}</td>
-          <td>{{ item.title }}</td>
-          <td>{{ item.date }}</td>
-          <td>{{ item.teamAPoint + " － " + item.teamBPoint }}</td>
-          <td style="text-align:center;">
-            <!-- <button v-on:click="onClickRestore(item)" class="btn btn-warning">復元</button> -->
-            <v-btn v-on:click="onClickRestore(item)" color="primary" dark>復元</v-btn>
-          </td>
-          <td style="text-align:center;">
-            <!-- <button v-on:click="onClickDelete(item)" class="btn btn-warning">完全削除</button> -->
-            <v-btn v-on:click="onClickDelete(item)" color="warning" dark>完全削除</v-btn>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <confirm
-      v-if="showModalConfirm"
-      v-on:dialogResult="result"
-      :title="title"
-      :msg="msg"
-      :positive="positive"
-      :negative="negative"
-    ></confirm>
-  </div>
+  <v-card style="width:100%;" class="d-inline-block mx-auto">
+    <v-container>
+      <div style="margin-bottom:10px;">削除済みスコア一覧</div>
+      <v-data-table
+        :headers="headers"
+        :items="trashList"
+        item-key="id"
+        hide-default-footer
+        disable-sort
+      >
+        <!-- <template v-slot:header="{ props }">
+          <thead>
+            <tr>
+              <th
+                style="width:25%;background-color: #005ab3;color: #fff;"
+                v-for="h in props.headers"
+                class="text-center"
+                :key="h.text"
+              >{{ h.text }}</th>
+            </tr>
+          </thead>
+        </template>-->
+        <template v-slot:item.title="{ item }">
+          <div style="text-align:left;">{{ item.title }}</div>
+        </template>
+        <template v-slot:item.point="{ item }">{{ item.teamAPoint + " － " + item.teamBPoint }}</template>
+        <template v-slot:item.edit="{ item }">
+          <!-- <v-btn
+          v-on:click="linkScoreInput(item.id)"
+          color="primary"
+          style="margin-right:10px;"
+          dark
+        >編集</v-btn>
+          <v-btn v-on:click="onClickTrash(item)" color="warning" dark>削除</v-btn>-->
+
+          <v-btn
+            v-on:click="onClickRestore(item)"
+            color="primary"
+            style="margin-right:10px;"
+            dark
+          >復元</v-btn>
+          <v-btn v-on:click="onClickDelete(item)" color="warning" dark>完全削除</v-btn>
+        </template>
+      </v-data-table>
+      <table v-if="false" class="analyze">
+        <thead class="analyze_head">
+          <tr>
+            <th>#</th>
+            <th>タイトル</th>
+            <th>日付</th>
+            <th>得点</th>
+            <th>復元</th>
+            <th>完全削除</th>
+          </tr>
+        </thead>
+        <tbody class="analyze_body">
+          <tr v-for="(item, idx) of trashList" :key="item.id">
+            <td>{{ idx + 1 }}</td>
+            <td>{{ item.title }}</td>
+            <td>{{ item.date }}</td>
+            <td>{{ item.teamAPoint + " － " + item.teamBPoint }}</td>
+            <td style="text-align:center;">
+              <!-- <button v-on:click="onClickRestore(item)" class="btn btn-warning">復元</button> -->
+              <v-btn v-on:click="onClickRestore(item)" color="primary" dark>復元</v-btn>
+            </td>
+            <td style="text-align:center;">
+              <!-- <button v-on:click="onClickDelete(item)" class="btn btn-warning">完全削除</button> -->
+              <v-btn v-on:click="onClickDelete(item)" color="warning" dark>完全削除</v-btn>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <confirm
+        v-if="showModalConfirm"
+        v-on:dialogResult="result"
+        :title="title"
+        :msg="msg"
+        :positive="positive"
+        :negative="negative"
+      ></confirm>
+    </v-container>
+  </v-card>
 </template>
 
 <script>
@@ -55,7 +97,42 @@ export default {
       showModalConfirm: false,
       callbackConfirm: null,
       restoreItem: {},
-      deleteItem: {}
+      deleteItem: {},
+      headers: [
+        {
+          text: "タイトル",
+          align: "center",
+          value: "title",
+          width: "25%",
+          class: "test"
+        },
+        {
+          text: "日付",
+          align: "center",
+          value: "date",
+          width: "25%"
+        },
+        {
+          text: "得点",
+          align: "center",
+          sortable: false,
+          value: "point",
+          width: "25%"
+        },
+        {
+          text: "編集",
+          align: "center",
+          sortable: false,
+          value: "edit",
+          width: "25%"
+        }
+        // {
+        //   text: "削除",
+        //   align: "center",
+        //   sortable: false,
+        //   value: "delete"
+        // }
+      ]
     };
   },
   computed: {
@@ -147,3 +224,9 @@ export default {
 <style src="../../style/style.css" lang="css">
 </style>
 
+<style scoped>
+.test {
+  background-color: blue;
+  color: white;
+}
+</style>

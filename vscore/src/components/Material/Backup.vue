@@ -1,34 +1,38 @@
 <template>
-  <div>
-    <div>DBバックアップ</div>
-    <!-- <button v-on:click="onClickBackupDB" class="btn btn-primary">DBバックアップ</button> -->
-    <v-btn v-on:click="onClickBackupDB" color="primary" dark>DBバックアップ</v-btn>
-    <!-- <br /> -->
-    <div style="margin-bottom:30px;">前回バックアップ日時 : {{ bkDate }}</div>
-    <div>DBリストア</div>
-    <!-- <button v-on:click="onClickRestoreDB" class="btn btn-warning">DBリストア</button> -->
-    <v-btn style="margin-bottom:30px;" v-on:click="onClickRestoreDB" color="warning" dark>DBリストア</v-btn>
+  <v-card style="width:100%;" class="d-inline-block mx-auto">
+    <v-container>
+      <div style="margin-bottom:10px;">バックアップ・リストア</div>
+      <!-- <div>DBバックアップ</div> -->
+      <!-- <button v-on:click="onClickBackupDB" class="btn btn-primary">DBバックアップ</button> -->
+      <v-btn v-on:click="onClickBackupDB" color="primary" dark>DBバックアップ</v-btn>
+      <!-- <br /> -->
+      <div style="margin-bottom:30px;">前回バックアップ日時 : {{ bkDate }}</div>
+      <!-- <div>DBリストア</div> -->
+      <!-- <button v-on:click="onClickRestoreDB" class="btn btn-warning">DBリストア</button> -->
+      <v-btn style="margin-bottom:30px;" v-on:click="onClickRestoreDB" color="warning" dark>DBリストア</v-btn>
+      <br />
 
-    <div>DB内容JSON出力</div>
-    <!-- <button v-on:click="outputDB" class="btn btn-primary">出力</button> -->
-    <v-btn v-on:click="outputDB" color="primary" dark>出力</v-btn>
-    <!-- <textarea style="margin-bottom:30px;width:100%;height:300px;" v-model="output"></textarea> -->
-    <v-textarea style="margin-top:10px;" outlined label="JSON" v-model="output"></v-textarea>
-    <!-- <button v-on:click="onClickInputDB" class="btn btn-warning">入力</button> -->
-    <div>DB内容JSON入力</div>
-    <v-btn v-on:click="onClickInputDB" color="warning" dark>入力</v-btn>
-    <!-- <textarea style="width:100%;height:300px;" v-model="modelInput"></textarea> -->
-    <v-textarea style="margin:10px 0;" outlined label="JSON" v-model="modelInput"></v-textarea>
+      <!-- <div>DB内容JSON出力</div> -->
+      <!-- <button v-on:click="outputDB" class="btn btn-primary">出力</button> -->
+      <v-btn v-on:click="outputDB" color="primary" dark>DB内容JSON出力</v-btn>
+      <!-- <textarea style="margin-bottom:30px;width:100%;height:300px;" v-model="output"></textarea> -->
+      <v-textarea style="margin-top:10px;" outlined label="JSON" v-model="output"></v-textarea>
+      <!-- <button v-on:click="onClickInputDB" class="btn btn-warning">入力</button> -->
+      <!-- <div>DB内容JSON入力</div> -->
+      <v-btn v-on:click="onClickInputDB" color="warning" dark>DB内容JSON入力</v-btn>
+      <!-- <textarea style="width:100%;height:300px;" v-model="modelInput"></textarea> -->
+      <v-textarea style="margin:10px 0;" outlined label="JSON" v-model="modelInput"></v-textarea>
 
-    <confirm
-      v-if="showModalConfirm"
-      v-on:dialogResult="result"
-      :title="title"
-      :msg="msg"
-      :positive="positive"
-      :negative="negative"
-    ></confirm>
-  </div>
+      <confirm
+        v-if="showModalConfirm"
+        v-on:dialogResult="result"
+        :title="title"
+        :msg="msg"
+        :positive="positive"
+        :negative="negative"
+      ></confirm>
+    </v-container>
+  </v-card>
 </template>
 
 <script>

@@ -2,133 +2,246 @@
   <div class="main-area">
     <span id="page-top"></span>
     <div class="view-contents">
-      <!--
-        <div class="fixed-view-contents">
-      -->
-      <table class="analyze">
-        <thead class="analyze_head" style="text-align:center;">
-          <tr>
-            <th colspan="3">基本情報</th>
-            <th colspan="2">総合</th>
-            <th colspan="2" class="serve_cell">サーブ</th>
-            <!--
-                        <th colspan="5" class='spike_cell'>スパイク</th>
-            -->
-            <th colspan="2" class="spike_cell">
-              スパ
-              <br />イク
-            </th>
-            <th colspan="2" class="block_cell">
-              ブロ
-              <br />ック
-            </th>
-            <th class="reception_cell">
-              レシ
-              <br />ーブ
-            </th>
-            <th rowspan="2">
-              そ
-              <br />の
-              <br />他
-              <br />ミ
-              <br />ス
-            </th>
-            <th rowspan="2">
-              フ
-              <br />ァ
-              <br />ウ
-              <br />ル
-            </th>
-          </tr>
-          <tr>
-            <th>名前</th>
-            <th>日付</th>
-            <th>
-              得
-              <br />点
-            </th>
-            <th>
-              得
-              <br />点
-            </th>
-            <th>
-              失
-              <br />点
-            </th>
+      <v-card>
+        <v-tabs v-model="tab" background-color="primary accent-4" centered dark>
+          <v-tabs-slider></v-tabs-slider>
 
-            <th class="serve_cell">
-              得
-              <br />点
-            </th>
-            <th class="serve_cell">
-              失
-              <br />点
-            </th>
+          <v-tab href="#tab-serve">
+            サーブ
+            <!-- <serveSvg></serveSvg> -->
+            <!-- <v-icon>mdi-phone</v-icon> -->
+          </v-tab>
 
-            <!--
-                        <th class='spike_cell'>総<br>数<br>①</th>
-                        <th class='spike_cell'>得<br>点<br>②</th>
-                        <th class='spike_cell'>失<br>点<br>③</th>
-                        <th class='spike_cell sort' data-sort="spike_effect">効<br>果<br>率<br>(②－③)／①</th>
-                        <th class='spike_cell sort' data-sort="spike_det">決<br>定<br>率<br>②／①</th>
-            -->
-            <th class="spike_cell">
-              得
-              <br />点
-            </th>
-            <th class="spike_cell">
-              失
-              <br />点
-            </th>
+          <v-tab href="#tab-spike">
+            スパイク
+            <!-- <v-icon>mdi-heart</v-icon> -->
+          </v-tab>
 
-            <th class="block_cell">
-              得
-              <br />点
-            </th>
-            <th class="block_cell">
-              失
-              <br />点
-            </th>
+          <v-tab href="#tab-block">
+            ブロック
+            <!-- <v-icon>mdi-account-box</v-icon> -->
+          </v-tab>
 
-            <th class="reception_cell">
-              失
-              <br />点
-            </th>
-          </tr>
-        </thead>
-        <tbody class="analyze_body" style="text-align:right;">
-          <tr v-for="(item, idx) of scoreAnalyze" :key="idx">
-            <td style="text-align:left;">
-              <a href="#" v-on:click="onPlayerDetail(item)">{{item.name}}</a>
-            </td>
-            <td style="text-align:center;">{{item.date.substr(2, 8)}}</td>
-            <td style="text-align:center;">{{item.point}}</td>
-            <td>{{item.total.point}}</td>
-            <td>{{item.total.miss}}</td>
+          <v-tab href="#tab-receive-etc">
+            レシーブ他
+            <!-- <v-icon>mdi-account-box</v-icon> -->
+          </v-tab>
+        </v-tabs>
 
-            <td>{{item.serve.point}}</td>
-            <td>{{item.serve.miss}}</td>
+        <v-tabs-items v-model="tab">
+          <v-tab-item value="tab-serve">
+            <!-- <v-card flat>
+              <v-card-text>{{ text }}</v-card-text>
+            </v-card>-->
 
-            <!--
-                        <td>{{item.spike.total}}</td>
-                        <td>{{item.spike.point}}</td>
-                        <td>{{item.spike.miss}}</td>
-                        <td>{{item.spike.effect | filterPercent}}</td>
-                        <td>{{item.spike.determined | filterPercent}}</td>
-            -->
-            <td>{{item.spike.point}}</td>
-            <td>{{item.spike.miss}}</td>
+            <v-data-table
+              :headers="headersServe"
+              :items="scoreAnalyze"
+              item-key="id"
+              hide-default-footer
+              multi-sort
+            >
+              <template v-slot:header="{ props }">
+                <thead>
+                  <tr>
+                    <th style="border-bottom:none;text-align:left;">基本情報</th>
+                    <th style="border-bottom:none;"></th>
+                    <th style="border-bottom:none;text-align:left;">総合</th>
+                    <th style="border-bottom:none;"></th>
+                    <th style="border-bottom:none;text-align:left;">サーブ</th>
+                    <th style="border-bottom:none;"></th>
+                    <!-- <th colspan="5">スパイク</th>
+                  <th colspan="2">ブロック</th>
+                  <th>レシーブ</th>
+                  <th></th>
+                    <th></th>-->
+                  </tr>
+                </thead>
+              </template>
 
-            <td>{{item.block.point}}</td>
-            <td>{{item.block.miss}}</td>
+              <!-- <template v-slot:headerCell="{ props }">{{ props.header.text + "aa" }}</template> -->
+              <template v-slot:items="{ props }">
+                <tbody style="text-align:right;">
+                  <tr v-for="(item, idx) in props" :key="idx">
+                    <td style="text-align:center;">{{idx}}</td>
+                    <td style="text-align:left;">
+                      <a href="#" v-on:click="onPlayerDetail(item)">{{item.name}}</a>
+                    </td>
+                    <td style="background:#e6f2ff;">{{item.total.point}}</td>
+                    <td class="analyze-table-background">{{item.total.miss}}</td>
 
-            <td>{{item.receive.miss}}</td>
+                    <td>{{item.serve.point}}</td>
+                    <td>{{item.serve.miss}}</td>
 
-            <td>{{item.other_miss}}</td>
-            <td>{{item.faul}}</td>
-          </tr>
-        </tbody>
-      </table>
+                    <!-- <td class="analyze-table-background">{{item.spike.total}}</td>
+                  <td class="analyze-table-background">{{item.spike.point}}</td>
+                  <td class="analyze-table-background">{{item.spike.miss}}</td>
+                  <td class="analyze-table-background">{{item.spike.effect | filterPercent}}</td>
+                  <td class="analyze-table-background">{{item.spike.determined | filterPercent}}</td>
+
+                  <td>{{item.block.point}}</td>
+                  <td>{{item.block.miss}}</td>
+
+                  <td class="analyze-table-background">{{item.receive.miss}}</td>
+
+                  <td>{{item.other_miss}}</td>
+                    <td>{{item.faul}}</td>-->
+                  </tr>
+                </tbody>
+              </template>
+            </v-data-table>
+          </v-tab-item>
+          <v-tab-item value="tab-spike">
+            <v-data-table
+              :headers="headersSpike"
+              :items="scoreAnalyze"
+              item-key="id"
+              hide-default-footer
+              multi-sort
+            >
+              <template v-slot:header="{ props }">
+                <thead>
+                  <tr>
+                    <th style="border-bottom:none;text-align:left;">基本情報</th>
+                    <th style="border-bottom:none;"></th>
+                    <th style="border-bottom:none;text-align:left;">総合</th>
+                    <th style="border-bottom:none;"></th>
+                    <th style="border-bottom:none;text-align:left;">スパイク</th>
+                    <th style="border-bottom:none;"></th>
+                    <th style="border-bottom:none;"></th>
+                    <th style="border-bottom:none;"></th>
+                    <th style="border-bottom:none;"></th>
+                    <!-- <th colspan="2">ブロック</th>
+                  <th>レシーブ</th>
+                  <th></th>
+                    <th></th>-->
+                  </tr>
+                </thead>
+              </template>
+
+              <!-- <template v-slot:headerCell="{ props }">{{ props.header.text + "aa" }}</template> -->
+              <template v-slot:items="{ props }">
+                <tbody style="text-align:right;">
+                  <tr v-for="(item, idx) in props" :key="idx">
+                    <td style="text-align:center;">{{idx}}</td>
+                    <td style="text-align:left;">
+                      <a href="#" v-on:click="onPlayerDetail(item)">{{item.name}}</a>
+                    </td>
+                    <td style="background:#e6f2ff;">{{item.total.point}}</td>
+                    <td class="analyze-table-background">{{item.total.miss}}</td>
+
+                    <td class="analyze-table-background">{{item.spike.total}}</td>
+                    <td class="analyze-table-background">{{item.spike.point}}</td>
+                    <td class="analyze-table-background">{{item.spike.miss}}</td>
+                    <td class="analyze-table-background">{{Number(item.spike.determined * 100)}}</td>
+                    <td class="analyze-table-background">{{(item.spike.effect * 100).toFixed(1)}}</td>
+                    <!-- <td>{{(item.spike.effect * 100).toFixed(1)}}%</td>
+                    <td>{{(item.spike.determined * 100).toFixed(1) + "%"}}</td>-->
+
+                    <!-- <td>{{item.block.point}}</td>
+                  <td>{{item.block.miss}}</td>
+
+                  <td class="analyze-table-background">{{item.receive.miss}}</td>
+
+                  <td>{{item.other_miss}}</td>
+                    <td>{{item.faul}}</td>-->
+                  </tr>
+                </tbody>
+              </template>
+            </v-data-table>
+          </v-tab-item>
+          <v-tab-item value="tab-block">
+            <v-data-table
+              :headers="headersBlock"
+              :items="scoreAnalyze"
+              item-key="id"
+              hide-default-footer
+              multi-sort
+            >
+              <template v-slot:header="{ props }">
+                <thead>
+                  <tr>
+                    <th style="border-bottom:none;text-align:left;">基本情報</th>
+                    <th style="border-bottom:none;"></th>
+                    <th style="border-bottom:none;text-align:left;">総合</th>
+                    <th style="border-bottom:none;"></th>
+                    <th style="border-bottom:none;text-align:left;">ブロック</th>
+                    <th style="border-bottom:none;"></th>
+                    <!-- <th colspan="2">ブロック</th>
+                  <th>レシーブ</th>
+                  <th></th>
+                    <th></th>-->
+                  </tr>
+                </thead>
+              </template>
+
+              <!-- <template v-slot:headerCell="{ props }">{{ props.header.text + "aa" }}</template> -->
+              <template v-slot:items="{ props }">
+                <tbody style="text-align:right;">
+                  <tr v-for="(item, idx) in props" :key="idx">
+                    <td style="text-align:center;">{{idx}}</td>
+                    <td style="text-align:left;">
+                      <a href="#" v-on:click="onPlayerDetail(item)">{{item.name}}</a>
+                    </td>
+                    <td style="background:#e6f2ff;">{{item.total.point}}</td>
+                    <td class="analyze-table-background">{{item.total.miss}}</td>
+
+                    <td>{{item.block.point}}</td>
+                    <td>{{item.block.miss}}</td>
+
+                    <!-- <td class="analyze-table-background">{{item.receive.miss}}</td>
+
+                  <td>{{item.other_miss}}</td>
+                    <td>{{item.faul}}</td>-->
+                  </tr>
+                </tbody>
+              </template>
+            </v-data-table>
+          </v-tab-item>
+          <v-tab-item value="tab-receive-etc">
+            <v-data-table
+              :headers="headersReceiveEtc"
+              :items="scoreAnalyze"
+              item-key="id"
+              hide-default-footer
+              multi-sort
+            >
+              <template v-slot:header="{ props }">
+                <thead>
+                  <tr>
+                    <th style="border-bottom:none;text-align:left;">基本情報</th>
+                    <th style="border-bottom:none;"></th>
+                    <th style="border-bottom:none;text-align:left;">総合</th>
+                    <th style="border-bottom:none;"></th>
+                    <th style="border-bottom:none;text-align:left;">レシーブ</th>
+                    <th style="border-bottom:none;">その他ミス</th>
+                    <th style="border-bottom:none;">ファウル</th>
+                  </tr>
+                </thead>
+              </template>
+
+              <!-- <template v-slot:headerCell="{ props }">{{ props.header.text + "aa" }}</template> -->
+              <template v-slot:items="{ props }">
+                <tbody style="text-align:right;">
+                  <tr v-for="(item, idx) in props" :key="idx">
+                    <td style="text-align:center;">{{idx}}</td>
+                    <td style="text-align:left;">
+                      <a href="#" v-on:click="onPlayerDetail(item)">{{item.name}}</a>
+                    </td>
+                    <td>{{item.total.point}}</td>
+                    <td>{{item.total.miss}}</td>
+
+                    <td>{{item.receive.miss}}</td>
+
+                    <td>{{item.other_miss}}</td>
+                    <td>{{item.faul}}</td>
+                  </tr>
+                </tbody>
+              </template>
+            </v-data-table>
+          </v-tab-item>
+        </v-tabs-items>
+      </v-card>
       <a
         data-scroll
         href="#page-top"
@@ -137,11 +250,6 @@
       >
         <moveTop></moveTop>
       </a>
-      <!--
-        </div>
-        <div class="fixed-header" data-scroll-header>
-        </div>
-      -->
       <div class="menu" v-bind:style="styleNavi">
         <span>
           <div>戻る</div>
@@ -213,6 +321,7 @@ export default {
   },
   data() {
     return {
+      tab: "tab-serve",
       scoreAnalyze: [],
       // modelFilter: "serve",
       // modelDisp: "simple",
@@ -221,7 +330,226 @@ export default {
       styleNavi: {
         "line-height": "700px"
       },
-      tempScore: {}
+      tempScore: {},
+
+      headersServe: [
+        {
+          text: "#",
+          align: "left",
+          value: "no",
+          sortable: true
+        },
+        {
+          text: "名前",
+          align: "left",
+          value: "name"
+        },
+        {
+          text: "得点",
+          align: "left",
+          value: "total.point"
+        },
+        {
+          text: "失点",
+          align: "left",
+          value: "total.miss"
+        },
+        {
+          text: "得点",
+          align: "left",
+          value: "serve.point"
+        },
+        {
+          text: "失点",
+          align: "left",
+          value: "serve.miss"
+        }
+      ],
+      headersSpike: [
+        {
+          text: "#",
+          align: "left",
+          value: "no",
+          sortable: true
+        },
+        {
+          text: "名前",
+          align: "left",
+          value: "name"
+        },
+        {
+          text: "得点",
+          align: "left",
+          value: "total.point"
+        },
+        {
+          text: "失点",
+          align: "left",
+          value: "total.miss"
+        },
+        // {
+        //   text: "総数①",
+        //   align: "center",
+        //   value: "spike.total"
+        // },
+        // {
+        //   text: "得点②",
+        //   align: "center",
+        //   value: "spike.point"
+        // },
+        // {
+        //   text: "失点③",
+        //   align: "center",
+        //   value: "spike.miss"
+        // },
+        // {
+        //   text: "決定率②／①",
+        //   align: "center",
+        //   value: "spike.determined"
+        // },
+        // {
+        //   text: "効果率(②－③)／①",
+        //   align: "center",
+        //   value: "spike.effect"
+        // }
+
+        {
+          text: "総数",
+          align: "center",
+          value: "spike.total"
+        },
+        {
+          text: "得点",
+          align: "center",
+          value: "spike.point"
+        },
+        {
+          text: "失点",
+          align: "center",
+          value: "spike.miss"
+        },
+        {
+          text: "決定率",
+          align: "center",
+          value: "spike.determined"
+        },
+        {
+          text: "効果率",
+          align: "center",
+          value: "spike.effect"
+        }
+        // {
+        //   text: "得点",
+        //   align: "center",
+        //   value: "block.point"
+        // },
+        // {
+        //   text: "失点",
+        //   align: "center",
+        //   value: "block.miss"
+        // },
+        // {
+        //   text: "失点",
+        //   align: "center",
+        //   value: "receive.miss"
+        // },
+        // {
+        //   text: "その他ミス",
+        //   align: "center",
+        //   value: "other_miss"
+        // },
+        // {
+        //   text: "ファウル",
+        //   align: "center",
+        //   value: "faul"
+        // }
+      ],
+      headersBlock: [
+        {
+          text: "#",
+          align: "left",
+          value: "no",
+          sortable: true
+        },
+        {
+          text: "名前",
+          align: "left",
+          value: "name"
+        },
+        {
+          text: "得点",
+          align: "left",
+          value: "total.point"
+        },
+        {
+          text: "失点",
+          align: "left",
+          value: "total.miss"
+        },
+        {
+          text: "得点",
+          align: "left",
+          value: "block.point"
+        },
+        {
+          text: "失点",
+          align: "left",
+          value: "block.miss"
+        }
+        // {
+        //   text: "失点",
+        //   align: "left",
+        //   value: "receive.miss"
+        // },
+        // {
+        //   text: "その他ミス",
+        //   align: "left",
+        //   value: "other_miss"
+        // },
+        // {
+        //   text: "ファウル",
+        //   align: "left",
+        //   value: "faul"
+        // }
+      ],
+      headersReceiveEtc: [
+        {
+          text: "#",
+          align: "left",
+          value: "no",
+          sortable: true
+        },
+        {
+          text: "名前",
+          align: "left",
+          value: "name"
+        },
+        {
+          text: "得点",
+          align: "left",
+          value: "total.point"
+        },
+        {
+          text: "失点",
+          align: "left",
+          value: "total.miss"
+        },
+        {
+          text: "失点",
+          align: "left",
+          value: "receive.miss"
+        },
+        {
+          text: "失点",
+          align: "left",
+          value: "other_miss"
+        },
+        {
+          text: "失点",
+          align: "left",
+          value: "faul"
+        }
+      ]
     };
   },
   filters: {

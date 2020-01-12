@@ -20,34 +20,17 @@
         <v-tabs v-model="tab" background-color="primary accent-4" centered dark>
           <v-tabs-slider></v-tabs-slider>
 
-          <v-tab href="#tab-serve">
-            サーブ
-            <!-- <serveSvg></serveSvg> -->
-            <!-- <v-icon>mdi-phone</v-icon> -->
-          </v-tab>
+          <v-tab href="#tab-serve">サーブ</v-tab>
 
-          <v-tab href="#tab-spike">
-            スパイク
-            <!-- <v-icon>mdi-heart</v-icon> -->
-          </v-tab>
+          <v-tab href="#tab-spike">スパイク</v-tab>
 
-          <v-tab href="#tab-block">
-            ブロック
-            <!-- <v-icon>mdi-account-box</v-icon> -->
-          </v-tab>
+          <v-tab href="#tab-block">ブロック</v-tab>
 
-          <v-tab href="#tab-receive-etc">
-            レシーブ他
-            <!-- <v-icon>mdi-account-box</v-icon> -->
-          </v-tab>
+          <v-tab href="#tab-receive-etc">レシーブ他</v-tab>
         </v-tabs>
 
         <v-tabs-items v-model="tab">
           <v-tab-item value="tab-serve">
-            <!-- <v-card flat>
-              <v-card-text>{{ text }}</v-card-text>
-            </v-card>-->
-
             <v-data-table
               :headers="headersServe"
               :items="scoreAnalyze"
@@ -56,7 +39,6 @@
               :options.sync="options"
               multi-sort
             >
-              <!-- hide-default-footer -->
               <template v-slot:header="{ props }">
                 <thead>
                   <tr>
@@ -66,11 +48,6 @@
                     <th style="border-bottom:none;"></th>
                     <th style="border-bottom:none;text-align:left;">サーブ</th>
                     <th style="border-bottom:none;"></th>
-                    <!-- <th colspan="5">スパイク</th>
-                  <th colspan="2">ブロック</th>
-                  <th>レシーブ</th>
-                  <th></th>
-                    <th></th>-->
                   </tr>
                 </thead>
               </template>
@@ -82,25 +59,6 @@
                 <span v-if="item.sex == 0">男</span>
                 <span v-else>女</span>
               </template>
-              <!-- <template v-slot:headerCell="{ props }">{{ props.header.text + "aa" }}</template> -->
-              <!-- <template v-slot:items="{ props }">
-                <tbody>
-                  <tr v-for="(item, idx) in props" :key="idx">
-                    <td style="text-align:left;">
-                      <a href="#" v-on:click="onPlayerDetail(item)">{{item.name}}</a>
-                    </td>
-                    <td style="text-align:center;">
-                      <span v-if="item.sex == 0">男</span>
-                      <span v-else>女</span>
-                    </td>
-                    <td style="text-align:right;">{{item.total.point}}</td>
-                    <td style="text-align:right;">{{item.total.miss}}</td>
-
-                    <td style="text-align:right;">{{item.serve.point}}</td>
-                    <td style="text-align:right;">{{item.serve.miss}}</td>
-                  </tr>
-                </tbody>
-              </template>-->
             </v-data-table>
           </v-tab-item>
           <v-tab-item value="tab-spike">
@@ -124,10 +82,6 @@
                     <th style="border-bottom:none;"></th>
                     <th style="border-bottom:none;"></th>
                     <th style="border-bottom:none;"></th>
-                    <!-- <th colspan="2">ブロック</th>
-                  <th>レシーブ</th>
-                  <th></th>
-                    <th></th>-->
                   </tr>
                 </thead>
               </template>
@@ -143,29 +97,6 @@
                 v-slot:item.spike.determined="{ item }"
               >{{item.spike.determined | filterPercent}}</template>
               <template v-slot:item.spike.effect="{ item }">{{item.spike.effect | filterPercent}}</template>
-
-              <!-- <template v-slot:headerCell="{ props }">{{ props.header.text + "aa" }}</template> -->
-              <!-- <template v-slot:items="{ props }">
-                <tbody style="text-align:right;">
-                  <tr v-for="(item, idx) in props" :key="idx">
-                    <td style="text-align:left;">
-                      <a href="#" v-on:click="onPlayerDetail(item)">{{item.name}}</a>
-                    </td>
-                    <td style="text-align:center;">
-                      <span v-if="item.sex == 0">男</span>
-                      <span v-else>女</span>
-                    </td>
-                    <td style="background:#e6f2ff;">{{item.total.point}}</td>
-                    <td class="analyze-table-background">{{item.total.miss}}</td>
-
-                    <td class="analyze-table-background">{{item.spike.total}}</td>
-                    <td class="analyze-table-background">{{item.spike.point}}</td>
-                    <td class="analyze-table-background">{{item.spike.miss}}</td>
-                    <td class="analyze-table-background">{{item.spike.determined | filterPercent}}</td>
-                    <td class="analyze-table-background">{{item.spike.effect | filterPercent}}</td>
-                  </tr>
-                </tbody>
-              </!-->
             </v-data-table>
           </v-tab-item>
           <v-tab-item value="tab-block">
@@ -186,10 +117,6 @@
                     <th style="border-bottom:none;"></th>
                     <th style="border-bottom:none;text-align:left;">ブロック</th>
                     <th style="border-bottom:none;"></th>
-                    <!-- <th colspan="2">ブロック</th>
-                  <th>レシーブ</th>
-                  <th></th>
-                    <th></th>-->
                   </tr>
                 </thead>
               </template>
@@ -201,25 +128,6 @@
                 <span v-if="item.sex == 0">男</span>
                 <span v-else>女</span>
               </template>
-              <!-- <template v-slot:headerCell="{ props }">{{ props.header.text + "aa" }}</template> -->
-              <!-- <template v-slot:items="{ props }">
-                <tbody style="text-align:right;">
-                  <tr v-for="(item, idx) in props" :key="idx">
-                    <td style="text-align:left;">
-                      <a href="#" v-on:click="onPlayerDetail(item)">{{item.name}}</a>
-                    </td>
-                    <td style="text-align:center;">
-                      <span v-if="item.sex == 0">男</span>
-                      <span v-else>女</span>
-                    </td>
-                    <td style="background:#e6f2ff;">{{item.total.point}}</td>
-                    <td class="analyze-table-background">{{item.total.miss}}</td>
-
-                    <td>{{item.block.point}}</td>
-                    <td>{{item.block.miss}}</td>
-                  </tr>
-                </tbody>
-              </!-->
             </v-data-table>
           </v-tab-item>
           <v-tab-item value="tab-receive-etc">
@@ -252,27 +160,6 @@
                 <span v-if="item.sex == 0">男</span>
                 <span v-else>女</span>
               </template>
-              <!-- <template v-slot:headerCell="{ props }">{{ props.header.text + "aa" }}</template> -->
-              <!-- <template v-slot:items="{ props }">
-                <tbody style="text-align:right;">
-                  <tr v-for="(item, idx) in props" :key="idx">
-                    <td style="text-align:left;">
-                      <a href="#" v-on:click="onPlayerDetail(item)">{{item.name}}</a>
-                    </td>
-                    <td style="text-align:center;">
-                      <span v-if="item.sex == 0">男</span>
-                      <span v-else>女</span>
-                    </td>
-                    <td>{{item.total.point}}</td>
-                    <td>{{item.total.miss}}</td>
-
-                    <td>{{item.receive.miss}}</td>
-
-                    <td>{{item.other_miss}}</td>
-                    <td>{{item.faul}}</td>
-                  </tr>
-                </tbody>
-              </template>-->
             </v-data-table>
           </v-tab-item>
         </v-tabs-items>
@@ -291,138 +178,6 @@
         color="primary"
         dark
       >試合別に切り替える</v-btn>
-
-      <!-- <v-card style="width:100%;" class="d-inline-block mx-auto">
-        <v-container></v-container>
-      </v-card>
-
-      <v-card style="width:100%;" class="d-inline-block mx-auto">
-        <v-container></v-container>
-      </v-card>
-
-      <v-card style="width:100%;" class="d-inline-block mx-auto">
-        <v-container></v-container>
-      </v-card>
-
-      <v-card style="width:100%;" class="d-inline-block mx-auto">
-        <v-container></v-container>
-      </v-card>-->
-
-      <table v-if="false" class="analyze">
-        <thead class="analyze_head" style="text-align:center;">
-          <tr>
-            <th colspan="2">基本情報</th>
-            <th colspan="2">総合</th>
-            <th colspan="2" class="serve_cell">サーブ</th>
-            <th colspan="5" class="spike_cell">スパイク</th>
-            <th colspan="2" class="block_cell">ブロック</th>
-            <th class="reception_cell">レシーブ</th>
-            <th rowspan="2">
-              そ
-              <br />の
-              <br />他
-              <br />ミ
-              <br />ス
-            </th>
-            <th rowspan="2">
-              フ
-              <br />ァ
-              <br />ウ
-              <br />ル
-            </th>
-          </tr>
-          <tr>
-            <th>#</th>
-            <th>名前</th>
-            <th>
-              得
-              <br />点
-            </th>
-            <th>
-              失
-              <br />点
-            </th>
-
-            <th class="serve_cell">
-              得
-              <br />点
-            </th>
-            <th class="serve_cell">
-              失
-              <br />点
-            </th>
-
-            <th class="spike_cell">
-              総
-              <br />数
-              <br />①
-            </th>
-            <th class="spike_cell">
-              得
-              <br />点
-              <br />②
-            </th>
-            <th class="spike_cell">
-              失
-              <br />点
-              <br />③
-            </th>
-            <th class="spike_cell sort" data-sort="spike_effect">
-              効
-              <br />果
-              <br />率
-              <br />(②－③)／①
-            </th>
-            <th class="spike_cell sort" data-sort="spike_det">
-              決
-              <br />定
-              <br />率
-              <br />②／①
-            </th>
-
-            <th class="block_cell">
-              得
-              <br />点
-            </th>
-            <th class="block_cell">
-              失
-              <br />点
-            </th>
-
-            <th class="reception_cell">
-              失
-              <br />点
-            </th>
-          </tr>
-        </thead>
-        <tbody class="analyze_body" style="text-align:right;">
-          <tr v-for="(item, idx) of scoreAnalyze" :key="idx">
-            <td style="text-align:center;">{{item.no}}</td>
-            <td style="text-align:left;">
-              <a href="#" v-on:click="onPlayerDetail(item)">{{item.name}}</a>
-            </td>
-            <td>{{item.total.point}}</td>
-            <td>{{item.total.miss}}</td>
-
-            <td>{{item.serve.point}}</td>
-            <td>{{item.serve.miss}}</td>
-
-            <td>{{item.spike.total}}</td>
-            <td>{{item.spike.point}}</td>
-            <td>{{item.spike.miss}}</td>
-            <td>{{item.spike.effect | filterPercent}}</td>
-            <td>{{item.spike.determined | filterPercent}}</td>
-
-            <td>{{item.block.point}}</td>
-            <td>{{item.block.miss}}</td>
-
-            <td>{{item.receive.miss}}</td>
-
-            <td>{{item.other_miss}}</td>
-            <td>{{item.faul}}</td>
-          </tr>
-        </tbody>
-      </table>
       <a
         data-scroll
         href="#page-top"
@@ -431,11 +186,6 @@
       >
         <moveTop></moveTop>
       </a>
-      <!--
-        </div>
-        <div class="fixed-header" data-scroll-header>
-        </div>
-      -->
       <div class="menu" v-bind:style="styleNavi">
         <span>
           <div>戻る</div>
@@ -469,322 +219,9 @@
             <path d="M20 9v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9" />
             <path d="M9 22V12h6v10M2 10.6L12 2l10 8.6" />
           </svg>
-          <!-- <br />
-          <br />
-          <br />
-          <br />
-          <div v-if="isMatch">人別</div>
-          <div v-else>試合別</div>
-          <svg
-            v-on:click="switchList"
-            xmlns="http://www.w3.org/2000/svg"
-            width="70"
-            height="70"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="#000000"
-            stroke-width="1"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path d="M19 12H6M12 5l-7 7 7 7" />
-          </svg>-->
         </span>
       </div>
     </div>
-
-    <span v-if="false">
-      <div class="grid-analyzelist">
-        <div class="navi_a" v-bind:style="styleNavi" style="position:fixed;top:0;left:5px;">
-          <span>
-            <div>戻る</div>
-            <svg
-              v-on:click="backScoreList"
-              xmlns="http://www.w3.org/2000/svg"
-              width="70"
-              height="70"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#000000"
-              stroke-width="1"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path d="M19 12H6M12 5l-7 7 7 7" />
-            </svg>
-            <div>ホーム</div>
-            <svg
-              v-on:click="onHome"
-              xmlns="http://www.w3.org/2000/svg"
-              width="70"
-              height="70"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#000000"
-              stroke-width="1"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path d="M20 9v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9" />
-              <path d="M9 22V12h6v10M2 10.6L12 2l10 8.6" />
-            </svg>
-          </span>
-        </div>
-
-        <div class="analyzelist">
-          <span id="page-top"></span>
-          <!--
-        <input type="checkbox" v-model="isSimple" />
-        <span class="filter_action">
-            <input type="radio" id="simple" name="disp" value="simple" v-model="modelDisp">
-            <label for="simple">simple</label>
-        </span>
-        <span class="filter_action">
-            <input type="radio" id="detail" name="disp" value="detail" v-model="modelDisp">
-            <label for="detail">detail</label>
-        </span>
-          -->
-          <!--
-        <br>
-        <span class="filter_action">
-            <input type="radio" id="serve" name="action" value="serve" v-model="modelFilter">
-            <label for="serve">serve</label>
-        </span>
-        <span class="filter_action">
-            <input type="radio" id="spike" name="action" value="spike" v-model="modelFilter">
-            <label for="spike">spike</label>
-        </span>
-        <span class="filter_action">
-            <input type="radio" id="block" name="action" value="block" v-model="modelFilter">
-            <label for="block">block</label>
-        </span>
-        <span class="filter_action">
-            <input type="radio" id="receive" name="action" value="receive" v-model="modelFilter">
-            <label for="receive">receive</label>
-        </span>
-        <span class="filter_action">
-            <input type="radio" id="etc" name="action" value="etc" v-model="modelFilter">
-            <label for="etc">etc</label>
-        </span>
-        <br>
-          -->
-          <table class="analyze">
-            <thead class="analyze_head" style="text-align:center;">
-              <tr>
-                <th colspan="2">基本情報</th>
-                <th colspan="2">総合</th>
-                <th colspan="2" class="serve_cell">サーブ</th>
-                <th colspan="5" class="spike_cell">スパイク</th>
-                <th colspan="2" class="block_cell">ブロック</th>
-                <th class="reception_cell">レシーブ</th>
-                <th rowspan="2">
-                  そ
-                  <br />の
-                  <br />他
-                  <br />ミ
-                  <br />ス
-                </th>
-                <th rowspan="2">
-                  フ
-                  <br />ァ
-                  <br />ウ
-                  <br />ル
-                </th>
-              </tr>
-              <tr>
-                <th>#</th>
-                <th>名前</th>
-                <th>
-                  得
-                  <br />点
-                </th>
-                <th>
-                  失
-                  <br />点
-                </th>
-
-                <th class="serve_cell">
-                  得
-                  <br />点
-                </th>
-                <th class="serve_cell">
-                  失
-                  <br />点
-                </th>
-
-                <th class="spike_cell">
-                  総
-                  <br />数
-                  <br />①
-                </th>
-                <th class="spike_cell">
-                  得
-                  <br />点
-                  <br />②
-                </th>
-                <th class="spike_cell">
-                  失
-                  <br />点
-                  <br />③
-                </th>
-                <th class="spike_cell sort" data-sort="spike_effect">
-                  効
-                  <br />果
-                  <br />率
-                  <br />(②－③)／①
-                </th>
-                <th class="spike_cell sort" data-sort="spike_det">
-                  決
-                  <br />定
-                  <br />率
-                  <br />②／①
-                </th>
-
-                <th class="block_cell">
-                  得
-                  <br />点
-                </th>
-                <th class="block_cell">
-                  失
-                  <br />点
-                </th>
-
-                <th class="reception_cell">
-                  失
-                  <br />点
-                </th>
-              </tr>
-            </thead>
-            <tbody class="analyze_body" style="text-align:right;">
-              <tr v-for="(item, idx) of scoreAnalyze" :key="idx">
-                <td style="text-align:center;">{{item.no}}</td>
-                <td style="text-align:left;">
-                  <a href="#" v-on:click="onPlayerDetail(item)">{{item.name}}</a>
-                </td>
-                <td>{{item.total.point}}</td>
-                <td>{{item.total.miss}}</td>
-
-                <td>{{item.serve.point}}</td>
-                <td>{{item.serve.miss}}</td>
-
-                <td>{{item.spike.total}}</td>
-                <td>{{item.spike.point}}</td>
-                <td>{{item.spike.miss}}</td>
-                <td>{{item.spike.effect | filterPercent}}</td>
-                <td>{{item.spike.determined | filterPercent}}</td>
-
-                <td>{{item.block.point}}</td>
-                <td>{{item.block.miss}}</td>
-
-                <td>{{item.receive.miss}}</td>
-
-                <td>{{item.other_miss}}</td>
-                <td>{{item.faul}}</td>
-              </tr>
-            </tbody>
-          </table>
-          <!--
-        <table class="analyze" v-else>
-            <thead class="analyze_head">
-                <tr>
-                    <th colspan="2">基本情報</th>
-                    <th colspan="6">総合</th>
-                    <th colspan="5" class='serve_cell' v-show="showServe">サーブ</th>
-                    <th colspan="5" class='spike_cell' v-show="showSpike">スパイク</th>
-                    <th colspan="5" class='block_cell' v-show="showBlock">ブロック</th>
-                    <th colspan="9" class='reception_cell' v-show="showReceive">レセプション</th>
-                    <th rowspan="2" v-show="showEtc">そ<br>の<br>他<br>ミ<br>ス</th>
-                    <th rowspan="2" v-show="showEtc">フ<br>ァ<br>ウ<br>ル</th>
-                </tr>
-                <tr>
-                    <th>#</th>
-                    <th>名前</th>
-                    <th>総<br>数<br>①</th>
-                    <th>得<br>点<br>②</th>
-                    <th>失<br>点<br>③</th>
-                    <th>効<br>果<br>率<br>(②－③)／①</th>
-                    <th>決<br>定<br>率<br>②／①</th>
-                    <th>開<br>き</th>
-
-                    <th v-show="showServe" class='serve_cell'>総<br>数<br>①</th>
-                    <th v-show="showServe" class='serve_cell'>得<br>点<br>②</th>
-                    <th v-show="showServe" class='serve_cell'>失<br>点<br>③</th>
-                    <th v-show="showServe" class='serve_cell sort' data-sort="serve_effect">効<br>果<br>率<br>(②－③)／①</th>
-                    <th v-show="showServe" class='serve_cell sort' data-sort="serve_det">決<br>定<br>率<br>②／①</th>
-
-                    <th v-show="showSpike" class='spike_cell'>総<br>数<br>①</th>
-                    <th v-show="showSpike" class='spike_cell'>得<br>点<br>②</th>
-                    <th v-show="showSpike" class='spike_cell'>失<br>点<br>③</th>
-                    <th v-show="showSpike" class='spike_cell sort' data-sort="spike_effect">効<br>果<br>率<br>(②－③)／①</th>
-                    <th v-show="showSpike" class='spike_cell sort' data-sort="spike_det">決<br>定<br>率<br>②／①</th>
-
-                    <th v-show="showBlock" class='block_cell'>総<br>数<br>①</th>
-                    <th v-show="showBlock" class='block_cell'>得<br>点<br>②</th>
-                    <th v-show="showBlock" class='block_cell'>失<br>点<br>③</th>
-                    <th v-show="showBlock" class='block_cell sort' data-sort="block_effect">効<br>果<br>率<br>(②－③)／①</th>
-                    <th v-show="showBlock" class='block_cell sort' data-sort="block_det">決<br>定<br>率<br>②／①</th>
-
-                    <th v-show="showReceive" class='reception_cell'>総<br>数</th>
-                    <th v-show="showReceive" class='reception_cell'>A</th>
-                    <th v-show="showReceive" class='reception_cell'>B</th>
-                    <th v-show="showReceive" class='reception_cell'>C</th>
-                    <th v-show="showReceive" class='reception_cell'>失<br>点</th>
-                    <th v-show="showReceive" class='reception_cell'>A<br>率</th>
-                    <th v-show="showReceive" class='reception_cell'>B<br>率</th>
-                    <th v-show="showReceive" class='reception_cell'>C<br>率</th>
-                    <th v-show="showReceive" class='reception_cell'>失<br>点<br>率</th>
-                </tr>
-            </thead>
-            <tbody class="analyze_body">
-                <tr v-for="item, idx of scoreAnalyze">
-                    <td>{{item.no}}</td>
-                    <td><a href='#' v-on:click="onPlayerDetail(item)">{{item.name}}</a></td>
-                    <td>{{item.total.total}}</td>
-                    <td>{{item.total.point}}</td>
-                    <td>{{item.total.miss}}</td>
-                    <td>{{item.total.effect | filterPercent}}</td>
-                    <td>{{item.total.determined | filterPercent}}</td>
-                    <td>{{(-1 * (item.total.effect - item.total.determined)) | filterPercent}}</td>
-                    <td v-show="showServe">{{item.serve.total}}</td>
-                    <td v-show="showServe">{{item.serve.point}}</td>
-                    <td v-show="showServe">{{item.serve.miss}}</td>
-                    <td v-show="showServe">{{item.serve.effect | filterPercent}}</td>
-                    <td v-show="showServe">{{item.serve.determined | filterPercent}}</td>
-                    <td v-show="showSpike">{{item.spike.total}}</td>
-                    <td v-show="showSpike">{{item.spike.point}}</td>
-                    <td v-show="showSpike">{{item.spike.miss}}</td>
-                    <td v-show="showSpike">{{item.spike.effect | filterPercent}}</td>
-                    <td v-show="showSpike">{{item.spike.determined | filterPercent}}</td>
-                    <td v-show="showBlock">{{item.block.total}}</td>
-                    <td v-show="showBlock">{{item.block.point}}</td>
-                    <td v-show="showBlock">{{item.block.miss}}</td>
-                    <td v-show="showBlock">{{item.block.effect | filterPercent}}</td>
-                    <td v-show="showBlock">{{item.block.determined | filterPercent}}</td>
-                    <td v-show="showReceive">{{item.receive.total}}</td>
-                    <td v-show="showReceive">{{item.receive.a}}</td>
-                    <td v-show="showReceive">{{item.receive.b}}</td>
-                    <td v-show="showReceive">{{item.receive.c}}</td>
-                    <td v-show="showReceive">{{item.receive.miss}}</td>
-                    <td v-show="showReceive">{{item.receive.a_rate | filterPercent}}</td>
-                    <td v-show="showReceive">{{item.receive.b_rate | filterPercent}}</td>
-                    <td v-show="showReceive">{{item.receive.c_rate | filterPercent}}</td>
-                    <td v-show="showReceive">{{item.receive.miss_rate | filterPercent}}</td>
-                    <td v-show="showEtc">{{item.other_miss}}</td>
-                    <td v-show="showEtc">{{item.faul}}</td>
-                </tr>
-            </tbody>
-        </table>
-          -->
-          <a
-            data-scroll
-            href="#page-top"
-            style="position:fixed;bottom:10px;right:10px;filter: drop-shadow(3px 3px 3px rgba(0, 0, 0, 0.6));"
-          >
-            <movetop></movetop>
-          </a>
-        </div>
-      </div>
-    </span>
   </div>
 </template>
 
@@ -806,15 +243,8 @@ export default {
         itemsPerPage: -1
       },
       isMatch: false,
-      // options: {
-      //   sortBy: [],
-      //   sortDesc: []
-      // },
       tab: "tab-serve",
       scoreAnalyze: [],
-      // modelFilter: "serve",
-      // modelDisp: "simple",
-      // isSimple: true,
       members: [],
       styleNavi: {
         "line-height": "700px"
@@ -920,7 +350,6 @@ export default {
   },
   filters: {
     filterPercent(n) {
-      // console.log((n * 100).toFixed(1) + "%");
       return (n * 100).toFixed(1) + "%";
     }
   },
@@ -1032,7 +461,6 @@ export default {
     totalScore(score) {
       if (this.isMatch) {
         var matchScore = this.getPlayerTemplate(0, score.title, 0);
-        // matchScore.name = score.title;
         matchScore.date = score.date;
         matchScore.point = score.teamAPoint + "-" + score.teamBPoint;
         for (var i = 0; i < score.score.length; i++) {
@@ -1111,7 +539,6 @@ export default {
         analyzeData.block.total++;
       } else if (data.action == "receive") {
         if (data.kind == "miss") {
-          // analyzeData.receive.miss_detail[data.detail]++;
           analyzeData.total.miss++;
         } else {
           analyzeData.total.rally++;
@@ -1213,18 +640,6 @@ export default {
         faul: 0
       };
     }
-
-    // changeSort(column) {
-    //   console.log(column);
-    //   this.options.sortBy = [column];
-    //   this.options.sortDesc = [!this.options.sortDesc[0]];
-    //   // if (this.options.sortBy === column) {
-    //   //   this.options.descending = !this.options.descending;
-    //   // } else {
-    //   //   this.options.sortBy = column;
-    //   //   this.options.descending = false;
-    //   // }
-    // }
   }
 };
 </script>

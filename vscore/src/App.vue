@@ -9,9 +9,6 @@
       </v-btn>
       <v-toolbar-title style="margin-left:16px;">{{ title }}</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn v-on:click="onClickNewScore" v-show="isShowNewScore" style="margin-left:8px;" icon>
-        <v-icon>fas fa-edit</v-icon>
-      </v-btn>
       <v-btn
         v-on:click="onClickUndo"
         v-show="isShowUndo"
@@ -39,6 +36,29 @@
         <v-icon>fas fa-exchange-alt</v-icon>
         <!-- <memberSvg></memberSvg> -->
       </v-btn>
+      <v-btn
+        v-on:click="onClickAnalyzeList"
+        v-show="isShowAnalyzeList"
+        style="margin-left:8px;"
+        text
+      >分析一覧へ</v-btn>
+      <v-btn v-on:click="onClickNewScore" v-show="isShowNewScore" style="margin-left:8px;" icon>
+        <v-icon>fas fa-edit</v-icon>
+      </v-btn>
+      <v-btn
+        v-on:click="onClickAnalyzePlayer"
+        v-show="isShowAnalyzePlayer"
+        style="margin-left:8px;"
+        v-bind:disabled="!isEnableAnalyzePlayer"
+        text
+      >人別</v-btn>
+      <v-btn
+        v-on:click="onClickAnalyzeMatch"
+        v-show="isShowAnalyzeMatch"
+        style="margin-left:8px;"
+        v-bind:disabled="!isEnableAnalyzeMatch"
+        text
+      >試合別</v-btn>
       <v-btn v-on:click="onClickSave" v-show="isShowSave" style="margin-left:8px;" icon>
         <v-icon>fas fa-save</v-icon>
       </v-btn>
@@ -103,6 +123,8 @@
           v-bind:analyze-player-score="analyzePlayerData"
           v-bind:is-match-prop="isMatchProp"
           v-bind:score-input-prop="scoreInputProp"
+          v-bind:score-list-prop="scoreListProp"
+          v-bind:analyze-list-prop="analyzeListProp"
           v-bind:common-prop="commonProp"
         ></router-view>
       </div>
@@ -160,6 +182,31 @@ export default {
     onClickSettings() {
       this.routeSettings();
     },
+    onClickAnalyzeList() {
+      if (this.scoreListProp.linkAnalyzeList != null) {
+        this.scoreListProp.linkAnalyzeList();
+      } else {
+        console.log("this.scoreListProp.linkAnalyzeList is null !!!");
+      }
+    },
+    onClickAnalyzePlayer() {
+      if (this.analyzeListProp.switchList != null) {
+        this.analyzeListProp.switchList();
+        this.isEnableAnalyzePlayer = false;
+        this.isEnableAnalyzeMatch = true;
+      } else {
+        console.log("this.analyzeListProp.switchList is null !!!");
+      }
+    },
+    onClickAnalyzeMatch() {
+      if (this.analyzeListProp.switchList != null) {
+        this.analyzeListProp.switchList();
+        this.isEnableAnalyzePlayer = true;
+        this.isEnableAnalyzeMatch = false;
+      } else {
+        console.log("this.analyzeListProp.switchList is null !!!");
+      }
+    },
     setEnableUndo(flg) {
       // console.log("setEnableUndo " + flg);
       this.isEnableUndo = flg;
@@ -177,6 +224,9 @@ export default {
       this.isShowMemberChange = false;
       this.isShowNewScore = true;
       this.isShowSettings = true;
+      this.isShowAnalyzePlayer = false;
+      this.isShowAnalyzeMatch = false;
+      this.isShowAnalyzeList = true;
       this.$router.push({ path: "/scorelist" });
     },
     routeAnalyzeListPlayer(items) {
@@ -190,6 +240,11 @@ export default {
       this.isShowMemberChange = false;
       this.isShowNewScore = false;
       this.isShowSettings = false;
+      this.isShowAnalyzePlayer = true;
+      this.isShowAnalyzeMatch = true;
+      this.isEnableAnalyzePlayer = false;
+      this.isEnableAnalyzeMatch = true;
+      this.isShowAnalyzeList = false;
       this.$router.push({ path: "/analyzelist" });
     },
     routeAnalyzeListMatch(items) {
@@ -204,6 +259,11 @@ export default {
       this.isShowMemberChange = false;
       this.isShowNewScore = false;
       this.isShowSettings = false;
+      this.isShowAnalyzePlayer = true;
+      this.isShowAnalyzeMatch = true;
+      this.isEnableAnalyzePlayer = true;
+      this.isEnableAnalyzeMatch = false;
+      this.isShowAnalyzeList = false;
       this.$router.push({ path: "/analyzelist" });
     },
     routeScoreInput(scoreId) {
@@ -217,6 +277,9 @@ export default {
       this.isShowMemberChange = true;
       this.isShowNewScore = false;
       this.isShowSettings = false;
+      this.isShowAnalyzePlayer = false;
+      this.isShowAnalyzeMatch = false;
+      this.isShowAnalyzeList = false;
       this.$router.push({ path: "/scoreinput" });
     },
     routeScoreInputNew() {
@@ -229,6 +292,9 @@ export default {
       this.isShowMemberChange = true;
       this.isShowNewScore = false;
       this.isShowSettings = false;
+      this.isShowAnalyzePlayer = false;
+      this.isShowAnalyzeMatch = false;
+      this.isShowAnalyzeList = false;
       this.createDigest(this.digestCallback);
     },
     routeHome() {
@@ -244,6 +310,9 @@ export default {
       this.isShowMemberChange = false;
       this.isShowNewScore = false;
       this.isShowSettings = false;
+      this.isShowAnalyzePlayer = false;
+      this.isShowAnalyzeMatch = false;
+      this.isShowAnalyzeList = false;
       this.$router.push({ path: "/settings" });
     },
     routeAnalyzeDetail(analyzePlayerData) {
@@ -256,6 +325,9 @@ export default {
       this.isShowMemberChange = false;
       this.isShowNewScore = false;
       this.isShowSettings = false;
+      this.isShowAnalyzePlayer = false;
+      this.isShowAnalyzeMatch = false;
+      this.isShowAnalyzeList = false;
       this.$router.push({ path: "/AnalyzeDetail" });
     },
     digestCallback(hex) {
@@ -299,18 +371,29 @@ export default {
       isEnableUndo: true,
       isEnableRedo: true,
       isEnableBack: true,
+      isEnableAnalyzePlayer: false,
+      isEnableAnalyzeMatch: false,
       isShowUndo: false,
       isShowRedo: false,
       isShowSave: false,
       isShowMemberChange: false,
       isShowNewScore: false,
       isShowSettings: false,
+      isShowAnalyzePlayer: false,
+      isShowAnalyzeMatch: false,
+      isShowAnalyzeList: false,
       scoreInputProp: {
         undo: null,
         redo: null,
         changeMember: null,
         setEnableUndo: this.setEnableUndo,
         setEnableRedo: this.setEnableRedo
+      },
+      scoreListProp: {
+        linkAnalyzeList: null
+      },
+      analyzeListProp: {
+        switchList: null
       },
       commonProp: {
         backView: null

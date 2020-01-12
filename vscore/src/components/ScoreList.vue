@@ -2,17 +2,12 @@
   <div class="main-area">
     <span id="page-top"></span>
     <div class="view-contents">
-      <!-- <button
-        v-on:click="linkAnalyzeList"
-        class="btn btn-primary"
-        style="width:100%;margin-bottom:10px"
-      >選択した試合を対象に分析する</button>-->
-      <v-btn
+      <!-- <v-btn
         style="width:100%;margin-bottom:10px"
         v-on:click="linkAnalyzeList"
         color="primary"
         dark
-      >選択した試合を対象に分析する</v-btn>
+      >選択した試合を対象に分析する</v-btn>-->
 
       <v-card style="width:100%;" class="d-inline-block mx-auto">
         <v-container>
@@ -81,12 +76,12 @@
           </v-data-table>
         </v-container>
       </v-card>
-      <v-btn
+      <!-- <v-btn
         style="width:100%;margin-top:10px;margin-bottom:10px"
         v-on:click="linkAnalyzeList"
         color="primary"
         dark
-      >選択した試合を対象に分析する</v-btn>
+      >選択した試合を対象に分析する</v-btn>-->
       <a
         data-scroll
         href="#page-top"
@@ -138,7 +133,8 @@ import moveTop from "./SVG/MoveTopSVG";
 export default {
   name: "score_list",
   props: {
-    score: String
+    score: String,
+    scoreListProp: Object
   },
   components: {
     confirm,
@@ -184,6 +180,8 @@ export default {
     // }
   },
   mounted() {
+    this.scoreListProp.linkAnalyzeList = this.linkAnalyzeList;
+
     var gridHeight = window.innerHeight - 10;
     this.styleNavi = {
       "line-height": gridHeight + "px"

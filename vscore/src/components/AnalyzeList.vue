@@ -2,7 +2,7 @@
   <div class="main-area">
     <span id="page-top"></span>
     <div class="view-contents">
-      <v-btn
+      <!-- <v-btn
         v-if="isMatch"
         style="width:100%;margin-bottom:10px"
         v-on:click="switchList"
@@ -15,7 +15,7 @@
         v-on:click="switchList"
         color="primary"
         dark
-      >試合別に切り替える</v-btn>
+      >試合別に切り替える</v-btn>-->
       <v-card>
         <v-tabs v-model="tab" background-color="primary accent-4" centered dark>
           <v-tabs-slider></v-tabs-slider>
@@ -182,7 +182,7 @@
           </v-tab-item>
         </v-tabs-items>
       </v-card>
-      <v-btn
+      <!-- <v-btn
         v-if="isMatch"
         style="width:100%;margin:10px 0"
         v-on:click="switchList"
@@ -195,7 +195,7 @@
         v-on:click="switchList"
         color="primary"
         dark
-      >試合別に切り替える</v-btn>
+      >試合別に切り替える</v-btn>-->
       <a
         data-scroll
         href="#page-top"
@@ -251,7 +251,8 @@ export default {
   props: {
     isMatchProp: Boolean,
     analyzeData: Array,
-    commonProp: Object
+    commonProp: Object,
+    analyzeListProp: Object
   },
   components: {
     moveTop
@@ -383,6 +384,7 @@ export default {
   },
   mounted() {
     this.commonProp.back = this.backScoreList;
+    this.analyzeListProp.switchList = this.switchList;
 
     var gridHeight = window.innerHeight - 10;
     this.styleNavi = {

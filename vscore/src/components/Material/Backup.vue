@@ -17,7 +17,7 @@
     <!-- <button v-on:click="outputDB" class="btn btn-primary">出力</button> -->
     <v-btn v-on:click="outputDB" color="primary" dark>DB内容JSON出力</v-btn>
     <!-- <textarea style="margin-bottom:30px;width:100%;height:300px;" v-model="output"></textarea> -->
-    <v-textarea style="margin-top:10px;" outlined label="JSON" v-model="output" readonly></v-textarea>
+    <v-textarea style="margin-top:10px;" outlined label="JSON" v-model="output"></v-textarea>
     <!-- <button v-on:click="onClickInputDB" class="btn btn-warning">入力</button> -->
     <!-- <div>DB内容JSON入力</div> -->
     <v-form v-model="isFormValid" ref="score_json_input_form">

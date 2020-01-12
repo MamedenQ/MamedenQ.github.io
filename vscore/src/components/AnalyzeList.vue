@@ -273,48 +273,50 @@ export default {
       headersTotalPlayer: [
         { text: "名前", align: "left", value: "name" },
         { text: "性別", align: "left", value: "sex" },
-        { text: "得点", align: "left", value: "total.point" },
-        { text: "失点", align: "left", value: "total.miss" }
+        { text: "得点", align: "right", value: "total.point" },
+        { text: "失点", align: "right", value: "total.miss" }
       ],
       headersTotalMatch: [
-        { text: "名前", align: "left", value: "name" },
-        { text: "得点", align: "left", value: "total.point" },
-        { text: "失点", align: "left", value: "total.miss" }
+        { text: "試合", align: "left", value: "name" },
+        { text: "日付", align: "left", value: "date" },
+        { text: "得点", align: "right", value: "total.point" },
+        { text: "失点", align: "right", value: "total.miss" }
       ],
       headersServe: [],
       headersServePlayer: [
         { text: "名前", align: "left", value: "name" },
         { text: "性別", align: "left", value: "sex" },
-        { text: "得点", align: "left", value: "serve.point" },
-        { text: "失点", align: "left", value: "serve.miss" }
+        { text: "得点", align: "right", value: "serve.point" },
+        { text: "失点", align: "right", value: "serve.miss" }
       ],
       headersServeMatch: [
-        { text: "名前", align: "left", value: "name" },
-        { text: "得点", align: "left", value: "serve.point" },
-        { text: "失点", align: "left", value: "serve.miss" }
+        { text: "試合", align: "left", value: "name" },
+        { text: "日付", align: "left", value: "date" },
+        { text: "得点", align: "right", value: "serve.point" },
+        { text: "失点", align: "right", value: "serve.miss" }
       ],
       headersSpike: [],
       headersSpikePlayer: [
         { text: "名前", align: "left", value: "name" },
         { text: "性別", align: "left", value: "sex" },
-        { text: "総数", align: "left", value: "spike.total" },
-        { text: "得点", align: "left", value: "spike.point" },
-        { text: "失点", align: "left", value: "spike.miss" },
-        { text: "決定率", align: "left", value: "spike.determined" },
-        { text: "効果率", align: "left", value: "spike.effect" }
+        { text: "総数", align: "right", value: "spike.total" },
+        { text: "得点", align: "right", value: "spike.point" },
+        { text: "失点", align: "right", value: "spike.miss" },
+        { text: "決定率", align: "right", value: "spike.determined" },
+        { text: "効果率", align: "right", value: "spike.effect" }
         // { text: "名前", align: "left", value: "name" },
         // { text: "性別", align: "left", value: "sex" },
-        // { text: "総数", align: "left", value: "spike.total" },
-        // { text: "総得", align: "left", value: "spike.point" },
-        // { text: "ｲﾝ", align: "left", value: "spike.point" },
-        // { text: "ﾌｪｲｸ", align: "left", value: "spike.point" },
-        // { text: "ﾌﾞﾛｯｸｱｳﾄ", align: "left", value: "spike.point" },
-        // { text: "総失", align: "left", value: "spike.miss" },
-        // { text: "ｱｳﾄ", align: "left", value: "spike.miss" },
-        // { text: "ﾈｯﾄ", align: "left", value: "spike.miss" },
-        // { text: "ﾌﾞﾛｯｸ", align: "left", value: "spike.miss" },
-        // { text: "決率", align: "left", value: "spike.determined" },
-        // { text: "効率", align: "left", value: "spike.effect" }
+        // { text: "総数", align: "right", value: "spike.total" },
+        // { text: "総得", align: "right", value: "spike.point" },
+        // { text: "ｲﾝ", align: "right", value: "spike.point" },
+        // { text: "ﾌｪｲｸ", align: "right", value: "spike.point" },
+        // { text: "ﾌﾞﾛｯｸｱｳﾄ", align: "right", value: "spike.point" },
+        // { text: "総失", align: "right", value: "spike.miss" },
+        // { text: "ｱｳﾄ", align: "right", value: "spike.miss" },
+        // { text: "ﾈｯﾄ", align: "right", value: "spike.miss" },
+        // { text: "ﾌﾞﾛｯｸ", align: "right", value: "spike.miss" },
+        // { text: "決率", align: "right", value: "spike.determined" },
+        // { text: "効率", align: "right", value: "spike.effect" }
         // {
         //   text: "総数①",
         //   align: "center",
@@ -342,24 +344,26 @@ export default {
         // }
       ],
       headersSpikeMatch: [
-        { text: "名前", align: "left", value: "name" },
-        { text: "総数", align: "left", value: "spike.total" },
-        { text: "得点", align: "left", value: "spike.point" },
-        { text: "失点", align: "left", value: "spike.miss" },
-        { text: "決定率", align: "left", value: "spike.determined" },
-        { text: "効果率", align: "left", value: "spike.effect" }
+        { text: "試合", align: "left", value: "name" },
+        { text: "日付", align: "left", value: "date" },
+        { text: "総数", align: "right", value: "spike.total" },
+        { text: "得点", align: "right", value: "spike.point" },
+        { text: "失点", align: "right", value: "spike.miss" },
+        { text: "決定率", align: "right", value: "spike.determined" },
+        { text: "効果率", align: "right", value: "spike.effect" }
       ],
       headersBlock: [],
       headersBlockPlayer: [
         { text: "名前", align: "left", value: "name" },
         { text: "性別", align: "left", value: "sex" },
-        { text: "得点", align: "left", value: "block.point" },
-        { text: "失点", align: "left", value: "block.miss" }
+        { text: "得点", align: "right", value: "block.point" },
+        { text: "失点", align: "right", value: "block.miss" }
       ],
       headersBlockMatch: [
-        { text: "名前", align: "left", value: "name" },
-        { text: "得点", align: "left", value: "block.point" },
-        { text: "失点", align: "left", value: "block.miss" }
+        { text: "試合", align: "left", value: "name" },
+        { text: "日付", align: "left", value: "date" },
+        { text: "得点", align: "right", value: "block.point" },
+        { text: "失点", align: "right", value: "block.miss" }
       ],
       headersReceiveEtc: [],
       headersReceiveEtcPlayer: [
@@ -368,18 +372,19 @@ export default {
         // { text: "失点", align: "left", value: "receive.miss" },
         // { text: "失点", align: "left", value: "other_miss" },
         // { text: "失点", align: "left", value: "faul" }
-        { text: "レシーブ失点", align: "left", value: "receive.miss" },
-        { text: "その他失点", align: "left", value: "other_miss" },
-        { text: "ファウル", align: "left", value: "faul" }
+        { text: "レシーブ失点", align: "right", value: "receive.miss" },
+        { text: "その他失点", align: "right", value: "other_miss" },
+        { text: "ファウル", align: "right", value: "faul" }
       ],
       headersReceiveEtcMatch: [
-        { text: "名前", align: "left", value: "name" },
+        { text: "試合", align: "left", value: "name" },
+        { text: "日付", align: "left", value: "date" },
         // { text: "失点", align: "left", value: "receive.miss" },
         // { text: "失点", align: "left", value: "other_miss" },
         // { text: "失点", align: "left", value: "faul" }
-        { text: "レシーブ失点", align: "left", value: "receive.miss" },
-        { text: "その他失点", align: "left", value: "other_miss" },
-        { text: "ファウル", align: "left", value: "faul" }
+        { text: "レシーブ失点", align: "right", value: "receive.miss" },
+        { text: "その他失点", align: "right", value: "other_miss" },
+        { text: "ファウル", align: "right", value: "faul" }
       ]
     };
   },
@@ -500,7 +505,7 @@ export default {
     },
     totalScore(score) {
       if (this.isMatch) {
-        var matchScore = this.getPlayerTemplate(0, score.title, 0);
+        var matchScore = this.getPlayerTemplate(0, score.title, 0, score.date);
         matchScore.date = score.date;
         matchScore.point = score.teamAPoint + "-" + score.teamBPoint;
         for (var i = 0; i < score.score.length; i++) {
@@ -530,7 +535,7 @@ export default {
           name = member[0].name;
           sex = member[0].sex;
         }
-        analyzeData = this.getPlayerTemplate(data.no, name, sex);
+        analyzeData = this.getPlayerTemplate(data.no, name, sex, "");
         this.scoreAnalyze.push(analyzeData);
       } else {
         analyzeData = analyzeData[0];
@@ -597,10 +602,11 @@ export default {
         analyzeData.total.total++;
       }
     },
-    getPlayerTemplate(no, name, sex) {
+    getPlayerTemplate(no, name, sex, date) {
       return {
         no: no,
         name: name,
+        date: date,
         sex: sex,
         total: {
           point: 0,

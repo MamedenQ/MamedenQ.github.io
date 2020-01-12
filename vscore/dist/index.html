@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang=en><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1"><link rel=icon href=favicon.ico><title>vscore</title><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900"><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css><link rel=stylesheet href=https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css><style type=text/css>[v-cloak] {
       display: none;
-    }</style><link href=css/app.14f96613.css rel=preload as=style><link href=css/chunk-vendors.ed730122.css rel=preload as=style><link href=js/app.3934210c.js rel=preload as=script><link href=js/chunk-vendors.85225177.js rel=preload as=script><link href=css/chunk-vendors.ed730122.css rel=stylesheet><link href=css/app.14f96613.css rel=stylesheet></head><body><noscript><strong>We're sorry but vscore doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id=app></div><script src=js/chunk-vendors.85225177.js></script><script src=js/app.3934210c.js></script></body><script>// ＝＝＝＝＝調査項目
+    }</style><link href=css/app.7ca9d03c.css rel=preload as=style><link href=css/chunk-vendors.057fa8c4.css rel=preload as=style><link href=js/app.487ec51e.js rel=preload as=script><link href=js/chunk-vendors.aed55b38.js rel=preload as=script><link href=css/chunk-vendors.057fa8c4.css rel=stylesheet><link href=css/app.7ca9d03c.css rel=stylesheet></head><body><noscript><strong>We're sorry but vscore doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id=app></div><script src=js/chunk-vendors.aed55b38.js></script><script src=js/app.487ec51e.js></script></body><script>// ＝＝＝＝＝調査項目
   // 画面間データ連携調査
   // https://commis.hatenablog.com/entry/2017/11/21/180556
 
@@ -39,18 +39,45 @@
   // http://pictogram2.com/?tag=volleyball
 
   // ＝＝＝＝＝未実装
-  // 一覧の上下に横幅いっぱいのボタンはやめる　タブと見分けにくい
+  // モーダルダイアログはvietifyに切り替える
+  // 他のダイアログ系もopenメソッドを用意するようにする
+
+  // スコア一覧の削除が反応しない
+
+  // メニュー構成見直す
+
+  // グラフ
+
+  // なんか余計な余白が出る
+  // homeとスコア入力
+
+
+
+
   // 途中データの保存機能
-
-  // スコア一覧のチェックは全選択状態で初期表示したい
-
-  // モーダルダイアログはvietifyに切り替える？
-
-  // 入力チェック機能追加
-  // マスタの保存忘れチェック
+  // 新規スコア開くときに確認　読み込まなければ破棄
+  // isDirty変更時に保存する
+  // 新規と編集で分けにくいから保留
 
   // 複数団体登録
   // スコア一覧をタブにして、団体登録マスタを追加
+  // 画面が一階層増えるから、設定で切り替えるようにする
+  // 現状データの移行どうしよう？json直接編集しかない？
+  // 入力団体間違いを修正する一覧で解決
+  // メンバーとかどうする？
+  // メンバーを別にしたいが、解決が難しいため保留
+  // そもそもチーム登録との共存が難しい
+  // チームの仕組みを複数団体機能に置き換えてしまう？
+
+
+
+
+  // 一覧の上下に横幅いっぱいのボタンはやめる　タブと見分けにくい
+
+  // スコア一覧のチェックは全選択状態で初期表示したい
+
+  // マスタメンテのタブ遷移が遅い
+  // 毎回生成されている？初回だけ遅い？
 
   // 詳細一覧を作る
 
@@ -74,7 +101,7 @@
   // リベロ枠設定された箇所はローテーションから除外
   // リベロ設定はデフォルトにするかを設定で選択できる
 
-
+  // プレーヤの番号がキーになっている　変えると紐付けができなくなる
 
   // 得点カウンタ作る？
   // メニューの左下を埋めるための機能

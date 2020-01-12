@@ -36,7 +36,7 @@
               :options.sync="options"
               multi-sort
             >
-              <template v-slot:header="{ props }">
+              <!-- <template v-slot:header="{ props }">
                 <thead>
                   <tr>
                     <th style="border-bottom:none;text-align:left;">基本情報</th>
@@ -45,7 +45,7 @@
                     <th style="border-bottom:none;"></th>
                   </tr>
                 </thead>
-              </template>
+              </template>-->
 
               <template v-slot:item.name="{ item }">
                 <a href="#" v-on:click="onPlayerDetail(item)">{{item.name}}</a>
@@ -65,7 +65,7 @@
               :options.sync="options"
               multi-sort
             >
-              <template v-slot:header="{ props }">
+              <!-- <template v-slot:header="{ props }">
                 <thead>
                   <tr>
                     <th style="border-bottom:none;text-align:left;">基本情報</th>
@@ -74,7 +74,7 @@
                     <th style="border-bottom:none;"></th>
                   </tr>
                 </thead>
-              </template>
+              </template>-->
 
               <template v-slot:item.name="{ item }">
                 <a href="#" v-on:click="onPlayerDetail(item)">{{item.name}}</a>
@@ -94,7 +94,7 @@
               :options.sync="options"
               multi-sort
             >
-              <template v-slot:header="{ props }">
+              <!-- <template v-slot:header="{ props }">
                 <thead>
                   <tr>
                     <th style="border-bottom:none;text-align:left;">基本情報</th>
@@ -106,7 +106,7 @@
                     <th style="border-bottom:none;"></th>
                   </tr>
                 </thead>
-              </template>
+              </template>-->
 
               <template v-slot:item.name="{ item }">
                 <a href="#" v-on:click="onPlayerDetail(item)">{{item.name}}</a>
@@ -130,7 +130,7 @@
               :options.sync="options"
               multi-sort
             >
-              <template v-slot:header="{ props }">
+              <!-- <template v-slot:header="{ props }">
                 <thead>
                   <tr>
                     <th style="border-bottom:none;text-align:left;">基本情報</th>
@@ -139,7 +139,7 @@
                     <th style="border-bottom:none;"></th>
                   </tr>
                 </thead>
-              </template>
+              </template>-->
 
               <template v-slot:item.name="{ item }">
                 <a href="#" v-on:click="onPlayerDetail(item)">{{item.name}}</a>
@@ -159,7 +159,7 @@
               :options.sync="options"
               multi-sort
             >
-              <template v-slot:header="{ props }">
+              <!-- <template v-slot:header="{ props }">
                 <thead>
                   <tr>
                     <th style="border-bottom:none;text-align:left;">基本情報</th>
@@ -169,7 +169,7 @@
                     <th style="border-bottom:none;">ファウル</th>
                   </tr>
                 </thead>
-              </template>
+              </template>-->
 
               <template v-slot:item.name="{ item }">
                 <a href="#" v-on:click="onPlayerDetail(item)">{{item.name}}</a>
@@ -365,15 +365,21 @@ export default {
       headersReceiveEtcPlayer: [
         { text: "名前", align: "left", value: "name" },
         { text: "性別", align: "left", value: "sex" },
-        { text: "失点", align: "left", value: "receive.miss" },
-        { text: "失点", align: "left", value: "other_miss" },
-        { text: "失点", align: "left", value: "faul" }
+        // { text: "失点", align: "left", value: "receive.miss" },
+        // { text: "失点", align: "left", value: "other_miss" },
+        // { text: "失点", align: "left", value: "faul" }
+        { text: "レシーブ失点", align: "left", value: "receive.miss" },
+        { text: "その他失点", align: "left", value: "other_miss" },
+        { text: "ファウル", align: "left", value: "faul" }
       ],
       headersReceiveEtcMatch: [
         { text: "名前", align: "left", value: "name" },
-        { text: "失点", align: "left", value: "receive.miss" },
-        { text: "失点", align: "left", value: "other_miss" },
-        { text: "失点", align: "left", value: "faul" }
+        // { text: "失点", align: "left", value: "receive.miss" },
+        // { text: "失点", align: "left", value: "other_miss" },
+        // { text: "失点", align: "left", value: "faul" }
+        { text: "レシーブ失点", align: "left", value: "receive.miss" },
+        { text: "その他失点", align: "left", value: "other_miss" },
+        { text: "ファウル", align: "left", value: "faul" }
       ]
     };
   },

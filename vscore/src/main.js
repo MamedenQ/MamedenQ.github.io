@@ -21,12 +21,12 @@ Vue.directive('scroll', {
 });
 
 
-import VueGoodTablePlugin from 'vue-good-table';
+// import VueGoodTablePlugin from 'vue-good-table';
 
 // import the styles 
-import 'vue-good-table/dist/vue-good-table.css'
+// import 'vue-good-table/dist/vue-good-table.css'
 
-Vue.use(VueGoodTablePlugin);
+// Vue.use(VueGoodTablePlugin);
 
 Vue.config.productionTip = false
 

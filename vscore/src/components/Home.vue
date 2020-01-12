@@ -1,14 +1,17 @@
 <template>
   <div class="grid-top" v-bind:style="styleGridHome">
-    <div class="btninput" v-on:click="onClickScoreInput">
+    <div class="btninput">
+      <v-btn v-on:click="onClickScoreInput" style="width:100%;height:100%;"></v-btn>
       <span>スコアを入力する</span>
       <scoreInputSvg style="width:100%;height:100%;"></scoreInputSvg>
     </div>
-    <div class="btnlist" v-on:click="onClickScoreList">
+    <div class="btnlist">
+      <v-btn v-on:click="onClickScoreList" style="width:100%;height:100%;"></v-btn>
       <span>スコアを分析する</span>
       <analyzeSvg style="width:100%;height:100%;"></analyzeSvg>
     </div>
-    <div class="btnsettings" v-on:click="onClickSettings">
+    <div class="btnsettings">
+      <v-btn v-on:click="onClickSettings" style="width:100%;height:100%;"></v-btn>
       <span>アプリをメンテナンスする</span>
       <settingsSvg style="width:100%;height:100%;"></settingsSvg>
     </div>
@@ -68,30 +71,30 @@ export default {
 }
 
 .btninput {
-  color: #333;
-  background: #eee;
+  /* color: #333;
+  background: #eee; */
   position: relative;
   grid-area: btninput;
-  filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.6));
-  border-radius: 2px;
+  /* filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.6));
+  border-radius: 2px; */
 }
 
 .btnlist {
-  color: #333;
-  background: #eee;
+  /* color: #333;
+  background: #eee; */
   position: relative;
   grid-area: btnlist;
-  filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.6));
-  border-radius: 2px;
+  /* filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.6));
+  border-radius: 2px; */
 }
 
 .btnsettings {
-  color: #333;
-  background: #eee;
+  /* color: #333;
+  background: #eee; */
   position: relative;
   grid-area: btnsettings;
-  filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.6));
-  border-radius: 2px;
+  /* filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.6));
+  border-radius: 2px; */
 }
 
 .grid-top div span {
@@ -101,6 +104,7 @@ export default {
   right: 0;
   text-align: center;
   line-height: 40px;
+  pointer-events: none;
 }
 
 .grid-top div svg {
@@ -109,5 +113,6 @@ export default {
   left: 0;
   bottom: 0;
   width: 100%;
+  pointer-events: none;
 }
 </style>

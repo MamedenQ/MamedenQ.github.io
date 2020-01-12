@@ -3,15 +3,15 @@
     <!-- <v-card style="width:100%;" class="d-inline-block mx-auto"> -->
     <!-- <v-container> -->
     <div style="margin-bottom:10px;">プレーヤマスタ編集</div>
-    <v-data-table
-      :headers="headersPlayer"
-      :items="members"
-      item-key="id"
-      disable-sort
-      hide-default-footer
-      style="margin-bottom:10px;"
-    >
-      <!-- <template v-slot:header="{ props }">
+    <v-form v-model="isFormValid" ref="master_player_form">
+      <v-data-table
+        :headers="headersPlayer"
+        :items="members"
+        item-key="id"
+        disable-sort
+        style="margin-bottom:10px;"
+      >
+        <!-- <template v-slot:header="{ props }">
           <thead>
             <tr>
               <th
@@ -22,26 +22,33 @@
               >{{ h.text }}</th>
             </tr>
           </thead>
-      </template>-->
-      <template style="width:25%;" v-slot:item.no="{ item }">
-        <v-text-field color="primary" v-model="item.no"></v-text-field>
-      </template>
-      <template v-slot:item.name="{ item }">
-        <v-text-field color="primary" v-model="item.name"></v-text-field>
-      </template>
-      <template v-slot:item.sex="{ item }">
-        <v-radio-group v-model="item.sex" row>
-          <v-radio color="primary" label="男" value="0"></v-radio>
-          <v-radio color="red" label="女" value="1"></v-radio>
-        </v-radio-group>
-      </template>
-      <template v-slot:item.team="{ item }">
-        <v-select v-model="item.team" :items="teams" item-text="name" item-value="no"></v-select>
-      </template>
-      <template v-slot:item.delete="{ item }">
-        <v-btn v-on:click="onClickDelete(item)" color="warning" dark>削除</v-btn>
-      </template>
-    </v-data-table>
+        </template>-->
+        <template style="width:25%;" v-slot:item.no="{ item }">
+          <v-text-field color="primary" v-model="item.no" v-bind:rules="[required, limit_value]"></v-text-field>
+        </template>
+        <template v-slot:item.name="{ item }">
+          <v-text-field color="primary" v-model="item.name" v-bind:rules="[required]"></v-text-field>
+        </template>
+        <template v-slot:item.sex="{ item }">
+          <v-radio-group v-model="item.sex" v-bind:rules="[required]" row>
+            <v-radio color="primary" label="男" value="0"></v-radio>
+            <v-radio color="red" label="女" value="1"></v-radio>
+          </v-radio-group>
+        </template>
+        <template v-slot:item.team="{ item }">
+          <v-select
+            v-model="item.team"
+            :items="teams"
+            item-text="name"
+            item-value="no"
+            v-bind:rules="[required]"
+          ></v-select>
+        </template>
+        <template v-slot:item.delete="{ item }">
+          <v-btn v-on:click="onClickDelete(item)" color="warning" dark>削除</v-btn>
+        </template>
+      </v-data-table>
+    </v-form>
     <div>
       <v-btn
         style="float:right;margin-left:10px;margin-bottom:10px;"
@@ -74,6 +81,13 @@ export default {
   },
   data() {
     return {
+      isFormValid: false,
+      required: value => !!value || "必須入力",
+      // limit_length: value => value.length <= 2 || "2文字以内",
+      limit_value: value => (value >= 0 && value <= 999) || "0-999の整数",
+      options: {
+        itemsPerPage: -1
+      },
       deleteItem: [],
       members: [],
       showModalConfirm: false,
@@ -150,6 +164,7 @@ export default {
       }
     },
     onClickDelete(item) {
+      console.log(this.options);
       this.deleteItem = item;
       this.title = "削除確認";
       this.msg = "削除しますか？";
@@ -186,6 +201,10 @@ export default {
       });
     },
     onClickSaveMember() {
+      this.isFormValid = this.$refs.master_player_form.validate();
+      if (!this.isFormValid) {
+        return;
+      }
       this.title = "保存確認";
       this.msg = "保存しますか？";
       this.callbackConfirm = this.callbackSaveMember;

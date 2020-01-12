@@ -106,75 +106,6 @@
             </svg>
         </div>
 
-        <div name="modalSave" v-if="showModalSave">
-            <transition>
-                <div class="modal-mask">
-                    <div class="modal-wrapper">
-                        <div class="modal-container" style="width:300px;">
-
-                            <div class="modal-header">
-                                <h3 slot="header">スコアの保存</h3>
-                            </div>
-
-                            <div class="modal-body" style="height:200px">
-                                <slot name="body">
-                                    <!-- <input style="width:100%" type="text" v-model="modelTitle"/><br> -->
-                                    <v-text-field dense outlined label="試合名" color="primary" v-model="modelTitle"></v-text-field>
-                                    <!-- 日付<br> -->
-                                    <!-- <input style="width:100%" type="date" v-model="modelDate" /><br> -->
-                                    <v-menu
-                                        v-model="showDatePicker"
-                                        :close-on-content-click="false"
-                                        :nudge-right="40"
-                                        transition="scale-transition"
-                                        offset-y
-                                        min-width="290px"
-                                    >
-                                        <template v-slot:activator="{ on }">
-                                        <v-text-field
-                                            v-model="modelDate"
-                                            readonly
-                                            v-on="on"
-                                            dense outlined label="日付" 
-                                        ></v-text-field>
-                                        </template>
-                                        <v-date-picker v-model="modelDate" @input="showDatePicker = false"></v-date-picker>
-                                    </v-menu>
-                                          <!-- 得点<br> -->
-                                    <div style="position:relative;">
-                                    <v-text-field style="display:inline-block;width:45%;position:absolute;left:0;top:0;bottom:0;" dense outlined label="得点A" type="number" color="primary" v-model="modelAPoint"></v-text-field>
-                                    <v-text-field style="display:inline-block;width:45%;position:absolute;right:0;top:0;bottom:0;" dense outlined label="得点B" type="number" color="primary" v-model="modelBPoint"></v-text-field>
-                                    </div>
-                                </slot>
-                            </div>
-
-                            <div class="modal-footer">
-                                <slot name="footer">
-                                    <!--
-                                    <button class="modal-default-button" @click="showModalSave = false">
-                                        キャンセル
-                                    </button>
-                                    <button class="modal-default-button" @click="save">
-                                        保存
-                                    </button>
-                                    -->
-                                    <!-- <button type="button" class="modal-default-button btn btn-secondary" @click="showModalSave = false">キャンセル</button>
-                                    <button type="button" class="modal-default-button btn btn-primary" @click="save">保存</button> -->
-                                    <v-btn class="modal-default-button" v-on:click="showModalSave = false">キャンセル</v-btn>
-                                    <v-btn
-                                    style="margin-right:20px;"
-                                    class="modal-default-button"
-                                    v-on:click="save"
-                                    color="primary"
-                                    dark
-                                    >保存</v-btn>
-                                </slot>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </transition>
-        </div>
         <div name="modalWarn" v-if="showModalWarn">
             <transition>
                 <div class="modal-mask">
@@ -219,8 +150,9 @@
                 </div>
             </transition>
         </div>
-        <confirm v-if="showModalConfirm" v-on:dialogResult="result" :title="title" :msg="msg" :positive="positive" :negative="negative"></confirm>
+        <confirm v-if="showModalConfirm" v-on:dialogResult="showModalConfirm = false;callbackConfirm(flg);" :title="title" :msg="msg" :positive="positive" :negative="negative"></confirm>
         <memberChange v-if="showModalMemberChange" v-on:member-change-result="memberChangeResult" :title="title" :msg="msg" :positive="positive" :negative="negative" :itemTeamA="itemTeamA" :itemTeamB="itemTeamB" :members="members"></memberChange>
+        <scoreSave  v-if="showModalSave" v-on:dialogResult="save" :title="modelTitle" :dateProp="modelDate" :aPoint="modelAPoint" :bPoint="modelBPoint"></scoreSave>
     </div>
 </div>
 </template>
@@ -250,6 +182,7 @@ import judgeSvg from './SVG/JudgeSVG'
 import suikomiSvg from './SVG/SuikomiSVG'
 import omiaiSvg from './SVG/OmiaiSVG'
 import rallySvg from './SVG/RallySVG'
+import scoreSave from './Material/ScoreSave'
 
 export default {
   name: 'score_input',
@@ -278,6 +211,7 @@ export default {
         suikomiSvg,
         omiaiSvg,
         rallySvg,
+        scoreSave,
     },
     props: {
         scoreId: String,
@@ -314,7 +248,7 @@ export default {
             showModalWarn: false,
             showModalConfirm: false,
             showModalMemberChange: false,
-            showDatePicker: false,
+            // showDatePicker: false,
             title: "",
             msg: "",
             positive: "",
@@ -492,7 +426,16 @@ export default {
             this.outputlog();
             this.isDirty = true;
         },
-        save() {
+        save(flg, title, date, apoint, bpoint) {
+            this.showModalSave = false;
+            if(!flg) {
+                return;
+            }
+            this.modelTitle = title;
+            this.modelDate = date;
+            this.modelAPoint = Number(apoint);
+            this.modelBPoint = Number(bpoint);
+
             // 保存ボタンの制御を行う
             if (this.modelTitle == "") {
                 return;
@@ -1000,10 +943,10 @@ export default {
             team[0].name = tempName;
             team[0].sex = tempSex;
         },
-        result(flg) {
-            this.callbackConfirm(flg);
-            this.showModalConfirm = false;
-        },
+        // result(flg) {
+        //     this.callbackConfirm(flg);
+        //     this.showModalConfirm = false;
+        // },
         changeMember() {
             this.title = "メンバーチェンジ";
             this.positive = "OK";

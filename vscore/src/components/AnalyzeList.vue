@@ -53,8 +53,10 @@
               :items="scoreAnalyze"
               item-key="id"
               hide-default-footer
+              :options.sync="options"
               multi-sort
             >
+              <!-- hide-default-footer -->
               <template v-slot:header="{ props }">
                 <thead>
                   <tr>
@@ -107,6 +109,7 @@
               :items="scoreAnalyze"
               item-key="id"
               hide-default-footer
+              :options.sync="options"
               multi-sort
             >
               <template v-slot:header="{ props }">
@@ -171,6 +174,7 @@
               :items="scoreAnalyze"
               item-key="id"
               hide-default-footer
+              :options.sync="options"
               multi-sort
             >
               <template v-slot:header="{ props }">
@@ -224,6 +228,7 @@
               :items="scoreAnalyze"
               item-key="id"
               hide-default-footer
+              :options.sync="options"
               multi-sort
             >
               <template v-slot:header="{ props }">
@@ -274,14 +279,14 @@
       </v-card>
       <v-btn
         v-if="isMatch"
-        style="width:100%;margin-top:10px"
+        style="width:100%;margin:10px 0"
         v-on:click="switchList"
         color="primary"
         dark
       >人別に切り替える</v-btn>
       <v-btn
         v-else
-        style="width:100%;margin-top:10px"
+        style="width:100%;margin:10px 0"
         v-on:click="switchList"
         color="primary"
         dark
@@ -797,6 +802,9 @@ export default {
   },
   data() {
     return {
+      options: {
+        itemsPerPage: -1
+      },
       isMatch: false,
       // options: {
       //   sortBy: [],

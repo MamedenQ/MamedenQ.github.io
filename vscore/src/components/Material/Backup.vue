@@ -17,12 +17,20 @@
     <!-- <button v-on:click="outputDB" class="btn btn-primary">出力</button> -->
     <v-btn v-on:click="outputDB" color="primary" dark>DB内容JSON出力</v-btn>
     <!-- <textarea style="margin-bottom:30px;width:100%;height:300px;" v-model="output"></textarea> -->
-    <v-textarea style="margin-top:10px;" outlined label="JSON" v-model="output"></v-textarea>
+    <v-textarea style="margin-top:10px;" outlined label="JSON" v-model="output" readonly></v-textarea>
     <!-- <button v-on:click="onClickInputDB" class="btn btn-warning">入力</button> -->
     <!-- <div>DB内容JSON入力</div> -->
-    <v-btn v-on:click="onClickInputDB" color="warning" dark>DB内容JSON入力</v-btn>
-    <!-- <textarea style="width:100%;height:300px;" v-model="modelInput"></textarea> -->
-    <v-textarea style="margin:10px 0;" outlined label="JSON" v-model="modelInput"></v-textarea>
+    <v-form v-model="isFormValid" ref="score_json_input_form">
+      <v-btn v-on:click="onClickInputDB" color="warning" dark>DB内容JSON入力</v-btn>
+      <!-- <textarea style="width:100%;height:300px;" v-model="modelInput"></textarea> -->
+      <v-textarea
+        style="margin:10px 0;"
+        outlined
+        label="JSON"
+        v-model="modelInput"
+        v-bind:rules="[required]"
+      ></v-textarea>
+    </v-form>
 
     <confirm
       v-if="showModalConfirm"
@@ -47,6 +55,8 @@ export default {
   },
   data() {
     return {
+      isFormValid: true,
+      required: value => !!value || "必須入力",
       output: "",
       modelInput: "",
       showModalConfirm: false,
@@ -83,6 +93,10 @@ export default {
       this.output = JSON.stringify(outputJson);
     },
     onClickInputDB() {
+      this.isFormValid = this.$refs.score_json_input_form.validate();
+      if (!this.isFormValid) {
+        return;
+      }
       this.title = "入力確認";
       this.msg = " DBへ入力しますか？";
       this.callbackConfirm = this.callbackInputDB;

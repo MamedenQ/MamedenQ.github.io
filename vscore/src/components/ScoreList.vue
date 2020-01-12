@@ -23,6 +23,7 @@
             item-key="id"
             show-select
             hide-default-footer
+            :options.sync="options"
             multi-sort
           >
             <!-- <template slot="headers" slot-scope="props">
@@ -145,6 +146,9 @@ export default {
   },
   data() {
     return {
+      options: {
+        itemsPerPage: -1
+      },
       scoreList: [],
       modelTarget: [],
       headers: [

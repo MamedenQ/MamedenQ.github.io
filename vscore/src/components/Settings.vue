@@ -51,7 +51,7 @@
         <moveTop></moveTop>
       </a>
     </div>
-    <div class="menu" v-bind:style="styleNavi">
+    <!-- <div class="menu" v-bind:style="styleNavi">
       <span>
         <span>ホーム</span>
         <svg
@@ -70,7 +70,7 @@
           <path d="M9 22V12h6v10M2 10.6L12 2l10 8.6" />
         </svg>
       </span>
-    </div>
+    </div>-->
   </div>
 </template>
 
@@ -89,6 +89,9 @@ export default {
     masterMaintenanceTeam,
     backup,
     moveTop
+  },
+  props: {
+    commonProp: Object
   },
   data() {
     return {
@@ -111,6 +114,8 @@ export default {
     // }
   },
   mounted() {
+    this.commonProp.back = this.onBack;
+
     var gridHeight = window.innerHeight - 10;
     // this.styleGrid = {
     //     "grid-template-rows": gridHeight + "px",
@@ -120,7 +125,7 @@ export default {
     };
   },
   methods: {
-    onHome() {
+    onBack() {
       this.$emit("route-home");
     }
   }

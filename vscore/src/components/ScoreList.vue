@@ -95,7 +95,7 @@
       >
         <moveTop></moveTop>
       </a>
-      <div class="menu" v-bind:style="styleNavi">
+      <!-- <div class="menu" v-bind:style="styleNavi">
         <span>
           <span>ホーム</span>
           <svg
@@ -114,7 +114,7 @@
             <path d="M9 22V12h6v10M2 10.6L12 2l10 8.6" />
           </svg>
         </span>
-      </div>
+      </div>-->
     </div>
 
     <!-- <confirm

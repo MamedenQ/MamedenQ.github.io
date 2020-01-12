@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuetify from 'vuetify/lib';
-import colors from 'vuetify/lib/util/colors'
+// import colors from 'vuetify/lib/util/colors'
+import '@fortawesome/fontawesome-free/css/all.css'
 
 // Vue.use(Vuetify, {
 //     primary: "#3f51b5",
@@ -14,6 +15,9 @@ import colors from 'vuetify/lib/util/colors'
 Vue.use(Vuetify);
 
 export default new Vuetify({
+    icons: {
+        iconfont: 'fa',
+    },
     // icons: {
     //     iconfont: 'mdi', // default
     //     values: {

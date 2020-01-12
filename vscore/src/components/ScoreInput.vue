@@ -1,6 +1,6 @@
 <template>
 <div class="main-area">
-    <div class="menu" v-bind:style="styleNavi">
+    <!-- <div class="menu" v-bind:style="styleNavi">
         <span>
             <div v-if="!isNewScore">
                 <span>戻る</span>
@@ -40,7 +40,7 @@
                 <path d="M4 21v-7a4 4 0 0 1 4-4h11"/>
             </svg>
         </span>
-    </div>
+    </div> -->
     <div class="grid-scoreinput view-contents" v-bind:style="styleGrid">
         <div class="grid-action">
             <div v-bind:class="item.classGrid" v-for="item of itemAction" :key="item.id">
@@ -207,6 +207,8 @@ export default {
     props: {
         scoreId: String,
         isNewScore: Boolean,
+        scoreInputProp: Object,
+        commonProp: Object,
     },
     filters: {
         memberDisp(str) {
@@ -226,8 +228,8 @@ export default {
             score: [],
             scoreBk: [],
             scoreTempSave: [],
-            undoEnabled: false,
-            redoEnabled: false,
+            // undoEnabled: false,
+            // redoEnabled: false,
             modelAction: "",
             modelKind: "",
             modelDetail: "",
@@ -345,6 +347,12 @@ export default {
         }
     },
     mounted() {
+        this.scoreInputProp.undo = this.undo;
+        this.scoreInputProp.redo = this.redo;
+        this.scoreInputProp.save = this.save;
+        this.scoreInputProp.changeMember = this.changeMember;
+        this.commonProp.back = this.onBack;
+        
         this.modelDate = this.getNowDateStr();
 
         this.members = JSON.parse(localStorage.getItem("members"));
@@ -358,11 +366,11 @@ export default {
         this.toggleKind();
         this.onChangeKind();
 
-        var itemHeight = (window.innerHeight - 230) / 6;
+        var itemHeight = (window.innerHeight - (180 + 64)) / 6;
         this.styleGrid = {
-            "grid-template-rows": itemHeight + "px " + itemHeight + "px " + itemHeight + "px " + itemHeight + "px " + itemHeight + "px " + itemHeight + "px 200px",
+            "grid-template-rows": itemHeight + "px " + itemHeight + "px " + itemHeight + "px " + itemHeight + "px " + itemHeight + "px " + itemHeight + "px 150px",
         };
-        var itemHeightCoat = (window.innerHeight - 280) / 6;
+        var itemHeightCoat = (window.innerHeight - (230 + 64)) / 6;
         this.styleGridCoat = {
             "grid-template-rows": itemHeightCoat + "px " + itemHeightCoat + "px " + itemHeightCoat + "px " + itemHeightCoat + "px " + itemHeightCoat + "px " + itemHeightCoat + "px",
         };
@@ -405,6 +413,7 @@ export default {
             console.log(JSON.stringify(this.score, null, "    "));
         },
         undo() {
+            // console.log(this.score);
             if (this.score.length < 1) {
                 return;
             }
@@ -413,6 +422,12 @@ export default {
             this.outputlog();
 
             this.isDirty = true;
+        },
+        getScoreLength() {
+            return this.score.length;
+        },
+        getScoreRedoLength() {
+            return this.scoreBk.length;
         },
         redo() {
             if (this.scoreBk.length < 1) {
@@ -911,14 +926,18 @@ export default {
         },
         updateUndoRedoButton() {
             if (this.score.length < 1) {
-                this.undoEnabled = false;
+                // this.undoEnabled = false;
+                this.scoreInputProp.setEnableUndo(false);
             } else {
-                this.undoEnabled = true;
+                // this.undoEnabled = true;
+                this.scoreInputProp.setEnableUndo(true);
             }
             if (this.scoreBk.length < 1) {
-                this.redoEnabled = false;
+                // this.redoEnabled = false;
+                this.scoreInputProp.setEnableRedo(false);
             } else {
-                this.redoEnabled = true;
+                // this.redoEnabled = true;
+                this.scoreInputProp.setEnableRedo(true);
             }
         },
         rotateA() {

@@ -122,11 +122,11 @@ export default {
     this.convertDispLabel();
 
     // console.log("score_obj[" + JSON.stringify(this.dispItem, null, "    ") + "]");
-    if (this.item.team == 0) {
-      this.originY = 0;
-    } else {
-      this.originY = 50;
-    }
+    // if (this.item.team == 0) {
+    //   this.originY = 0;
+    // } else {
+    //   this.originY = 50;
+    // }
   },
   methods: {
     convertDispLabel() {

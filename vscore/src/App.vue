@@ -1,7 +1,61 @@
 <template>
   <v-app>
-    <!-- <v-app-bar app color="primary" dark> -->
-    <!-- <div class="d-flex align-center">
+    <v-app-bar app color="primary" height="64px" dark>
+      <v-btn v-on:click="onClickBack" v-bind:disabled="!isEnableBack" icon>
+        <v-icon>fas fa-arrow-left</v-icon>
+      </v-btn>
+      <v-btn v-show="false" style="margin-left:8px;" icon>
+        <v-icon>fas fa-home</v-icon>
+      </v-btn>
+      <v-toolbar-title style="margin-left:16px;">{{ title }}</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn v-on:click="onClickNewScore" v-show="isShowNewScore" style="margin-left:8px;" icon>
+        <v-icon>fas fa-edit</v-icon>
+      </v-btn>
+      <v-btn
+        v-on:click="onClickUndo"
+        v-show="isShowUndo"
+        v-bind:disabled="!isEnableUndo"
+        style="margin-left:8px;"
+        icon
+      >
+        <v-icon>fas fa-undo</v-icon>
+      </v-btn>
+      <v-btn
+        v-on:click="onClickRedo"
+        v-show="isShowRedo"
+        v-bind:disabled="!isEnableRedo"
+        style="margin-left:8px;"
+        icon
+      >
+        <v-icon>fas fa-redo</v-icon>
+      </v-btn>
+      <v-btn
+        v-on:click="onClickMemberChange"
+        v-show="isShowMemberChange"
+        style="margin-left:8px;"
+        icon
+      >
+        <v-icon>fas fa-exchange-alt</v-icon>
+        <!-- <memberSvg></memberSvg> -->
+      </v-btn>
+      <v-btn v-on:click="onClickSave" v-show="isShowSave" style="margin-left:8px;" icon>
+        <v-icon>fas fa-save</v-icon>
+      </v-btn>
+      <!-- <v-btn icon>
+        <v-icon>fas fa-youtube</v-icon>
+      </v-btn>
+      <v-btn icon>
+        <v-icon>fas fa-trash-alt</v-icon>
+      </v-btn>-->
+      <!-- <v-btn icon>
+        <v-icon>fas fa-tools</v-icon>
+      </v-btn>-->
+      <v-btn v-on:click="onClickSettings" v-show="isShowSettings" style="margin-left:32px;" icon>
+        <v-icon>fas fa-cog</v-icon>
+      </v-btn>
+      <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
+      <!-- <div class="d-flex align-center">
         <v-img
           alt="Vuetify Logo"
           class="shrink mr-2"
@@ -19,7 +73,8 @@
           src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
           width="100"
         />
-    </div>-->
+      </div>-->
+    </v-app-bar>
 
     <!-- <v-spacer></v-spacer>
 
@@ -47,6 +102,8 @@
           v-bind:analyze-data="analyzeData"
           v-bind:analyze-player-score="analyzePlayerData"
           v-bind:is-match-prop="isMatchProp"
+          v-bind:score-input-prop="scoreInputProp"
+          v-bind:common-prop="commonProp"
         ></router-view>
       </div>
     </div>
@@ -62,37 +119,143 @@ export default {
     popup() {
       console.log("popup!");
     },
+    onClickBack() {
+      if (this.commonProp.back != null) {
+        this.commonProp.back();
+      } else {
+        console.log("this.commonProp.back is null !!!");
+      }
+    },
+    onClickNewScore() {
+      this.routeScoreInputNew();
+    },
+    onClickUndo() {
+      if (this.scoreInputProp.undo != null) {
+        this.scoreInputProp.undo();
+      } else {
+        console.log("this.scoreInputProp.undo is null !!!");
+      }
+    },
+    onClickRedo() {
+      if (this.scoreInputProp.redo != null) {
+        this.scoreInputProp.redo();
+      } else {
+        console.log("this.scoreInputProp.redo is null !!!");
+      }
+    },
+    onClickSave() {
+      if (this.scoreInputProp.save != null) {
+        this.scoreInputProp.save();
+      } else {
+        console.log("this.scoreInputProp.save is null !!!");
+      }
+    },
+    onClickMemberChange() {
+      if (this.scoreInputProp.changeMember != null) {
+        this.scoreInputProp.changeMember();
+      } else {
+        console.log("this.scoreInputProp.changeMember is null !!!");
+      }
+    },
+    onClickSettings() {
+      this.routeSettings();
+    },
+    setEnableUndo(flg) {
+      // console.log("setEnableUndo " + flg);
+      this.isEnableUndo = flg;
+    },
+    setEnableRedo(flg) {
+      // console.log("setEnableRedo " + flg);
+      this.isEnableRedo = flg;
+    },
     routeScoreList() {
+      this.title = "スコアリスト";
+      this.isEnableBack = false;
+      this.isShowUndo = false;
+      this.isShowRedo = false;
+      this.isShowSave = false;
+      this.isShowMemberChange = false;
+      this.isShowNewScore = true;
+      this.isShowSettings = true;
       this.$router.push({ path: "/scorelist" });
     },
     routeAnalyzeListPlayer(items) {
+      this.title = "分析一覧";
       this.analyzeData = items;
       this.isMatchProp = false;
+      this.isEnableBack = true;
+      this.isShowUndo = false;
+      this.isShowRedo = false;
+      this.isShowSave = false;
+      this.isShowMemberChange = false;
+      this.isShowNewScore = false;
+      this.isShowSettings = false;
       this.$router.push({ path: "/analyzelist" });
     },
     routeAnalyzeListMatch(items) {
+      this.title = "分析一覧";
       this.analyzeData = items;
       // this.$router.push({ path: "/analyzelistmatch" });
       this.isMatchProp = true;
+      this.isEnableBack = true;
+      this.isShowUndo = false;
+      this.isShowRedo = false;
+      this.isShowSave = false;
+      this.isShowMemberChange = false;
+      this.isShowNewScore = false;
+      this.isShowSettings = false;
       this.$router.push({ path: "/analyzelist" });
     },
     routeScoreInput(scoreId) {
+      this.title = "スコア入力";
       this.scoreId = scoreId;
       this.isNewScore = false;
+      this.isEnableBack = true;
+      this.isShowUndo = true;
+      this.isShowRedo = true;
+      this.isShowSave = true;
+      this.isShowMemberChange = true;
+      this.isShowNewScore = false;
+      this.isShowSettings = false;
       this.$router.push({ path: "/scoreinput" });
     },
     routeScoreInputNew() {
+      this.title = "スコア入力";
       this.isNewScore = true;
+      this.isEnableBack = true;
+      this.isShowUndo = true;
+      this.isShowRedo = true;
+      this.isShowSave = true;
+      this.isShowMemberChange = true;
+      this.isShowNewScore = false;
+      this.isShowSettings = false;
       this.createDigest(this.digestCallback);
     },
     routeHome() {
-      this.$router.push({ path: "/home" });
+      // this.$router.push({ path: "/home" });
+      this.routeScoreList();
     },
     routeSettings() {
+      this.title = "メンテナンス";
+      this.isEnableBack = true;
+      this.isShowUndo = false;
+      this.isShowRedo = false;
+      this.isShowSave = false;
+      this.isShowMemberChange = false;
+      this.isShowNewScore = false;
+      this.isShowSettings = false;
       this.$router.push({ path: "/settings" });
     },
     routeAnalyzeDetail(analyzePlayerData) {
+      this.title = "詳細分析";
       this.analyzePlayerData = analyzePlayerData;
+      this.isEnableBack = true;
+      this.isShowUndo = false;
+      this.isShowRedo = false;
+      this.isShowSave = false;
+      this.isShowMemberChange = false;
+      this.isShowNewScore = false;
+      this.isShowSettings = false;
       this.$router.push({ path: "/AnalyzeDetail" });
     },
     digestCallback(hex) {
@@ -123,7 +286,8 @@ export default {
     }
   },
   mounted() {
-    this.$router.push({ path: "/home" });
+    // this.$router.push({ path: "/home" });
+    this.routeHome();
   },
   data: function() {
     return {
@@ -131,7 +295,27 @@ export default {
       isNewScore: true,
       scoreId: "",
       analyzeData: [],
-      analyzePlayerData: {}
+      analyzePlayerData: {},
+      isEnableUndo: true,
+      isEnableRedo: true,
+      isEnableBack: true,
+      isShowUndo: false,
+      isShowRedo: false,
+      isShowSave: false,
+      isShowMemberChange: false,
+      isShowNewScore: false,
+      isShowSettings: false,
+      scoreInputProp: {
+        undo: null,
+        redo: null,
+        changeMember: null,
+        setEnableUndo: this.setEnableUndo,
+        setEnableRedo: this.setEnableRedo
+      },
+      commonProp: {
+        backView: null
+      },
+      title: ""
     };
   }
 };

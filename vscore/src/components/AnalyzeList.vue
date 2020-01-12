@@ -204,7 +204,7 @@
       >
         <moveTop></moveTop>
       </a>
-      <div class="menu" v-bind:style="styleNavi">
+      <!-- <div class="menu" v-bind:style="styleNavi">
         <span>
           <div>戻る</div>
           <svg
@@ -238,7 +238,7 @@
             <path d="M9 22V12h6v10M2 10.6L12 2l10 8.6" />
           </svg>
         </span>
-      </div>
+      </div>-->
     </div>
   </div>
 </template>
@@ -250,7 +250,8 @@ export default {
   name: "analyze_list_player",
   props: {
     isMatchProp: Boolean,
-    analyzeData: Array
+    analyzeData: Array,
+    commonProp: Object
   },
   components: {
     moveTop
@@ -300,6 +301,19 @@ export default {
         { text: "失点", align: "left", value: "spike.miss" },
         { text: "決定率", align: "left", value: "spike.determined" },
         { text: "効果率", align: "left", value: "spike.effect" }
+        // { text: "名前", align: "left", value: "name" },
+        // { text: "性別", align: "left", value: "sex" },
+        // { text: "総数", align: "left", value: "spike.total" },
+        // { text: "総得", align: "left", value: "spike.point" },
+        // { text: "ｲﾝ", align: "left", value: "spike.point" },
+        // { text: "ﾌｪｲｸ", align: "left", value: "spike.point" },
+        // { text: "ﾌﾞﾛｯｸｱｳﾄ", align: "left", value: "spike.point" },
+        // { text: "総失", align: "left", value: "spike.miss" },
+        // { text: "ｱｳﾄ", align: "left", value: "spike.miss" },
+        // { text: "ﾈｯﾄ", align: "left", value: "spike.miss" },
+        // { text: "ﾌﾞﾛｯｸ", align: "left", value: "spike.miss" },
+        // { text: "決率", align: "left", value: "spike.determined" },
+        // { text: "効率", align: "left", value: "spike.effect" }
         // {
         //   text: "総数①",
         //   align: "center",
@@ -368,6 +382,8 @@ export default {
     }
   },
   mounted() {
+    this.commonProp.back = this.backScoreList;
+
     var gridHeight = window.innerHeight - 10;
     this.styleNavi = {
       "line-height": gridHeight + "px"

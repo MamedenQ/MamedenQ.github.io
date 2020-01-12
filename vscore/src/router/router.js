@@ -11,14 +11,18 @@ import settings from "../components/Settings";
 Vue.use(VueRouter)
 
 export default new VueRouter({
+    test: {
+        scoreInput: scoreinput,
+    },
     mode: 'history',
     // base:'/app/public/',
     routes: [
         {
             path: '/home',
-            component: home,
+            component: scorelist,
         },
         {
+            name: "scoreInput",
             path: '/scoreinput',
             component: scoreinput,
         },

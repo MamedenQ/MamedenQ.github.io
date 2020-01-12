@@ -19,17 +19,43 @@
       <v-card>
         <v-tabs v-model="tab" background-color="primary accent-4" centered dark>
           <v-tabs-slider></v-tabs-slider>
-
+          <v-tab href="#tab-total">トータル</v-tab>
           <v-tab href="#tab-serve">サーブ</v-tab>
-
           <v-tab href="#tab-spike">スパイク</v-tab>
-
           <v-tab href="#tab-block">ブロック</v-tab>
-
           <v-tab href="#tab-receive-etc">レシーブ他</v-tab>
         </v-tabs>
 
         <v-tabs-items v-model="tab">
+          <v-tab-item value="tab-total">
+            <v-data-table
+              :headers="headersTotal"
+              :items="scoreAnalyze"
+              item-key="id"
+              hide-default-footer
+              :options.sync="options"
+              multi-sort
+            >
+              <template v-slot:header="{ props }">
+                <thead>
+                  <tr>
+                    <th style="border-bottom:none;text-align:left;">基本情報</th>
+                    <th v-show="!isMatch" style="border-bottom:none;"></th>
+                    <th style="border-bottom:none;text-align:left;">総合</th>
+                    <th style="border-bottom:none;"></th>
+                  </tr>
+                </thead>
+              </template>
+
+              <template v-slot:item.name="{ item }">
+                <a href="#" v-on:click="onPlayerDetail(item)">{{item.name}}</a>
+              </template>
+              <template v-slot:item.sex="{ item }">
+                <span v-if="item.sex == 0">男</span>
+                <span v-else>女</span>
+              </template>
+            </v-data-table>
+          </v-tab-item>
           <v-tab-item value="tab-serve">
             <v-data-table
               :headers="headersServe"
@@ -44,8 +70,6 @@
                   <tr>
                     <th style="border-bottom:none;text-align:left;">基本情報</th>
                     <th v-show="!isMatch" style="border-bottom:none;"></th>
-                    <th style="border-bottom:none;text-align:left;">総合</th>
-                    <th style="border-bottom:none;"></th>
                     <th style="border-bottom:none;text-align:left;">サーブ</th>
                     <th style="border-bottom:none;"></th>
                   </tr>
@@ -75,8 +99,6 @@
                   <tr>
                     <th style="border-bottom:none;text-align:left;">基本情報</th>
                     <th v-show="!isMatch" style="border-bottom:none;"></th>
-                    <th style="border-bottom:none;text-align:left;">総合</th>
-                    <th style="border-bottom:none;"></th>
                     <th style="border-bottom:none;text-align:left;">スパイク</th>
                     <th style="border-bottom:none;"></th>
                     <th style="border-bottom:none;"></th>
@@ -113,8 +135,6 @@
                   <tr>
                     <th style="border-bottom:none;text-align:left;">基本情報</th>
                     <th v-show="!isMatch" style="border-bottom:none;"></th>
-                    <th style="border-bottom:none;text-align:left;">総合</th>
-                    <th style="border-bottom:none;"></th>
                     <th style="border-bottom:none;text-align:left;">ブロック</th>
                     <th style="border-bottom:none;"></th>
                   </tr>
@@ -144,8 +164,6 @@
                   <tr>
                     <th style="border-bottom:none;text-align:left;">基本情報</th>
                     <th v-show="!isMatch" style="border-bottom:none;"></th>
-                    <th style="border-bottom:none;text-align:left;">総合</th>
-                    <th style="border-bottom:none;"></th>
                     <th style="border-bottom:none;text-align:left;">レシーブ</th>
                     <th style="border-bottom:none;">その他ミス</th>
                     <th style="border-bottom:none;">ファウル</th>
@@ -243,25 +261,33 @@ export default {
         itemsPerPage: -1
       },
       isMatch: false,
-      tab: "tab-serve",
+      tab: "tab-total",
       scoreAnalyze: [],
       members: [],
       styleNavi: {
         "line-height": "700px"
       },
+      headersTotal: [],
+      headersTotalPlayer: [
+        { text: "名前", align: "left", value: "name" },
+        { text: "性別", align: "left", value: "sex" },
+        { text: "得点", align: "left", value: "total.point" },
+        { text: "失点", align: "left", value: "total.miss" }
+      ],
+      headersTotalMatch: [
+        { text: "名前", align: "left", value: "name" },
+        { text: "得点", align: "left", value: "total.point" },
+        { text: "失点", align: "left", value: "total.miss" }
+      ],
       headersServe: [],
       headersServePlayer: [
         { text: "名前", align: "left", value: "name" },
         { text: "性別", align: "left", value: "sex" },
-        { text: "得点", align: "left", value: "total.point" },
-        { text: "失点", align: "left", value: "total.miss" },
         { text: "得点", align: "left", value: "serve.point" },
         { text: "失点", align: "left", value: "serve.miss" }
       ],
       headersServeMatch: [
         { text: "名前", align: "left", value: "name" },
-        { text: "得点", align: "left", value: "total.point" },
-        { text: "失点", align: "left", value: "total.miss" },
         { text: "得点", align: "left", value: "serve.point" },
         { text: "失点", align: "left", value: "serve.miss" }
       ],
@@ -269,8 +295,6 @@ export default {
       headersSpikePlayer: [
         { text: "名前", align: "left", value: "name" },
         { text: "性別", align: "left", value: "sex" },
-        { text: "得点", align: "left", value: "total.point" },
-        { text: "失点", align: "left", value: "total.miss" },
         { text: "総数", align: "left", value: "spike.total" },
         { text: "得点", align: "left", value: "spike.point" },
         { text: "失点", align: "left", value: "spike.miss" },
@@ -304,8 +328,6 @@ export default {
       ],
       headersSpikeMatch: [
         { text: "名前", align: "left", value: "name" },
-        { text: "得点", align: "left", value: "total.point" },
-        { text: "失点", align: "left", value: "total.miss" },
         { text: "総数", align: "left", value: "spike.total" },
         { text: "得点", align: "left", value: "spike.point" },
         { text: "失点", align: "left", value: "spike.miss" },
@@ -316,15 +338,11 @@ export default {
       headersBlockPlayer: [
         { text: "名前", align: "left", value: "name" },
         { text: "性別", align: "left", value: "sex" },
-        { text: "得点", align: "left", value: "total.point" },
-        { text: "失点", align: "left", value: "total.miss" },
         { text: "得点", align: "left", value: "block.point" },
         { text: "失点", align: "left", value: "block.miss" }
       ],
       headersBlockMatch: [
         { text: "名前", align: "left", value: "name" },
-        { text: "得点", align: "left", value: "total.point" },
-        { text: "失点", align: "left", value: "total.miss" },
         { text: "得点", align: "left", value: "block.point" },
         { text: "失点", align: "left", value: "block.miss" }
       ],
@@ -332,16 +350,12 @@ export default {
       headersReceiveEtcPlayer: [
         { text: "名前", align: "left", value: "name" },
         { text: "性別", align: "left", value: "sex" },
-        { text: "得点", align: "left", value: "total.point" },
-        { text: "失点", align: "left", value: "total.miss" },
         { text: "失点", align: "left", value: "receive.miss" },
         { text: "失点", align: "left", value: "other_miss" },
         { text: "失点", align: "left", value: "faul" }
       ],
       headersReceiveEtcMatch: [
         { text: "名前", align: "left", value: "name" },
-        { text: "得点", align: "left", value: "total.point" },
-        { text: "失点", align: "left", value: "total.miss" },
         { text: "失点", align: "left", value: "receive.miss" },
         { text: "失点", align: "left", value: "other_miss" },
         { text: "失点", align: "left", value: "faul" }
@@ -407,11 +421,13 @@ export default {
     },
     formatScoreData() {
       if (this.isMatch) {
+        this.headersTotal = this.headersTotalMatch;
         this.headersServe = this.headersServeMatch;
         this.headersSpike = this.headersSpikeMatch;
         this.headersBlock = this.headersBlockMatch;
         this.headersReceiveEtc = this.headersReceiveEtcMatch;
       } else {
+        this.headersTotal = this.headersTotalPlayer;
         this.headersServe = this.headersServePlayer;
         this.headersSpike = this.headersSpikePlayer;
         this.headersBlock = this.headersBlockPlayer;

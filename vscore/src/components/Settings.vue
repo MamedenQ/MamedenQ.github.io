@@ -71,19 +71,10 @@
         </svg>
       </span>
     </div>
-    <confirm
-      v-if="showModalConfirm"
-      v-on:dialogResult="result"
-      :title="title"
-      :msg="msg"
-      :positive="positive"
-      :negative="negative"
-    ></confirm>
   </div>
 </template>
 
 <script>
-import confirm from "./Material/Confirm";
 import trashList from "./Material/TrashList";
 import masterMaintenancePlayer from "./Material/MasterMaintenancePlayer";
 import masterMaintenanceTeam from "./Material/MasterMaintenanceTeam";
@@ -93,7 +84,6 @@ import moveTop from "./SVG/MoveTopSVG";
 export default {
   name: "settings",
   components: {
-    confirm,
     trashList,
     masterMaintenancePlayer,
     masterMaintenanceTeam,
@@ -103,12 +93,10 @@ export default {
   data() {
     return {
       tab: "tab-trash-list",
-      showModalConfirm: false,
       title: "",
       msg: "",
       positive: "OK",
       negative: "キャンセル",
-      callbackConfirm: null,
       // styleGrid: {
       //     "grid-template-rows": "1fr",
       // },

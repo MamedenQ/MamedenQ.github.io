@@ -32,14 +32,7 @@
       ></v-textarea>
     </v-form>
 
-    <confirm
-      v-if="showModalConfirm"
-      v-on:dialogResult="result"
-      :title="title"
-      :msg="msg"
-      :positive="positive"
-      :negative="negative"
-    ></confirm>
+    <confirm ref="confirm"></confirm>
     <!-- </v-container> -->
     <!-- </v-card> -->
   </div>
@@ -55,16 +48,23 @@ export default {
   },
   data() {
     return {
+      dialogProp: {
+        title: "",
+        msg: "",
+        positive: "",
+        negative: "",
+        callback: null
+      },
       isFormValid: true,
       required: value => !!value || "必須入力",
       output: "",
       modelInput: "",
-      showModalConfirm: false,
-      title: "",
-      msg: "",
-      positive: "OK",
-      negative: "キャンセル",
-      callbackConfirm: null,
+      // showModalConfirm: false,
+      // title: "",
+      // msg: "",
+      // positive: "OK",
+      // negative: "キャンセル",
+      // callbackConfirm: null,
       bkDate: ""
     };
   },
@@ -97,11 +97,20 @@ export default {
       if (!this.isFormValid) {
         return;
       }
-      this.title = "入力確認";
-      this.msg = " DBへ入力しますか？";
-      this.callbackConfirm = this.callbackInputDB;
+      // this.title = "入力確認";
+      // this.msg = " DBへ入力しますか？";
+      // this.callbackConfirm = this.callbackInputDB;
 
-      this.showModalConfirm = true;
+      // this.showModalConfirm = true;
+
+      this.dialogProp = {
+        title: "入力確認",
+        msg: "DBへ入力しますか？",
+        positive: "OK",
+        negative: "キャンセル",
+        callback: this.callbackInputDB
+      };
+      this.$refs.confirm.open(this.dialogProp);
     },
     callbackInputDB(result) {
       if (!result) {
@@ -114,11 +123,19 @@ export default {
       // this.$emit("route-home");
     },
     onClickBackupDB() {
-      this.title = "DBバックアップ確認";
-      this.msg = " DBをバックアップしますか？";
-      this.callbackConfirm = this.callbackBackupDB;
+      // this.title = "DBバックアップ確認";
+      // this.msg = " DBをバックアップしますか？";
+      // this.callbackConfirm = this.callbackBackupDB;
 
-      this.showModalConfirm = true;
+      // this.showModalConfirm = true;
+      this.dialogProp = {
+        title: "DBバックアップ確認",
+        msg: "DBをバックアップしますか？",
+        positive: "OK",
+        negative: "キャンセル",
+        callback: this.callbackBackupDB
+      };
+      this.$refs.confirm.open(this.dialogProp);
     },
     callbackBackupDB(result) {
       if (!result) {
@@ -139,11 +156,19 @@ export default {
       localStorage.setItem("teams_bk", JSON.stringify(teams));
     },
     onClickRestoreDB() {
-      this.title = "DBリストア確認";
-      this.msg = " DBをリストアしますか？";
-      this.callbackConfirm = this.callbackRestoreDB;
+      // this.title = "DBリストア確認";
+      // this.msg = " DBをリストアしますか？";
+      // this.callbackConfirm = this.callbackRestoreDB;
 
-      this.showModalConfirm = true;
+      // this.showModalConfirm = true;
+      this.dialogProp = {
+        title: "DBリストア確認",
+        msg: "DBをリストアしますか？",
+        positive: "OK",
+        negative: "キャンセル",
+        callback: this.callbackRestoreDB
+      };
+      this.$refs.confirm.open(this.dialogProp);
     },
     callbackRestoreDB(result) {
       if (!result) {
@@ -156,11 +181,11 @@ export default {
       localStorage.setItem("score", JSON.stringify(score));
       localStorage.setItem("members", JSON.stringify(members));
       localStorage.setItem("teams", JSON.stringify(teams));
-    },
-    result(flg) {
-      this.callbackConfirm(flg);
-      this.showModalConfirm = false;
     }
+    // result(flg) {
+    //   this.callbackConfirm(flg);
+    //   this.showModalConfirm = false;
+    // }
   }
 };
 </script>

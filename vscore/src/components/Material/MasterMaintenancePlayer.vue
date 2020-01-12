@@ -58,14 +58,7 @@
       >保存</v-btn>
       <v-btn style="float:right;" v-on:click="onClickAddMember" color="primary" dark>追加</v-btn>
     </div>
-    <confirm
-      v-if="showModalConfirm"
-      v-on:dialogResult="result"
-      :title="title"
-      :msg="msg"
-      :positive="positive"
-      :negative="negative"
-    ></confirm>
+    <confirm ref="confirm"></confirm>
     <!-- </v-container> -->
     <!-- </v-card> -->
   </div>
@@ -90,13 +83,14 @@ export default {
       },
       deleteItem: [],
       members: [],
-      showModalConfirm: false,
       modelDeleteTarget: [],
-      title: "",
-      msg: "",
-      positive: "OK",
-      negative: "キャンセル",
-      callbackConfirm: null,
+      dialogProp: {
+        title: "",
+        msg: "",
+        positive: "",
+        negative: "",
+        callback: null
+      },
       headersPlayer: [
         {
           text: "番号",
@@ -165,23 +159,27 @@ export default {
     },
     onClickDelete(item) {
       console.log(this.options);
-      this.deleteItem = item;
-      this.title = "削除確認";
-      this.msg = "削除しますか？";
-      this.callbackConfirm = this.callbackDelete;
 
-      this.showModalConfirm = true;
+      this.dialogProp = {
+        title: "削除確認",
+        msg: "削除しますか？",
+        positive: "OK",
+        negative: "キャンセル",
+        deleteItem: item,
+        callback: this.callbackDelete
+      };
+      this.$refs.confirm.open(this.dialogProp);
     },
-    result(flg) {
-      this.callbackConfirm(flg);
-      this.showModalConfirm = false;
-    },
+    // result(flg) {
+    //   this.callbackConfirm(flg);
+    //   this.showModalConfirm = false;
+    // },
     callbackDelete(result) {
       if (!result) {
         return;
       }
 
-      var item = this.deleteItem;
+      var item = this.dialogProp.deleteItem;
       // var scoreList = JSON.parse(localStorage.getItem("score"));
       var filterData = this.members.filter(function(data) {
         if (data.no != item.no) return true;
@@ -205,11 +203,19 @@ export default {
       if (!this.isFormValid) {
         return;
       }
-      this.title = "保存確認";
-      this.msg = "保存しますか？";
-      this.callbackConfirm = this.callbackSaveMember;
+      // this.title = "保存確認";
+      // this.msg = "保存しますか？";
+      // this.callbackConfirm = this.callbackSaveMember;
 
-      this.showModalConfirm = true;
+      // this.showModalConfirm = true;
+      this.dialogProp = {
+        title: "保存確認",
+        msg: "保存しますか？",
+        positive: "OK",
+        negative: "キャンセル",
+        callback: this.callbackSaveMember
+      };
+      this.$refs.confirm.open(this.dialogProp);
     },
     callbackSaveMember(result) {
       if (!result) {

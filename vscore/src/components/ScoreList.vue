@@ -117,14 +117,15 @@
       </div>
     </div>
 
-    <confirm
+    <!-- <confirm
       v-if="showModalConfirm"
       v-on:dialogResult="result"
       :title="title"
       :msg="msg"
       :positive="positive"
       :negative="negative"
-    ></confirm>
+    ></confirm>-->
+    <confirm ref="confirm"></confirm>
   </div>
 </template>
 
@@ -132,7 +133,7 @@
 import confirm from "./Material/Confirm";
 import moveTop from "./SVG/MoveTopSVG";
 
-import { VueGoodTable } from "vue-good-table";
+// import { VueGoodTable } from "vue-good-table";
 
 export default {
   name: "score_list",
@@ -141,53 +142,32 @@ export default {
   },
   components: {
     confirm,
-    moveTop,
-    VueGoodTable
+    moveTop
+    // VueGoodTable
   },
   data() {
     return {
       options: {
         itemsPerPage: -1
       },
+      dialogProp: {
+        title: "",
+        msg: "",
+        positive: "",
+        negative: "",
+        callback: null
+      },
       scoreList: [],
       modelTarget: [],
       headers: [
-        {
-          text: "タイトル",
-          align: "center",
-          value: "title"
-          // width: "20%"
-        },
-        {
-          text: "日付",
-          align: "center",
-          value: "date"
-          // width: "20%"
-        },
-        {
-          text: "得点",
-          align: "center",
-          sortable: false,
-          value: "point"
-          // width: "20%"
-        },
-        {
-          text: "編集",
-          align: "center",
-          sortable: false,
-          value: "edit"
-          // width: "20%"
-        }
-        // {
-        //   text: "削除",
-        //   align: "center",
-        //   sortable: false,
-        //   value: "delete"
-        // }
+        { text: "タイトル", align: "center", value: "title" },
+        { text: "日付", align: "center", value: "date" },
+        { text: "得点", align: "center", sortable: false, value: "point" },
+        { text: "編集", align: "center", sortable: false, value: "edit" }
       ],
-      showModalConfirm: false,
-      callbackConfirm: null,
-      deleteItem: {},
+      // showModalConfirm: false,
+      // callbackConfirm: null,
+      // deleteItem: {},
       isCheckAll: false,
       modelDateStart: "2000-01-01",
       modelDateEnd: "2030-12-31",
@@ -196,27 +176,6 @@ export default {
       styleNavi: {
         "line-height": "700px"
       }
-      // columns: [
-      //   {
-      //     label: "タイトル",
-      //     field: "title"
-      //   },
-      //   {
-      //     label: "日付",
-      //     field: "date"
-      //   },
-      //   {
-      //     label: "得点",
-      //     field: "point",
-      //     type: "number"
-      //   },
-      //   {
-      //     label: "削除",
-      //     field: "delete"
-      //   }
-      // ],
-      // rows: [],
-      // targetScore: []
     };
   },
   computed: {
@@ -351,25 +310,26 @@ export default {
       this.$emit("route-score-input", scoreId);
     },
     onClickTrash(item) {
-      this.deleteItem = item;
-      this.title = "削除確認";
-      this.msg = "削除しますか？";
-      this.positive = "OK";
-      this.negative = "キャンセル";
-      this.callbackConfirm = this.callback;
-
-      this.showModalConfirm = true;
+      this.dialogProp = {
+        title: "削除確認",
+        msg: "削除しますか？",
+        positive: "OK",
+        negative: "キャンセル",
+        deleteItem: item,
+        callback: this.callback
+      };
+      this.$refs.confirm.open(this.dialogProp);
     },
-    result(flg) {
-      this.callbackConfirm(flg);
-      this.showModalConfirm = false;
-    },
+    // result(flg) {
+    //   this.callbackConfirm(flg);
+    //   this.showModalConfirm = false;
+    // },
     callback(result) {
       if (!result) {
         return;
       }
 
-      var item = this.deleteItem;
+      var item = this.dialogProp.deleteItem;
       var scoreList = JSON.parse(localStorage.getItem("score"));
       var filterData = scoreList.filter(function(data, index) {
         if (data.id == item.id) return true;

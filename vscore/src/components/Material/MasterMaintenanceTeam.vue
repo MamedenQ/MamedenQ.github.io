@@ -38,14 +38,7 @@
       >保存</v-btn>
     </div>
 
-    <confirm
-      v-if="showModalConfirm"
-      v-on:dialogResult="result"
-      :title="title"
-      :msg="msg"
-      :positive="positive"
-      :negative="negative"
-    ></confirm>
+    <confirm ref="confirm"></confirm>
     <!-- </v-container> -->
     <!-- </v-card> -->
   </div>
@@ -61,15 +54,13 @@ export default {
   },
   data() {
     return {
-      // deleteItem: [],
-      // members: [],
-      showModalConfirm: false,
-      // modelDeleteTarget: [],
-      title: "",
-      msg: "",
-      positive: "OK",
-      negative: "キャンセル",
-      callbackConfirm: null,
+      dialogProp: {
+        title: "",
+        msg: "",
+        positive: "",
+        negative: "",
+        callback: null
+      },
       teams: [
         { no: 1, name: "" },
         { no: 2, name: "" },
@@ -128,16 +119,19 @@ export default {
         ];
       }
     },
-    result(flg) {
-      this.callbackConfirm(flg);
-      this.showModalConfirm = false;
-    },
+    // result(flg) {
+    //   this.callbackConfirm(flg);
+    //   this.showModalConfirm = false;
+    // },
     onClickSaveTeam() {
-      this.title = "保存確認";
-      this.msg = "保存しますか？";
-      this.callbackConfirm = this.callbackSaveTeam;
-
-      this.showModalConfirm = true;
+      this.dialogProp = {
+        title: "保存確認",
+        msg: "保存しますか？",
+        positive: "OK",
+        negative: "キャンセル",
+        callback: this.callbackSaveTeam
+      };
+      this.$refs.confirm.open(this.dialogProp);
     },
     callbackSaveTeam(result) {
       if (!result) {

@@ -1,62 +1,55 @@
 <template>
-  <div>
-    <transition>
-      <div class="modal-mask">
-        <div class="modal-wrapper">
-          <div class="modal-container">
-            <div class="modal-header">
-              <h3 slot="header">{{title}}</h3>
-            </div>
-            <div class="modal-body">
-              <slot name="body">{{ msg }}</slot>
-            </div>
-            <div class="modal-footer">
-              <slot name="footer">
-                <!-- <button
-                  class="modal-default-button btn btn-secondary"
-                  @click="sendResult(false)"
-                >{{ negative }}</button>-->
-                <!-- <button
-                  class="modal-default-button btn btn-primary"
-                  @click="sendResult(true)"
-                >{{ positive }}</button>-->
-                <v-btn class="modal-default-button" v-on:click="sendResult(false)">{{ negative }}</v-btn>
-                <v-btn
-                  style="margin-right:20px;"
-                  class="modal-default-button"
-                  v-on:click="sendResult(true)"
-                  color="primary"
-                  dark
-                >{{ positive }}</v-btn>
-                <!--
-                                <a href="#" class="btn-flat-bottom-border" @click="sendResult(false)">
-                                    <span>{{ negative }}</span>
-                                </a>
-                                <a href="#" class="btn-flat-bottom-border" @click="sendResult(true)">
-                                    <span>{{ positive }}</span>
-                                </a>
-                -->
-              </slot>
-            </div>
-          </div>
-        </div>
-      </div>
-    </transition>
-  </div>
+  <v-dialog v-model="isShow" persistent>
+    <v-card>
+      <v-card-title
+        class="headline primary"
+        style="color:white;"
+        primary-title
+        dark
+      >{{dialogProp.title}}</v-card-title>
+
+      <v-card-text style="padding-top:20px;">{{ dialogProp.msg }}</v-card-text>
+
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn v-on:click="sendResult(true)" color="primary" dark>{{ dialogProp.positive }}</v-btn>
+        <v-btn v-on:click="sendResult(false)">{{ dialogProp.negative }}</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script>
 export default {
   name: "confirm",
   props: {
-    title: String,
-    msg: String,
-    positive: String,
-    negative: String
+    // title: String,
+    // msg: String,
+    // positive: String,
+    // negative: String,
+    // dialogProp: Object
   },
+  data() {
+    return {
+      dialogProp: {},
+      isShow: false
+    };
+  },
+  // mounted() {
+  //   this.dialog = this.dialogProp;
+  // },
   methods: {
+    open(dialogProp) {
+      this.dialogProp = dialogProp;
+      this.isShow = true;
+    },
     sendResult(flg) {
-      this.$emit("dialogResult", flg);
+      this.isShow = false;
+      // console.log(this.dialogProp);
+      // this.dialogProp.isShow = false;
+      // console.log(this.dialogProp);
+      // this.$emit("dialogResult", flg);
+      this.dialogProp.callback(flg);
     }
   }
 };

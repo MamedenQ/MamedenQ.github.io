@@ -67,14 +67,7 @@
         </tr>
       </tbody>
     </table>
-    <confirm
-      v-if="showModalConfirm"
-      v-on:dialogResult="result"
-      :title="title"
-      :msg="msg"
-      :positive="positive"
-      :negative="negative"
-    ></confirm>
+    <confirm ref="confirm"></confirm>
     <!-- </v-container> -->
     <!-- </v-card> -->
   </div>
@@ -91,10 +84,15 @@ export default {
   data() {
     return {
       trashList: [],
-      showModalConfirm: false,
-      callbackConfirm: null,
-      restoreItem: {},
-      deleteItem: {},
+      dialogProp: {
+        title: "",
+        msg: "",
+        positive: "",
+        negative: "",
+        callback: null
+      },
+      // restoreItem: {},
+      // deleteItem: {},
       headers: [
         {
           text: "タイトル",
@@ -162,25 +160,22 @@ export default {
     //     this.$emit("route-score-input", scoreId);
     // },
     onClickRestore(item) {
-      this.restoreItem = item;
-      this.title = "復元確認";
-      this.msg = "復元しますか？";
-      this.positive = "OK";
-      this.negative = "キャンセル";
-      this.callbackConfirm = this.callbackRestore;
-
-      this.showModalConfirm = true;
-    },
-    result(flg) {
-      this.callbackConfirm(flg);
-      this.showModalConfirm = false;
+      this.dialogProp = {
+        title: "復元確認",
+        msg: "復元しますか？",
+        positive: "OK",
+        negative: "キャンセル",
+        restoreItem: item,
+        callback: this.callbackRestore
+      };
+      this.$refs.confirm.open(this.dialogProp);
     },
     callbackRestore(result) {
       if (!result) {
         return;
       }
 
-      var item = this.restoreItem;
+      var item = this.dialogProp.restoreItem;
       var scoreData = JSON.parse(localStorage.getItem("score"));
       var filterData = scoreData.filter(function(data, index) {
         if (data.id == item.id) return true;
@@ -191,21 +186,22 @@ export default {
       this.refresh();
     },
     onClickDelete(item) {
-      this.deleteItem = item;
-      this.title = "削除確認";
-      this.msg = "完全に削除しますか？";
-      this.positive = "OK";
-      this.negative = "キャンセル";
-      this.callbackConfirm = this.callbackDelete;
-
-      this.showModalConfirm = true;
+      this.dialogProp = {
+        title: "削除確認",
+        msg: "完全に削除しますか？",
+        positive: "OK",
+        negative: "キャンセル",
+        deleteItem: item,
+        callback: this.callbackDelete
+      };
+      this.$refs.confirm.open(this.dialogProp);
     },
     callbackDelete(result) {
       if (!result) {
         return;
       }
 
-      var item = this.deleteItem;
+      var item = this.dialogProp.deleteItem;
       var scoreData = JSON.parse(localStorage.getItem("score"));
       var filterData = scoreData.filter(function(data, index) {
         if (data.id != item.id) return true;

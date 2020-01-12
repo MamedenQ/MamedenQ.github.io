@@ -1,6 +1,95 @@
 <template>
   <div>
-    <transition>
+    <v-dialog v-model="isShow" persistent>
+      <v-card>
+        <v-card-title class="headline primary" style="color:white;" primary-title dark>メンバーチェンジ</v-card-title>
+
+        <v-card-text style="padding-top:20px;height:420px">
+          <div
+            style="overflow-x:hidden; overflow-y:scroll; float:left;height:100%;width:calc(50% - 10px);margin-right:10px;"
+          >
+            <ul>
+              <li class="member">
+                <input
+                  type="radio"
+                  id="mem_x"
+                  name="member"
+                  v-on:change="onChangeMember(null)"
+                  value="-1"
+                  v-model="modelSelection"
+                />
+                <label for="mem_x">
+                  <v-btn
+                    v-show="modelSelection == -1"
+                    v-bind:style="styleMemberButton"
+                    color="primary"
+                    dark
+                  >空に変更</v-btn>
+                  <v-btn
+                    v-on:click="modelSelection = -1;onChangeMember(null);"
+                    v-show="modelSelection != -1"
+                    v-bind:style="styleMemberButton"
+                  >空に変更</v-btn>
+                  <!-- <span style="left:0;text-align:center;pointer-events:none">空に変更</span> -->
+                </label>
+              </li>
+              <li class="member" v-for="member of dialogProp.members" :key="member.no">
+                <input
+                  type="radio"
+                  v-bind:id="'mem_' + member.no"
+                  name="member"
+                  v-on:change="onChangeMember(member)"
+                  v-bind:value="member.no"
+                  v-model="modelSelection"
+                />
+                <label v-bind:for="'mem_' + member.no">
+                  <v-btn
+                    v-show="modelSelection == member.no"
+                    v-bind:style="styleMemberButton"
+                    color="primary"
+                    dark
+                  >{{member.no}}:{{member.name}}</v-btn>
+                  <v-btn
+                    v-on:click="modelSelection = member.no;onChangeMember(member);"
+                    v-show="modelSelection != member.no"
+                    v-bind:style="styleMemberButton"
+                  >{{member.no}}:{{member.name}}</v-btn>
+                  <playerSvg v-if="member.sex == 0"></playerSvg>
+                  <playerFSvg v-else></playerFSvg>
+                  <!-- <span>{{member.no}}:{{member.name}}</span> -->
+                </label>
+              </li>
+            </ul>
+          </div>
+          <div class="coat" style="float:left;height:100%;width:50%;">
+            <player
+              v-on:on-click-player="changeMember(item)"
+              v-bind:item="item"
+              v-bind:class="item.classGrid"
+              v-for="item of itemTeamAWork"
+              :key="item.key"
+            ></player>
+            <!-- <rotate class="rotate-a" v-on:on-click-rotate="rotateA"></rotate> -->
+
+            <player
+              v-on:on-click-player="changeMember(item)"
+              v-bind:item="item"
+              v-bind:class="item.classGrid"
+              v-for="item of itemTeamBWork"
+              :key="item.key"
+            ></player>
+            <!-- <rotate class="rotate-b" v-on:on-click-rotate="rotateB"></rotate> -->
+          </div>
+        </v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn v-on:click="sendResult(true)" color="primary" dark>OK</v-btn>
+          <v-btn v-on:click="sendResult(false)">キャンセル</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <transition v-if="false">
       <div class="modal-mask">
         <div class="modal-wrapper">
           <div class="modal-container" style="width:700px">
@@ -141,15 +230,15 @@ import player from "../Material/Player";
 
 export default {
   name: "member_change",
-  props: {
-    title: String,
-    msg: String,
-    positive: String,
-    negative: String,
-    itemTeamA: Array,
-    itemTeamB: Array,
-    members: Array
-  },
+  // props: {
+  //   title: String,
+  //   msg: String,
+  //   positive: String,
+  //   negative: String,
+  //   itemTeamA: Array,
+  //   itemTeamB: Array,
+  //   members: Array
+  // },
   components: {
     playerSvg,
     playerFSvg,
@@ -170,14 +259,22 @@ export default {
         width: "100%",
         height: "100%",
         "text-align": "center"
-      }
+      },
+      dialogProp: {},
+      isShow: false
     };
   },
-  mounted() {
-    this.itemTeamAWork = JSON.parse(JSON.stringify(this.itemTeamA));
-    this.itemTeamBWork = JSON.parse(JSON.stringify(this.itemTeamB));
-  },
+  // mounted() {
+  //   this.itemTeamAWork = JSON.parse(JSON.stringify(this.itemTeamA));
+  //   this.itemTeamBWork = JSON.parse(JSON.stringify(this.itemTeamB));
+  // },
   methods: {
+    open(dialogProp) {
+      this.dialogProp = dialogProp;
+      this.itemTeamAWork = JSON.parse(JSON.stringify(dialogProp.itemTeamA));
+      this.itemTeamBWork = JSON.parse(JSON.stringify(dialogProp.itemTeamB));
+      this.isShow = true;
+    },
     onChangeMember(member) {
       this.selectedMember = member;
     },
@@ -195,12 +292,14 @@ export default {
       }
     },
     sendResult(flg) {
-      this.$emit(
-        "member-change-result",
-        flg,
-        this.itemTeamAWork,
-        this.itemTeamBWork
-      );
+      this.isShow = false;
+
+      if (flg) {
+        this.dialogProp.itemTeamA = this.itemTeamAWork;
+        this.dialogProp.itemTeamB = this.itemTeamBWork;
+      }
+
+      this.dialogProp.callback(flg);
     }
   }
 };

@@ -13,7 +13,7 @@
             </svg>
             <br><br><br><br>
             <span>保存</span>
-            <svg v-on:click="showModalSave = true" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+            <svg v-on:click="save" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
                 <polyline points="17 21 17 13 7 13 7 21"></polyline>
                 <polyline points="7 3 7 8 15 8"></polyline>
@@ -106,7 +106,7 @@
             </svg>
         </div>
 
-        <div name="modalWarn" v-if="showModalWarn">
+        <!-- <div name="modalWarn" v-if="showModalWarn">
             <transition>
                 <div class="modal-mask">
                     <div class="modal-wrapper">
@@ -125,16 +125,6 @@
 
                             <div class="modal-footer">
                                 <slot name="footer">
-                                    <!--
-                                    <button class="modal-default-button" @click="showModalWarn = false">
-                                        キャンセル
-                                    </button>
-                                    <button class="modal-default-button" @click="closeScore(false)">
-                                        続行
-                                    </button>
-                                    -->
-                                    <!-- <button type="button" class="modal-default-button btn btn-secondary" @click="showModalWarn = false">キャンセル</button>
-                                    <button type="button" class="modal-default-button btn btn-primary" @click="callbackClose">続行</button> -->
                                     <v-btn class="modal-default-button" v-on:click="showModalWarn = false">キャンセル</v-btn>
                                     <v-btn
                                     style="margin-right:20px;"
@@ -149,10 +139,11 @@
                     </div>
                 </div>
             </transition>
-        </div>
-        <confirm v-if="showModalConfirm" v-on:dialogResult="showModalConfirm = false;callbackConfirm(flg);" :title="title" :msg="msg" :positive="positive" :negative="negative"></confirm>
-        <memberChange v-if="showModalMemberChange" v-on:member-change-result="memberChangeResult" :title="title" :msg="msg" :positive="positive" :negative="negative" :itemTeamA="itemTeamA" :itemTeamB="itemTeamB" :members="members"></memberChange>
-        <scoreSave  v-if="showModalSave" v-on:dialogResult="save" :title="modelTitle" :dateProp="modelDate" :aPoint="modelAPoint" :bPoint="modelBPoint"></scoreSave>
+        </div> -->
+        <!-- <confirm ref="confirm" v-on:dialogResult="callbackConfirm"></confirm> -->
+        <confirm ref="confirm"></confirm>
+        <memberChange ref="memberChange"></memberChange>
+        <scoreSave ref="save"></scoreSave>
     </div>
 </div>
 </template>
@@ -244,17 +235,25 @@ export default {
             modelDate: "",
             modelAPoint: 0,
             modelBPoint: 0,
-            showModalSave: false,
-            showModalWarn: false,
-            showModalConfirm: false,
-            showModalMemberChange: false,
+            // showModalSave: false,
+            // showModalWarn: false,
+            // showModalConfirm: false,
+            // showModalMemberChange: false,
             // showDatePicker: false,
-            title: "",
-            msg: "",
-            positive: "",
-            negative: "",
-            callbackConfirm: "",
-            callbackClose: null,
+                // title: "",
+                // msg: "",
+                // positive: "",
+                // negative: "",
+            dialogProp: {
+                title: "",
+                msg: "",
+                positive: "",
+                negative: "",
+                callback: null,
+            },
+            // deleteIndex: 0,
+            // callbackConfirm: "",
+            // callbackClose: null,
             isCancel: false,
             isDirty: false,
             showChangeArea: false,
@@ -426,21 +425,25 @@ export default {
             this.outputlog();
             this.isDirty = true;
         },
-        save(flg, title, date, apoint, bpoint) {
-            this.showModalSave = false;
+        save() {
+            this.dialogProp = {
+                modelTitle: this.modelTitle,
+                modelDate: this.modelDate,
+                modelAPoint: this.modelAPoint,
+                modelBPoint: this.modelBPoint,
+                callback: this.callbackSave
+            };
+            this.$refs.save.open(this.dialogProp);
+        },
+        callbackSave(flg) {
             if(!flg) {
                 return;
             }
-            this.modelTitle = title;
-            this.modelDate = date;
-            this.modelAPoint = Number(apoint);
-            this.modelBPoint = Number(bpoint);
+            this.modelTitle = this.dialogProp.modelTitle;
+            this.modelDate = this.dialogProp.modelDate;
+            this.modelAPoint = Number(this.dialogProp.modelAPoint);
+            this.modelBPoint = Number(this.dialogProp.modelBPoint);
 
-            // 保存ボタンの制御を行う
-            if (this.modelTitle == "") {
-                return;
-            }
-            this.showModalSave = false;
             var data = {
                 id: this.scoreId,
                 title: this.modelTitle,
@@ -487,17 +490,29 @@ export default {
                 this.loadMain();
                 return;
             }
-            this.title = "確認";
-            this.msg = "入力内容を破棄してデータを読み込みますか？";
-            this.positive = "OK";
-            this.negative = "キャンセル";
-            this.showModalConfirm = true;
 
-            this.callbackConfirm = function (result) {
-                if (result) {
-                    this.loadMain();
-                }
+            this.dialogProp = {
+                title: "確認",
+                msg: "入力内容を破棄してデータを読み込みますか？",
+                positive: "OK",
+                negative: "キャンセル",
+                callback: function (result) {
+                    if (result) {
+                        this.loadMain();
+                    }
+                },
             };
+            // this.dialogProp.title = "確認";
+            // this.dialogProp.msg = "入力内容を破棄してデータを読み込みますか？";
+            // this.dialogProp.positive = "OK";
+            // this.dialogProp.negative = "キャンセル";
+            // // this.dialogProp.isShow = true;
+            // this.dialogProp.callback = function (result) {
+            //     if (result) {
+            //         this.loadMain();
+            //     }
+            // };
+            this.$refs.confirm.open(this.dialogProp);
         },
         loadMain() {
             if (this.scoreId == "") {
@@ -548,11 +563,20 @@ export default {
                 this.itemTeamB[i].isEmpty = teamB[i].isEmpty;
             }
         },
-        closeScore(isCheck, callback) {
-            this.showModalWarn = false;
-            if (isCheck && this.isDirty) {
-                this.showModalWarn = true;
-                this.callbackClose = callback;
+        closeScore(callback) {
+            if (this.isDirty) {
+                this.dialogProp = {
+                    title: "スコア入力の終了",
+                    msg: "スコアが保存されていません。入力内容を破棄して画面を移動しますか？",
+                    positive: "続行",
+                    negative: "キャンセル",
+                    callback: function (result) {
+                        if (result) {
+                            callback();
+                        }
+                    },
+                };
+                this.$refs.confirm.open(this.dialogProp);
                 return;
             }
 
@@ -577,27 +601,41 @@ export default {
             this.outputlog();
         },
         deleteScore(deleteIndex) {
-            this.title = "削除確認";
-            this.msg = "削除しますか？";
-            this.positive = "OK";
-            this.negative = "キャンセル";
-            this.showModalConfirm = true;
+            this.dialogProp = {
+                title: "削除確認",
+                msg: "削除しますか？",
+                positive: "OK",
+                negative: "キャンセル",
+                deleteIndex: deleteIndex,
+                callback: this.callbackDelete,
+            };
+            // this.dialogProp.title = "削除確認";
+            // this.dialogProp.msg = "削除しますか？";
+            // this.dialogProp.positive = "OK";
+            // this.dialogProp.negative = "キャンセル";
+            // this.dialogProp.isShow = true;
+            // this.dialogProp.deleteIndex = deleteIndex;
+            this.$refs.confirm.open(this.dialogProp);
 
-            this.callbackConfirm = function (result) {
-                if (!result) {
-                    return;
-                }
+            // this.deleteIndex = deleteIndex;
 
-                var newData = this.score.filter(function (s, index) {
-                    if (s.index != deleteIndex) return true;
-                });
-
-                this.score = newData;
-
-                this.outputlog();
-
-                this.isDirty = true;
+            // this.callbackConfirm = this.callbackDelete;
+        },
+        callbackDelete(result) {
+            if (!result) {
+                return;
             }
+
+            var tmpDeleteIndex = this.dialogProp.deleteIndex;
+            var newData = this.score.filter(function (s, index) {
+                if (s.index != tmpDeleteIndex) return true;
+            });
+
+            this.score = newData;
+
+            this.outputlog();
+
+            this.isDirty = true;
         },
         getMaxIndex() {
             if (this.score.length == 0) {
@@ -948,26 +986,29 @@ export default {
         //     this.showModalConfirm = false;
         // },
         changeMember() {
-            this.title = "メンバーチェンジ";
-            this.positive = "OK";
-            this.negative = "キャンセル";
-            this.showModalMemberChange = true;
+            this.dialogProp = {
+                itemTeamA: this.itemTeamA,
+                itemTeamB: this.itemTeamB,
+                members: this.members,
+                callback: this.memberChangeResult
+            };
+            this.$refs.memberChange.open(this.dialogProp);
         },
-        memberChangeResult(flg, itemTeamA, itemTeamB) {
-            this.showModalMemberChange = false;
+        memberChangeResult(flg) {
+            // this.showModalMemberChange = false;
             if (flg) {
-                this.itemTeamA = itemTeamA;
-                this.itemTeamB = itemTeamB;
+                this.itemTeamA = this.dialogProp.itemTeamA;
+                this.itemTeamB = this.dialogProp.itemTeamB;
             }
         },
         onHome() {
-            this.closeScore(true, this.callbackHome);
+            this.closeScore(this.callbackHome);
         },
         callbackHome() {
             this.$emit("route-home");
         },
         onBack() {
-            this.closeScore(true, this.callbackBack);
+            this.closeScore(this.callbackBack);
         },
         callbackBack() {
             this.$emit("route-score-list");

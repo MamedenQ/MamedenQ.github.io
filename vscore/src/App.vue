@@ -7,6 +7,7 @@
       <v-btn v-show="false" style="margin-left:8px;" icon>
         <v-icon>fas fa-home</v-icon>
       </v-btn>
+      <v-toolbar-title style="margin-left:16px;">Vスコア</v-toolbar-title>
       <v-toolbar-title style="margin-left:16px;">{{ title }}</v-toolbar-title>
       <v-toolbar-title style="margin-left:16px;">{{ target }}</v-toolbar-title>
       <v-spacer></v-spacer>
@@ -414,7 +415,7 @@ export default {
         backView: null
       },
       title: "",
-      target: "",
+      target: ""
     };
   }
 };

@@ -5,6 +5,7 @@ import home from "../components/Home";
 import scoreinput from "../components/ScoreInput";
 import scorelist from "../components/ScoreList";
 import analyzelist from "../components/AnalyzeList";
+import analyzedetail from "../components/AnalyzeDetail";
 // import analyzelistmatch from "../components/AnalyzeListMatch";
 import settings from "../components/Settings";
 
@@ -38,10 +39,10 @@ export default new VueRouter({
         //     path: '/analyzelistmatch',
         //     component: analyzelistmatch,
         // },
-        // {
-        //     path: '/AnalyzeDetail',
-        //     component: analyzedetail,
-        // },
+        {
+            path: '/analyzedetail',
+            component: analyzedetail,
+        },
         {
             path: '/settings',
             component: settings,

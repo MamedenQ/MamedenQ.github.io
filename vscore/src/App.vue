@@ -8,6 +8,7 @@
         <v-icon>fas fa-home</v-icon>
       </v-btn>
       <v-toolbar-title style="margin-left:16px;">{{ title }}</v-toolbar-title>
+      <v-toolbar-title style="margin-left:16px;">{{ target }}</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn
         v-on:click="onClickUndo"
@@ -120,8 +121,9 @@
           v-bind:is-new-score="isNewScore"
           v-bind:score-id="scoreId"
           v-bind:analyze-data="analyzeData"
-          v-bind:analyze-player-score="analyzePlayerData"
+          v-bind:analyze-player-data="analyzePlayerData"
           v-bind:is-match-prop="isMatchProp"
+          v-bind:is-match-from="isMatchFrom"
           v-bind:score-input-prop="scoreInputProp"
           v-bind:score-list-prop="scoreListProp"
           v-bind:analyze-list-prop="analyzeListProp"
@@ -217,6 +219,7 @@ export default {
     },
     routeScoreList() {
       this.title = "スコアリスト";
+      this.target = "";
       this.isEnableBack = false;
       this.isShowUndo = false;
       this.isShowRedo = false;
@@ -231,7 +234,10 @@ export default {
     },
     routeAnalyzeListPlayer(items) {
       this.title = "分析一覧";
-      this.analyzeData = items;
+      this.target = "";
+      if (items != null) {
+        this.analyzeData = items;
+      }
       this.isMatchProp = false;
       this.isEnableBack = true;
       this.isShowUndo = false;
@@ -249,7 +255,10 @@ export default {
     },
     routeAnalyzeListMatch(items) {
       this.title = "分析一覧";
-      this.analyzeData = items;
+      this.target = "";
+      if (items != null) {
+        this.analyzeData = items;
+      }
       // this.$router.push({ path: "/analyzelistmatch" });
       this.isMatchProp = true;
       this.isEnableBack = true;
@@ -268,6 +277,7 @@ export default {
     },
     routeScoreInput(scoreId) {
       this.title = "スコア入力";
+      this.target = "";
       this.scoreId = scoreId;
       this.isNewScore = false;
       this.isEnableBack = true;
@@ -284,6 +294,7 @@ export default {
     },
     routeScoreInputNew() {
       this.title = "スコア入力";
+      this.target = "";
       this.isNewScore = true;
       this.isEnableBack = true;
       this.isShowUndo = true;
@@ -303,6 +314,7 @@ export default {
     },
     routeSettings() {
       this.title = "メンテナンス";
+      this.target = "";
       this.isEnableBack = true;
       this.isShowUndo = false;
       this.isShowRedo = false;
@@ -315,8 +327,10 @@ export default {
       this.isShowAnalyzeList = false;
       this.$router.push({ path: "/settings" });
     },
-    routeAnalyzeDetail(analyzePlayerData) {
+    routeAnalyzeDetail(analyzePlayerData, isMatchFrom) {
       this.title = "詳細分析";
+      this.target = analyzePlayerData.name;
+      this.isMatchFrom = isMatchFrom;
       this.analyzePlayerData = analyzePlayerData;
       this.isEnableBack = true;
       this.isShowUndo = false;
@@ -328,7 +342,7 @@ export default {
       this.isShowAnalyzePlayer = false;
       this.isShowAnalyzeMatch = false;
       this.isShowAnalyzeList = false;
-      this.$router.push({ path: "/AnalyzeDetail" });
+      this.$router.push({ path: "/analyzedetail" });
     },
     digestCallback(hex) {
       this.scoreId = hex;
@@ -365,6 +379,7 @@ export default {
     return {
       isMatchProp: true,
       isNewScore: true,
+      isMatchFrom: false,
       scoreId: "",
       analyzeData: [],
       analyzePlayerData: {},
@@ -398,7 +413,8 @@ export default {
       commonProp: {
         backView: null
       },
-      title: ""
+      title: "",
+      target: "",
     };
   }
 };

@@ -446,7 +446,8 @@ export default {
       // }
     },
     onPlayerDetail(item) {
-      this.$emit("route-analyze-detail", item);
+      console.log(item);
+      this.$emit("route-analyze-detail", item, this.isMatch);
     },
     formatScoreData() {
       if (this.isMatch) {
@@ -635,7 +636,7 @@ export default {
           point: 0,
           point_detail: {
             in: 0,
-            block_out: 0,
+            blockout: 0,
             fake: 0
           },
           miss: 0,

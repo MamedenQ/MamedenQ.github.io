@@ -100,11 +100,16 @@
             <rotate class="rotate-b" v-on:on-click-rotate="rotateB"></rotate>
         </div>
 
-        <div class="score" style="overflow-x:auto; overflow-y:hidden;">
+        <!-- <div class="score" style="overflow-x:auto; overflow-y:hidden;">
             <svg id="score_area" v-bind:width="score.length * 90 + 10" style="height: 100%;max-width:none;max-height:none;">
                 <scoreObjSvg v-on:click-score="onClickScore(item)" v-for="(item, idx) of score" :key="item.index" :item="item" :idx="idx"></scoreObjSvg>
             </svg>
-        </div>
+        </div> -->
+    <hooper ref="scoreCarousel" :center-mode="true" :itemsToShow="10" class="score" style="height:150px;">
+        <slide v-for="item of score" :key="item.index">
+            <scoreObjSvg v-on:click-score="onClickScore(item)" :item="item" :idx="0"></scoreObjSvg>
+        </slide>
+    </hooper>
 
         <!-- <div name="modalWarn" v-if="showModalWarn">
             <transition>
@@ -175,6 +180,9 @@ import omiaiSvg from './SVG/OmiaiSVG'
 import rallySvg from './SVG/RallySVG'
 import scoreSave from './Material/ScoreSave'
 
+import { Hooper, Slide } from "hooper";
+import "hooper/dist/hooper.css";
+
 export default {
   name: 'score_input',
     components: {
@@ -203,6 +211,8 @@ export default {
         omiaiSvg,
         rallySvg,
         scoreSave,
+        Hooper,
+        Slide,
     },
     props: {
         scoreId: String,
@@ -613,6 +623,7 @@ export default {
             this.pushScore(item.team, item.no, item.name, this.modelAction, this.getKind(), this.modelDetail);
             this.scoreBk = [];
             this.updateUndoRedoButton();
+            this.$refs.scoreCarousel.slideTo(this.score.length - 1);
             this.outputlog();
         },
         deleteScore(deleteIndex) {

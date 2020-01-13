@@ -432,6 +432,7 @@ export default {
             this.outputlog();
 
             this.isDirty = true;
+            this.$refs.scoreCarousel.slideTo(this.score.length - 1);
         },
         getScoreLength() {
             return this.score.length;
@@ -449,6 +450,7 @@ export default {
             this.updateUndoRedoButton();
             this.outputlog();
             this.isDirty = true;
+            this.$refs.scoreCarousel.slideTo(this.score.length - 1);
         },
         save() {
             this.dialogProp = {

@@ -74,7 +74,7 @@
       <!-- <v-btn icon>
         <v-icon>fas fa-tools</v-icon>
       </v-btn>-->
-      <v-btn v-on:click="onClickSettings" v-show="isShowSettings" style="margin-left:32px;" icon>
+      <v-btn v-bind:disabled="!isEnableSettings" v-on:click="onClickSettings" style="margin-left:32px;" icon>
         <v-icon>fas fa-cog</v-icon>
       </v-btn>
       <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
@@ -235,7 +235,7 @@ export default {
       this.isShowSave = false;
       this.isShowMemberChange = false;
       this.isShowNewScore = true;
-      this.isShowSettings = true;
+      this.isEnableSettings = true;
       this.isShowAnalyzePlayer = false;
       this.isShowAnalyzeMatch = false;
       this.isShowAnalyzeList = true;
@@ -254,7 +254,7 @@ export default {
       this.isShowSave = false;
       this.isShowMemberChange = false;
       this.isShowNewScore = false;
-      this.isShowSettings = false;
+      this.isEnableSettings = false;
       this.isShowAnalyzePlayer = true;
       this.isShowAnalyzeMatch = true;
       this.isEnableAnalyzePlayer = false;
@@ -276,7 +276,7 @@ export default {
       this.isShowSave = false;
       this.isShowMemberChange = false;
       this.isShowNewScore = false;
-      this.isShowSettings = false;
+      this.isEnableSettings = false;
       this.isShowAnalyzePlayer = true;
       this.isShowAnalyzeMatch = true;
       this.isEnableAnalyzePlayer = true;
@@ -295,7 +295,7 @@ export default {
       this.isShowSave = true;
       this.isShowMemberChange = true;
       this.isShowNewScore = false;
-      this.isShowSettings = false;
+      this.isEnableSettings = false;
       this.isShowAnalyzePlayer = false;
       this.isShowAnalyzeMatch = false;
       this.isShowAnalyzeList = false;
@@ -311,7 +311,7 @@ export default {
       this.isShowSave = true;
       this.isShowMemberChange = true;
       this.isShowNewScore = false;
-      this.isShowSettings = false;
+      this.isEnableSettings = false;
       this.isShowAnalyzePlayer = false;
       this.isShowAnalyzeMatch = false;
       this.isShowAnalyzeList = false;
@@ -330,7 +330,7 @@ export default {
       this.isShowSave = false;
       this.isShowMemberChange = false;
       this.isShowNewScore = false;
-      this.isShowSettings = false;
+      this.isEnableSettings = false;
       this.isShowAnalyzePlayer = false;
       this.isShowAnalyzeMatch = false;
       this.isShowAnalyzeList = false;
@@ -347,7 +347,7 @@ export default {
       this.isShowSave = false;
       this.isShowMemberChange = false;
       this.isShowNewScore = false;
-      this.isShowSettings = false;
+      this.isEnableSettings = false;
       this.isShowAnalyzePlayer = false;
       this.isShowAnalyzeMatch = false;
       this.isShowAnalyzeList = false;
@@ -392,6 +392,7 @@ export default {
       scoreId: "",
       analyzeData: [],
       analyzePlayerData: {},
+      isEnableSettings: true,
       isEnableUndo: true,
       isEnableRedo: true,
       isEnableBack: true,
@@ -403,7 +404,6 @@ export default {
       isShowSave: false,
       isShowMemberChange: false,
       isShowNewScore: false,
-      isShowSettings: false,
       isShowAnalyzePlayer: false,
       isShowAnalyzeMatch: false,
       isShowAnalyzeList: false,

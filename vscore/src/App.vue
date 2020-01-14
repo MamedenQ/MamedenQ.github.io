@@ -41,6 +41,7 @@
       <v-btn
         v-on:click="onClickAnalyzeList"
         v-show="isShowAnalyzeList"
+        v-bind:disabled="!isEnabledAnalyzeList"
         style="margin-left:8px;"
         text
       >分析一覧へ</v-btn>
@@ -180,6 +181,13 @@ export default {
         this.scoreInputProp.changeMember();
       } else {
         console.log("this.scoreInputProp.changeMember is null !!!");
+      }
+    },
+    checkChangedScoreList(checkedNum) {
+      if (checkedNum > 0) {
+        this.isEnabledAnalyzeList = true;
+      } else {
+        this.isEnabledAnalyzeList = false;
       }
     },
     onClickSettings() {
@@ -389,6 +397,7 @@ export default {
       isEnableBack: true,
       isEnableAnalyzePlayer: false,
       isEnableAnalyzeMatch: false,
+      isEnabledAnalyzeList: false,
       isShowUndo: false,
       isShowRedo: false,
       isShowSave: false,
@@ -406,7 +415,8 @@ export default {
         setEnableRedo: this.setEnableRedo
       },
       scoreListProp: {
-        linkAnalyzeList: null
+        linkAnalyzeList: null,
+        checkChangedScoreList: this.checkChangedScoreList
       },
       analyzeListProp: {
         switchList: null

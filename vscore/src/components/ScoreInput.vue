@@ -420,7 +420,7 @@ export default {
             ].join('-');
         },
         outputlog() {
-            console.log(JSON.stringify(this.score, null, "    "));
+            // console.log(JSON.stringify(this.score, null, "    "));
         },
         undo() {
             // console.log(this.score);
@@ -594,8 +594,8 @@ export default {
             if (this.isDirty) {
                 this.dialogProp = {
                     title: "スコア入力の終了",
-                    msg: "スコアが保存されていません。入力内容を破棄して画面を移動しますか？",
-                    positive: "続行",
+                    msg: "スコアが保存されていません。入力内容を破棄してスコア入力を終了しますか？",
+                    positive: "終了",
                     negative: "キャンセル",
                     callback: function (result) {
                         if (result) {

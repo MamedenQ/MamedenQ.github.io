@@ -179,6 +179,11 @@ export default {
     //     return this.modelA + this.modelB;
     // }
   },
+  watch: {
+    modelTarget: function(val) {
+      this.scoreListProp.checkChangedScoreList(this.modelTarget.length);
+    }
+  },
   mounted() {
     this.scoreListProp.linkAnalyzeList = this.linkAnalyzeList;
 

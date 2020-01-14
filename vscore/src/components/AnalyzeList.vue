@@ -265,6 +265,7 @@ export default {
       isMatch: false,
       tab: "tab-total",
       scoreAnalyze: [],
+      matchTotalScore: {},
       members: [],
       styleNavi: {
         "line-height": "700px"
@@ -465,6 +466,15 @@ export default {
       }
 
       this.scoreAnalyze = [];
+      if (this.isMatch) {
+        this.matchTotalScore = this.getPlayerTemplate(
+          0,
+          "全試合",
+          0,
+          "2000-01-01"
+        );
+        this.scoreAnalyze.push(this.matchTotalScore);
+      }
       this.analyzeData.forEach(this.totalScore);
       this.scoreAnalyze.forEach(this.calcScore);
       if (this.isMatch) {
@@ -511,6 +521,7 @@ export default {
         matchScore.point = score.teamAPoint + "-" + score.teamBPoint;
         for (var i = 0; i < score.score.length; i++) {
           this.addScore(matchScore, score.score[i]);
+          this.addScore(this.matchTotalScore, score.score[i]);
         }
         this.scoreAnalyze.push(matchScore);
       } else {

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-switch v-model="scoreSettings.isLibero" class="ma-2" label="リベロ"></v-switch>
+    <v-switch v-model="scoreSettings.isLibero" class="ma-2" label="リベロ" color="primary"></v-switch>
     <confirm ref="confirm"></confirm>
     <v-spacer></v-spacer>
     <v-btn v-on:click="onSaveSettings" color="primary">保存</v-btn>

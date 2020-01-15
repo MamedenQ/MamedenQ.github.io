@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang=en><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,user-scalable=no"><link rel=icon href=favicon.ico><title>vscore</title><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900"><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css><link rel=stylesheet href=https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css><style type=text/css>[v-cloak] {
       display: none;
-    }</style><link href=css/app.fc28ea91.css rel=preload as=style><link href=css/chunk-vendors.cae279ae.css rel=preload as=style><link href=js/app.b27b562e.js rel=preload as=script><link href=js/chunk-vendors.262efbcf.js rel=preload as=script><link href=css/chunk-vendors.cae279ae.css rel=stylesheet><link href=css/app.fc28ea91.css rel=stylesheet></head><body><noscript><strong>We're sorry but vscore doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id=app></div><script src=js/chunk-vendors.262efbcf.js></script><script src=js/app.b27b562e.js></script></body><script>// ＝＝＝＝＝調査項目
+    }</style><link href=css/app.fc28ea91.css rel=preload as=style><link href=css/chunk-vendors.cae279ae.css rel=preload as=style><link href=js/app.e811f001.js rel=preload as=script><link href=js/chunk-vendors.262efbcf.js rel=preload as=script><link href=css/chunk-vendors.cae279ae.css rel=stylesheet><link href=css/app.fc28ea91.css rel=stylesheet></head><body><noscript><strong>We're sorry but vscore doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id=app></div><script src=js/chunk-vendors.262efbcf.js></script><script src=js/app.e811f001.js></script></body><script>// ＝＝＝＝＝調査項目
   // 画面間データ連携調査
   // https://commis.hatenablog.com/entry/2017/11/21/180556
 
@@ -37,8 +37,11 @@
   // http://pictogram2.com/?tag=volleyball
 
   // ＝＝＝＝＝未実装
-  // 他のタブ内に詳細を追加する
+  // 分析一覧はポイントやミスしかないが、詳細タブみたいなのを追加して見れるようにする
+  // 誰が一番レシーブミス多いかとかを見たい
   // 省略表記にしないと入らない
+
+  // 開催ごとの推移をグラフで出す
 
   // なんか余計な余白が出る
   // homeとスコア入力
@@ -51,18 +54,35 @@
 
   // 初回の入力ガイド
 
+  // 現状のグリッドやめてvuetifyのグリッド使う　行ごとのサイズ計算するのがなくせるなら
+
+  // オープンソース表記
+
+  // コピーライト表記
+
+  // ロリポップ契約してDB使う
+
   // アプリ名
   // Vスコア、Vカルテ、Vノート、Vメモ
-  // iスコア
+  // iスコア、VExit、Vモニター、VInspector
+  // VOffice、VStudio、VVisualization、
+  // VProfessor、VAssistant、VBook、VLibrary
   // インテリジェンスな感じを出したい
 
   // pwa用のアイコンを作る
 
-  // 拡大しないようにしたいけど、できない？
-
   // レシーブミスを詳細化する？
 
   // スコア項目をカスタムできるようにする
+  // ポイント、ミス、ラリーの区分とその詳細項目を設定
+  // 効果率を計算するときはラリーを入れてもらうようにする
+  // ラリーの名前も変えれるようにする
+  // 内部コードは固定して、名称を変えても、元のデータと合算される警告出す
+  // 順番も変えれるようにする
+  // 効果率を計算する場合は分析一覧に効果率を追加する
+  // カスタムしたときはアイコンをなしにする？
+  // プリセットデータを用意しておくか
+  // アップロードできるようにする（プレビュー機能が必要になる）
 
   // 開催管理
 
@@ -82,8 +102,11 @@
   // メンバーを別にしたいが、解決が難しいため保留
   // そもそもチーム登録との共存が難しい
   // チームの仕組みを複数団体機能に置き換えてしまう？
+  // 団体キーを追加してデータを別にする
+  // ログイン機能を追加して団体を分けてしまう
 
 
+  // 分析一覧は毎回データを編集しているが、初回のみにして処理量を減らしたい
 
   // 分析一覧で総数のフィルタかけて規定回数以上の効果率分析したい
 
@@ -91,10 +114,6 @@
 
   // マスタメンテのタブ遷移が遅い
   // 毎回生成されている？初回だけ遅い？
-
-  // 対戦相手を入力し、タイトルを結合した文字列にする
-
-  // 全試合分析
 
   // レーダーチャート　絞り込みなしで全体での力レベルをチャートにする
 
@@ -108,10 +127,6 @@
   // 入力後選択値設定
 
   // データクリア
-
-  // 色設定
-
-  // アニメーション追加
 
   // プレーヤの番号がキーになっている　変えると紐付けができなくなる
 
@@ -142,6 +157,10 @@
 
   // iPhoneでも表示できるようにする？
   // スコア表示のところを固定pxではなく可変にするとできるが、小さい？
+
+  // 本格的な分析
+  // https://www.vleague.jp/record/player_detail/3559
+  // icloudに愛知県の高校生の試合の結果シートがある参考程度に
 
   // リファクタリング
   // アイコンの共通化

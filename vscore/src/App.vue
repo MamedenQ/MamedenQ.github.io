@@ -7,7 +7,7 @@
       <v-btn v-show="false" style="margin-left:8px;" icon>
         <v-icon>fas fa-home</v-icon>
       </v-btn>
-      <v-toolbar-title style="margin-left:16px;">Vスコア</v-toolbar-title>
+      <v-toolbar-title style="margin-left:16px;">Ｖノート</v-toolbar-title>
       <v-toolbar-title style="margin-left:16px;">{{ title }}</v-toolbar-title>
       <v-toolbar-title style="margin-left:16px;">{{ target }}</v-toolbar-title>
       <v-spacer></v-spacer>
@@ -16,26 +16,26 @@
         v-show="isShowUndo"
         v-bind:disabled="!isEnableUndo"
         style="margin-left:8px;"
-        icon
+        text
       >
-        <v-icon>fas fa-undo</v-icon>
+        <v-icon style="margin-right:5px;">fas fa-undo</v-icon>元に戻す
       </v-btn>
       <v-btn
         v-on:click="onClickRedo"
         v-show="isShowRedo"
         v-bind:disabled="!isEnableRedo"
         style="margin-left:8px;"
-        icon
+        text
       >
-        <v-icon>fas fa-redo</v-icon>
+        <v-icon style="margin-right:5px;">fas fa-redo</v-icon>やり直す
       </v-btn>
       <v-btn
         v-on:click="onClickMemberChange"
         v-show="isShowMemberChange"
         style="margin-left:8px;"
-        icon
+        text
       >
-        <v-icon>fas fa-exchange-alt</v-icon>
+        <v-icon style="margin-right:5px;">fas fa-exchange-alt</v-icon>選手交代
         <!-- <memberSvg></memberSvg> -->
       </v-btn>
       <v-btn
@@ -44,9 +44,11 @@
         v-bind:disabled="!isEnabledAnalyzeList"
         style="margin-left:8px;"
         text
-      >分析一覧へ</v-btn>
-      <v-btn v-on:click="onClickNewScore" v-show="isShowNewScore" style="margin-left:8px;" icon>
-        <v-icon>fas fa-edit</v-icon>
+      >
+        <v-icon style="margin-right:5px;">far fa-chart-bar</v-icon>分析一覧へ
+      </v-btn>
+      <v-btn v-on:click="onClickNewScore" v-show="isShowNewScore" style="margin-left:8px;" text>
+        <v-icon style="margin-right:5px;">fas fa-edit</v-icon>新規作成
       </v-btn>
       <v-btn
         v-on:click="onClickAnalyzePlayer"
@@ -54,16 +56,20 @@
         style="margin-left:8px;"
         v-bind:disabled="!isEnableAnalyzePlayer"
         text
-      >人別</v-btn>
+      >
+        <v-icon style="margin-right:5px;">far fa-address-card</v-icon>人別
+      </v-btn>
       <v-btn
         v-on:click="onClickAnalyzeMatch"
         v-show="isShowAnalyzeMatch"
         style="margin-left:8px;"
         v-bind:disabled="!isEnableAnalyzeMatch"
         text
-      >試合別</v-btn>
-      <v-btn v-on:click="onClickSave" v-show="isShowSave" style="margin-left:8px;" icon>
-        <v-icon>fas fa-save</v-icon>
+      >
+        <v-icon style="margin-right:5px;">far fa-handshake</v-icon>試合別
+      </v-btn>
+      <v-btn v-on:click="onClickSave" v-show="isShowSave" style="margin-left:8px;" text>
+        <v-icon style="margin-right:5px;">fas fa-save</v-icon>保存
       </v-btn>
       <!-- <v-btn icon>
         <v-icon>fas fa-youtube</v-icon>
@@ -74,8 +80,13 @@
       <!-- <v-btn icon>
         <v-icon>fas fa-tools</v-icon>
       </v-btn>-->
-      <v-btn v-bind:disabled="!isEnableSettings" v-on:click="onClickSettings" style="margin-left:32px;" icon>
-        <v-icon>fas fa-cog</v-icon>
+      <v-btn
+        v-bind:disabled="!isEnableSettings"
+        v-on:click="onClickSettings"
+        style="margin-left:8px;"
+        text
+      >
+        <v-icon style="margin-right:5px;">fas fa-cog</v-icon>設定
       </v-btn>
       <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
       <!-- <div class="d-flex align-center">
@@ -227,7 +238,7 @@ export default {
       this.isEnableRedo = flg;
     },
     routeScoreList() {
-      this.title = "スコアリスト";
+      this.title = "スコア一覧";
       this.target = "";
       this.isEnableBack = false;
       this.isShowUndo = false;
@@ -239,6 +250,7 @@ export default {
       this.isShowAnalyzePlayer = false;
       this.isShowAnalyzeMatch = false;
       this.isShowAnalyzeList = true;
+      this.isEnabledAnalyzeList = false;
       this.$router.push({ path: "/scorelist" });
     },
     routeAnalyzeListPlayer(items) {
@@ -322,7 +334,7 @@ export default {
       this.routeScoreList();
     },
     routeSettings() {
-      this.title = "メンテナンス";
+      this.title = "設定";
       this.target = "";
       this.isEnableBack = true;
       this.isShowUndo = false;

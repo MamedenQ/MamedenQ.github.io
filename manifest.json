@@ -1,17 +1,19 @@
 {
-  "name": "PWA GPS",
-  "short_name": "PWA GPS S",
+  "name": "Ｖノート",
+  "short_name": "Ｖノート",
   "background_color": "#fc980c",
-  "icons": [{
-      "src": "./icon-256.png",
+  "icons": [
+    {
+      "src": "./vball.png",
       "sizes": "256x256",
       "type": "image/png"
-    },{
-      "src": "./icon-192.png",
+    },
+    {
+      "src": "./vball.png",
       "sizes": "192x192",
       "type": "image/png"
-    }],
+    }
+  ],
   "start_url": "./?utm_source=homescreen",
   "display": "standalone"
 }
-

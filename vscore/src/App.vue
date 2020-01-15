@@ -45,7 +45,7 @@
         style="margin-left:8px;"
         text
       >
-        <v-icon style="margin-right:5px;">far fa-chart-bar</v-icon>分析一覧へ
+        <v-icon style="margin-right:5px;">far fa-chart-bar</v-icon>分析一覧
       </v-btn>
       <v-btn v-on:click="onClickNewScore" v-show="isShowNewScore" style="margin-left:8px;" text>
         <v-icon style="margin-right:5px;">fas fa-edit</v-icon>新規作成

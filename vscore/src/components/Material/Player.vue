@@ -4,6 +4,7 @@
     <span v-show="!item.isEmpty" v-bind:style="labelStyle">{{item.no + ":" + item.name}}</span>
     <playerSvg v-bind:style="iconStyle" v-show="item.sex == 0 && !item.isEmpty"></playerSvg>
     <playerFSvg v-bind:style="iconStyle" v-show="item.sex == 1 && !item.isEmpty"></playerFSvg>
+    <span v-if="item.isLibero" style="position:absolute;left:5px;bottom:0px;">L</span>
   </div>
 </template>
 

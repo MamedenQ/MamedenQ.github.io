@@ -6,11 +6,15 @@
         <v-tabs v-model="tab" background-color="primary accent-4" centered dark>
           <v-tabs-slider></v-tabs-slider>
 
+          <v-tab href="#tab-score-settings">スコア設定</v-tab>
           <v-tab href="#tab-trash-list">削除済みスコア</v-tab>
           <v-tab href="#tab-master">マスタメンテ</v-tab>
           <v-tab href="#tab-backup">バックアップ</v-tab>
         </v-tabs>
         <v-tabs-items v-model="tab" style="margin-bottom:10px;">
+          <v-tab-item value="tab-score-settings" style="padding:10px;">
+            <scoreSettings style="margin-bottom:10px;"></scoreSettings>
+          </v-tab-item>
           <v-tab-item value="tab-trash-list" style="padding:10px;">
             <trashList style="margin:10px;"></trashList>
           </v-tab-item>
@@ -79,6 +83,7 @@ import trashList from "./Material/TrashList";
 import masterMaintenancePlayer from "./Material/MasterMaintenancePlayer";
 import masterMaintenanceTeam from "./Material/MasterMaintenanceTeam";
 import backup from "./Material/Backup";
+import scoreSettings from "./Material/ScoreSettings";
 import moveTop from "./SVG/MoveTopSVG";
 
 export default {
@@ -88,6 +93,7 @@ export default {
     masterMaintenancePlayer,
     masterMaintenanceTeam,
     backup,
+    scoreSettings,
     moveTop
   },
   props: {
@@ -95,7 +101,7 @@ export default {
   },
   data() {
     return {
-      tab: "tab-trash-list",
+      tab: "tab-score-settings",
       title: "",
       msg: "",
       positive: "OK",

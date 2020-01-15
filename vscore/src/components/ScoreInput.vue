@@ -269,6 +269,7 @@ export default {
             isCancel: false,
             isDirty: false,
             showChangeArea: false,
+            scoreSettings: {},
             styleGrid: {
                 "grid-template-rows": "1fr 1fr 1fr 1fr 1fr 1fr 220px",
             },
@@ -325,14 +326,14 @@ export default {
                 // { key: "a3", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a3", isEmpty: true, },
                 // { key: "a2", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a2", isEmpty: true, },
                 // { key: "a1", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a1", isEmpty: true, },
-                { key: "a1", team: "a", no: "", name: "", sex: 0, classGrid: "a1", isEmpty: true, isFront: true},
-                { key: "a2", team: "a", no: "", name: "", sex: 0, classGrid: "a2", isEmpty: true, isFront: true},
-                { key: "a3", team: "a", no: "", name: "", sex: 0, classGrid: "a3", isEmpty: true, isFront: true},
-                { key: "a4", team: "a", no: "", name: "", sex: 0, classGrid: "a4", isEmpty: true, isFront: false},
-                { key: "a5", team: "a", no: "", name: "", sex: 0, classGrid: "a5", isEmpty: true, isFront: false},
-                { key: "a6", team: "a", no: "", name: "", sex: 0, classGrid: "a6", isEmpty: true, isFront: false},
-                { key: "a7", team: "a", no: "", name: "", sex: 0, classGrid: "a7", isEmpty: true, isFront: false},
-                { key: "a8", team: "a", no: "", name: "", sex: 0, classGrid: "a8", isEmpty: true, isFront: false},
+                { key: "a1", team: "a", no: "", name: "", sex: 0, classGrid: "a1", isEmpty: true, isLibero: false, isFront: true},
+                { key: "a2", team: "a", no: "", name: "", sex: 0, classGrid: "a2", isEmpty: true, isLibero: false, isFront: true},
+                { key: "a3", team: "a", no: "", name: "", sex: 0, classGrid: "a3", isEmpty: true, isLibero: false, isFront: true},
+                { key: "a4", team: "a", no: "", name: "", sex: 0, classGrid: "a4", isEmpty: true, isLibero: false, isFront: false},
+                { key: "a5", team: "a", no: "", name: "", sex: 0, classGrid: "a5", isEmpty: true, isLibero: false, isFront: false},
+                { key: "a6", team: "a", no: "", name: "", sex: 0, classGrid: "a6", isEmpty: true, isLibero: false, isFront: false},
+                { key: "a7", team: "a", no: "", name: "", sex: 0, classGrid: "a7", isEmpty: true, isLibero: true, isFront: false},
+                { key: "a8", team: "a", no: "", name: "", sex: 0, classGrid: "a8", isEmpty: true, isLibero: true, isFront: false},
             ],
             itemTeamB: [
                 // { key: "b1", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b1", isEmpty: true, },
@@ -344,14 +345,14 @@ export default {
                 // { key: "b9", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b9", isEmpty: true, },
                 // { key: "b8", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b8", isEmpty: true, },
                 // { key: "b7", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b7", isEmpty: true, },
-                { key: "b1", team: "b", no: "", name: "", sex: 0, classGrid: "b1", isEmpty: true, isFront: true},
-                { key: "b2", team: "b", no: "", name: "", sex: 0, classGrid: "b2", isEmpty: true, isFront: true},
-                { key: "b3", team: "b", no: "", name: "", sex: 0, classGrid: "b3", isEmpty: true, isFront: true},
-                { key: "b4", team: "b", no: "", name: "", sex: 0, classGrid: "b4", isEmpty: true, isFront: false},
-                { key: "b5", team: "b", no: "", name: "", sex: 0, classGrid: "b5", isEmpty: true, isFront: false},
-                { key: "b6", team: "b", no: "", name: "", sex: 0, classGrid: "b6", isEmpty: true, isFront: false},
-                { key: "b7", team: "b", no: "", name: "", sex: 0, classGrid: "b7", isEmpty: true, isFront: false},
-                { key: "b8", team: "b", no: "", name: "", sex: 0, classGrid: "b8", isEmpty: true, isFront: false},
+                { key: "b1", team: "b", no: "", name: "", sex: 0, classGrid: "b1", isEmpty: true, isLibero: false, isFront: true},
+                { key: "b2", team: "b", no: "", name: "", sex: 0, classGrid: "b2", isEmpty: true, isLibero: false, isFront: true},
+                { key: "b3", team: "b", no: "", name: "", sex: 0, classGrid: "b3", isEmpty: true, isLibero: false, isFront: true},
+                { key: "b4", team: "b", no: "", name: "", sex: 0, classGrid: "b4", isEmpty: true, isLibero: false, isFront: false},
+                { key: "b5", team: "b", no: "", name: "", sex: 0, classGrid: "b5", isEmpty: true, isLibero: false, isFront: false},
+                { key: "b6", team: "b", no: "", name: "", sex: 0, classGrid: "b6", isEmpty: true, isLibero: false, isFront: false},
+                { key: "b7", team: "b", no: "", name: "", sex: 0, classGrid: "b7", isEmpty: true, isLibero: true, isFront: false},
+                { key: "b8", team: "b", no: "", name: "", sex: 0, classGrid: "b8", isEmpty: true, isLibero: true, isFront: false},
             ],
             members: [],
         }
@@ -369,6 +370,18 @@ export default {
         if (this.members == null) {
             this.members = [];
         }
+
+
+        this.scoreSettings = JSON.parse(localStorage.getItem("score_settings"));
+        if (this.scoreSettings == null) {
+            this.scoreSettings = {
+                isLibero: false
+            };
+        }
+        this.itemTeamA[6].isLibero = this.scoreSettings.isLibero;
+        this.itemTeamA[7].isLibero = this.scoreSettings.isLibero;
+        this.itemTeamB[6].isLibero = this.scoreSettings.isLibero;
+        this.itemTeamB[7].isLibero = this.scoreSettings.isLibero;
 
         this.loadMain();
         this.modelAction = "serve";
@@ -989,7 +1002,13 @@ export default {
             var tempName = "";
             var tempSex = 0;
             var first = true;
-            for (var i = 7; i > 0; i--) {
+            var lastIdx;
+            if(this.scoreSettings.isLibero) {
+                lastIdx = 5;
+            } else {
+                lastIdx = 7;
+            }
+            for (var i = lastIdx; i > 0; i--) {
                 if (team[i].isEmpty) {
                     continue;
                 }

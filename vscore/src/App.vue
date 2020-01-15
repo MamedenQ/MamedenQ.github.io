@@ -7,6 +7,7 @@
       <v-btn v-show="false" style="margin-left:8px;" icon>
         <v-icon>fas fa-home</v-icon>
       </v-btn>
+      <!-- <v-img src="./assets/vball.png" height="64px" width="32px" aspect-ratio="2"></v-img> -->
       <v-toolbar-title style="margin-left:16px;">Ｖノート</v-toolbar-title>
       <v-toolbar-title style="margin-left:16px;">{{ title }}</v-toolbar-title>
       <v-toolbar-title style="margin-left:16px;">{{ target }}</v-toolbar-title>

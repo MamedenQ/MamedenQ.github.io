@@ -85,10 +85,12 @@ export default {
       var score = JSON.parse(localStorage.getItem("score"));
       var members = JSON.parse(localStorage.getItem("members"));
       var teams = JSON.parse(localStorage.getItem("teams"));
+      var score_settings = JSON.parse(localStorage.getItem("score_settings"));
       var outputJson = {
         score: score,
         members: members,
-        teams: teams
+        teams: teams,
+        score_settings: score_settings
       };
       this.output = JSON.stringify(outputJson);
     },
@@ -120,6 +122,10 @@ export default {
       localStorage.setItem("score", JSON.stringify(inputJson.score));
       localStorage.setItem("members", JSON.stringify(inputJson.members));
       localStorage.setItem("teams", JSON.stringify(inputJson.teams));
+      localStorage.setItem(
+        "score_settings",
+        JSON.stringify(inputJson.score_settings)
+      );
       // this.$emit("route-home");
     },
     onClickBackupDB() {
@@ -150,10 +156,12 @@ export default {
       var score = JSON.parse(localStorage.getItem("score"));
       var members = JSON.parse(localStorage.getItem("members"));
       var teams = JSON.parse(localStorage.getItem("teams"));
+      var score_settings = JSON.parse(localStorage.getItem("score_settings"));
       localStorage.setItem("bk_date", bkDate);
       localStorage.setItem("score_bk", JSON.stringify(score));
       localStorage.setItem("members_bk", JSON.stringify(members));
       localStorage.setItem("teams_bk", JSON.stringify(teams));
+      localStorage.setItem("score_settings_bk", JSON.stringify(score_settings));
     },
     onClickRestoreDB() {
       // this.title = "DBリストア確認";
@@ -178,9 +186,13 @@ export default {
       var score = JSON.parse(localStorage.getItem("score_bk"));
       var members = JSON.parse(localStorage.getItem("members_bk"));
       var teams = JSON.parse(localStorage.getItem("teams_bk"));
+      var score_settings = JSON.parse(
+        localStorage.getItem("score_settings_bk")
+      );
       localStorage.setItem("score", JSON.stringify(score));
       localStorage.setItem("members", JSON.stringify(members));
       localStorage.setItem("teams", JSON.stringify(teams));
+      localStorage.setItem("score_settings", JSON.stringify(score_settings));
     }
     // result(flg) {
     //   this.callbackConfirm(flg);

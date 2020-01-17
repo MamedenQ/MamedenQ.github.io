@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang=en><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,user-scalable=no"><link rel=icon href=favicon.ico><title>Ｖノート</title><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900"><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css><link rel=stylesheet href=https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css><style type=text/css>[v-cloak] {
       display: none;
-    }</style><link href=css/app.fc28ea91.css rel=preload as=style><link href=css/chunk-vendors.88145921.css rel=preload as=style><link href=js/app.d7082649.js rel=preload as=script><link href=js/chunk-vendors.3570c39f.js rel=preload as=script><link href=css/chunk-vendors.88145921.css rel=stylesheet><link href=css/app.fc28ea91.css rel=stylesheet></head><body><noscript><strong>We're sorry but vscore doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id=app></div><script src=js/chunk-vendors.3570c39f.js></script><script src=js/app.d7082649.js></script></body><script>// ＝＝＝＝＝調査項目
+    }</style><link href=css/app.fc28ea91.css rel=preload as=style><link href=css/chunk-vendors.88145921.css rel=preload as=style><link href=js/app.89ea4487.js rel=preload as=script><link href=js/chunk-vendors.3570c39f.js rel=preload as=script><link href=css/chunk-vendors.88145921.css rel=stylesheet><link href=css/app.fc28ea91.css rel=stylesheet></head><body><noscript><strong>We're sorry but vscore doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id=app></div><script src=js/chunk-vendors.3570c39f.js></script><script src=js/app.89ea4487.js></script></body><script>// ＝＝＝＝＝調査項目
   // 画面間データ連携調査
   // https://commis.hatenablog.com/entry/2017/11/21/180556
 
@@ -37,20 +37,24 @@
   // http://pictogram2.com/?tag=volleyball
 
   // ＝＝＝＝＝未実装
-
+  // データアクセス部分コンポーネント化
+  // ミックスインという機能があるっぽい
+  // https://blog.capilano-fw.com/?p=3741
 
   // 分析一覧は毎回データを編集しているが、初回のみにして処理量を減らしたい
-
-  // スコア一覧のチェックは全選択状態で初期表示したい
-
-  // 初期表示用の固定メンバー設定追加
-
-
-
 
   // 分析一覧はポイントやミスしかないが、詳細タブみたいなのを追加して見れるようにする
   // 誰が一番レシーブミス多いかとかを見たい
   // 省略表記にしないと入らない
+
+  // pwa用のアイコンを作る
+
+  // レーダーチャート　絞り込みなしで全体での力レベルをチャートにする
+
+  // 色をちゃんと決める
+
+
+
 
   // ロリポップ契約してDB使う
   // まずはMAMPでも入れてみて検証してから
@@ -58,23 +62,10 @@
   // DBはめんどければブラウザのストレージでいい
 
   // 開催ごとの推移をグラフで出す
-
-  // プレーヤマスタの番号重複チェック
-  // プレーヤの番号がキーになっている　変えると紐付けができなくなる
-  // 背番号ではなくシステム上の番号にしてしまう
-  // 現状登録済みのデータはどうする？
-  // json変換する
-
-  // pwa用のアイコンを作る
-
-  // データアクセス部分をコンポーネント化
-
-
+  // 開催ごとで起用のばらつきがあるから難しいかな
 
   // mountedで処理している箇所が多いが、表示時に一瞬コントロールの設定処理が見える（スイッチだったらOFFからONになる）
   // もう１つ前のサイクルでもいいかも
-
-
 
   // 現状のグリッドやめてvuetifyのグリッド使う　行ごとのサイズ計算するのがなくせるなら
 
@@ -159,24 +150,16 @@
   // マスタメンテのタブ遷移が遅い
   // 毎回生成されている？初回だけ遅い？
 
-  // レーダーチャート　絞り込みなしで全体での力レベルをチャートにする
-
   // 入力後選択値設定
 
-  // データクリア
-  // 今のところは全部スコア消せばおk
-
   // ipadのchromeでバックアップの確認画面で下スクロールすると余計な余白が出てくる
-
-  // データアクセス部分コンポーネント化
-  // ミックスインという機能があるっぽい
-  // https://blog.capilano-fw.com/?p=3741
 
   // 9人制ルールに適用する
   // 設定で切り替える
   // サーブセカンド、ローテなし
   // ８人しか登録できないが、相手チーム側も使えば９人登録できる
   // 9人制はコートcomponentを切り替える
+  // サーブのミスをファーストとセカンドに分ける
 
   // トス品質、２段トス、コース分析、ブロック枚数
 
@@ -189,8 +172,6 @@
   // icloudに愛知県の高校生の試合の結果シートがある参考程度に
 
   // リファクタリング
-  // アイコンの共通化
-  // メニューの共通化
   // 変数名やファイル名の規則を整える
   // スタイル名を整える
 

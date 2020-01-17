@@ -212,7 +212,7 @@ export default {
     },
     refresh() {
       var scoreList = JSON.parse(localStorage.getItem("score"));
-      if (scoreList == null) {
+      if (scoreList == null || scoreList.length == 0) {
         return;
       }
 

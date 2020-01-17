@@ -32,6 +32,8 @@
       ></v-textarea>
     </v-form>
 
+    <v-btn v-on:click="onClickClear" color="warning" dark>DB消去</v-btn>
+
     <confirm ref="confirm"></confirm>
     <!-- </v-container> -->
     <!-- </v-card> -->
@@ -195,11 +197,31 @@ export default {
       localStorage.setItem("score_settings", JSON.stringify(score_settings));
 
       this.$emit("route-home");
-    }
+    },
     // result(flg) {
     //   this.callbackConfirm(flg);
     //   this.showModalConfirm = false;
     // }
+    onClickClear() {
+      this.dialogProp = {
+        title: "DB消去確認",
+        msg: "DBのデータを消去しますか？",
+        positive: "OK",
+        negative: "キャンセル",
+        callback: this.callbackClear
+      };
+      this.$refs.confirm.open(this.dialogProp);
+    },
+    callbackClear(result) {
+      if (!result) {
+        return;
+      }
+
+      localStorage.setItem("score", JSON.stringify([]));
+      localStorage.setItem("members", JSON.stringify([]));
+      localStorage.setItem("teams", JSON.stringify([]));
+      localStorage.setItem("score_settings", JSON.stringify({}));
+    }
   }
 };
 </script>

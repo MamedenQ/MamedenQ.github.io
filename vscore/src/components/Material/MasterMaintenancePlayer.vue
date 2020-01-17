@@ -123,7 +123,7 @@ export default {
       this.members = this.members.sort(this.compare);
 
       this.teams = JSON.parse(localStorage.getItem("teams"));
-      if (this.teams == null) {
+      if (this.teams == null || this.teams.length == 0) {
         this.teams = [
           { no: 1, name: "" },
           { no: 2, name: "" },
@@ -185,6 +185,9 @@ export default {
       });
     },
     getNewPlayerId() {
+      if (this.members.length == 0) {
+        return 0;
+      }
       var playerid = this.members.map(function(p) {
         return p.playerid;
       });

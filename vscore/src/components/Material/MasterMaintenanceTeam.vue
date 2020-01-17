@@ -104,7 +104,7 @@ export default {
       //   this.members = [];
       // }
       this.teams = JSON.parse(localStorage.getItem("teams"));
-      if (this.teams == null) {
+      if (this.teams == null || this.teams.length == 0) {
         this.teams = [
           { no: 1, name: "" },
           { no: 2, name: "" },

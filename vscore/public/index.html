@@ -10,8 +10,6 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css">
-  <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> -->
   <style type="text/css">
     [v-cloak] {
       display: none;
@@ -25,14 +23,7 @@
       continue.</strong>
   </noscript>
   <div id="app"></div>
-  <!-- built files will be auto injected -->
 </body>
-<!-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-  integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-  integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-  integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script> -->
 <script type="text/javascript">
   // ＝＝＝＝＝調査項目
   // 画面間データ連携調査
@@ -71,20 +62,24 @@
   // http://pictogram2.com/?tag=volleyball
 
   // ＝＝＝＝＝未実装
-
+  // データアクセス部分コンポーネント化
+  // ミックスインという機能があるっぽい
+  // https://blog.capilano-fw.com/?p=3741
 
   // 分析一覧は毎回データを編集しているが、初回のみにして処理量を減らしたい
-
-  // スコア一覧のチェックは全選択状態で初期表示したい
-
-  // 初期表示用の固定メンバー設定追加
-
-
-
 
   // 分析一覧はポイントやミスしかないが、詳細タブみたいなのを追加して見れるようにする
   // 誰が一番レシーブミス多いかとかを見たい
   // 省略表記にしないと入らない
+
+  // pwa用のアイコンを作る
+
+  // レーダーチャート　絞り込みなしで全体での力レベルをチャートにする
+
+  // 色をちゃんと決める
+
+
+
 
   // ロリポップ契約してDB使う
   // まずはMAMPでも入れてみて検証してから
@@ -92,23 +87,10 @@
   // DBはめんどければブラウザのストレージでいい
 
   // 開催ごとの推移をグラフで出す
-
-  // プレーヤマスタの番号重複チェック
-  // プレーヤの番号がキーになっている　変えると紐付けができなくなる
-  // 背番号ではなくシステム上の番号にしてしまう
-  // 現状登録済みのデータはどうする？
-  // json変換する
-
-  // pwa用のアイコンを作る
-
-  // データアクセス部分をコンポーネント化
-
-
+  // 開催ごとで起用のばらつきがあるから難しいかな
 
   // mountedで処理している箇所が多いが、表示時に一瞬コントロールの設定処理が見える（スイッチだったらOFFからONになる）
   // もう１つ前のサイクルでもいいかも
-
-
 
   // 現状のグリッドやめてvuetifyのグリッド使う　行ごとのサイズ計算するのがなくせるなら
 
@@ -193,24 +175,16 @@
   // マスタメンテのタブ遷移が遅い
   // 毎回生成されている？初回だけ遅い？
 
-  // レーダーチャート　絞り込みなしで全体での力レベルをチャートにする
-
   // 入力後選択値設定
 
-  // データクリア
-  // 今のところは全部スコア消せばおk
-
   // ipadのchromeでバックアップの確認画面で下スクロールすると余計な余白が出てくる
-
-  // データアクセス部分コンポーネント化
-  // ミックスインという機能があるっぽい
-  // https://blog.capilano-fw.com/?p=3741
 
   // 9人制ルールに適用する
   // 設定で切り替える
   // サーブセカンド、ローテなし
   // ８人しか登録できないが、相手チーム側も使えば９人登録できる
   // 9人制はコートcomponentを切り替える
+  // サーブのミスをファーストとセカンドに分ける
 
   // トス品質、２段トス、コース分析、ブロック枚数
 
@@ -223,8 +197,6 @@
   // icloudに愛知県の高校生の試合の結果シートがある参考程度に
 
   // リファクタリング
-  // アイコンの共通化
-  // メニューの共通化
   // 変数名やファイル名の規則を整える
   // スタイル名を整える
 

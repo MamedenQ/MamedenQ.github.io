@@ -469,6 +469,7 @@ export default {
       if (this.isMatch) {
         this.matchTotalScore = this.getPlayerTemplate(
           0,
+          0,
           "全試合",
           0,
           "2000-01-01"

@@ -24,7 +24,14 @@
           </thead>
         </template>-->
         <template style="width:25%;" v-slot:item.no="{ item }">
-          <v-text-field color="primary" v-model="item.no" v-bind:rules="[required, limit_value]"></v-text-field>
+          <v-text-field
+            color="primary"
+            v-model="item.no"
+            v-bind:rules="[required, limit_value, duplicate_no]"
+            :error="item.isError"
+            :error-messages="item.errorMsg"
+            type="number"
+          ></v-text-field>
         </template>
         <template v-slot:item.name="{ item }">
           <v-text-field color="primary" v-model="item.name" v-bind:rules="[required]"></v-text-field>
@@ -78,6 +85,7 @@ export default {
       required: value => !!value || "必須入力",
       // limit_length: value => value.length <= 2 || "2文字以内",
       limit_value: value => (value >= 0 && value <= 999) || "0-999の整数",
+      duplicate_no: value => this.checkDuplicateNo(value) || "重複しています",
       options: {
         itemsPerPage: -1
       },
@@ -92,45 +100,16 @@ export default {
         callback: null
       },
       headersPlayer: [
-        {
-          text: "番号",
-          align: "center",
-          value: "no",
-          width: "20%"
-        },
-        {
-          text: "名前",
-          align: "center",
-          value: "name",
-          width: "20%"
-        },
-        {
-          text: "性別",
-          align: "center",
-          value: "sex",
-          width: "20%"
-        },
-        {
-          text: "所属",
-          align: "center",
-          value: "team",
-          width: "20%"
-        },
-        {
-          text: "削除",
-          align: "center",
-          value: "delete",
-          width: "20%"
-        }
+        { text: "番号", align: "center", value: "no", width: "20%" },
+        { text: "名前", align: "center", value: "name", width: "20%" },
+        { text: "性別", align: "center", value: "sex", width: "20%" },
+        { text: "所属", align: "center", value: "team", width: "20%" },
+        { text: "削除", align: "center", value: "delete", width: "20%" }
       ],
       teams: []
     };
   },
-  computed: {
-    // compMessage() {
-    //     return this.modelA + this.modelB;
-    // }
-  },
+  computed: {},
   mounted() {
     this.refresh();
   },
@@ -140,6 +119,8 @@ export default {
       if (this.members == null) {
         this.members = [];
       }
+
+      this.members = this.members.sort(this.compare);
 
       this.teams = JSON.parse(localStorage.getItem("teams"));
       if (this.teams == null) {
@@ -157,6 +138,17 @@ export default {
         ];
       }
     },
+    compare(a, b) {
+      var r = 0;
+
+      if (a.no < b.no) {
+        r = -1;
+      } else if (a.no > b.no) {
+        r = 1;
+      }
+
+      return r;
+    },
     onClickDelete(item) {
       console.log(this.options);
 
@@ -170,26 +162,17 @@ export default {
       };
       this.$refs.confirm.open(this.dialogProp);
     },
-    // result(flg) {
-    //   this.callbackConfirm(flg);
-    //   this.showModalConfirm = false;
-    // },
     callbackDelete(result) {
       if (!result) {
         return;
       }
 
       var item = this.dialogProp.deleteItem;
-      // var scoreList = JSON.parse(localStorage.getItem("score"));
       var filterData = this.members.filter(function(data) {
         if (data.no != item.no) return true;
       });
-      // filterData[0].isTrash = true;
-
-      // localStorage.setItem("score", JSON.stringify(scoreList));
 
       this.members = filterData;
-      // this.refresh();
     },
     onClickAddMember() {
       this.members.push({
@@ -203,11 +186,6 @@ export default {
       if (!this.isFormValid) {
         return;
       }
-      // this.title = "保存確認";
-      // this.msg = "保存しますか？";
-      // this.callbackConfirm = this.callbackSaveMember;
-
-      // this.showModalConfirm = true;
       this.dialogProp = {
         title: "保存確認",
         msg: "保存しますか？",
@@ -222,6 +200,20 @@ export default {
         return;
       }
       localStorage.setItem("members", JSON.stringify(this.members));
+    },
+    checkDuplicateNo(value) {
+      var cnt = 0;
+      this.members.forEach(function(d) {
+        if (d.no == value) {
+          cnt++;
+        }
+      });
+
+      if (cnt > 1) {
+        return false;
+      }
+
+      return true;
     }
   }
 };

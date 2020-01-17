@@ -31,7 +31,7 @@
             </v-card>
           </v-tab-item>
           <v-tab-item value="tab-backup" style="padding:10px;">
-            <backup style="margin-bottom:10px;"></backup>
+            <backup v-on:route-home="routeHome" style="margin-bottom:10px;"></backup>
           </v-tab-item>
         </v-tabs-items>
       </v-card>
@@ -132,6 +132,9 @@ export default {
   },
   methods: {
     onBack() {
+      this.$emit("route-home");
+    },
+    routeHome() {
       this.$emit("route-home");
     }
   }

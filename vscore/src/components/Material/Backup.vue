@@ -126,7 +126,7 @@ export default {
         "score_settings",
         JSON.stringify(inputJson.score_settings)
       );
-      // this.$emit("route-home");
+      this.$emit("route-home");
     },
     onClickBackupDB() {
       // this.title = "DBバックアップ確認";
@@ -193,6 +193,8 @@ export default {
       localStorage.setItem("members", JSON.stringify(members));
       localStorage.setItem("teams", JSON.stringify(teams));
       localStorage.setItem("score_settings", JSON.stringify(score_settings));
+
+      this.$emit("route-home");
     }
     // result(flg) {
     //   this.callbackConfirm(flg);

@@ -141,9 +141,9 @@ export default {
     compare(a, b) {
       var r = 0;
 
-      if (a.no < b.no) {
+      if (a.playerid < b.playerid) {
         r = -1;
-      } else if (a.no > b.no) {
+      } else if (a.playerid > b.playerid) {
         r = 1;
       }
 
@@ -175,11 +175,21 @@ export default {
       this.members = filterData;
     },
     onClickAddMember() {
+      var newId = this.getNewPlayerId();
+      console.log("newId = " + newId);
       this.members.push({
+        playerid: newId,
         no: "",
         name: "",
         sex: 0
       });
+    },
+    getNewPlayerId() {
+      var playerid = this.members.map(function(p) {
+        return p.playerid;
+      });
+      var newId = Math.max.apply(null, playerid);
+      return Number(newId) + 1;
     },
     onClickSaveMember() {
       this.isFormValid = this.$refs.master_player_form.validate();

@@ -477,15 +477,15 @@ export default {
       }
       this.analyzeData.forEach(this.totalScore);
       this.scoreAnalyze.forEach(this.calcScore);
-      if (this.isMatch) {
+      if (!this.isMatch) {
         this.scoreAnalyze.sort(this.compare);
       }
     },
     compare(a, b) {
       var r = 0;
-      if (a.no < b.no) {
+      if (a.playerid < b.playerid) {
         r = -1;
-      } else if (a.no > b.no) {
+      } else if (a.playerid > b.playerid) {
         r = 1;
       }
 
@@ -516,7 +516,13 @@ export default {
     },
     totalScore(score) {
       if (this.isMatch) {
-        var matchScore = this.getPlayerTemplate(0, score.title, 0, score.date);
+        var matchScore = this.getPlayerTemplate(
+          0,
+          0,
+          score.title,
+          0,
+          score.date
+        );
         matchScore.date = score.date;
         matchScore.point = score.teamAPoint + "-" + score.teamBPoint;
         for (var i = 0; i < score.score.length; i++) {
@@ -530,24 +536,27 @@ export default {
     },
     forEachScore(data) {
       var analyzeData = this.scoreAnalyze.filter(function(d) {
-        if (d.no == data.no) return true;
+        if (d.playerid == data.playerid) return true;
       });
 
       if (analyzeData.length == 0) {
-        var no = data.no;
+        var playerid = data.playerid;
         var member = this.members.filter(function(s) {
-          if (s.no == no) return true;
+          if (s.playerid == playerid) return true;
         });
         var name;
         var sex;
+        var no;
         if (member.length == 0) {
           name = "（不明なプレーヤ）";
           sex = 0;
+          no = 0;
         } else {
           name = member[0].name;
           sex = member[0].sex;
+          no = member[0].no;
         }
-        analyzeData = this.getPlayerTemplate(data.no, name, sex, "");
+        analyzeData = this.getPlayerTemplate(data.playerid, no, name, sex, "");
         this.scoreAnalyze.push(analyzeData);
       } else {
         analyzeData = analyzeData[0];
@@ -614,8 +623,9 @@ export default {
         analyzeData.total.total++;
       }
     },
-    getPlayerTemplate(no, name, sex, date) {
+    getPlayerTemplate(playerid, no, name, sex, date) {
       return {
+        playerid: playerid,
         no: no,
         name: name,
         date: date,

@@ -33,25 +33,25 @@
                   <!-- <span style="left:0;text-align:center;pointer-events:none">空に変更</span> -->
                 </label>
               </li>
-              <li class="member" v-for="member of dialogProp.members" :key="member.no">
+              <li class="member" v-for="member of dialogProp.members" :key="member.playerid">
                 <input
                   type="radio"
-                  v-bind:id="'mem_' + member.no"
+                  v-bind:id="'mem_' + member.playerid"
                   name="member"
                   v-on:change="onChangeMember(member)"
-                  v-bind:value="member.no"
+                  v-bind:value="member.playerid"
                   v-model="modelSelection"
                 />
-                <label v-bind:for="'mem_' + member.no">
+                <label v-bind:for="'mem_' + member.playerid">
                   <v-btn
-                    v-show="modelSelection == member.no"
+                    v-show="modelSelection == member.playerid"
                     v-bind:style="styleMemberButton"
                     color="primary"
                     dark
                   >{{member.no}}:{{member.name}}</v-btn>
                   <v-btn
-                    v-on:click="modelSelection = member.no;onChangeMember(member);"
-                    v-show="modelSelection != member.no"
+                    v-on:click="modelSelection = member.playerid;onChangeMember(member);"
+                    v-show="modelSelection != member.playerid"
                     v-bind:style="styleMemberButton"
                   >{{member.no}}:{{member.name}}</v-btn>
                   <playerSvg v-if="member.sex == 0"></playerSvg>
@@ -125,25 +125,25 @@
                       <!-- <span style="left:0;text-align:center;pointer-events:none">空に変更</span> -->
                     </label>
                   </li>
-                  <li class="member" v-for="member of members" :key="member.no">
+                  <li class="member" v-for="member of members" :key="member.playerid">
                     <input
                       type="radio"
-                      v-bind:id="'mem_' + member.no"
+                      v-bind:id="'mem_' + member.playerid"
                       name="member"
                       v-on:change="onChangeMember(member)"
-                      v-bind:value="member.no"
+                      v-bind:value="member.playerid"
                       v-model="modelSelection"
                     />
-                    <label v-bind:for="'mem_' + member.no">
+                    <label v-bind:for="'mem_' + member.playerid">
                       <v-btn
-                        v-show="modelSelection == member.no"
+                        v-show="modelSelection == member.playerid"
                         v-bind:style="styleMemberButton"
                         color="primary"
                         dark
                       >{{member.no}}:{{member.name}}</v-btn>
                       <v-btn
-                        v-on:click="modelSelection = member.no;onChangeMember(member);"
-                        v-show="modelSelection != member.no"
+                        v-on:click="modelSelection = member.playerid;onChangeMember(member);"
+                        v-show="modelSelection != member.playerid"
                         v-bind:style="styleMemberButton"
                       >{{member.no}}:{{member.name}}</v-btn>
                       <playerSvg v-if="member.sex == 0"></playerSvg>
@@ -280,11 +280,13 @@ export default {
     },
     changeMember(item) {
       if (this.selectedMember == null) {
+        item.playerid = "";
         item.no = "";
         item.name = "";
         item.sex = 0;
         item.isEmpty = true;
       } else {
+        item.playerid = this.selectedMember.playerid;
         item.no = this.selectedMember.no;
         item.name = this.selectedMember.name;
         item.sex = this.selectedMember.sex;

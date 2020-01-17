@@ -326,14 +326,14 @@ export default {
                 // { key: "a3", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a3", isEmpty: true, },
                 // { key: "a2", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a2", isEmpty: true, },
                 // { key: "a1", team: "a", no: "", name: "", sex: 0, classGrid: "grid_style_team a1", isEmpty: true, },
-                { key: "a1", team: "a", no: "", name: "", sex: 0, classGrid: "a1", isEmpty: true, isLibero: false, isFront: true},
-                { key: "a2", team: "a", no: "", name: "", sex: 0, classGrid: "a2", isEmpty: true, isLibero: false, isFront: true},
-                { key: "a3", team: "a", no: "", name: "", sex: 0, classGrid: "a3", isEmpty: true, isLibero: false, isFront: true},
-                { key: "a4", team: "a", no: "", name: "", sex: 0, classGrid: "a4", isEmpty: true, isLibero: false, isFront: false},
-                { key: "a5", team: "a", no: "", name: "", sex: 0, classGrid: "a5", isEmpty: true, isLibero: false, isFront: false},
-                { key: "a6", team: "a", no: "", name: "", sex: 0, classGrid: "a6", isEmpty: true, isLibero: false, isFront: false},
-                { key: "a7", team: "a", no: "", name: "", sex: 0, classGrid: "a7", isEmpty: true, isLibero: true, isFront: false},
-                { key: "a8", team: "a", no: "", name: "", sex: 0, classGrid: "a8", isEmpty: true, isLibero: true, isFront: false},
+                { key: "a1", team: "a", playerid:"", no: "", name: "", sex: 0, classGrid: "a1", isEmpty: true, isLibero: false, isFront: true},
+                { key: "a2", team: "a", playerid:"", no: "", name: "", sex: 0, classGrid: "a2", isEmpty: true, isLibero: false, isFront: true},
+                { key: "a3", team: "a", playerid:"", no: "", name: "", sex: 0, classGrid: "a3", isEmpty: true, isLibero: false, isFront: true},
+                { key: "a4", team: "a", playerid:"", no: "", name: "", sex: 0, classGrid: "a4", isEmpty: true, isLibero: false, isFront: false},
+                { key: "a5", team: "a", playerid:"", no: "", name: "", sex: 0, classGrid: "a5", isEmpty: true, isLibero: false, isFront: false},
+                { key: "a6", team: "a", playerid:"", no: "", name: "", sex: 0, classGrid: "a6", isEmpty: true, isLibero: false, isFront: false},
+                { key: "a7", team: "a", playerid:"", no: "", name: "", sex: 0, classGrid: "a7", isEmpty: true, isLibero: true, isFront: false},
+                { key: "a8", team: "a", playerid:"", no: "", name: "", sex: 0, classGrid: "a8", isEmpty: true, isLibero: true, isFront: false},
             ],
             itemTeamB: [
                 // { key: "b1", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b1", isEmpty: true, },
@@ -345,14 +345,14 @@ export default {
                 // { key: "b9", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b9", isEmpty: true, },
                 // { key: "b8", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b8", isEmpty: true, },
                 // { key: "b7", team: "b", no: "", name: "", sex: 0, classGrid: "grid_style_team b7", isEmpty: true, },
-                { key: "b1", team: "b", no: "", name: "", sex: 0, classGrid: "b1", isEmpty: true, isLibero: false, isFront: true},
-                { key: "b2", team: "b", no: "", name: "", sex: 0, classGrid: "b2", isEmpty: true, isLibero: false, isFront: true},
-                { key: "b3", team: "b", no: "", name: "", sex: 0, classGrid: "b3", isEmpty: true, isLibero: false, isFront: true},
-                { key: "b4", team: "b", no: "", name: "", sex: 0, classGrid: "b4", isEmpty: true, isLibero: false, isFront: false},
-                { key: "b5", team: "b", no: "", name: "", sex: 0, classGrid: "b5", isEmpty: true, isLibero: false, isFront: false},
-                { key: "b6", team: "b", no: "", name: "", sex: 0, classGrid: "b6", isEmpty: true, isLibero: false, isFront: false},
-                { key: "b7", team: "b", no: "", name: "", sex: 0, classGrid: "b7", isEmpty: true, isLibero: true, isFront: false},
-                { key: "b8", team: "b", no: "", name: "", sex: 0, classGrid: "b8", isEmpty: true, isLibero: true, isFront: false},
+                { key: "b1", team: "b", playerid:"", no: "", name: "", sex: 0, classGrid: "b1", isEmpty: true, isLibero: false, isFront: true},
+                { key: "b2", team: "b", playerid:"", no: "", name: "", sex: 0, classGrid: "b2", isEmpty: true, isLibero: false, isFront: true},
+                { key: "b3", team: "b", playerid:"", no: "", name: "", sex: 0, classGrid: "b3", isEmpty: true, isLibero: false, isFront: true},
+                { key: "b4", team: "b", playerid:"", no: "", name: "", sex: 0, classGrid: "b4", isEmpty: true, isLibero: false, isFront: false},
+                { key: "b5", team: "b", playerid:"", no: "", name: "", sex: 0, classGrid: "b5", isEmpty: true, isLibero: false, isFront: false},
+                { key: "b6", team: "b", playerid:"", no: "", name: "", sex: 0, classGrid: "b6", isEmpty: true, isLibero: false, isFront: false},
+                { key: "b7", team: "b", playerid:"", no: "", name: "", sex: 0, classGrid: "b7", isEmpty: true, isLibero: true, isFront: false},
+                { key: "b8", team: "b", playerid:"", no: "", name: "", sex: 0, classGrid: "b8", isEmpty: true, isLibero: true, isFront: false},
             ],
             members: [],
         }
@@ -591,12 +591,14 @@ export default {
         updateTeam(teamA, teamB) {
             for (var i = 0; i < 8; i++) {
                 this.itemTeamA[i].key = teamA[i].key;
+                this.itemTeamA[i].playerid = teamA[i].playerid;
                 this.itemTeamA[i].no = teamA[i].no;
                 this.itemTeamA[i].name = teamA[i].name;
                 this.itemTeamA[i].sex = teamA[i].sex;
                 this.itemTeamA[i].isEmpty = teamA[i].isEmpty;
 
                 this.itemTeamB[i].key = teamB[i].key;
+                this.itemTeamB[i].playerid = teamB[i].playerid;
                 this.itemTeamB[i].no = teamB[i].no;
                 this.itemTeamB[i].name = teamB[i].name;
                 this.itemTeamB[i].sex = teamB[i].sex;
@@ -635,7 +637,7 @@ export default {
             if (item.isEmpty) {
                 return;
             }
-            this.pushScore(item.team, item.no, item.name, this.modelAction, this.getKind(), this.modelDetail);
+            this.pushScore(item.team, item.playerid, item.no, item.name, this.modelAction, this.getKind(), this.modelDetail);
             this.scoreBk = [];
             this.updateUndoRedoButton();
             this.$refs.scoreCarousel.slideTo(this.score.length - 1);
@@ -931,7 +933,7 @@ export default {
             }
             return this.modelKind;
         },
-        pushScore(team, no, name, action, kind, detail) {
+        pushScore(team, playerid, no, name, action, kind, detail) {
             var teamcode;
             if (team == "a") {
                 teamcode = 0;
@@ -942,6 +944,7 @@ export default {
             this.score.push({
                 index: this.getMaxIndex() + 1,
                 team: teamcode,
+                playerid: playerid,
                 no: no,
                 name: name,
                 action: action,
@@ -998,6 +1001,7 @@ export default {
         },
         rotate(team) {
             // jsonの順番を変えるようにしないとだめ
+            var tempPlayerId = -1;
             var tempNo = -1;
             var tempName = "";
             var tempSex = 0;
@@ -1013,6 +1017,7 @@ export default {
                     continue;
                 }
                 if (first) {
+                    tempPlayerId = team[i].playerid;
                     tempNo = team[i].no;
                     tempName = team[i].name;
                     tempSex = team[i].sex;
@@ -1020,6 +1025,7 @@ export default {
                 }
                 for (var j = i - 1; j >= 0; j--) {
                     if (!team[j].isEmpty) {
+                        team[i].playerid = team[j].playerid;
                         team[i].no = team[j].no;
                         team[i].name = team[j].name;
                         team[i].sex = team[j].sex;
@@ -1028,6 +1034,7 @@ export default {
                 }
             }
 
+            team[0].playerid = tempPlayerId;
             team[0].no = tempNo;
             team[0].name = tempName;
             team[0].sex = tempSex;

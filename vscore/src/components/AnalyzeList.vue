@@ -16,27 +16,27 @@
         color="primary"
         dark
       >試合別に切り替える</v-btn>-->
-      <v-card>
-        <v-tabs v-model="tab" background-color="primary accent-4" centered dark>
-          <v-tabs-slider></v-tabs-slider>
-          <v-tab href="#tab-total">トータル</v-tab>
-          <v-tab href="#tab-serve">サーブ</v-tab>
-          <v-tab href="#tab-spike">スパイク</v-tab>
-          <v-tab href="#tab-block">ブロック</v-tab>
-          <v-tab href="#tab-receive-etc">レシーブ他</v-tab>
-        </v-tabs>
+      <!-- <v-card> -->
+      <v-tabs v-model="tab" background-color="primary accent-4" centered dark>
+        <v-tabs-slider></v-tabs-slider>
+        <v-tab href="#tab-total">トータル</v-tab>
+        <v-tab href="#tab-serve">サーブ</v-tab>
+        <v-tab href="#tab-spike">スパイク</v-tab>
+        <v-tab href="#tab-block">ブロック</v-tab>
+        <v-tab href="#tab-receive-etc">レシーブ他</v-tab>
+      </v-tabs>
 
-        <v-tabs-items v-model="tab">
-          <v-tab-item value="tab-total">
-            <v-data-table
-              :headers="headersTotal"
-              :items="scoreAnalyze"
-              item-key="id"
-              hide-default-footer
-              :options.sync="options"
-              multi-sort
-            >
-              <!-- <template v-slot:header="{ props }">
+      <v-tabs-items v-model="tab">
+        <v-tab-item value="tab-total">
+          <v-data-table
+            :headers="headersTotal"
+            :items="scoreAnalyze"
+            item-key="id"
+            hide-default-footer
+            :options.sync="options"
+            multi-sort
+          >
+            <!-- <template v-slot:header="{ props }">
                 <thead>
                   <tr>
                     <th style="border-bottom:none;text-align:left;">基本情報</th>
@@ -45,27 +45,27 @@
                     <th style="border-bottom:none;"></th>
                   </tr>
                 </thead>
-              </template>-->
+            </template>-->
 
-              <template v-slot:item.name="{ item }">
-                <a href="#" v-on:click="onPlayerDetail(item)">{{item.name}}</a>
-              </template>
-              <template v-slot:item.sex="{ item }">
-                <span v-if="item.sex == 0">男</span>
-                <span v-else>女</span>
-              </template>
-            </v-data-table>
-          </v-tab-item>
-          <v-tab-item value="tab-serve">
-            <v-data-table
-              :headers="headersServe"
-              :items="scoreAnalyze"
-              item-key="id"
-              hide-default-footer
-              :options.sync="options"
-              multi-sort
-            >
-              <!-- <template v-slot:header="{ props }">
+            <template v-slot:item.name="{ item }">
+              <a href="#" v-on:click="onPlayerDetail(item)">{{item.name}}</a>
+            </template>
+            <template v-slot:item.sex="{ item }">
+              <span v-if="item.sex == 0">男</span>
+              <span v-else>女</span>
+            </template>
+          </v-data-table>
+        </v-tab-item>
+        <v-tab-item value="tab-serve">
+          <v-data-table
+            :headers="headersServe"
+            :items="scoreAnalyze"
+            item-key="id"
+            hide-default-footer
+            :options.sync="options"
+            multi-sort
+          >
+            <!-- <template v-slot:header="{ props }">
                 <thead>
                   <tr>
                     <th style="border-bottom:none;text-align:left;">基本情報</th>
@@ -74,27 +74,27 @@
                     <th style="border-bottom:none;"></th>
                   </tr>
                 </thead>
-              </template>-->
+            </template>-->
 
-              <template v-slot:item.name="{ item }">
-                <a href="#" v-on:click="onPlayerDetail(item)">{{item.name}}</a>
-              </template>
-              <template v-slot:item.sex="{ item }">
-                <span v-if="item.sex == 0">男</span>
-                <span v-else>女</span>
-              </template>
-            </v-data-table>
-          </v-tab-item>
-          <v-tab-item value="tab-spike">
-            <v-data-table
-              :headers="headersSpike"
-              :items="scoreAnalyze"
-              item-key="id"
-              hide-default-footer
-              :options.sync="options"
-              multi-sort
-            >
-              <!-- <template v-slot:header="{ props }">
+            <template v-slot:item.name="{ item }">
+              <a href="#" v-on:click="onPlayerDetail(item)">{{item.name}}</a>
+            </template>
+            <template v-slot:item.sex="{ item }">
+              <span v-if="item.sex == 0">男</span>
+              <span v-else>女</span>
+            </template>
+          </v-data-table>
+        </v-tab-item>
+        <v-tab-item value="tab-spike">
+          <v-data-table
+            :headers="headersSpike"
+            :items="scoreAnalyze"
+            item-key="id"
+            hide-default-footer
+            :options.sync="options"
+            multi-sort
+          >
+            <!-- <template v-slot:header="{ props }">
                 <thead>
                   <tr>
                     <th style="border-bottom:none;text-align:left;">基本情報</th>
@@ -106,31 +106,31 @@
                     <th style="border-bottom:none;"></th>
                   </tr>
                 </thead>
-              </template>-->
+            </template>-->
 
-              <template v-slot:item.name="{ item }">
-                <a href="#" v-on:click="onPlayerDetail(item)">{{item.name}}</a>
-              </template>
-              <template v-slot:item.sex="{ item }">
-                <span v-if="item.sex == 0">男</span>
-                <span v-else>女</span>
-              </template>
-              <template
-                v-slot:item.spike.determined="{ item }"
-              >{{item.spike.determined | filterPercent}}</template>
-              <template v-slot:item.spike.effect="{ item }">{{item.spike.effect | filterPercent}}</template>
-            </v-data-table>
-          </v-tab-item>
-          <v-tab-item value="tab-block">
-            <v-data-table
-              :headers="headersBlock"
-              :items="scoreAnalyze"
-              item-key="id"
-              hide-default-footer
-              :options.sync="options"
-              multi-sort
-            >
-              <!-- <template v-slot:header="{ props }">
+            <template v-slot:item.name="{ item }">
+              <a href="#" v-on:click="onPlayerDetail(item)">{{item.name}}</a>
+            </template>
+            <template v-slot:item.sex="{ item }">
+              <span v-if="item.sex == 0">男</span>
+              <span v-else>女</span>
+            </template>
+            <template
+              v-slot:item.spike.determined="{ item }"
+            >{{item.spike.determined | filterPercent}}</template>
+            <template v-slot:item.spike.effect="{ item }">{{item.spike.effect | filterPercent}}</template>
+          </v-data-table>
+        </v-tab-item>
+        <v-tab-item value="tab-block">
+          <v-data-table
+            :headers="headersBlock"
+            :items="scoreAnalyze"
+            item-key="id"
+            hide-default-footer
+            :options.sync="options"
+            multi-sort
+          >
+            <!-- <template v-slot:header="{ props }">
                 <thead>
                   <tr>
                     <th style="border-bottom:none;text-align:left;">基本情報</th>
@@ -139,27 +139,27 @@
                     <th style="border-bottom:none;"></th>
                   </tr>
                 </thead>
-              </template>-->
+            </template>-->
 
-              <template v-slot:item.name="{ item }">
-                <a href="#" v-on:click="onPlayerDetail(item)">{{item.name}}</a>
-              </template>
-              <template v-slot:item.sex="{ item }">
-                <span v-if="item.sex == 0">男</span>
-                <span v-else>女</span>
-              </template>
-            </v-data-table>
-          </v-tab-item>
-          <v-tab-item value="tab-receive-etc">
-            <v-data-table
-              :headers="headersReceiveEtc"
-              :items="scoreAnalyze"
-              item-key="id"
-              hide-default-footer
-              :options.sync="options"
-              multi-sort
-            >
-              <!-- <template v-slot:header="{ props }">
+            <template v-slot:item.name="{ item }">
+              <a href="#" v-on:click="onPlayerDetail(item)">{{item.name}}</a>
+            </template>
+            <template v-slot:item.sex="{ item }">
+              <span v-if="item.sex == 0">男</span>
+              <span v-else>女</span>
+            </template>
+          </v-data-table>
+        </v-tab-item>
+        <v-tab-item value="tab-receive-etc">
+          <v-data-table
+            :headers="headersReceiveEtc"
+            :items="scoreAnalyze"
+            item-key="id"
+            hide-default-footer
+            :options.sync="options"
+            multi-sort
+          >
+            <!-- <template v-slot:header="{ props }">
                 <thead>
                   <tr>
                     <th style="border-bottom:none;text-align:left;">基本情報</th>
@@ -169,19 +169,19 @@
                     <th style="border-bottom:none;">ファウル</th>
                   </tr>
                 </thead>
-              </template>-->
+            </template>-->
 
-              <template v-slot:item.name="{ item }">
-                <a href="#" v-on:click="onPlayerDetail(item)">{{item.name}}</a>
-              </template>
-              <template v-slot:item.sex="{ item }">
-                <span v-if="item.sex == 0">男</span>
-                <span v-else>女</span>
-              </template>
-            </v-data-table>
-          </v-tab-item>
-        </v-tabs-items>
-      </v-card>
+            <template v-slot:item.name="{ item }">
+              <a href="#" v-on:click="onPlayerDetail(item)">{{item.name}}</a>
+            </template>
+            <template v-slot:item.sex="{ item }">
+              <span v-if="item.sex == 0">男</span>
+              <span v-else>女</span>
+            </template>
+          </v-data-table>
+        </v-tab-item>
+      </v-tabs-items>
+      <!-- </v-card> -->
       <!-- <v-btn
         v-if="isMatch"
         style="width:100%;margin:10px 0"

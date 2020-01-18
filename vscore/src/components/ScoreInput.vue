@@ -97,7 +97,6 @@ import scoreSave from './Material/ScoreSave'
 import { Hooper, Slide } from "hooper";
 import "hooper/dist/hooper.css";
 
-
 export default {
     name: 'score_input',
     components: {
@@ -132,21 +131,11 @@ export default {
         scoreInputProp: Object,
         commonProp: Object,
     },
-    filters: {
-        memberDisp(str) {
-
-        },
-    },
     data: function () {
         return {
             isSimple: true,
-            scoreColor: [
-                "#5acbc0",
-                "#a8a093",
-            ],
             score: [],
             scoreBk: [],
-            scoreTempSave: [],
             modelAction: "",
             modelKind: "",
             modelDetail: "",

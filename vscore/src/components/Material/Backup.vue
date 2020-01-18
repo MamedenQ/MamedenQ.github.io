@@ -193,9 +193,9 @@ export default {
       }
 
       this.setScoreData([]);
-      var defaultMembers = this.getDefaultDataTeams();
-      this.setMembersData(defaultMembers);
-      this.setTeamsData([]);
+      this.setMembersData([]);
+      var defaultTeams = this.getDefaultDataTeams();
+      this.setTeamsData(defaultTeams);
       var defaultScoreSettings = this.getDefaultDataScoreSettings();
       this.setScoreSettingsData(defaultScoreSettings);
 

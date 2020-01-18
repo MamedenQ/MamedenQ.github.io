@@ -108,6 +108,92 @@
                 </thead>
             </template>-->
 
+            <template v-slot:header.name="{ header }">
+              名
+              <br />前
+              <br />
+            </template>
+            <template v-slot:header.sex="{ header }">
+              性
+              <br />別
+              <br />
+            </template>
+            <template v-slot:header.date="{ header }">
+              日
+              <br />付
+              <br />
+            </template>
+            <template v-slot:header.spike.total="{ header }">
+              総
+              <br />数
+              <br />
+            </template>
+            <template v-slot:header.spike.point="{ header }">
+              総
+              <br />得
+              <br />点
+              <br />
+            </template>
+            <template v-slot:header.spike.point_detail.in="{ header }">
+              イ
+              <br />ン
+              <br />
+            </template>
+            <template v-slot:header.spike.point_detail.fake="{ header }">
+              フ
+              <br />ェ
+              <br />イ
+              <br />ン
+              <br />ト
+              <br />
+            </template>
+            <template v-slot:header.spike.point_detail.blockout="{ header }">
+              ブ
+              <br />ロ
+              <br />ッ
+              <br />ク
+              <br />ア
+              <br />ウ
+              <br />ト
+              <br />
+            </template>
+            <template v-slot:header.spike.miss="{ header }">
+              総
+              <br />失
+              <br />点
+              <br />
+            </template>
+            <template v-slot:header.spike.miss_detail.out="{ header }">
+              ア
+              <br />ウ
+              <br />ト
+              <br />
+            </template>
+            <template v-slot:header.spike.miss_detail.net="{ header }">
+              ネ
+              <br />ッ
+              <br />ト
+              <br />
+            </template>
+            <template v-slot:header.spike.miss_detail.block="{ header }">
+              ブ
+              <br />ロ
+              <br />ッ
+              <br />ク
+              <br />
+            </template>
+            <template v-slot:header.spike.determined="{ header }">
+              決
+              <br />定
+              <br />率
+              <br />
+            </template>
+            <template v-slot:header.spike.effect="{ header }">
+              効
+              <br />果
+              <br />率
+              <br />
+            </template>
             <template v-slot:item.name="{ item }">
               <a href="#" v-on:click="onPlayerDetail(item)">{{item.name}}</a>
             </template>
@@ -288,36 +374,40 @@ export default {
         { text: "名前", align: "left", value: "name" },
         { text: "性別", align: "left", value: "sex" },
         { text: "得点", align: "right", value: "serve.point" },
-        { text: "失点", align: "right", value: "serve.miss" }
+        { text: "総失点", align: "right", value: "serve.miss" },
+        { text: "アウト", align: "right", value: "serve.miss_detail.out" },
+        { text: "ネット", align: "right", value: "serve.miss_detail.net" }
       ],
       headersServeMatch: [
         { text: "試合", align: "left", value: "name" },
         { text: "日付", align: "left", value: "date" },
         { text: "得点", align: "right", value: "serve.point" },
-        { text: "失点", align: "right", value: "serve.miss" }
+        { text: "総失点", align: "right", value: "serve.miss" },
+        { text: "アウト", align: "right", value: "serve.miss_detail.out" },
+        { text: "ネット", align: "right", value: "serve.miss_detail.net" }
       ],
       headersSpike: [],
       headersSpikePlayer: [
-        { text: "名前", align: "left", value: "name" },
-        { text: "性別", align: "left", value: "sex" },
-        { text: "総数", align: "right", value: "spike.total" },
-        { text: "得点", align: "right", value: "spike.point" },
-        { text: "失点", align: "right", value: "spike.miss" },
-        { text: "決定率", align: "right", value: "spike.determined" },
-        { text: "効果率", align: "right", value: "spike.effect" }
         // { text: "名前", align: "left", value: "name" },
         // { text: "性別", align: "left", value: "sex" },
         // { text: "総数", align: "right", value: "spike.total" },
-        // { text: "総得", align: "right", value: "spike.point" },
-        // { text: "ｲﾝ", align: "right", value: "spike.point" },
-        // { text: "ﾌｪｲｸ", align: "right", value: "spike.point" },
-        // { text: "ﾌﾞﾛｯｸｱｳﾄ", align: "right", value: "spike.point" },
-        // { text: "総失", align: "right", value: "spike.miss" },
-        // { text: "ｱｳﾄ", align: "right", value: "spike.miss" },
-        // { text: "ﾈｯﾄ", align: "right", value: "spike.miss" },
-        // { text: "ﾌﾞﾛｯｸ", align: "right", value: "spike.miss" },
-        // { text: "決率", align: "right", value: "spike.determined" },
-        // { text: "効率", align: "right", value: "spike.effect" }
+        // { text: "得点", align: "right", value: "spike.point" },
+        // { text: "失点", align: "right", value: "spike.miss" },
+        // { text: "決定率", align: "right", value: "spike.determined" },
+        // { text: "効果率", align: "right", value: "spike.effect" }
+        { text: "名前", align: "left", value: "name" },
+        { text: "性別", align: "left", value: "sex" },
+        { text: "総数", align: "right", value: "spike.total" },
+        { text: "総得点", align: "right", value: "spike.point" },
+        { text: "in", align: "right", value: "spike.point_detail.in" },
+        { text: "fake", align: "right", value: "spike.point_detail.fake" },
+        { text: "bout", align: "right", value: "spike.point_detail.blockout" },
+        { text: "総失点", align: "right", value: "spike.miss" },
+        { text: "out", align: "right", value: "spike.miss_detail.out" },
+        { text: "net", align: "right", value: "spike.miss_detail.net" },
+        { text: "blo", align: "right", value: "spike.miss_detail.block" },
+        { text: "決定率", align: "right", value: "spike.determined" },
+        { text: "効果率", align: "right", value: "spike.effect" }
         // {
         //   text: "総数①",
         //   align: "center",
@@ -347,24 +437,39 @@ export default {
       headersSpikeMatch: [
         { text: "試合", align: "left", value: "name" },
         { text: "日付", align: "left", value: "date" },
+        // { text: "総数", align: "right", value: "spike.total" },
+        // { text: "得点", align: "right", value: "spike.point" },
+        // { text: "失点", align: "right", value: "spike.miss" },
+        // { text: "決定率", align: "right", value: "spike.determined" },
+        // { text: "効果率", align: "right", value: "spike.effect" }
         { text: "総数", align: "right", value: "spike.total" },
-        { text: "得点", align: "right", value: "spike.point" },
-        { text: "失点", align: "right", value: "spike.miss" },
-        { text: "決定率", align: "right", value: "spike.determined" },
-        { text: "効果率", align: "right", value: "spike.effect" }
+        { text: "総得", align: "right", value: "spike.point" },
+        { text: "イ", align: "right", value: "spike.point_detail.in" },
+        { text: "フ", align: "right", value: "spike.point_detail.fake" },
+        { text: "ブア", align: "right", value: "spike.point_detail.blockout" },
+        { text: "総失", align: "right", value: "spike.miss" },
+        { text: "ア", align: "right", value: "spike.miss_detail.out" },
+        { text: "ネ", align: "right", value: "spike.miss_detail.net" },
+        { text: "ブ", align: "right", value: "spike.miss_detail.block" },
+        { text: "決", align: "right", value: "spike.determined" },
+        { text: "効", align: "right", value: "spike.effect" }
       ],
       headersBlock: [],
       headersBlockPlayer: [
         { text: "名前", align: "left", value: "name" },
         { text: "性別", align: "left", value: "sex" },
         { text: "得点", align: "right", value: "block.point" },
-        { text: "失点", align: "right", value: "block.miss" }
+        { text: "総失点", align: "right", value: "block.miss" },
+        { text: "アウト", align: "right", value: "block.miss_detail.out" },
+        { text: "吸い込み", align: "right", value: "block.miss_detail.suikomi" }
       ],
       headersBlockMatch: [
         { text: "試合", align: "left", value: "name" },
         { text: "日付", align: "left", value: "date" },
         { text: "得点", align: "right", value: "block.point" },
-        { text: "失点", align: "right", value: "block.miss" }
+        { text: "総失点", align: "right", value: "block.miss" },
+        { text: "アウト", align: "right", value: "block.miss_detail.out" },
+        { text: "吸い込み", align: "right", value: "block.miss_detail.suikomi" }
       ],
       headersReceiveEtc: [],
       headersReceiveEtcPlayer: [
@@ -374,7 +479,9 @@ export default {
         // { text: "失点", align: "left", value: "other_miss" },
         // { text: "失点", align: "left", value: "faul" }
         { text: "レシーブ失点", align: "right", value: "receive.miss" },
-        { text: "その他失点", align: "right", value: "other_miss" },
+        { text: "その他総失点", align: "right", value: "other_miss" },
+        { text: "ジャッジ", align: "right", value: "other_miss_detail.judge" },
+        { text: "お見合い", align: "right", value: "other_miss_detail.omiai" },
         { text: "ファウル", align: "right", value: "faul" }
       ],
       headersReceiveEtcMatch: [
@@ -384,7 +491,9 @@ export default {
         // { text: "失点", align: "left", value: "other_miss" },
         // { text: "失点", align: "left", value: "faul" }
         { text: "レシーブ失点", align: "right", value: "receive.miss" },
-        { text: "その他失点", align: "right", value: "other_miss" },
+        { text: "その他総失点", align: "right", value: "other_miss" },
+        { text: "ジャッジ", align: "right", value: "other_miss_detail.judge" },
+        { text: "お見合い", align: "right", value: "other_miss_detail.omiai" },
         { text: "ファウル", align: "right", value: "faul" }
       ]
     };
@@ -393,6 +502,11 @@ export default {
     filterPercent(n) {
       return (n * 100).toFixed(1) + "%";
     }
+    // lineBrakeEachCharacter(s) {
+    //   var strs = s.split("");
+    //   console.log(strs.join("<br>"));
+    //   return strs.join("<br>");
+    // }
   },
   mounted() {
     this.commonProp.back = this.backScoreList;

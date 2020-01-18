@@ -76,18 +76,14 @@ export default {
     // }
   },
   mounted() {
-    var bkDate = localStorage.getItem("bk_date");
-    if (bkDate == null) {
-      bkDate = "";
-    }
-    this.bkDate = bkDate;
+    this.bkDate = this.getBkDateData();
   },
   methods: {
     outputDB() {
-      var score = JSON.parse(localStorage.getItem("score"));
-      var members = JSON.parse(localStorage.getItem("members"));
-      var teams = JSON.parse(localStorage.getItem("teams"));
-      var score_settings = JSON.parse(localStorage.getItem("score_settings"));
+      var score = this.getScoreData();
+      var members = this.getMembersData();
+      var teams = this.getTeamsData();
+      var score_settings = this.getScoreSettingsData();
       var outputJson = {
         score: score,
         members: members,
@@ -101,11 +97,6 @@ export default {
       if (!this.isFormValid) {
         return;
       }
-      // this.title = "入力確認";
-      // this.msg = " DBへ入力しますか？";
-      // this.callbackConfirm = this.callbackInputDB;
-
-      // this.showModalConfirm = true;
 
       this.dialogProp = {
         title: "入力確認",
@@ -121,21 +112,14 @@ export default {
         return;
       }
       var inputJson = JSON.parse(this.modelInput);
-      localStorage.setItem("score", JSON.stringify(inputJson.score));
-      localStorage.setItem("members", JSON.stringify(inputJson.members));
-      localStorage.setItem("teams", JSON.stringify(inputJson.teams));
-      localStorage.setItem(
-        "score_settings",
-        JSON.stringify(inputJson.score_settings)
-      );
+      this.setScoreData(inputJson.score);
+      this.setMembersData(inputJson.members);
+      this.setTeamsData(inputJson.teams);
+      this.setScoreSettingsData(inputJson.score_settings);
+
       this.$emit("route-home");
     },
     onClickBackupDB() {
-      // this.title = "DBバックアップ確認";
-      // this.msg = " DBをバックアップしますか？";
-      // this.callbackConfirm = this.callbackBackupDB;
-
-      // this.showModalConfirm = true;
       this.dialogProp = {
         title: "DBバックアップ確認",
         msg: "DBをバックアップしますか？",
@@ -155,22 +139,18 @@ export default {
       var bkDate = d.toLocaleString();
       this.bkDate = bkDate;
 
-      var score = JSON.parse(localStorage.getItem("score"));
-      var members = JSON.parse(localStorage.getItem("members"));
-      var teams = JSON.parse(localStorage.getItem("teams"));
-      var score_settings = JSON.parse(localStorage.getItem("score_settings"));
-      localStorage.setItem("bk_date", bkDate);
-      localStorage.setItem("score_bk", JSON.stringify(score));
-      localStorage.setItem("members_bk", JSON.stringify(members));
-      localStorage.setItem("teams_bk", JSON.stringify(teams));
-      localStorage.setItem("score_settings_bk", JSON.stringify(score_settings));
+      var score = this.getScoreData();
+      var members = this.getMembersData();
+      var teams = this.getTeamsData();
+      var score_settings = this.getScoreSettingsData();
+      this.setBkDateData(bkDate);
+
+      this.setScoreBkData(score);
+      this.setMembersBkData(members);
+      this.setTeamsBkData(teams);
+      this.setScoreSettingsBkData(score_settings);
     },
     onClickRestoreDB() {
-      // this.title = "DBリストア確認";
-      // this.msg = " DBをリストアしますか？";
-      // this.callbackConfirm = this.callbackRestoreDB;
-
-      // this.showModalConfirm = true;
       this.dialogProp = {
         title: "DBリストア確認",
         msg: "DBをリストアしますか？",
@@ -185,23 +165,18 @@ export default {
         return;
       }
 
-      var score = JSON.parse(localStorage.getItem("score_bk"));
-      var members = JSON.parse(localStorage.getItem("members_bk"));
-      var teams = JSON.parse(localStorage.getItem("teams_bk"));
-      var score_settings = JSON.parse(
-        localStorage.getItem("score_settings_bk")
-      );
-      localStorage.setItem("score", JSON.stringify(score));
-      localStorage.setItem("members", JSON.stringify(members));
-      localStorage.setItem("teams", JSON.stringify(teams));
-      localStorage.setItem("score_settings", JSON.stringify(score_settings));
+      var score = this.getScoreBkData();
+      var members = this.getMembersBkData();
+      var teams = this.getTeamsBkData();
+      var score_settings = this.getScoreSettingsBkData();
+
+      this.setScoreData(score);
+      this.setMembersData(members);
+      this.setTeamsData(teams);
+      this.setScoreSettingsData(score_settings);
 
       this.$emit("route-home");
     },
-    // result(flg) {
-    //   this.callbackConfirm(flg);
-    //   this.showModalConfirm = false;
-    // }
     onClickClear() {
       this.dialogProp = {
         title: "DB消去確認",
@@ -217,10 +192,14 @@ export default {
         return;
       }
 
-      localStorage.setItem("score", JSON.stringify([]));
-      localStorage.setItem("members", JSON.stringify([]));
-      localStorage.setItem("teams", JSON.stringify([]));
-      localStorage.setItem("score_settings", JSON.stringify({}));
+      this.setScoreData([]);
+      var defaultMembers = this.getDefaultDataTeams();
+      this.setMembersData(defaultMembers);
+      this.setTeamsData([]);
+      var defaultScoreSettings = this.getDefaultDataScoreSettings();
+      this.setScoreSettingsData(defaultScoreSettings);
+
+      this.$emit("route-home");
     }
   }
 };

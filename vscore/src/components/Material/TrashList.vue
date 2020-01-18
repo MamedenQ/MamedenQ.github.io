@@ -1,8 +1,5 @@
 <template>
   <div>
-    <!-- <v-card style="width:100%;" class="d-inline-block mx-auto"> -->
-    <!-- <v-container> -->
-    <!-- <div style="margin-bottom:10px;">削除済みスコア一覧</div> -->
     <v-data-table
       :headers="headers"
       :items="trashList"
@@ -10,31 +7,11 @@
       hide-default-footer
       disable-sort
     >
-      <!-- <template v-slot:header="{ props }">
-          <thead>
-            <tr>
-              <th
-                style="width:25%;background-color: #005ab3;color: #fff;"
-                v-for="h in props.headers"
-                class="text-center"
-                :key="h.text"
-              >{{ h.text }}</th>
-            </tr>
-          </thead>
-      </template>-->
       <template v-slot:item.title="{ item }">
         <div style="text-align:left;">{{ item.title }}</div>
       </template>
       <template v-slot:item.point="{ item }">{{ item.teamAPoint + " － " + item.teamBPoint }}</template>
       <template v-slot:item.edit="{ item }">
-        <!-- <v-btn
-          v-on:click="linkScoreInput(item.id)"
-          color="primary"
-          style="margin-right:10px;"
-          dark
-        >編集</v-btn>
-        <v-btn v-on:click="onClickTrash(item)" color="warning" dark>削除</v-btn>-->
-
         <v-btn v-on:click="onClickRestore(item)" color="primary" style="margin-right:10px;" dark>復元</v-btn>
         <v-btn v-on:click="onClickDelete(item)" color="warning" dark>完全削除</v-btn>
       </template>
@@ -57,19 +34,15 @@
           <td>{{ item.date }}</td>
           <td>{{ item.teamAPoint + " － " + item.teamBPoint }}</td>
           <td style="text-align:center;">
-            <!-- <button v-on:click="onClickRestore(item)" class="btn btn-warning">復元</button> -->
             <v-btn v-on:click="onClickRestore(item)" color="primary" dark>復元</v-btn>
           </td>
           <td style="text-align:center;">
-            <!-- <button v-on:click="onClickDelete(item)" class="btn btn-warning">完全削除</button> -->
             <v-btn v-on:click="onClickDelete(item)" color="warning" dark>完全削除</v-btn>
           </td>
         </tr>
       </tbody>
     </table>
     <confirm ref="confirm"></confirm>
-    <!-- </v-container> -->
-    <!-- </v-card> -->
   </div>
 </template>
 
@@ -91,8 +64,6 @@ export default {
         negative: "",
         callback: null
       },
-      // restoreItem: {},
-      // deleteItem: {},
       headers: [
         {
           text: "タイトル",
@@ -121,44 +92,16 @@ export default {
           value: "edit",
           width: "25%"
         }
-        // {
-        //   text: "削除",
-        //   align: "center",
-        //   sortable: false,
-        //   value: "delete"
-        // }
       ]
     };
-  },
-  computed: {
-    // compMessage() {
-    //     return this.modelA + this.modelB;
-    // }
   },
   mounted() {
     this.refresh();
   },
   methods: {
     refresh() {
-      var scoreList = JSON.parse(localStorage.getItem("score"));
-      if (scoreList == null) {
-        return;
-      }
-      var filterData = scoreList.filter(function(data) {
-        if (data.isTrash) return true;
-      });
-
-      this.trashList = filterData;
+      this.trashList = this.getTrashScoreData();
     },
-    onCheckChange() {
-      console.log(this.modelTarget);
-    },
-    // linkAnalyzeList() {
-    //     this.$emit("route-analyze-list", this.modelTarget);
-    // },
-    // linkScoreInput(scoreId) {
-    //     this.$emit("route-score-input", scoreId);
-    // },
     onClickRestore(item) {
       this.dialogProp = {
         title: "復元確認",
@@ -176,12 +119,7 @@ export default {
       }
 
       var item = this.dialogProp.restoreItem;
-      var scoreData = JSON.parse(localStorage.getItem("score"));
-      var filterData = scoreData.filter(function(data, index) {
-        if (data.id == item.id) return true;
-      });
-      filterData[0].isTrash = false;
-      localStorage.setItem("score", JSON.stringify(scoreData));
+      this.restoreScoreData(item.id);
 
       this.refresh();
     },
@@ -202,11 +140,7 @@ export default {
       }
 
       var item = this.dialogProp.deleteItem;
-      var scoreData = JSON.parse(localStorage.getItem("score"));
-      var filterData = scoreData.filter(function(data, index) {
-        if (data.id != item.id) return true;
-      });
-      localStorage.setItem("score", JSON.stringify(filterData));
+      this.deleteScoreData(item.id);
 
       this.refresh();
     }

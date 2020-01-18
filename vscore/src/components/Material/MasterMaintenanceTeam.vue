@@ -61,18 +61,7 @@ export default {
         negative: "",
         callback: null
       },
-      teams: [
-        { no: 1, name: "" },
-        { no: 2, name: "" },
-        { no: 3, name: "" },
-        { no: 4, name: "" },
-        { no: 5, name: "" },
-        { no: 6, name: "" },
-        { no: 7, name: "" },
-        { no: 8, name: "" },
-        { no: 9, name: "" },
-        { no: 10, name: "" }
-      ],
+      teams: [],
       headersTeam: [
         {
           text: "番号",
@@ -99,30 +88,8 @@ export default {
   },
   methods: {
     refresh() {
-      // this.members = JSON.parse(localStorage.getItem("members"));
-      // if (this.members == null) {
-      //   this.members = [];
-      // }
-      this.teams = JSON.parse(localStorage.getItem("teams"));
-      if (this.teams == null || this.teams.length == 0) {
-        this.teams = [
-          { no: 1, name: "" },
-          { no: 2, name: "" },
-          { no: 3, name: "" },
-          { no: 4, name: "" },
-          { no: 5, name: "" },
-          { no: 6, name: "" },
-          { no: 7, name: "" },
-          { no: 8, name: "" },
-          { no: 9, name: "" },
-          { no: 10, name: "" }
-        ];
-      }
+      this.teams = this.getTeamsData();
     },
-    // result(flg) {
-    //   this.callbackConfirm(flg);
-    //   this.showModalConfirm = false;
-    // },
     onClickSaveTeam() {
       this.dialogProp = {
         title: "保存確認",
@@ -137,7 +104,7 @@ export default {
       if (!result) {
         return;
       }
-      localStorage.setItem("teams", JSON.stringify(this.teams));
+      this.setTeamsData(this.teams);
     }
   }
 };

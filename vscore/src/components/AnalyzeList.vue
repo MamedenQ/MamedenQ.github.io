@@ -403,10 +403,7 @@ export default {
       "line-height": gridHeight + "px"
     };
 
-    this.members = JSON.parse(localStorage.getItem("members"));
-    if (this.members == null) {
-      this.members = [];
-    }
+    this.members = this.getMembersData();
 
     this.isMatch = this.isMatchProp;
 

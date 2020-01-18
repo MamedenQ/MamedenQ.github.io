@@ -115,28 +115,11 @@ export default {
   },
   methods: {
     refresh() {
-      this.members = JSON.parse(localStorage.getItem("members"));
-      if (this.members == null) {
-        this.members = [];
-      }
+      this.members = this.getMembersData();
 
       this.members = this.members.sort(this.compare);
 
-      this.teams = JSON.parse(localStorage.getItem("teams"));
-      if (this.teams == null || this.teams.length == 0) {
-        this.teams = [
-          { no: 1, name: "" },
-          { no: 2, name: "" },
-          { no: 3, name: "" },
-          { no: 4, name: "" },
-          { no: 5, name: "" },
-          { no: 6, name: "" },
-          { no: 7, name: "" },
-          { no: 8, name: "" },
-          { no: 9, name: "" },
-          { no: 10, name: "" }
-        ];
-      }
+      this.teams = this.getTeamsData();
     },
     compare(a, b) {
       var r = 0;
@@ -212,7 +195,7 @@ export default {
       if (!result) {
         return;
       }
-      localStorage.setItem("members", JSON.stringify(this.members));
+      this.setMembersData(this.members);
     },
     checkDuplicateNo(value) {
       var cnt = 0;

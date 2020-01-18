@@ -28,12 +28,7 @@ export default {
     };
   },
   mounted() {
-    this.scoreSettings = JSON.parse(localStorage.getItem("score_settings"));
-    if (this.scoreSettings == null) {
-      this.scoreSettings = {
-        isLibero: false
-      };
-    }
+    this.scoreSettings = this.getScoreSettingsData();
   },
   methods: {
     onSaveSettings() {
@@ -50,10 +45,7 @@ export default {
       if (!result) {
         return;
       }
-      localStorage.setItem(
-        "score_settings",
-        JSON.stringify(this.scoreSettings)
-      );
+      this.setScoreSettingsData(this.scoreSettings);
     }
   }
 };

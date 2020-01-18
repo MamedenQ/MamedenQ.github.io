@@ -97,8 +97,9 @@ import scoreSave from './Material/ScoreSave'
 import { Hooper, Slide } from "hooper";
 import "hooper/dist/hooper.css";
 
+
 export default {
-  name: 'score_input',
+    name: 'score_input',
     components: {
         confirm,
         faulSvg,
@@ -232,18 +233,9 @@ export default {
         
         this.modelDate = this.getNowDateStr();
 
-        this.members = JSON.parse(localStorage.getItem("members"));
-        if (this.members == null) {
-            this.members = [];
-        }
+        this.members = this.getMembersData();
+        this.scoreSettings = this.getScoreSettingsData();
 
-
-        this.scoreSettings = JSON.parse(localStorage.getItem("score_settings"));
-        if (this.scoreSettings == null) {
-            this.scoreSettings = {
-                isLibero: false
-            };
-        }
         this.itemTeamA[6].isLibero = this.scoreSettings.isLibero;
         this.itemTeamA[7].isLibero = this.scoreSettings.isLibero;
         this.itemTeamB[6].isLibero = this.scoreSettings.isLibero;
@@ -345,10 +337,8 @@ export default {
                 isTrash: false,
             };
 
-            var saveDatas = JSON.parse(localStorage.getItem("score"));
-            if (saveDatas == null) {
-                saveDatas = [];
-            }
+            var saveDatas = this.getScoreData();
+
             var existsData = false;
             var tmpScoreId = this.scoreId;
             saveDatas.forEach(function (saveData) {
@@ -369,7 +359,7 @@ export default {
                 saveDatas.push(data);
             }
 
-            localStorage.setItem("score", JSON.stringify(saveDatas));
+            this.setScoreData(saveDatas);
             this.isDirty = false;
         },
         load() {
@@ -398,11 +388,7 @@ export default {
 
             this.modelAction = "serve";
             this.scoreBk = [];
-            var saveData = JSON.parse(localStorage.getItem("score"));
-
-            if (saveData == null) {
-                saveData = [];
-            }
+            var saveData = this.getScoreData();
 
             var tmpScoreId = this.scoreId;
             var filterData = saveData.filter(function (data, index) {

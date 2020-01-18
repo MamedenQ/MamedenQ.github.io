@@ -26,7 +26,6 @@ export default {
         },
         getScoreSettingsData() {
           var data = JSON.parse(localStorage.getItem("score_settings"));
-          console.log(data);
           if (data == null) {
             return this.getDefaultDataScoreSettings();
           }

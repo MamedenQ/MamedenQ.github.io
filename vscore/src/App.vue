@@ -46,7 +46,7 @@
         style="margin-left:8px;"
         text
       >
-        <v-icon style="margin-right:5px;">far fa-chart-bar</v-icon>分析一覧
+        <v-icon style="margin-right:5px;">far fa-chart-bar</v-icon>データ分析
       </v-btn>
       <v-btn v-on:click="onClickNewScore" v-show="isShowNewScore" style="margin-left:8px;" text>
         <v-icon style="margin-right:5px;">fas fa-edit</v-icon>新規作成
@@ -255,7 +255,7 @@ export default {
       this.$router.push({ path: "/scorelist" });
     },
     routeAnalyzeListPlayer(items) {
-      this.title = "分析一覧";
+      this.title = "データ分析";
       this.target = "";
       if (items != null) {
         this.analyzeData = items;
@@ -276,7 +276,7 @@ export default {
       this.$router.push({ path: "/analyzelist" });
     },
     routeAnalyzeListMatch(items) {
-      this.title = "分析一覧";
+      this.title = "データ分析";
       this.target = "";
       if (items != null) {
         this.analyzeData = items;

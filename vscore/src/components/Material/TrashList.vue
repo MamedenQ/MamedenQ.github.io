@@ -1,49 +1,32 @@
 <template>
-  <div>
-    <v-data-table
-      :headers="headers"
-      :items="trashList"
-      item-key="id"
-      hide-default-footer
-      disable-sort
-    >
-      <template v-slot:item.title="{ item }">
-        <div style="text-align:left;">{{ item.title }}</div>
-      </template>
-      <template v-slot:item.point="{ item }">{{ item.teamAPoint + " － " + item.teamBPoint }}</template>
-      <template v-slot:item.edit="{ item }">
-        <v-btn v-on:click="onClickRestore(item)" color="primary" style="margin-right:10px;" dark>復元</v-btn>
-        <v-btn v-on:click="onClickDelete(item)" color="warning" dark>完全削除</v-btn>
-      </template>
-    </v-data-table>
-    <table v-if="false" class="analyze">
-      <thead class="analyze_head">
-        <tr>
-          <th>#</th>
-          <th>タイトル</th>
-          <th>日付</th>
-          <th>得点</th>
-          <th>復元</th>
-          <th>完全削除</th>
-        </tr>
-      </thead>
-      <tbody class="analyze_body">
-        <tr v-for="(item, idx) of trashList" :key="item.id">
-          <td>{{ idx + 1 }}</td>
-          <td>{{ item.title }}</td>
-          <td>{{ item.date }}</td>
-          <td>{{ item.teamAPoint + " － " + item.teamBPoint }}</td>
-          <td style="text-align:center;">
-            <v-btn v-on:click="onClickRestore(item)" color="primary" dark>復元</v-btn>
-          </td>
-          <td style="text-align:center;">
+  <v-container>
+    <v-row>
+      <v-col cols="12">
+        <v-data-table
+          :headers="headers"
+          :items="trashList"
+          item-key="id"
+          hide-default-footer
+          disable-sort
+        >
+          <template v-slot:item.title="{ item }">
+            <div style="text-align:left;">{{ item.title }}</div>
+          </template>
+          <template v-slot:item.point="{ item }">{{ item.teamAPoint + " － " + item.teamBPoint }}</template>
+          <template v-slot:item.edit="{ item }">
+            <v-btn
+              v-on:click="onClickRestore(item)"
+              color="primary"
+              style="margin-right:10px;"
+              dark
+            >復元</v-btn>
             <v-btn v-on:click="onClickDelete(item)" color="warning" dark>完全削除</v-btn>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <confirm ref="confirm"></confirm>
-  </div>
+          </template>
+        </v-data-table>
+        <confirm ref="confirm"></confirm>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
@@ -148,12 +131,6 @@ export default {
 };
 </script>
 
-<style src="../../style/style.css" lang="css">
-</style>
-
-<style scoped>
-.test {
-  background-color: blue;
-  color: white;
-}
+<style lang='scss'>
+@import "../../style/common.scss";
 </style>

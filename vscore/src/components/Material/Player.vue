@@ -1,10 +1,15 @@
 <template>
-  <div style="position: relative;">
-    <v-btn style="height:100%;width:100%;" v-on:click="onClickPlayer" v-bind:color="buttonColor"></v-btn>
-    <span v-show="!item.isEmpty" v-bind:style="labelStyle">{{item.no + ":" + item.name}}</span>
-    <playerSvg v-bind:style="iconStyle" v-show="item.sex == 0 && !item.isEmpty"></playerSvg>
-    <playerFSvg v-bind:style="iconStyle" v-show="item.sex == 1 && !item.isEmpty"></playerFSvg>
-    <span v-if="item.isLibero" style="position:absolute;left:5px;bottom:0px;">L</span>
+  <div class="player-button">
+    <v-btn
+      style="height: 100%;"
+      class="background-button"
+      v-on:click="onClickPlayer"
+      v-bind:color="buttonColor"
+    ></v-btn>
+    <span v-show="!item.isEmpty" class="player-name">{{item.no + ":" + item.name}}</span>
+    <playerSvg v-show="item.sex == 0 && !item.isEmpty"></playerSvg>
+    <playerFSvg v-show="item.sex == 1 && !item.isEmpty"></playerFSvg>
+    <span class="libero" v-if="item.isLibero">L</span>
   </div>
 </template>
 
@@ -23,25 +28,7 @@ export default {
   },
   data() {
     return {
-      buttonColor: "#d6edbe",
-      labelStyle: {
-        position: "absolute",
-        top: "2px",
-        left: "0",
-        right: "0",
-        "text-align": "center",
-        height: "50%",
-        "pointer-events": "none"
-      },
-      iconStyle: {
-        position: "absolute",
-        left: "0",
-        right: "0",
-        bottom: "2px",
-        width: "100%",
-        height: "60%",
-        "pointer-events": "none"
-      }
+      buttonColor: "#d6edbe"
     };
   },
   mounted() {
@@ -57,5 +44,6 @@ export default {
 };
 </script>
 
-<style src="../../style/style.css" lang="css">
+<style lang='scss'>
+@import "../../style/common.scss";
 </style>

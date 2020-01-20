@@ -1,7 +1,5 @@
 <template>
   <div>
-    <!-- <v-card style="width:100%;" class="d-inline-block mx-auto"> -->
-    <!-- <v-container> -->
     <div style="margin-bottom:10px;">チームマスタ編集</div>
     <v-data-table
       :headers="headersTeam"
@@ -11,36 +9,23 @@
       hide-default-footer
       style="margin-bottom:10px;"
     >
-      <!-- <template v-slot:header="{ props }">
-          <thead>
-            <tr>
-              <th
-                style="background-color: #005ab3;color: #fff;"
-                v-for="h in props.headers"
-                class="text-center"
-                :key="h.text"
-              >{{ h.text }}</th>
-            </tr>
-          </thead>
-      </template>-->
       <template v-slot:item.no="{ item }">{{ item.no }}</template>
       <template v-slot:item.name="{ item }">
         <v-text-field color="primary" v-model="item.name"></v-text-field>
       </template>
     </v-data-table>
     <div>
-      <!-- <button v-on:click="onClickSaveTeam" class="btn btn-primary">保存</button> -->
-      <v-btn
-        style="float:right;margin-bottom:10px;"
-        v-on:click="onClickSaveTeam"
-        color="primary"
-        dark
-      >保存</v-btn>
+      <v-container>
+        <v-row>
+          <v-spacer></v-spacer>
+          <v-col cols="auto">
+            <v-btn v-on:click="onClickSaveTeam" color="primary" dark>保存</v-btn>
+          </v-col>
+        </v-row>
+      </v-container>
     </div>
 
     <confirm ref="confirm"></confirm>
-    <!-- </v-container> -->
-    <!-- </v-card> -->
   </div>
 </template>
 
@@ -78,11 +63,6 @@ export default {
       ]
     };
   },
-  computed: {
-    // compMessage() {
-    //     return this.modelA + this.modelB;
-    // }
-  },
   mounted() {
     this.refresh();
   },
@@ -110,6 +90,7 @@ export default {
 };
 </script>
 
-<style src="../../style/style.css" lang="css">
+<style lang='scss'>
+@import "../../style/common.scss";
 </style>
 

@@ -2,21 +2,6 @@
   <div class="main-area">
     <span id="page-top"></span>
     <div class="view-contents">
-      <!-- <v-btn
-        v-if="isMatch"
-        style="width:100%;margin-bottom:10px"
-        v-on:click="switchList"
-        color="primary"
-        dark
-      >人別に切り替える</v-btn>
-      <v-btn
-        v-else
-        style="width:100%;margin-bottom:10px"
-        v-on:click="switchList"
-        color="primary"
-        dark
-      >試合別に切り替える</v-btn>-->
-      <!-- <v-card> -->
       <v-tabs v-model="tab" background-color="primary accent-4" centered dark>
         <v-tabs-slider></v-tabs-slider>
         <v-tab href="#tab-total">トータル</v-tab>
@@ -36,17 +21,6 @@
             :options.sync="options"
             multi-sort
           >
-            <!-- <template v-slot:header="{ props }">
-                <thead>
-                  <tr>
-                    <th style="border-bottom:none;text-align:left;">基本情報</th>
-                    <th v-show="!isMatch" style="border-bottom:none;"></th>
-                    <th style="border-bottom:none;text-align:left;">総合</th>
-                    <th style="border-bottom:none;"></th>
-                  </tr>
-                </thead>
-            </template>-->
-
             <template v-slot:item.name="{ item }">
               <a href="#" v-on:click="onPlayerDetail(item)">{{item.name}}</a>
             </template>
@@ -65,17 +39,6 @@
             :options.sync="options"
             multi-sort
           >
-            <!-- <template v-slot:header="{ props }">
-                <thead>
-                  <tr>
-                    <th style="border-bottom:none;text-align:left;">基本情報</th>
-                    <th v-show="!isMatch" style="border-bottom:none;"></th>
-                    <th style="border-bottom:none;text-align:left;">サーブ</th>
-                    <th style="border-bottom:none;"></th>
-                  </tr>
-                </thead>
-            </template>-->
-
             <template v-slot:item.name="{ item }">
               <a href="#" v-on:click="onPlayerDetail(item)">{{item.name}}</a>
             </template>
@@ -94,20 +57,6 @@
             :options.sync="options"
             multi-sort
           >
-            <!-- <template v-slot:header="{ props }">
-                <thead>
-                  <tr>
-                    <th style="border-bottom:none;text-align:left;">基本情報</th>
-                    <th v-show="!isMatch" style="border-bottom:none;"></th>
-                    <th style="border-bottom:none;text-align:left;">スパイク</th>
-                    <th style="border-bottom:none;"></th>
-                    <th style="border-bottom:none;"></th>
-                    <th style="border-bottom:none;"></th>
-                    <th style="border-bottom:none;"></th>
-                  </tr>
-                </thead>
-            </template>-->
-
             <template v-slot:header.name="{ header }">
               名
               <br />前
@@ -216,17 +165,6 @@
             :options.sync="options"
             multi-sort
           >
-            <!-- <template v-slot:header="{ props }">
-                <thead>
-                  <tr>
-                    <th style="border-bottom:none;text-align:left;">基本情報</th>
-                    <th v-show="!isMatch" style="border-bottom:none;"></th>
-                    <th style="border-bottom:none;text-align:left;">ブロック</th>
-                    <th style="border-bottom:none;"></th>
-                  </tr>
-                </thead>
-            </template>-->
-
             <template v-slot:item.name="{ item }">
               <a href="#" v-on:click="onPlayerDetail(item)">{{item.name}}</a>
             </template>
@@ -245,18 +183,6 @@
             :options.sync="options"
             multi-sort
           >
-            <!-- <template v-slot:header="{ props }">
-                <thead>
-                  <tr>
-                    <th style="border-bottom:none;text-align:left;">基本情報</th>
-                    <th v-show="!isMatch" style="border-bottom:none;"></th>
-                    <th style="border-bottom:none;text-align:left;">レシーブ</th>
-                    <th style="border-bottom:none;">その他ミス</th>
-                    <th style="border-bottom:none;">ファウル</th>
-                  </tr>
-                </thead>
-            </template>-->
-
             <template v-slot:item.name="{ item }">
               <a href="#" v-on:click="onPlayerDetail(item)">{{item.name}}</a>
             </template>
@@ -267,21 +193,6 @@
           </v-data-table>
         </v-tab-item>
       </v-tabs-items>
-      <!-- </v-card> -->
-      <!-- <v-btn
-        v-if="isMatch"
-        style="width:100%;margin:10px 0"
-        v-on:click="switchList"
-        color="primary"
-        dark
-      >人別に切り替える</v-btn>
-      <v-btn
-        v-else
-        style="width:100%;margin:10px 0"
-        v-on:click="switchList"
-        color="primary"
-        dark
-      >試合別に切り替える</v-btn>-->
       <a
         data-scroll
         href="#page-top"
@@ -290,41 +201,6 @@
       >
         <moveTop></moveTop>
       </a>
-      <!-- <div class="menu" v-bind:style="styleNavi">
-        <span>
-          <div>戻る</div>
-          <svg
-            v-on:click="backScoreList"
-            xmlns="http://www.w3.org/2000/svg"
-            width="70"
-            height="70"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="#000000"
-            stroke-width="1"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path d="M19 12H6M12 5l-7 7 7 7" />
-          </svg>
-          <span>ホーム</span>
-          <svg
-            v-on:click="onHome"
-            xmlns="http://www.w3.org/2000/svg"
-            width="70"
-            height="70"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="#000000"
-            stroke-width="1"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path d="M20 9v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9" />
-            <path d="M9 22V12h6v10M2 10.6L12 2l10 8.6" />
-          </svg>
-        </span>
-      </div>-->
     </div>
   </div>
 </template>
@@ -824,6 +700,7 @@ export default {
 };
 </script>
 
-<style src="../style/style.css" lang="css">
+<style lang='scss'>
+@import "../style/common.scss";
 </style>
 

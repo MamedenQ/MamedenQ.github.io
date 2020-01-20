@@ -1,42 +1,57 @@
 <template>
   <div>
-    <!-- <v-card style="width:100%;" class="d-inline-block mx-auto"> -->
-    <!-- <v-container> -->
-    <!-- <div style="margin-bottom:10px;">バックアップ・リストア</div> -->
-    <!-- <div>DBバックアップ</div> -->
-    <!-- <button v-on:click="onClickBackupDB" class="btn btn-primary">DBバックアップ</button> -->
-    <v-btn v-on:click="onClickBackupDB" color="primary" dark>DBバックアップ</v-btn>
-    <!-- <br /> -->
-    <div style="margin-bottom:30px;">前回バックアップ日時 : {{ bkDate }}</div>
-    <!-- <div>DBリストア</div> -->
-    <!-- <button v-on:click="onClickRestoreDB" class="btn btn-warning">DBリストア</button> -->
-    <v-btn style="margin-bottom:30px;" v-on:click="onClickRestoreDB" color="warning" dark>DBリストア</v-btn>
-    <br />
-
-    <!-- <div>DB内容JSON出力</div> -->
-    <!-- <button v-on:click="outputDB" class="btn btn-primary">出力</button> -->
-    <v-btn v-on:click="outputDB" color="primary" dark>DB内容JSON出力</v-btn>
-    <!-- <textarea style="margin-bottom:30px;width:100%;height:300px;" v-model="output"></textarea> -->
-    <v-textarea style="margin-top:10px;" outlined label="JSON" v-model="output"></v-textarea>
-    <!-- <button v-on:click="onClickInputDB" class="btn btn-warning">入力</button> -->
-    <!-- <div>DB内容JSON入力</div> -->
-    <v-form v-model="isFormValid" ref="score_json_input_form">
-      <v-btn v-on:click="onClickInputDB" color="warning" dark>DB内容JSON入力</v-btn>
-      <!-- <textarea style="width:100%;height:300px;" v-model="modelInput"></textarea> -->
-      <v-textarea
-        style="margin:10px 0;"
-        outlined
-        label="JSON"
-        v-model="modelInput"
-        v-bind:rules="[required]"
-      ></v-textarea>
-    </v-form>
-
-    <v-btn v-on:click="onClickClear" color="warning" dark>DB消去</v-btn>
-
+    <v-container>
+      <v-row>
+        <v-col cols="auto">
+          <v-btn v-on:click="onClickBackupDB" color="primary" dark>DBバックアップ</v-btn>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="auto">前回バックアップ日時 : {{ bkDate }}</v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="auto">
+          <v-btn v-on:click="onClickRestoreDB" color="warning" dark>DBリストア</v-btn>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="auto"></v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="auto">
+          <v-btn v-on:click="outputDB" color="primary" dark>DB内容JSON出力</v-btn>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="12">
+          <v-textarea outlined label="JSON" v-model="output" :no-resize="true"></v-textarea>
+        </v-col>
+      </v-row>
+      <v-form v-model="isFormValid" ref="score_json_input_form">
+        <v-row>
+          <v-col cols="auto">
+            <v-btn v-on:click="onClickInputDB" color="warning" dark>DB内容JSON入力</v-btn>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="12">
+            <v-textarea
+              outlined
+              label="JSON"
+              v-model="modelInput"
+              v-bind:rules="[required]"
+              :no-resize="true"
+            ></v-textarea>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="auto">
+            <v-btn v-on:click="onClickClear" color="warning" dark>DB消去</v-btn>
+          </v-col>
+        </v-row>
+      </v-form>
+    </v-container>
     <confirm ref="confirm"></confirm>
-    <!-- </v-container> -->
-    <!-- </v-card> -->
   </div>
 </template>
 
@@ -61,19 +76,8 @@ export default {
       required: value => !!value || "必須入力",
       output: "",
       modelInput: "",
-      // showModalConfirm: false,
-      // title: "",
-      // msg: "",
-      // positive: "OK",
-      // negative: "キャンセル",
-      // callbackConfirm: null,
       bkDate: ""
     };
-  },
-  computed: {
-    // compMessage() {
-    //     return this.modelA + this.modelB;
-    // }
   },
   mounted() {
     this.bkDate = this.getBkDateData();
@@ -205,5 +209,6 @@ export default {
 };
 </script>
 
-<style src="../../style/style.css" lang="css">
+<style lang='scss'>
+@import "../../style/common.scss";
 </style>

@@ -207,6 +207,7 @@ export default {
 };
 </script>
 
-<style src="../style/style.css" lang="css">
+<style lang='scss'>
+@import "../style/common.scss";
 </style>
 

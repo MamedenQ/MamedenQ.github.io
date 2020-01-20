@@ -1,8 +1,8 @@
 <template>
-  <div style="position: relative;">
-    <v-btn style="height:100%;width:100%;" v-on:click="onClickRotate"></v-btn>
-    <span v-bind:style="labelStyle">ローテ</span>
-    <rotateSvg v-bind:style="iconStyle"></rotateSvg>
+  <div class="player-button">
+    <v-btn style="height: 100%;" class="background-button" v-on:click="onClickRotate"></v-btn>
+    <span class="player-name">ローテ</span>
+    <rotateSvg></rotateSvg>
   </div>
 </template>
 
@@ -14,31 +14,6 @@ export default {
   components: {
     rotateSvg
   },
-  // props: {
-  //   item: Object
-  // },
-  data() {
-    return {
-      labelStyle: {
-        position: "absolute",
-        top: "2px",
-        left: "0",
-        right: "0",
-        "text-align": "center",
-        height: "50%",
-        "pointer-events": "none"
-      },
-      iconStyle: {
-        position: "absolute",
-        left: "0",
-        right: "0",
-        bottom: "2px",
-        width: "100%",
-        height: "60%",
-        "pointer-events": "none"
-      }
-    };
-  },
   methods: {
     onClickRotate() {
       this.$emit("on-click-rotate");
@@ -47,5 +22,6 @@ export default {
 };
 </script>
 
-<style src="../../style/style.css" lang="css">
+<style lang='scss'>
+@import "../../style/common.scss";
 </style>

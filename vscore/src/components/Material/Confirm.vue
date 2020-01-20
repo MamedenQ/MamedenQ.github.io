@@ -22,22 +22,12 @@
 <script>
 export default {
   name: "confirm",
-  props: {
-    // title: String,
-    // msg: String,
-    // positive: String,
-    // negative: String,
-    // dialogProp: Object
-  },
   data() {
     return {
       dialogProp: {},
       isShow: false
     };
   },
-  // mounted() {
-  //   this.dialog = this.dialogProp;
-  // },
   methods: {
     open(dialogProp) {
       this.dialogProp = dialogProp;
@@ -45,15 +35,12 @@ export default {
     },
     sendResult(flg) {
       this.isShow = false;
-      // console.log(this.dialogProp);
-      // this.dialogProp.isShow = false;
-      // console.log(this.dialogProp);
-      // this.$emit("dialogResult", flg);
       this.dialogProp.callback(flg);
     }
   }
 };
 </script>
 
-<style src="../../style/style.css" lang="css">
+<style lang='scss'>
+@import "../../style/common.scss";
 </style>

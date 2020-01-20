@@ -16,7 +16,7 @@
             <scoreSettings style="margin-bottom:10px;"></scoreSettings>
           </v-tab-item>
           <v-tab-item value="tab-trash-list" style="padding:10px;">
-            <trashList style="margin:10px;"></trashList>
+            <trashList></trashList>
           </v-tab-item>
           <v-tab-item value="tab-master" style="padding:10px;">
             <v-card style="width:100%;margin-bottom:10px;" class="d-inline-block mx-auto">
@@ -140,6 +140,3 @@ export default {
   }
 };
 </script>
-
-<style>
-</style>

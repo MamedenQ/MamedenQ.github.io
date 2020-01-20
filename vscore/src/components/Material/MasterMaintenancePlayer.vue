@@ -1,7 +1,5 @@
 <template>
   <div>
-    <!-- <v-card style="width:100%;" class="d-inline-block mx-auto"> -->
-    <!-- <v-container> -->
     <div style="margin-bottom:10px;">プレーヤマスタ編集</div>
     <v-form v-model="isFormValid" ref="master_player_form">
       <v-data-table
@@ -11,18 +9,6 @@
         disable-sort
         style="margin-bottom:10px;"
       >
-        <!-- <template v-slot:header="{ props }">
-          <thead>
-            <tr>
-              <th
-                style="width:20%;background-color: #005ab3;color: #fff;"
-                v-for="h in props.headers"
-                class="text-center"
-                :key="h.text"
-              >{{ h.text }}</th>
-            </tr>
-          </thead>
-        </template>-->
         <template style="width:25%;" v-slot:item.no="{ item }">
           <v-text-field
             color="primary"
@@ -57,17 +43,17 @@
       </v-data-table>
     </v-form>
     <div>
-      <v-btn
-        style="float:right;margin-left:10px;margin-bottom:10px;"
-        v-on:click="onClickSaveMember"
-        color="primary"
-        dark
-      >保存</v-btn>
-      <v-btn style="float:right;" v-on:click="onClickAddMember" color="primary" dark>追加</v-btn>
+      <v-container>
+        <v-row>
+          <v-spacer></v-spacer>
+          <v-col cols="auto">
+            <v-btn v-on:click="onClickAddMember" color="primary" dark>追加</v-btn>
+            <v-btn style="margin-left:10px;" v-on:click="onClickSaveMember" color="primary" dark>保存</v-btn>
+          </v-col>
+        </v-row>
+      </v-container>
     </div>
     <confirm ref="confirm"></confirm>
-    <!-- </v-container> -->
-    <!-- </v-card> -->
   </div>
 </template>
 
@@ -215,6 +201,6 @@ export default {
 };
 </script>
 
-<style src="../../style/style.css" lang="css">
+<style lang='scss'>
+@import "../../style/common.scss";
 </style>
-

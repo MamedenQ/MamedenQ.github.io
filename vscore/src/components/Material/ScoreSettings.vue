@@ -1,9 +1,19 @@
 <template>
   <div>
-    <v-switch v-model="scoreSettings.isLibero" class="ma-2" label="リベロ" color="primary"></v-switch>
     <confirm ref="confirm"></confirm>
-    <v-spacer></v-spacer>
-    <v-btn v-on:click="onSaveSettings" color="primary">保存</v-btn>
+    <v-container>
+      <v-row>
+        <v-col cols="auto">
+          <v-switch v-model="scoreSettings.isLibero" class="ma-2" label="リベロ" color="primary"></v-switch>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-spacer></v-spacer>
+        <v-col cols="auto">
+          <v-btn v-on:click="onSaveSettings" color="primary">保存</v-btn>
+        </v-col>
+      </v-row>
+    </v-container>
   </div>
 </template>
 
@@ -51,5 +61,6 @@ export default {
 };
 </script>
 
-<style src="../../style/style.css" lang="css">
+<style lang='scss'>
+@import "../../style/common.scss";
 </style>

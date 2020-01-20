@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang=en><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,user-scalable=no"><link rel=icon href=favicon.ico><title>Ｖノート</title><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900"><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css><link rel=stylesheet href=https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css><style type=text/css>[v-cloak] {
       display: none;
-    }</style><link href=css/app.eab492e6.css rel=preload as=style><link href=css/chunk-vendors.88145921.css rel=preload as=style><link href=js/app.04d3f703.js rel=preload as=script><link href=js/chunk-vendors.3570c39f.js rel=preload as=script><link href=css/chunk-vendors.88145921.css rel=stylesheet><link href=css/app.eab492e6.css rel=stylesheet></head><body><noscript><strong>We're sorry but vscore doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id=app></div><script src=js/chunk-vendors.3570c39f.js></script><script src=js/app.04d3f703.js></script></body><script>// ＝＝＝＝＝調査項目
+    }</style><link href=css/app.4241dc04.css rel=preload as=style><link href=css/chunk-vendors.6d5f974d.css rel=preload as=style><link href=js/app.7bb785ad.js rel=preload as=script><link href=js/chunk-vendors.3570c39f.js rel=preload as=script><link href=css/chunk-vendors.6d5f974d.css rel=stylesheet><link href=css/app.4241dc04.css rel=stylesheet></head><body><noscript><strong>We're sorry but vscore doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id=app></div><script src=js/chunk-vendors.3570c39f.js></script><script src=js/app.7bb785ad.js></script></body><script>// ＝＝＝＝＝調査項目
   // 画面間データ連携調査
   // https://commis.hatenablog.com/entry/2017/11/21/180556
 
@@ -37,6 +37,8 @@
   // http://pictogram2.com/?tag=volleyball
 
   // ＝＝＝＝＝未実装
+  // excelのピボットテーブルみたいな列カスタムできる物はないか
+
   // 分析一覧は毎回データを編集しているが、初回のみにして処理量を減らしたい
 
   // pwa用のアイコンを作る
@@ -45,8 +47,11 @@
 
   // 色をちゃんと決める
 
+  //　バックキーでツールバーの制御がおかしくなることがある
+  // 各子画面表示時にツールバーの表示状態チェックを入れる
 
-
+  // メンバーが８人いるときのメンバー挿入機能
+  // やり方知らないとずらすのがめんどい
 
   // ロリポップ契約してDB使う
   // まずはMAMPでも入れてみて検証してから
@@ -63,9 +68,18 @@
 
   // 初回の入力ガイド
 
+  // v-btnのheightをcssで指定すると効かない
 
+  // 動画URL載せる
 
+  // ボタンの右寄せ方法　その２
+  // <v-card-actions>
+  //   <v-spacer></v-spacer>
+  //   <v-btn v-on: click="sendResult(true)" color="primary" dark>OK</v-btn>
+  //   <v-btn v-on: click="sendResult(false)">キャンセル</v-btn>
+  //       </v - card - actions >
 
+  // typescriptへの移行
 
 
   // 途中データの保存機能

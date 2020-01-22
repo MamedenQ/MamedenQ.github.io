@@ -1,258 +1,257 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
+        <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
+        <title>Ｖノート</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css" />
+        <style type="text/css">
+            [v-cloak] {
+                display: none;
+            }
+        </style>
+    </head>
 
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
-  <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-  <title>Ｖノート</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css">
-  <style type="text/css">
-    [v-cloak] {
-      display: none;
-    }
-  </style>
-</head>
+    <body>
+        <noscript>
+            <strong>We're sorry but vscore doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+        </noscript>
+        <div id="app"></div>
+    </body>
+    <script type="text/javascript">
+        // ＝＝＝＝＝調査項目
+        // 画面間データ連携調査
+        // https://commis.hatenablog.com/entry/2017/11/21/180556
 
-<body>
-  <noscript>
-    <strong>We're sorry but vscore doesn't work properly without JavaScript enabled. Please enable it to
-      continue.</strong>
-  </noscript>
-  <div id="app"></div>
-</body>
-<script type="text/javascript">
-  // ＝＝＝＝＝調査項目
-  // 画面間データ連携調査
-  // https://commis.hatenablog.com/entry/2017/11/21/180556
+        // ルーターを使った画面遷移
+        // https://router.vuejs.org/ja/guide/essentials/navigation.html
 
-  // ルーターを使った画面遷移
-  // https://router.vuejs.org/ja/guide/essentials/navigation.html
+        // ここでemitをやっている　今までとは違う構造のため参考になるかも
+        // https://jp.vuejs.org/v2/examples/modal.html
 
-  // ここでemitをやっている　今までとは違う構造のため参考になるかも
-  // https://jp.vuejs.org/v2/examples/modal.html
+        // svg作成方法
+        // gimpでファイルからインポート
+        // Shift+Oで色域を選択にする
+        // パス出力したい箇所を選択（Shiftで複数選択可能）
+        // 右クリックか選択メニューから選択範囲をパスにを選択
+        // 右下のレイヤ選ぶところの３つ目のタブがパス一覧なので、選択して右クリックからエクスポート
 
-  // svg作成方法
-  // gimpでファイルからインポート
-  // Shift+Oで色域を選択にする
-  // パス出力したい箇所を選択（Shiftで複数選択可能）
-  // 右クリックか選択メニューから選択範囲をパスにを選択
-  // 右下のレイヤ選ぶところの３つ目のタブがパス一覧なので、選択して右クリックからエクスポート
+        // templateに文字列でDOMを入れているが、分けれる方法があるかも
+        // https://jp.vuejs.org/v2/examples/modal.html
+        // scriptタグでx-template？的な書き方ができるが、ファイルが別れるため微妙
 
-  // templateに文字列でDOMを入れているが、分けれる方法があるかも
-  // https://jp.vuejs.org/v2/examples/modal.html
-  // scriptタグでx-template？的な書き方ができるが、ファイルが別れるため微妙
+        // カラーピッカー
+        // <input type="color" value="#4251f5" />
 
-  // カラーピッカー
-  // <input type="color" value="#4251f5" />
+        // vue-datepickerというものがあるらしい
+        // https://www.kabanoki.net/2560/
+        // https://github.com/hilongjw/vue-datepicker
 
-  // vue-datepickerというものがあるらしい
-  // https://www.kabanoki.net/2560/
-  // https://github.com/hilongjw/vue-datepicker
+        // vuejsスムーズスクロール
+        // https://cleysense.com/blog/smooth-scroll-with-vuejs/
 
-  // vuejsスムーズスクロール
-  // https://cleysense.com/blog/smooth-scroll-with-vuejs/
+        // ＝＝＝＝＝レイアウト
+        // バレーボールっぽいsvgを作成する
+        // ピクトさんで
+        // http://pictogram2.com/?tag=volleyball
 
-  // ＝＝＝＝＝レイアウト
-  // バレーボールっぽいsvgを作成する
-  // ピクトさんで
-  // http://pictogram2.com/?tag=volleyball
+        // ＝＝＝＝＝未実装
+        // 削除を元に戻すことができない
 
-  // ＝＝＝＝＝未実装
-  // excelのピボットテーブルみたいな列カスタムできる物はないか
+        // 新規作成時、前のメンバーが表示される
 
-  // 分析一覧は毎回データを編集しているが、初回のみにして処理量を減らしたい
+        // excelのピボットテーブルみたいな列カスタムできる物はないか
 
-  // pwa用のアイコンを作る
+        // 分析一覧は毎回データを編集しているが、初回のみにして処理量を減らしたい
 
-  // レーダーチャート　絞り込みなしで全体での力レベルをチャートにする
+        // pwa用のアイコンを作る
 
-  // 色をちゃんと決める
+        // レーダーチャート　絞り込みなしで全体での力レベルをチャートにする
 
-  //　バックキーでツールバーの制御がおかしくなることがある
-  // 各子画面表示時にツールバーの表示状態チェックを入れる
+        // 色をちゃんと決める
 
-  // メンバーが８人いるときのメンバー挿入機能
-  // やり方知らないとずらすのがめんどい
+        //　バックキーでツールバーの制御がおかしくなることがある
+        // 各子画面表示時にツールバーの表示状態チェックを入れる
 
-  // ロリポップ契約してDB使う
-  // まずはMAMPでも入れてみて検証してから
-  // PWA複数作れるかどうかも気になる
-  // DBはめんどければブラウザのストレージでいい
+        // メンバーが８人いるときのメンバー挿入機能
+        // やり方知らないとずらすのがめんどい
 
-  // 開催ごとの推移をグラフで出す
-  // 開催ごとで起用のばらつきがあるから難しいかな
+        // ロリポップ契約してDB使う
+        // まずはMAMPでも入れてみて検証してから
+        // PWA複数作れるかどうかも気になる
+        // DBはめんどければブラウザのストレージでいい
 
-  // mountedで処理している箇所が多いが、表示時に一瞬コントロールの設定処理が見える（スイッチだったらOFFからONになる）
-  // もう１つ前のサイクルでもいいかも
+        // 開催ごとの推移をグラフで出す
+        // 開催ごとで起用のばらつきがあるから難しいかな
 
-  // 現状のグリッドやめてvuetifyのグリッド使う　行ごとのサイズ計算するのがなくせるなら
+        // mountedで処理している箇所が多いが、表示時に一瞬コントロールの設定処理が見える（スイッチだったらOFFからONになる）
+        // もう１つ前のサイクルでもいいかも
 
-  // 初回の入力ガイド
+        // 現状のグリッドやめてvuetifyのグリッド使う　行ごとのサイズ計算するのがなくせるなら
 
-  // v-btnのheightをcssで指定すると効かない
+        // 初回の入力ガイド
 
-  // 動画URL載せる
+        // v-btnのheightをcssで指定すると効かない
 
-  // ボタンの右寄せ方法　その２
-  // <v-card-actions>
-  //   <v-spacer></v-spacer>
-  //   <v-btn v-on: click="sendResult(true)" color="primary" dark>OK</v-btn>
-  //   <v-btn v-on: click="sendResult(false)">キャンセル</v-btn>
-  //       </v - card - actions >
+        // 動画URL載せる
 
-  // typescriptへの移行
+        // ボタンの右寄せ方法　その２
+        // <v-card-actions>
+        //   <v-spacer></v-spacer>
+        //   <v-btn v-on: click="sendResult(true)" color="primary" dark>OK</v-btn>
+        //   <v-btn v-on: click="sendResult(false)">キャンセル</v-btn>
+        //       </v - card - actions >
 
+        // typescriptへの移行
 
-  // 途中データの保存機能
-  // ブラウザのDBに保存する
-  // isDirty=true変更時に保存する
-  // スコア一覧のアプリバーに通知する
-  // スコアデータとID、最終更新日時を保持しておく
-  // score_temp {
-  //   id: XXXX,
-  //   date: XXXX,
-  //   score: {
-  //
-  //   },
-  // }
-  // 保存時や画面移動時に破棄する
-  // いつの途中編集データ、名称を画面表示時に通知する
-  // 途中データがありますの表記でベル使う？
-  // 優先度低いから後回し
+        // 削除したときにスナックバー出す
 
-  // なんか余計な余白が出る
-  // homeとスコア入力
+        // 途中データの保存機能
+        // ブラウザのDBに保存する
+        // isDirty=true変更時に保存する
+        // スコア一覧のアプリバーに通知する
+        // スコアデータとID、最終更新日時を保持しておく
+        // score_temp {
+        //   id: XXXX,
+        //   date: XXXX,
+        //   score: {
+        //
+        //   },
+        // }
+        // 保存時や画面移動時に破棄する
+        // いつの途中編集データ、名称を画面表示時に通知する
+        // 途中データがありますの表記でベル使う？
+        // 優先度低いから後回し
 
-  // 閲覧用にすでに入力したプリセットデータを読み込む機能
+        // なんか余計な余白が出る
+        // homeとスコア入力
 
-  // 分析一覧の下端がギリギリで上へ移動するボタンで数値が隠れる
+        // 閲覧用にすでに入力したプリセットデータを読み込む機能
 
+        // 分析一覧の下端がギリギリで上へ移動するボタンで数値が隠れる
 
-  // オープンソース表記
+        // オープンソース表記
 
-  // コピーライト表記
+        // コピーライト表記
 
-  // アプリ名
-  // Vスコア、Vカルテ、Vノート、Vメモ
-  // iスコア、VExit、Vモニター、VInspector
-  // VOffice、VStudio、VVisualization、
-  // VProfessor、VAssistant、VBook、VLibrary
-  // インテリジェンスな感じを出したい
+        // アプリ名
+        // Vスコア、Vカルテ、Vノート、Vメモ
+        // iスコア、VExit、Vモニター、VInspector
+        // VOffice、VStudio、VVisualization、
+        // VProfessor、VAssistant、VBook、VLibrary
+        // インテリジェンスな感じを出したい
 
-  // レシーブミスを詳細化する？
+        // レシーブミスを詳細化する？
 
-  // スコア項目をカスタムできるようにする
-  // ポイント、ミス、ラリーの区分とその詳細項目を設定
-  // 効果率を計算するときはラリーを入れてもらうようにする
-  // ラリーの名前も変えれるようにする
-  // 内部コードは固定して、名称を変えても、元のデータと合算される警告出す
-  // 順番も変えれるようにする
-  // 効果率を計算する場合は分析一覧に効果率を追加する
-  // カスタムしたときはアイコンをなしにする？
-  // プリセットデータを用意しておくか
-  // アップロードできるようにする（プレビュー機能が必要になる）
-  // グラフ作るのが面倒（項目名を直接ソースに）書いてるため
-  // 保留
+        // スコア項目をカスタムできるようにする
+        // ポイント、ミス、ラリーの区分とその詳細項目を設定
+        // 効果率を計算するときはラリーを入れてもらうようにする
+        // ラリーの名前も変えれるようにする
+        // 内部コードは固定して、名称を変えても、元のデータと合算される警告出す
+        // 順番も変えれるようにする
+        // 効果率を計算する場合は分析一覧に効果率を追加する
+        // カスタムしたときはアイコンをなしにする？
+        // プリセットデータを用意しておくか
+        // アップロードできるようにする（プレビュー機能が必要になる）
+        // グラフ作るのが面倒（項目名を直接ソースに）書いてるため
+        // 保留
 
-  // 開催管理
+        // 開催管理
 
-  // 複数団体登録
-  // スコア一覧をタブにして、団体登録マスタを追加
-  // 画面が一階層増えるから、設定で切り替えるようにする
-  // 現状データの移行どうしよう？json直接編集しかない？
-  // 入力団体間違いを修正する一覧で解決
-  // メンバーとかどうする？
-  // メンバーを別にしたいが、解決が難しいため保留
-  // そもそもチーム登録との共存が難しい
-  // チームの仕組みを複数団体機能に置き換えてしまう？
-  // 団体キーを追加してデータを別にする
-  // ログイン機能を追加して団体を分けてしまう
-  // そもそもチーム登録自体不要じゃね？
-  // 必要そうになったらこの機能を実装することにする
+        // 複数団体登録
+        // スコア一覧をタブにして、団体登録マスタを追加
+        // 画面が一階層増えるから、設定で切り替えるようにする
+        // 現状データの移行どうしよう？json直接編集しかない？
+        // 入力団体間違いを修正する一覧で解決
+        // メンバーとかどうする？
+        // メンバーを別にしたいが、解決が難しいため保留
+        // そもそもチーム登録との共存が難しい
+        // チームの仕組みを複数団体機能に置き換えてしまう？
+        // 団体キーを追加してデータを別にする
+        // ログイン機能を追加して団体を分けてしまう
+        // そもそもチーム登録自体不要じゃね？
+        // 必要そうになったらこの機能を実装することにする
 
+        // 分析一覧で総数のフィルタかけて規定回数以上の効果率分析したい
 
+        // マスタメンテのタブ遷移が遅い
+        // 毎回生成されている？初回だけ遅い？
+        // 非同期にする？
 
-  // 分析一覧で総数のフィルタかけて規定回数以上の効果率分析したい
+        // 入力後選択値設定
 
-  // マスタメンテのタブ遷移が遅い
-  // 毎回生成されている？初回だけ遅い？
-  // 非同期にする？
+        // ipadのchromeでバックアップの確認画面で下スクロールすると余計な余白が出てくる
 
-  // 入力後選択値設定
+        // 9人制ルールに適用する
+        // 設定で切り替える
+        // サーブセカンド、ローテなし
+        // ８人しか登録できないが、相手チーム側も使えば９人登録できる
+        // 9人制はコートcomponentを切り替える
+        // サーブのミスをファーストとセカンドに分ける
 
-  // ipadのchromeでバックアップの確認画面で下スクロールすると余計な余白が出てくる
+        // トス品質、２段トス、コース分析、ブロック枚数
 
-  // 9人制ルールに適用する
-  // 設定で切り替える
-  // サーブセカンド、ローテなし
-  // ８人しか登録できないが、相手チーム側も使えば９人登録できる
-  // 9人制はコートcomponentを切り替える
-  // サーブのミスをファーストとセカンドに分ける
+        // オープンソースやアイコンなどのサイトを載せる
 
-  // トス品質、２段トス、コース分析、ブロック枚数
+        // 設定でシンプル＜＞詳細モードの切替
 
-  // オープンソースやアイコンなどのサイトを載せる
+        // 本格的な分析
+        // https://www.vleague.jp/record/player_detail/3559
+        // icloudに愛知県の高校生の試合の結果シートがある参考程度に
 
-  // 設定でシンプル＜＞詳細モードの切替
+        // リファクタリング
+        // 変数名やファイル名の規則を整える
+        // スタイル名を整える
 
-  // 本格的な分析
-  // https://www.vleague.jp/record/player_detail/3559
-  // icloudに愛知県の高校生の試合の結果シートがある参考程度に
+        // vuejsの省略記法
+        // v-on  @
+        // v-bind  :
 
-  // リファクタリング
-  // 変数名やファイル名の規則を整える
-  // スタイル名を整える
+        // 付け方
+        // サーブがよくて繋げれなかったやつはサービスエース
+        // でもレシーブが悪かったとか判断つかないから、よっぽどのやつでない限りサーブに得点
+        // 相手がフェイントの意思なく相手コートに返して相手が取れなかった時は、
+        // 相手側のミス、アウトだったら返した人のミス
+        // 繋ぎ系はレシーブミスに集約する
+        // ブロックの得点はスパイクのミスもつく
 
-  // vuejsの省略記法
-  // v-on  @
-  // v-bind  :
+        // var color = d3.scale.category20();
+    </script>
+    <style>
+        /* https://grid.layoutit.com/?id=cFy6gyh */
+        svg {
+            max-height: 100%;
+            max-width: 100%;
+        }
 
-  // 付け方
-  // サーブがよくて繋げれなかったやつはサービスエース
-  // でもレシーブが悪かったとか判断つかないから、よっぽどのやつでない限りサーブに得点
-  // 相手がフェイントの意思なく相手コートに返して相手が取れなかった時は、
-  // 相手側のミス、アウトだったら返した人のミス
-  // 繋ぎ系はレシーブミスに集約する
-  // ブロックの得点はスパイクのミスもつく
+        html {
+            height: 100%;
+            -webkit-font-smoothing: auto;
+            /* font-family: 'Rounded Mplus 1c'; */
+        }
 
-  // var color = d3.scale.category20();
-</script>
-<style>
-  /* https://grid.layoutit.com/?id=cFy6gyh */
-  svg {
-    max-height: 100%;
-    max-width: 100%;
-  }
-
-  html {
-    height: 100%;
-    -webkit-font-smoothing: auto;
-    /* font-family: 'Rounded Mplus 1c'; */
-  }
-
-  /* .application {
+        /* .application {
   font-family: 'Rounded Mplus 1c';
 } */
-  /* 
+        /* 
   body {
     height: 100%;
     margin: 0;
     font-family: 'Rounded Mplus 1c';
   } */
 
-  /* ul {
+        /* ul {
     list-style-type: none;
     padding: 0;
     margin: 0;
   } */
 
-  .empty {
-    grid-area: empty;
-  }
-</style>
-
+        .empty {
+            grid-area: empty;
+        }
+    </style>
 </html>

@@ -1,6 +1,6 @@
 {
-    "name": "ScoreApp",
-    "short_name": "ScoreApp",
+    "name": "scoreapp",
+    "short_name": "scoreapp",
     "theme_color": "#1976d2",
     "background_color": "#fafafa",
     "display": "standalone",

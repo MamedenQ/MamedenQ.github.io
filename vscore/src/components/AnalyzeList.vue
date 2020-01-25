@@ -22,7 +22,7 @@
             multi-sort
           >
             <template v-slot:item.name="{ item }">
-              <a href="#" v-on:click="onPlayerDetail(item)">{{item.name}}</a>
+              <a v-on:click="onPlayerDetail(item)"><u>{{item.name}}</u></a>
             </template>
             <template v-slot:item.sex="{ item }">
               <span v-if="item.sex == 0">男</span>
@@ -40,7 +40,7 @@
             multi-sort
           >
             <template v-slot:item.name="{ item }">
-              <a href="#" v-on:click="onPlayerDetail(item)">{{item.name}}</a>
+              <a v-on:click="onPlayerDetail(item)"><u>{{item.name}}</u></a>
             </template>
             <template v-slot:item.sex="{ item }">
               <span v-if="item.sex == 0">男</span>
@@ -144,7 +144,7 @@
               <br />
             </template>
             <template v-slot:item.name="{ item }">
-              <a href="#" v-on:click="onPlayerDetail(item)">{{item.name}}</a>
+              <a v-on:click="onPlayerDetail(item)"><u>{{item.name}}</u></a>
             </template>
             <template v-slot:item.sex="{ item }">
               <span v-if="item.sex == 0">男</span>
@@ -166,7 +166,7 @@
             multi-sort
           >
             <template v-slot:item.name="{ item }">
-              <a href="#" v-on:click="onPlayerDetail(item)">{{item.name}}</a>
+              <a v-on:click="onPlayerDetail(item)"><u>{{item.name}}</u></a>
             </template>
             <template v-slot:item.sex="{ item }">
               <span v-if="item.sex == 0">男</span>
@@ -184,7 +184,7 @@
             multi-sort
           >
             <template v-slot:item.name="{ item }">
-              <a href="#" v-on:click="onPlayerDetail(item)">{{item.name}}</a>
+              <a v-on:click="onPlayerDetail(item)"><u>{{item.name}}</u></a>
             </template>
             <template v-slot:item.sex="{ item }">
               <span v-if="item.sex == 0">男</span>

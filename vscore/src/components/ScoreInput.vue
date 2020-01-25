@@ -146,6 +146,7 @@ export default {
         scoreInputProp: Object,
         commonProp: Object
     },
+    inject: ["parentMethod"],
     watch: {
         score: function(val) {
             this.isDirty = true;
@@ -256,6 +257,7 @@ export default {
             console.log("nextTick");
             this.isDirty = false;
         });
+        this.parentMethod();
     },
     methods: {
         init() {

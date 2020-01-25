@@ -5,20 +5,22 @@ import App from "./App.vue";
 import vuetify from "./plugins/vuetify";
 import router from "./router/router";
 
-import vueSmoothScroll from "vue-smooth-scroll";
+import vueSmoothScroll from "vue-smoothscroll";
 Vue.use(vueSmoothScroll);
 
-// 必ずVueインスタンス作成前に登録する
-Vue.directive("scroll", {
-    inserted: function(el, binding) {
-        let f = function(evt) {
-            if (binding.value(evt, el)) {
-                window.removeEventListener("scroll", f);
-            }
-        };
-        window.addEventListener("scroll", f);
+var scrollMixin = {
+    created: function() {},
+    methods: {
+        moveTop() {
+            this.$SmoothScroll(document.querySelector("#page-top"), 750, this.callbackTop, undefined, "y");
+        },
+        callbackTop() {
+            // console.log("callbackTop");
+        }
     }
-});
+};
+
+Vue.mixin(scrollMixin);
 
 import dataAccess from "./components/DataAccess/DataAccess";
 Vue.use(dataAccess);
@@ -26,6 +28,7 @@ Vue.use(dataAccess);
 Vue.config.productionTip = false;
 
 new Vue({
+    // mixins: [scrollMixin],
     router: router,
     vuetify: vuetify,
     render: h => h(App)

@@ -359,6 +359,13 @@ export default {
             return hexCodes.join("");
         }
     },
+    provide: function() {
+        return {
+            parentMethod: function() {
+                console.log("parent");
+            }
+        };
+    },
     mounted() {
         // this.$router.push({ path: "/home" });
         this.routeHome();

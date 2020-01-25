@@ -41,20 +41,11 @@
                     </v-tab-item>
                 </v-tabs-items>
             </v-card>
-            <!-- <a
-        data-scroll
-        href="#page-top"
-        style="position:fixed;bottom:10px;right:10px;filter: drop-shadow(3px 3px 3px rgba(0, 0, 0, 0.6));"
-        v-smooth-scroll
-      >
-        <moveTop></moveTop>
-      </a>-->
         </div>
     </div>
 </template>
 
 <script>
-// import moveTop from "./SVG/MoveTopSVG";
 import detailTotal from "./Material/AnalyzeDetailTotal";
 import detailSpike from "./Material/AnalyzeDetailSpike";
 import detailServe from "./Material/AnalyzeDetailServe";

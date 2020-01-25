@@ -1,10 +1,10 @@
 <template>
-  <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 500 500">
-    <path
-      fill="#005ab3"
-      stroke="#005ab3"
-      stroke-width="1"
-      d="M 242.00,52.00
+    <svg v-on:click="onClickMoveTop" xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 500 500">
+        <path
+            fill="#005ab3"
+            stroke="#005ab3"
+            stroke-width="1"
+            d="M 242.00,52.00
            C 242.00,52.00 242.00,109.00 242.00,109.00
              242.09,115.42 243.63,120.83 251.00,121.77
              259.15,122.82 262.87,117.41 263.00,110.00
@@ -123,15 +123,19 @@
            C 300.00,443.00 302.00,466.00 302.00,466.00
              302.00,466.00 298.00,466.00 298.00,466.00
              298.00,466.00 300.00,443.00 300.00,443.00 Z"
-    />
-  </svg>
+        />
+    </svg>
 </template>
 
 <script>
 export default {
-  name: "move_top"
+    name: "move_top",
+    methods: {
+        onClickMoveTop() {
+            this.$emit("move-top");
+        }
+    }
 };
 </script>
 
-<style>
-</style>
+<style></style>

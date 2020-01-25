@@ -47,9 +47,10 @@
         <span>色設定</span><br>
       -->
 
-            <a href="#page-top" style="position:fixed;bottom:10px;right:10px;filter: drop-shadow(3px 3px 3px rgba(0, 0, 0, 0.6));" v-smooth-scroll>
-                <moveTop></moveTop>
-            </a>
+            <moveTop
+                style="cursor:pointer;position:fixed;bottom:10px;right:10px;filter: drop-shadow(3px 3px 3px rgba(0, 0, 0, 0.6));"
+                v-on:move-top="moveTop"
+            ></moveTop>
         </div>
         <!-- <div class="menu" v-bind:style="styleNavi">
       <span>

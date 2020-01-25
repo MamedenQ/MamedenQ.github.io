@@ -4,7 +4,6 @@
     "theme_color": "#1976d2",
     "background_color": "#fafafa",
     "display": "standalone",
-    "Scope": "/",
     "start_url": "./index.html",
     "icons": [
         {
@@ -47,6 +46,5 @@
             "sizes": "512x512",
             "type": "image/png"
         }
-    ],
-    "splash_pages": null
+    ]
 }

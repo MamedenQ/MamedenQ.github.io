@@ -91,8 +91,8 @@
                 <rotate class="rotate-b" v-on:on-click-rotate="rotateB"></rotate>
             </div>
             <hooper ref="scoreCarousel" :center-mode="true" :itemsToShow="10" class="score" style="height:150px;">
-                <slide v-for="item of score" :key="item.index">
-                    <scoreObjSvg v-on:click-score="onClickScore(item)" :item="item" :idx="0"></scoreObjSvg>
+                <slide v-for="(item, idx) of score" :key="idx">
+                    <scoreObjSvg v-on:click-score="onClickScore(idx, item)" :item="item" :idx="0"></scoreObjSvg>
                 </slide>
             </hooper>
             <confirm ref="confirm"></confirm>
@@ -142,16 +142,17 @@ export default {
     },
     watch: {
         score: function(val) {
-            console.log("score");
-            if (this.score.length < 1) {
+            this.isDirty = true;
+        },
+        undoList: function(val) {
+            if (this.undoList.length < 1) {
                 this.scoreInputProp.setEnableUndo(false);
             } else {
                 this.scoreInputProp.setEnableUndo(true);
             }
-            this.isDirty = true;
         },
-        scoreBk: function(val) {
-            if (this.scoreBk.length < 1) {
+        redoList: function(val) {
+            if (this.redoList.length < 1) {
                 this.scoreInputProp.setEnableRedo(false);
             } else {
                 this.scoreInputProp.setEnableRedo(true);
@@ -162,7 +163,8 @@ export default {
         return {
             isSimple: true,
             score: [],
-            scoreBk: [],
+            undoList: [],
+            redoList: [],
             modelAction: "",
             modelKind: "",
             modelDetail: "",
@@ -290,29 +292,58 @@ export default {
             // console.log(JSON.stringify(this.score, null, "    "));
         },
         undo() {
-            if (this.score.length < 1) {
+            if (this.undoList.length < 1) {
                 return;
             }
-            this.scoreBk.push(this.score.pop());
-            this.outputlog();
+            console.log(JSON.stringify(this.undoList, null, "    "));
+            var undoItem = this.undoList.pop();
+            if (undoItem.undoKind == "add") {
+                console.log("undo add");
+                this.redoList.push({
+                    redoKind: "add",
+                    addItem: this.score.pop()
+                });
+                this.$refs.scoreCarousel.slideTo(this.score.length - 1);
+            } else if (undoItem.undoKind == "del") {
+                console.log("undo del");
+                undoItem.delItem.index = this.getMaxIndex() + 1;
+                this.score.splice(undoItem.delListIndex, 0, undoItem.delItem);
+                this.redoList.push({
+                    redoKind: "del",
+                    delListIndex: undoItem.delListIndex,
+                    delItem: undoItem.delItem
+                });
+                this.$refs.scoreCarousel.slideTo(undoItem.delListIndex);
+            }
 
-            this.$refs.scoreCarousel.slideTo(this.score.length - 1);
-        },
-        getScoreLength() {
-            return this.score.length;
-        },
-        getScoreRedoLength() {
-            return this.scoreBk.length;
+            console.log(JSON.stringify(this.undoList, null, "    "));
+            this.outputlog();
         },
         redo() {
-            if (this.scoreBk.length < 1) {
+            if (this.redoList.length < 1) {
                 return;
             }
-            var popdata = this.scoreBk.pop();
-            popdata.index = this.score.length + 1;
-            this.score.push(popdata);
+            console.log(JSON.stringify(this.redoList, null, "    "));
+            var redoItem = this.redoList.pop();
+            if (redoItem.redoKind == "add") {
+                console.log("redo add");
+                redoItem.addItem.index = this.getMaxIndex() + 1;
+                this.score.push(redoItem.addItem);
+                this.undoList.push({
+                    undoKind: "add"
+                });
+                this.$refs.scoreCarousel.slideTo(this.score.length - 1);
+            } else if (redoItem.redoKind == "del") {
+                console.log("redo del");
+                this.undoList.push({
+                    undoKind: "del",
+                    delListIndex: redoItem.delListIndex,
+                    delItem: redoItem.delItem
+                });
+                this.deleteScoreItem(redoItem.delListIndex, redoItem.delItem, true);
+                this.$refs.scoreCarousel.slideTo(redoItem.delListIndex);
+            }
             this.outputlog();
-            this.$refs.scoreCarousel.slideTo(this.score.length - 1);
         },
         save() {
             this.dialogProp = {
@@ -376,7 +407,6 @@ export default {
             }
 
             this.modelAction = "serve";
-            this.scoreBk = [];
             var saveData = this.getScoreData();
 
             var tmpScoreId = this.scoreId;
@@ -438,25 +468,25 @@ export default {
                 this.showModalWarn = true;
             }
         },
-        onClickScore(item) {
-            this.deleteScore(item.index);
+        onClickScore(listIdx, item) {
+            this.deleteScore(listIdx, item);
         },
         addScore(item) {
             if (item.isEmpty) {
                 return;
             }
             this.pushScore(item.team, item.playerid, item.no, item.name, this.modelAction, this.getKind(), this.modelDetail);
-            this.scoreBk = [];
             this.$refs.scoreCarousel.slideTo(this.score.length - 1);
             this.outputlog();
         },
-        deleteScore(deleteIndex) {
+        deleteScore(listIdx, deleteItem) {
             this.dialogProp = {
                 title: "削除確認",
                 msg: "削除しますか？",
                 positive: "OK",
                 negative: "キャンセル",
-                deleteIndex: deleteIndex,
+                listIndex: listIdx,
+                deleteItem: deleteItem,
                 callback: this.callbackDelete
             };
             this.$refs.confirm.open(this.dialogProp);
@@ -465,13 +495,21 @@ export default {
             if (!result) {
                 return;
             }
-
-            var tmpDeleteIndex = this.dialogProp.deleteIndex;
+            this.deleteScoreItem(this.dialogProp.listIndex, this.dialogProp.deleteItem, false);
+        },
+        deleteScoreItem(listIndex, deleteItem, isRedo) {
+            var tmpDeleteIdx = deleteItem.index;
             var newData = this.score.filter(function(s, index) {
-                if (s.index != tmpDeleteIndex) return true;
+                if (s.index != tmpDeleteIdx) return true;
             });
-
             this.score = newData;
+            if (!isRedo) {
+                this.undoList.push({
+                    undoKind: "del",
+                    delListIndex: listIndex,
+                    delItem: deleteItem
+                });
+            }
 
             this.outputlog();
         },
@@ -557,6 +595,10 @@ export default {
                 action: action,
                 kind: kind,
                 detail: detail
+            });
+
+            this.undoList.push({
+                undoKind: "add"
             });
         },
         rotateA() {

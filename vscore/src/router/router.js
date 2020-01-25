@@ -17,28 +17,28 @@ export default new VueRouter({
     // base:'/app/public/',
     routes: [
         {
-            path: "/home",
+            path: "/scoreapp/home",
             component: scorelist
         },
         {
             name: "scoreInput",
-            path: "/scoreinput",
+            path: "/scoreapp/scoreinput",
             component: scoreinput
         },
         {
-            path: "/scorelist",
+            path: "/scoreapp/scorelist",
             component: scorelist
         },
         {
-            path: "/analyzelist",
+            path: "/scoreapp/analyzelist",
             component: analyzelist
         },
         {
-            path: "/analyzedetail",
+            path: "/scoreapp/analyzedetail",
             component: analyzedetail
         },
         {
-            path: "/settings",
+            path: "/scoreapp/settings",
             component: settings
         }
     ]

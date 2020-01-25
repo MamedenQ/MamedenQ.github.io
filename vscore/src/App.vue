@@ -239,7 +239,7 @@ export default {
             this.isShowAnalyzeMatch = false;
             this.isShowAnalyzeList = true;
             this.isEnabledAnalyzeList = false;
-            this.$router.replace({ path: "/scorelist" });
+            this.$router.replace({ path: "/scoreapp/scorelist" });
         },
         routeAnalyzeListPlayer(items) {
             this.title = "データ分析";
@@ -260,7 +260,7 @@ export default {
             this.isEnableAnalyzePlayer = false;
             this.isEnableAnalyzeMatch = true;
             this.isShowAnalyzeList = false;
-            this.$router.replace({ path: "/analyzelist" });
+            this.$router.replace({ path: "/scoreapp/analyzelist" });
         },
         routeAnalyzeListMatch(items) {
             this.title = "データ分析";
@@ -282,7 +282,7 @@ export default {
             this.isEnableAnalyzePlayer = true;
             this.isEnableAnalyzeMatch = false;
             this.isShowAnalyzeList = false;
-            this.$router.replace({ path: "/analyzelist" });
+            this.$router.replace({ path: "/scoreapp/analyzelist" });
         },
         routeScoreInput(scoreId) {
             this.title = "スコア入力";
@@ -299,7 +299,7 @@ export default {
             this.isShowAnalyzePlayer = false;
             this.isShowAnalyzeMatch = false;
             this.isShowAnalyzeList = false;
-            this.$router.replace({ path: "/scoreinput" });
+            this.$router.replace({ path: "/scoreapp/scoreinput" });
         },
         routeScoreInputNew() {
             this.title = "スコア入力";
@@ -334,7 +334,7 @@ export default {
             this.isShowAnalyzePlayer = false;
             this.isShowAnalyzeMatch = false;
             this.isShowAnalyzeList = false;
-            this.$router.replace({ path: "/settings" });
+            this.$router.replace({ path: "/scoreapp/settings" });
         },
         routeAnalyzeDetail(analyzePlayerData, isMatchFrom) {
             this.title = "詳細分析";
@@ -351,11 +351,11 @@ export default {
             this.isShowAnalyzePlayer = false;
             this.isShowAnalyzeMatch = false;
             this.isShowAnalyzeList = false;
-            this.$router.replace({ path: "/analyzedetail" });
+            this.$router.replace({ path: "/scoreapp/analyzedetail" });
         },
         digestCallback(hex) {
             this.scoreId = hex;
-            this.$router.replace({ path: "/scoreinput" });
+            this.$router.replace({ path: "/scoreapp/scoreinput" });
         },
         createDigest(callback) {
             if (!crypto || !crypto.subtle) {

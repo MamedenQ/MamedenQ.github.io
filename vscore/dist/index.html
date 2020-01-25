@@ -1,15 +1,6 @@
-<!DOCTYPE html><html lang=en><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,user-scalable=no"><link rel=icon href=favicon.ico><title>Ｖノート</title><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900"><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css><link rel=stylesheet href=https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css><style type=text/css>[v-cloak] {
+<!DOCTYPE html><html lang=en><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,user-scalable=no"><!--[if IE]><link rel="icon" href="favicon.ico" /><![endif]--><title>Ｖノート</title><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900"><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css><link rel=stylesheet href=https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css><style type=text/css>[v-cloak] {
                 display: none;
-            }</style><link href=css/app.6e5d8e02.css rel=preload as=style><link href=css/chunk-vendors.52717627.css rel=preload as=style><link href=js/app.0e7728e6.js rel=preload as=script><link href=js/chunk-vendors.125f7c81.js rel=preload as=script><link href=css/chunk-vendors.52717627.css rel=stylesheet><link href=css/app.6e5d8e02.css rel=stylesheet></head><body><noscript><strong>We're sorry but vscore doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id=app></div><script src=js/chunk-vendors.125f7c81.js></script><script src=js/app.0e7728e6.js></script></body><script>// ＝＝＝＝＝調査項目
-        // 画面間データ連携調査
-        // https://commis.hatenablog.com/entry/2017/11/21/180556
-
-        // ルーターを使った画面遷移
-        // https://router.vuejs.org/ja/guide/essentials/navigation.html
-
-        // ここでemitをやっている　今までとは違う構造のため参考になるかも
-        // https://jp.vuejs.org/v2/examples/modal.html
-
+            }</style><link href=css/app.98eb2820.css rel=preload as=style><link href=css/chunk-vendors.52717627.css rel=preload as=style><link href=js/app.bc767bb8.js rel=preload as=script><link href=js/chunk-vendors.be472d27.js rel=preload as=script><link href=css/chunk-vendors.52717627.css rel=stylesheet><link href=css/app.98eb2820.css rel=stylesheet><link rel=icon type=image/png sizes=32x32 href=img/icons/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=img/icons/favicon-16x16.png><link rel=manifest href=manifest.json><meta name=theme-color content=#4DBA87><meta name=apple-mobile-web-app-capable content=no><meta name=apple-mobile-web-app-status-bar-style content=default><meta name=apple-mobile-web-app-title content=vscore><link rel=apple-touch-icon href=img/icons/apple-touch-icon-152x152.png><link rel=mask-icon href=img/icons/safari-pinned-tab.svg color=#4DBA87><meta name=msapplication-TileImage content=img/icons/msapplication-icon-144x144.png><meta name=msapplication-TileColor content=#000000></head><body><noscript><strong>We're sorry but vscore doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id=app></div><script src=js/chunk-vendors.be472d27.js></script><script src=js/app.bc767bb8.js></script></body><script>// ＝＝＝＝＝調査項目
         // svg作成方法
         // gimpでファイルからインポート
         // Shift+Oで色域を選択にする
@@ -17,24 +8,8 @@
         // 右クリックか選択メニューから選択範囲をパスにを選択
         // 右下のレイヤ選ぶところの３つ目のタブがパス一覧なので、選択して右クリックからエクスポート
 
-        // templateに文字列でDOMを入れているが、分けれる方法があるかも
-        // https://jp.vuejs.org/v2/examples/modal.html
-        // scriptタグでx-template？的な書き方ができるが、ファイルが別れるため微妙
-
-        // カラーピッカー
-        // <input type="color" value="#4251f5" />
-
-        // vue-datepickerというものがあるらしい
-        // https://www.kabanoki.net/2560/
-        // https://github.com/hilongjw/vue-datepicker
-
-        // vuejsスムーズスクロール
-        // https://cleysense.com/blog/smooth-scroll-with-vuejs/
-
-        // ＝＝＝＝＝レイアウト
-        // バレーボールっぽいsvgを作成する
-        // ピクトさんで
-        // http://pictogram2.com/?tag=volleyball
+        //mixin
+        // https://jpn.itlibra.com/article?id=21307
 
         // ＝＝＝＝＝未実装
         // excelのピボットテーブルみたいな列カスタムできる物はないか
@@ -46,9 +21,6 @@
         // レーダーチャート　絞り込みなしで全体での力レベルをチャートにする
 
         // 色をちゃんと決める
-
-        //　バックキーでツールバーの制御がおかしくなることがある
-        // 各子画面表示時にツールバーの表示状態チェックを入れる
 
         // メンバーが８人いるときのメンバー挿入機能
         // やり方知らないとずらすのがめんどい

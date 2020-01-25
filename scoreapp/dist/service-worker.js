@@ -14,10 +14,10 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "precache-manifest.d267fd40f2750b186cee5caccc5aa366.js"
+  "precache-manifest.1842a3848424ec44066982b75dd52575.js"
 );
 
-workbox.core.setCacheNameDetails({prefix: "ScoreApp"});
+workbox.core.setCacheNameDetails({prefix: "scoreapp"});
 
 /**
  * The workboxSW.precacheAndRoute() method efficiently caches and responds to

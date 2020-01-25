@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "precache-manifest.c86aced9e2970f95ea136dcf9ba62850.js"
+  "precache-manifest.496b16f5df4a36113c2f1c764110e1e1.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "scoreapp"});

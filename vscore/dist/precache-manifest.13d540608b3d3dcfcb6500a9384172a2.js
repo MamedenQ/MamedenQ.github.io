@@ -16,20 +16,28 @@ self.__precacheManifest = [
     "url": "js/chunk-vendors.be472d27.js"
   },
   {
-    "revision": "822d94f19fe57477865209e1242a3c63",
-    "url": "fonts/fa-brands-400.822d94f1.woff2"
+    "revision": "088a34f78f530102fd9661173b4a4f26",
+    "url": "fonts/fa-brands-400.088a34f7.eot"
   },
   {
     "revision": "f4920c94c0861c537f72ba36590f6362",
     "url": "fonts/fa-brands-400.f4920c94.woff"
   },
   {
-    "revision": "088a34f78f530102fd9661173b4a4f26",
-    "url": "fonts/fa-brands-400.088a34f7.eot"
+    "revision": "822d94f19fe57477865209e1242a3c63",
+    "url": "fonts/fa-brands-400.822d94f1.woff2"
   },
   {
     "revision": "3ac49cb33f43a6471f21ab3df40d1b1e",
     "url": "fonts/fa-regular-400.3ac49cb3.eot"
+  },
+  {
+    "revision": "273dc9bf9778fd37fa61357645d46a28",
+    "url": "fonts/fa-brands-400.273dc9bf.ttf"
+  },
+  {
+    "revision": "9efb86976bd53e159166c12365f61e25",
+    "url": "fonts/fa-regular-400.9efb8697.woff2"
   },
   {
     "revision": "a57bcf76c178aee452db7a57b75509b6",
@@ -40,20 +48,12 @@ self.__precacheManifest = [
     "url": "fonts/fa-regular-400.ece54318.ttf"
   },
   {
-    "revision": "9efb86976bd53e159166c12365f61e25",
-    "url": "fonts/fa-regular-400.9efb8697.woff2"
+    "revision": "93f284548b42ab76fe3fd03a9d3a2180",
+    "url": "fonts/fa-solid-900.93f28454.woff"
   },
   {
     "revision": "7fb1cdd9c3b889161216a13267b55fe2",
     "url": "fonts/fa-solid-900.7fb1cdd9.eot"
-  },
-  {
-    "revision": "273dc9bf9778fd37fa61357645d46a28",
-    "url": "fonts/fa-brands-400.273dc9bf.ttf"
-  },
-  {
-    "revision": "93f284548b42ab76fe3fd03a9d3a2180",
-    "url": "fonts/fa-solid-900.93f28454.woff"
   },
   {
     "revision": "f6121be597a72928f54e7ab5b95512a1",

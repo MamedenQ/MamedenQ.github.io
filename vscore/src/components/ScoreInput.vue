@@ -217,8 +217,26 @@ export default {
             },
             // 詳細項目
             itemDetail: [],
-            itemTeamA: itemJson.itemTeamA,
-            itemTeamB: itemJson.itemTeamB,
+            itemTeamA: [
+                { key: "a1", team: "a", playerid: "", no: "", name: "", sex: 0, classGrid: "a1", isEmpty: true, isLibero: false, isFront: true },
+                { key: "a2", team: "a", playerid: "", no: "", name: "", sex: 0, classGrid: "a2", isEmpty: true, isLibero: false, isFront: true },
+                { key: "a3", team: "a", playerid: "", no: "", name: "", sex: 0, classGrid: "a3", isEmpty: true, isLibero: false, isFront: true },
+                { key: "a4", team: "a", playerid: "", no: "", name: "", sex: 0, classGrid: "a4", isEmpty: true, isLibero: false, isFront: false },
+                { key: "a5", team: "a", playerid: "", no: "", name: "", sex: 0, classGrid: "a5", isEmpty: true, isLibero: false, isFront: false },
+                { key: "a6", team: "a", playerid: "", no: "", name: "", sex: 0, classGrid: "a6", isEmpty: true, isLibero: false, isFront: false },
+                { key: "a7", team: "a", playerid: "", no: "", name: "", sex: 0, classGrid: "a7", isEmpty: true, isLibero: true, isFront: false },
+                { key: "a8", team: "a", playerid: "", no: "", name: "", sex: 0, classGrid: "a8", isEmpty: true, isLibero: true, isFront: false }
+            ],
+            itemTeamB: [
+                { key: "b1", team: "b", playerid: "", no: "", name: "", sex: 0, classGrid: "b1", isEmpty: true, isLibero: false, isFront: true },
+                { key: "b2", team: "b", playerid: "", no: "", name: "", sex: 0, classGrid: "b2", isEmpty: true, isLibero: false, isFront: true },
+                { key: "b3", team: "b", playerid: "", no: "", name: "", sex: 0, classGrid: "b3", isEmpty: true, isLibero: false, isFront: true },
+                { key: "b4", team: "b", playerid: "", no: "", name: "", sex: 0, classGrid: "b4", isEmpty: true, isLibero: false, isFront: false },
+                { key: "b5", team: "b", playerid: "", no: "", name: "", sex: 0, classGrid: "b5", isEmpty: true, isLibero: false, isFront: false },
+                { key: "b6", team: "b", playerid: "", no: "", name: "", sex: 0, classGrid: "b6", isEmpty: true, isLibero: false, isFront: false },
+                { key: "b7", team: "b", playerid: "", no: "", name: "", sex: 0, classGrid: "b7", isEmpty: true, isLibero: true, isFront: false },
+                { key: "b8", team: "b", playerid: "", no: "", name: "", sex: 0, classGrid: "b8", isEmpty: true, isLibero: true, isFront: false }
+            ],
             members: []
         };
     },
@@ -257,7 +275,9 @@ export default {
             this.itemTeamB[6].isLibero = this.scoreSettings.isLibero;
             this.itemTeamB[7].isLibero = this.scoreSettings.isLibero;
 
-            this.loadScore();
+            if (!this.isNewScore) {
+                this.loadScore();
+            }
             this.modelAction = "serve";
             this.onChangeAction();
 
@@ -413,10 +433,6 @@ export default {
             this.showInfo("保存しました");
         },
         loadScore() {
-            if (this.scoreId == "") {
-                return;
-            }
-
             this.modelAction = "serve";
             var saveData = this.getScoreData();
 

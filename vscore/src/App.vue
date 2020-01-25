@@ -110,10 +110,14 @@
                     v-bind:analyze-list-prop="analyzeListProp"
                     v-bind:common-prop="commonProp"
                 ></router-view>
-                <moveTop
-                    style="cursor:pointer;position:fixed;bottom:10px;right:10px;filter: drop-shadow(3px 3px 3px rgba(0, 0, 0, 0.6));"
-                    v-on:move-top="moveTop"
-                ></moveTop>
+                <transition name="fade">
+                    <moveTop
+                        v-show="isShowTopIcon"
+                        v-scroll="handleScroll"
+                        style="cursor:pointer;position:fixed;bottom:10px;right:10px;filter: drop-shadow(3px 3px 3px rgba(0, 0, 0, 0.6));"
+                        v-on:move-top="moveTop"
+                    ></moveTop>
+                </transition>
             </div>
         </div>
     </v-app>
@@ -127,9 +131,18 @@ export default {
     components: {
         moveTop
     },
+    // mounted() {
+    //     console.log("scroll handle on");
+    //     window.addEventListener("scroll", this.handleScroll);
+    // },
+    // destroyed() {
+    //     console.log("scroll handle off");
+    //     window.removeEventListener("scroll", this.handleScroll);
+    // },
     methods: {
-        popup() {
-            console.log("popup!");
+        handleScroll() {
+            // console.log("pos:" + window.scrollY);
+            this.isShowTopIcon = !(window.scrollY == 0);
         },
         onClickBack() {
             if (this.commonProp.back != null) {
@@ -399,6 +412,7 @@ export default {
             isEnableAnalyzePlayer: false,
             isEnableAnalyzeMatch: false,
             isEnabledAnalyzeList: false,
+            isShowTopIcon: false,
             isShowUndo: false,
             isShowRedo: false,
             isShowSave: false,
@@ -431,7 +445,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 [v-cloak] {
     display: none;
 }
@@ -443,5 +457,17 @@ export default {
 .contents {
     display: grid;
     grid-area: contents;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+    /* 表示されている際のCSSはこのブロックに記述 */
+    will-change: opacity;
+    transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+}
+.fade-enter,
+.fade-leave-to {
+    /* 非表示の際のCSSはこのブロックに記述 */
+    opacity: 0;
 }
 </style>

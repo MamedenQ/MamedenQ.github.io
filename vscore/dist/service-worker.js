@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "precache-manifest.13d540608b3d3dcfcb6500a9384172a2.js"
+  "precache-manifest.685554d9664239a86eede85b886e21dc.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "vscore"});

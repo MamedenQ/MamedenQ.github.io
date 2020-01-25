@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "232fc3f8cf805cc5f28f",
+    "revision": "a7fee8bafcfb0614d8c7",
     "url": "css/app.98eb2820.css"
   },
   {
-    "revision": "232fc3f8cf805cc5f28f",
-    "url": "js/app.bc767bb8.js"
+    "revision": "a7fee8bafcfb0614d8c7",
+    "url": "js/app.59b42be0.js"
   },
   {
     "revision": "a82b0184fd354512b0cb",
@@ -24,36 +24,36 @@ self.__precacheManifest = [
     "url": "fonts/fa-brands-400.088a34f7.eot"
   },
   {
-    "revision": "822d94f19fe57477865209e1242a3c63",
-    "url": "fonts/fa-brands-400.822d94f1.woff2"
-  },
-  {
     "revision": "3ac49cb33f43a6471f21ab3df40d1b1e",
     "url": "fonts/fa-regular-400.3ac49cb3.eot"
-  },
-  {
-    "revision": "9efb86976bd53e159166c12365f61e25",
-    "url": "fonts/fa-regular-400.9efb8697.woff2"
-  },
-  {
-    "revision": "a57bcf76c178aee452db7a57b75509b6",
-    "url": "fonts/fa-regular-400.a57bcf76.woff"
   },
   {
     "revision": "273dc9bf9778fd37fa61357645d46a28",
     "url": "fonts/fa-brands-400.273dc9bf.ttf"
   },
   {
+    "revision": "822d94f19fe57477865209e1242a3c63",
+    "url": "fonts/fa-brands-400.822d94f1.woff2"
+  },
+  {
+    "revision": "9efb86976bd53e159166c12365f61e25",
+    "url": "fonts/fa-regular-400.9efb8697.woff2"
+  },
+  {
     "revision": "ece54318791c51b52dfdc689efdb6271",
     "url": "fonts/fa-regular-400.ece54318.ttf"
   },
   {
-    "revision": "f6121be597a72928f54e7ab5b95512a1",
-    "url": "fonts/fa-solid-900.f6121be5.woff2"
+    "revision": "a57bcf76c178aee452db7a57b75509b6",
+    "url": "fonts/fa-regular-400.a57bcf76.woff"
   },
   {
     "revision": "7fb1cdd9c3b889161216a13267b55fe2",
     "url": "fonts/fa-solid-900.7fb1cdd9.eot"
+  },
+  {
+    "revision": "f6121be597a72928f54e7ab5b95512a1",
+    "url": "fonts/fa-solid-900.f6121be5.woff2"
   },
   {
     "revision": "93f284548b42ab76fe3fd03a9d3a2180",
@@ -76,11 +76,15 @@ self.__precacheManifest = [
     "url": "img/fa-solid-900.7a5de9b0.svg"
   },
   {
-    "revision": "ac56eeff8456cbe3f7f6c15f299372ab",
+    "revision": "62d9ee9ea26e725fcc63af81960ec436",
     "url": "index.html"
   },
   {
     "revision": "1ba2ae710d927f13d483fd5d1e548c9b",
     "url": "favicon.ico.bk"
+  },
+  {
+    "revision": "b6216d61c03e6ce0c9aea6ca7808f7ca",
+    "url": "robots.txt"
   }
 ];

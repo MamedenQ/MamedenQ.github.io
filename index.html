@@ -1,97 +1,10 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
-<head>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
-
-	<!-- manifest.jsonを呼び出しています -->
-	<link rel="manifest" href="./manifest.json">
-	<script>
-		// service workerが有効なら、service-worker.js を登録します
-		if ('serviceWorker' in navigator) {
-			navigator.serviceWorker.register('./service-worker.js').then(function () { console.log('Service Worker Registered'); });
-		}
-	</script>
-	<title>geo location</title>
-</head>
-<script>
-	// function startGeoLocation() {
-	// 	if (navigator.geolocation) {
-	// 		//Geolocation APIを利用できる環境向けの処理
-	// 		//ユーザーの現在の位置情報を取得
-	// 		navigator.geolocation.getCurrentPosition(
-	// 			successGps, errorGps
-	// 		);
-	// 	} else {
-	// 		//Geolocation APIを利用できない環境向けの処理
-	// 		alert('geo ng');
-	// 	}
-	// }
-
-	// function successGps(position) {
-	// 	var gl_text = "緯度：" + position.coords.latitude + "<br>";
-	// 	gl_text += "経度：" + position.coords.longitude + "<br>";
-	// 	gl_text += "高度：" + position.coords.altitude + "<br>";
-	// 	gl_text += "緯度・経度の誤差：" + position.coords.accuracy + "<br>";
-	// 	gl_text += "高度の誤差：" + position.coords.altitudeAccuracy + "<br>";
-	// 	gl_text += "方角：" + position.coords.heading + "<br>";
-	// 	gl_text += "速度：" + position.coords.speed + "<br>";
-	// 	document.getElementById("show_result").innerHTML = gl_text;
-	// }
-
-	// function errorGps(error) {
-	// 	var err_msg = "";
-	// 	switch(error.code)
-	// 	{
-	// 		case 1:
-	// 			err_msg = "位置情報の利用が許可されていません";
-	// 			break;
-	// 		case 2:
-	// 			err_msg = "デバイスの位置が判定できません";
-	// 			break;
-	// 		case 3:
-	// 			err_msg = "タイムアウトしました";
-	// 			break;
-	// 	}
-	// 	document.getElementById("show_result").innerHTML = err_msg;
-	// 	//デバッグ用→　document.getElementById("show_result").innerHTML = error.message;
-	// }
-</script>
-
-<body>
-	<!-- <button onclick="startGeoLocation();">start gps</button>
-	<div id="show_result"></div> -->
-	<!--
-	<a href="./vuesample/index.html">analyze</a>
-	<p>画面サイズ：<span id="ScrSize"></span></p>
-	<p>ウィンドウサイズ：<span id="WinSize"></span></p>
-	-->
-</body>
-
-<script type="text/javascript">
-	location.href = "./vscore/dist/index.html";
-	// //画面サイズの取得
-	// getScreenSize();
-	// //ウィンドウサイズの取得
-	// getWindowSize();
-
-	// //画面サイズを取得する
-	// function getScreenSize() {
-	// 	var s = "横幅 = " + window.parent.screen.width + " / 高さ = " + window.parent.screen.height;
-	// 	document.getElementById("ScrSize").innerHTML = s;
-	// }
-
-	// //ウィンドウサイズを取得する
-	// function getWindowSize() {
-	// 	var sW, sH, s;
-	// 	sW = window.innerWidth;
-	// 	sH = window.innerHeight;
-
-	// 	s = "横幅 = " + sW + " / 高さ = " + sH;
-
-	// 	document.getElementById("WinSize").innerHTML = s;
-	// }
-</script>
-
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>Document</title>
+    </head>
+    <body></body>
 </html>

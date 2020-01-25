@@ -89,6 +89,7 @@
         <!-- <HelloWorld /> -->
         <div class="grid-main">
             <div class="contents">
+                <span id="page-top"></span>
                 <router-view
                     v-on:route-home="routeHome"
                     v-on:route-score-input-new="routeScoreInputNew"
@@ -109,16 +110,23 @@
                     v-bind:analyze-list-prop="analyzeListProp"
                     v-bind:common-prop="commonProp"
                 ></router-view>
+                <moveTop
+                    style="cursor:pointer;position:fixed;bottom:10px;right:10px;filter: drop-shadow(3px 3px 3px rgba(0, 0, 0, 0.6));"
+                    v-on:move-top="moveTop"
+                ></moveTop>
             </div>
         </div>
     </v-app>
 </template>
 
 <script>
-// import HelloWorld from "./components/HelloWorld";
+import moveTop from "./components/SVG/MoveTopSVG";
 
 export default {
     name: "App",
+    components: {
+        moveTop
+    },
     methods: {
         popup() {
             console.log("popup!");
@@ -357,6 +365,12 @@ export default {
                 return paddedHexCode;
             });
             return hexCodes.join("");
+        },
+        moveTop() {
+            this.$SmoothScroll(document.querySelector("#page-top"), 750, this.callbackTop, undefined, "y");
+        },
+        callbackTop() {
+            // console.log("callbackTop");
         }
     },
     provide: function() {

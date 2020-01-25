@@ -1,6 +1,5 @@
 <template>
     <div class="main-area">
-        <span id="page-top"></span>
         <div class="view-contents">
             <v-card style="width:100%;" class="d-inline-block mx-auto">
                 <v-container>
@@ -28,10 +27,6 @@
                     </v-data-table>
                 </v-container>
             </v-card>
-            <moveTop
-                style="cursor:pointer;position:fixed;bottom:10px;right:10px;filter: drop-shadow(3px 3px 3px rgba(0, 0, 0, 0.6));"
-                v-on:move-top="moveTop"
-            ></moveTop>
         </div>
         <confirm ref="confirm"></confirm>
     </div>
@@ -39,7 +34,6 @@
 
 <script>
 import confirm from "./Material/Confirm";
-import moveTop from "./SVG/MoveTopSVG";
 
 export default {
     name: "score_list",
@@ -48,8 +42,7 @@ export default {
         scoreListProp: Object
     },
     components: {
-        confirm,
-        moveTop
+        confirm
     },
     data() {
         return {

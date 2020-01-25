@@ -1,6 +1,5 @@
 <template>
   <div class="main-area">
-    <span id="page-top"></span>
     <div class="view-contents">
       <v-tabs v-model="tab" background-color="primary accent-4" centered dark>
         <v-tabs-slider></v-tabs-slider>
@@ -193,17 +192,11 @@
           </v-data-table>
         </v-tab-item>
       </v-tabs-items>
-      <moveTop
-          style="cursor:pointer;position:fixed;bottom:10px;right:10px;filter: drop-shadow(3px 3px 3px rgba(0, 0, 0, 0.6));"
-          v-on:move-top="moveTop"
-      ></moveTop>
     </div>
   </div>
 </template>
 
 <script>
-import moveTop from "./SVG/MoveTopSVG";
-
 export default {
   name: "analyze_list_player",
   props: {
@@ -211,9 +204,6 @@ export default {
     analyzeData: Array,
     commonProp: Object,
     analyzeListProp: Object
-  },
-  components: {
-    moveTop
   },
   data() {
     return {

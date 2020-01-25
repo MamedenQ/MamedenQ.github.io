@@ -1,6 +1,5 @@
 <template>
     <div class="main-area">
-        <span id="page-top"></span>
         <div class="view-contents">
             <v-card>
                 <v-tabs v-model="tab" background-color="primary accent-4" centered dark>

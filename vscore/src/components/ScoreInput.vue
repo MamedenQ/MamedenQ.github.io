@@ -98,6 +98,12 @@
             <confirm ref="confirm"></confirm>
             <memberChange ref="memberChange"></memberChange>
             <scoreSave ref="save"></scoreSave>
+            <v-snackbar v-model="infoSnackBar" :timeout="3000" :bottom="true">
+                {{ infoText }}
+                <v-btn color="blue" text @click="infoSnackBar = false">
+                    Close
+                </v-btn>
+            </v-snackbar>
         </div>
     </div>
 </template>
@@ -165,6 +171,8 @@ export default {
             score: [],
             undoList: [],
             redoList: [],
+            infoSnackBar: false,
+            infoText: "",
             modelAction: "",
             modelKind: "",
             modelDetail: "",
@@ -316,6 +324,7 @@ export default {
                 this.$refs.scoreCarousel.slideTo(undoItem.delListIndex);
             }
 
+            this.showInfo("元に戻しました");
             console.log(JSON.stringify(this.undoList, null, "    "));
             this.outputlog();
         },
@@ -344,6 +353,7 @@ export default {
                 this.$refs.scoreCarousel.slideTo(redoItem.delListIndex);
             }
             this.outputlog();
+            this.showInfo("やり直しました");
         },
         save() {
             this.dialogProp = {
@@ -400,6 +410,7 @@ export default {
 
             this.setScoreData(saveDatas);
             this.isDirty = false;
+            this.showInfo("保存しました");
         },
         loadScore() {
             if (this.scoreId == "") {
@@ -496,6 +507,7 @@ export default {
                 return;
             }
             this.deleteScoreItem(this.dialogProp.listIndex, this.dialogProp.deleteItem, false);
+            this.showInfo("削除しました");
         },
         deleteScoreItem(listIndex, deleteItem, isRedo) {
             var tmpDeleteIdx = deleteItem.index;
@@ -673,6 +685,10 @@ export default {
         },
         callbackBack() {
             this.$emit("route-score-list");
+        },
+        showInfo(text) {
+            this.infoText = text;
+            this.infoSnackBar = true;
         }
     }
 };

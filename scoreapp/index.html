@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang=en><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,user-scalable=no"><!--[if IE]><link rel="icon" href="favicon.ico" /><![endif]--><link rel=manifest crossorigin=use-credentials href=/scoreapp/manifest.json><title>スコアブック</title><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900"><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css><link rel=stylesheet href=https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css><meta name=apple-mobile-web-app-capable content=yes><meta name=apple-mobile-web-app-title content=scoreapp><link rel=apple-touch-icon href=https://mamedenq.github.io/scoreapp/img/icons/icon-72x72.png sizes=72x72><link rel=apple-touch-icon href=https://mamedenq.github.io/scoreapp/img/icons/icon-114x114.png sizes=114x114><link rel=apple-touch-icon href=https://mamedenq.github.io/scoreapp/img/icons/icon-120x120.png sizes=120x120><link rel=apple-touch-icon href=https://mamedenq.github.io/scoreapp/img/icons/icon-144x144.png sizes=144x144><style type=text/css>[v-cloak] {
                 display: none;
-            }</style><link href=css/app.82971191.css rel=preload as=style><link href=css/chunk-vendors.52717627.css rel=preload as=style><link href=js/app.765e37f7.js rel=preload as=script><link href=js/chunk-vendors.02e58e60.js rel=preload as=script><link href=css/chunk-vendors.52717627.css rel=stylesheet><link href=css/app.82971191.css rel=stylesheet><link rel=icon type=image/png sizes=32x32 href=img/icons/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=img/icons/favicon-16x16.png><link rel=manifest href=manifest.json><meta name=theme-color content=#4DBA87><meta name=apple-mobile-web-app-capable content=no><meta name=apple-mobile-web-app-status-bar-style content=default><meta name=apple-mobile-web-app-title content=scoreapp><link rel=apple-touch-icon href=img/icons/apple-touch-icon-152x152.png><link rel=mask-icon href=img/icons/safari-pinned-tab.svg color=#4DBA87><meta name=msapplication-TileImage content=img/icons/msapplication-icon-144x144.png><meta name=msapplication-TileColor content=#000000></head><body><noscript><strong>We're sorry but vscore doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id=app></div><script src=js/chunk-vendors.02e58e60.js></script><script src=js/app.765e37f7.js></script></body><script>// ＝＝＝＝＝調査項目
+            }</style><link href=css/app.82971191.css rel=preload as=style><link href=css/chunk-vendors.52717627.css rel=preload as=style><link href=js/app.52e52791.js rel=preload as=script><link href=js/chunk-vendors.0983f58b.js rel=preload as=script><link href=css/chunk-vendors.52717627.css rel=stylesheet><link href=css/app.82971191.css rel=stylesheet><link rel=icon type=image/png sizes=32x32 href=img/icons/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=img/icons/favicon-16x16.png><link rel=manifest href=manifest.json><meta name=theme-color content=#4DBA87><meta name=apple-mobile-web-app-capable content=no><meta name=apple-mobile-web-app-status-bar-style content=default><meta name=apple-mobile-web-app-title content=scoreapp><link rel=apple-touch-icon href=img/icons/apple-touch-icon-152x152.png><link rel=mask-icon href=img/icons/safari-pinned-tab.svg color=#4DBA87><meta name=msapplication-TileImage content=img/icons/msapplication-icon-144x144.png><meta name=msapplication-TileColor content=#000000></head><body><noscript><strong>We're sorry but vscore doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id=app></div><script src=js/chunk-vendors.0983f58b.js></script><script src=js/app.52e52791.js></script></body><script>// ＝＝＝＝＝調査項目
         // svg作成方法
         // gimpでファイルからインポート
         // Shift+Oで色域を選択にする
@@ -19,8 +19,27 @@
         // 一度インストールすると、インストールアイコン（アドレスバーの右）が出ない
         // PWAの設定が誤っているのかと勘違いするため注意
 
-        // ＝＝＝＝＝未実装
+        // ＝＝＝＝＝優先度中
+        // issueに登録
+
+        // 和風のアイコンはやめる
+
+        // index.html以外の状態のままにし、他のアプリを表示したあと再表示すると４０４になる
+
+        // ＝＝＝＝＝優先度低
+        // マスタがなければマスタ追加を促す
+        // データを見てガイドを表示する
+
+        // スコアタップでメニュー表示
+        // 削除、編集
+        // 今のところ削除＞追加で対応可能だから優先度低
+
+        // one signalでwebプッシュ
+
+        // service workerの仕様を理解する
         // iosキャッシュ更新暫定対策
+        // https://teratail.com/questions/191291
+        // https://github.com/vuejs/vue-cli/issues/2945
         // module.exports = {
         //     transpileDependencies: ["vuetify"],
         //     publicPath: "./",
@@ -38,6 +57,11 @@
         // その他ミス　失点
         // 称号をつける　曲者　スパイクのXX
 
+        // プロット図で自分の位置を把握
+
+        // body-scroll-lockライブラリを使う
+        // 何ができるかを調査する必要がある
+
         // 開催ごとの推移をグラフで出す
         // 開催ごとで起用のばらつきがあるから難しいかな
         // グラフはここ参照
@@ -45,8 +69,6 @@
 
         // 色はここ参考
         // https://jsfiddle.net/kabanoki/3owdp4vc/
-
-        // index.html以外の状態のままにし、他のアプリを表示したあと再表示すると４０４になる
 
         // excelのピボットテーブルみたいな列カスタムできる物はないか
 

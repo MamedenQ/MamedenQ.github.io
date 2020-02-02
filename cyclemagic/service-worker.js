@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "precache-manifest.6f564f38b7675eaeca3fc9e6bae7f194.js"
+  "precache-manifest.5edbf28b803a007d324555b9c6c3544b.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "cyclemagicweb"});

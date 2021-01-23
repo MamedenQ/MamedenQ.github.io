@@ -14,16 +14,12 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.b88faa52cad47d59f4d252b15535a5c5.js"
+  "precache-manifest.2582f20b52a50882f8d918586388c2b6.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "papercostcalculator"});
 
-self.addEventListener('message', (event) => {
-  if (event.data && event.data.type === 'SKIP_WAITING') {
-    self.skipWaiting();
-  }
-});
+workbox.core.skipWaiting();
 
 /**
  * The workboxSW.precacheAndRoute() method efficiently caches and responds to

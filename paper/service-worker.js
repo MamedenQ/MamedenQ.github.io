@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "precache-manifest.2582f20b52a50882f8d918586388c2b6.js"
+  "precache-manifest.9bfe3243651666327ddcb6bee877b5c6.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "papercostcalculator"});

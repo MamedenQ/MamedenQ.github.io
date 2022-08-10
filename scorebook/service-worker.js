@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "precache-manifest.9cfb90803af133d642b95814128d4d89.js"
+  "precache-manifest.dbf15e68e8092a54ffbd86d8dc342ada.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "scorebook"});
